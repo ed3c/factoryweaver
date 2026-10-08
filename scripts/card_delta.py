@@ -125,10 +125,20 @@ def compile_delta(before, after, *, batch_size=12, cursor=None):
     next_offset = offset + len(selected)
     next_cursor = f"{stamp}:{next_offset}" if next_offset < len(changes) else None
     noop = before == after
+    # A modified source record is merely metadata; this compiler cannot
+    # independently verify its real bytes or clear downstream test receipts.
+    remaining_work = []
+    if changed_sources:
+        remaining_work.append("original_source_owner_readback_required")
+    if not changes and not noop and not changed_sources:
+        remaining_work.append("noncard_change_requires_reconciliation")
+    status = ("NOOP" if noop else "CONTINUE" if next_cursor else
+              "BLOCKED" if remaining_work else "DONE")
     return {
         "protocol": "factoryweaver/card-delta-v1",
         "subject": after["subject"]["id"],
-        "status": "NOOP" if noop else "CONTINUE" if next_cursor else "DONE",
+        "status": status,
+        "remaining_work": remaining_work,
         "patch": selected,
         "next_cursor": next_cursor,
         "source_metadata_changed": changed_sources,
