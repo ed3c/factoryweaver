@@ -1,0 +1,103 @@
+{
+  "protocol": "factoryweaver/semantic-golden-v1",
+  "source_kind": "SYNTHETIC_NORMATIVE_FIXTURE",
+  "human_review": "REQUIRED_NOT_RUN",
+  "purpose": "Structural golden from user-authored v7.1 card contracts, not retrieved external-world facts or measured model behavior.",
+  "cases": [
+    {
+      "id": "CASE-interview-question",
+      "entity": "coding-agent-interviewer",
+      "event": "human-answer-remains-unconfirmed",
+      "scope": "grilling-decision-frontier",
+      "decision_use": "authorize-specification-decision",
+      "falsifier": "agent-considers-suggested-answer-as-confirmed",
+      "evidence_compatibility": "same-human-interview-episode",
+      "card_id": "N-unconfirmed-frontier"
+    },
+    {
+      "id": "CASE-interview-suggestion",
+      "entity": "coding-agent-interviewer",
+      "event": "human-answer-remains-unconfirmed",
+      "scope": "grilling-decision-frontier",
+      "decision_use": "authorize-specification-decision",
+      "falsifier": "agent-considers-suggested-answer-as-confirmed",
+      "evidence_compatibility": "same-human-interview-episode",
+      "card_id": "N-unconfirmed-frontier"
+    },
+    {
+      "id": "CASE-source-drift",
+      "entity": "specification-contract-reducer",
+      "event": "source-metadata-mutates-after-compile",
+      "scope": "reference-knowledge-compiler",
+      "decision_use": "prevent-stale-fact-completion",
+      "falsifier": "compiler-marks-old-source-evidence-as-authenticated",
+      "evidence_compatibility": "separate-source-drift-condition",
+      "card_id": "C-source-invalidation"
+    },
+    {
+      "id": "CASE-runtime-check",
+      "entity": "independent-delivery-owner",
+      "event": "runtime-receipt-missing-after-test",
+      "scope": "autopr-delivery-boundary",
+      "decision_use": "block-unverified-release-claim",
+      "falsifier": "candidate-claim-promotes-test-into-shipping-receipt",
+      "evidence_compatibility": "separate-delivery-readback-condition",
+      "card_id": "P-owner-readback"
+    }
+  ],
+  "cards": [
+    {
+      "id": "N-unconfirmed-frontier",
+      "series": "N",
+      "payload": {
+        "tension": "開發者希望快速完成可交付規格，但模型提出的建議答案尚未得到真正的人類確認。",
+        "actors": "主角是執行訪談的 Agent；決策 Owner 是使用者；受影響的系統是下游規格工廠。",
+        "starting_state": "訪談建立 Decision Tree，部分問題的前提已滿足，因此進入可詢問的 Frontier。",
+        "pressure": "自動化流程希望繼續產生 Spec 或 PR，容易將模型推薦選項誤當成已得到同意。",
+        "decision": "把 Suggested Answer 與 Confirmed Human Decision 分離；只有使用者原始答覆可推動決策。",
+        "turn": "若沒有可信的人類答覆來源，狀態投影改為 WAIT_FOR_HUMAN，而不是自行補上決策。",
+        "outcome": "公開的規格編譯器可以保存未解問題與相依需求，不能因資料長得像確認紀錄就放行。",
+        "unresolved": "必須由真正有能力確認人類答覆的外部 Host 提供 Readback；目前此 Fixture 沒有那種權限。"
+      }
+    },
+    {
+      "id": "C-source-invalidation",
+      "series": "C",
+      "payload": {
+        "definition": "Source Invalidation 是來源身分或內容變化後，對依賴它的知識節點撤銷既有有效性假設。",
+        "mechanism": "以 Source ID 和 Typed Dependencies 找到受影響 Requirement 與 Card，並將需原 Owner 再查核的部分標示阻塞。",
+        "non_goals": "來源 Metadata 比對不能證明遠端資料真實，也不能取代可信 Owner 的原始輸入或獨立查驗。",
+        "boundary": "當來源未固定版本或收到未知寫入結果，系統只提出讀回需求，不能憑推論標成 VERIFIED。",
+        "positive_example": "官方文件更換版本時，只讓依賴該文件的規格回到待驗證，而不重跑全部無關工作。",
+        "counterexample": "只有檔名相同、SHA 格式正確就判定源頭未變，或把綠燈 CI 當成完整 Product Delivery。"
+      }
+    },
+    {
+      "id": "P-owner-readback",
+      "series": "P",
+      "payload": {
+        "scenario": "自動 PR 候選已通過局部測試，但尚未收到原始交付 Owner 的讀回確認。",
+        "value": "阻止測試通過或候選狀態被錯誤升級為已合併、已部署或可供使用者使用。",
+        "prerequisites": "已知精確候選來源、預期驗收規格、原始 Owner Identity 與合法的讀回能力。",
+        "inputs": "候選 Head、受影響的 Requirement、測試範圍、原始 Owner 允許取得的證據引用。",
+        "steps": [
+          {
+            "action": "檢查目前輸入中的 Candidate 和 CI Evidence，核對二者 Source Identity 與 Scope。",
+            "validation": "只有精確匹配的測試結果能支持其宣告過的測試範圍，不擴大解讀。",
+            "failure_signal": "候選 HEAD 不符、測試產物缺失或 Trace 指向不同版本時拒絕完成。"
+          },
+          {
+            "action": "對缺少的交付證據建立具名 Readback Request，交給受授權的原始 Owner。",
+            "validation": "回傳只能是未執行的 Action Proposal，直到 Owner 真的執行並保存原始證據。",
+            "failure_signal": "缺少 Owner、讀回權限或 Provider 狀態未知時保留 BLOCKED 或 WAIT。"
+          }
+        ],
+        "expected_output": "可追溯的等待狀態或真實 Owner Receipt；本 Fixture 只建立等待狀態。",
+        "rollback": "取消未採納的候選要求，保留原始 PR、Issue 與驗證歷史而不擅自 Merge。",
+        "failure_handling": "未知結果不得重試可能產生寫入的命令；必須取得原 Owner 獨立讀回。",
+        "security": "不得把私有 Token、來源秘密或宿主的執行權限封裝在公開 Card 或 Fixture。",
+        "execution_status": "UNTESTED"
+      }
+    }
+  ]
+}
