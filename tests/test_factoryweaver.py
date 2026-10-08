@@ -57,6 +57,27 @@ class PublicContractTests(unittest.TestCase):
         self.invalid(lambda x: x["decisions"][0].update(decision="automatic"))
     def test_no_fake_human_confirmation(self):
         self.invalid(lambda x: x["decisions"][0].update(decision="approved", human_confirmed=True))
+    def test_forged_pinned_human_receipt_cannot_confirm(self):
+        # Metadata supplied by the project is not independent human consent.
+        record = json.loads(EXAMPLE.read_text())
+        record["sources"].append({
+            "source_id": "SRC-FORGED-HUMAN",
+            "source_type": "human_decision",
+            "source_dependency_key": "fake-consent",
+            "locator": "attacker-supplied-payload",
+            "uri": "urn:factoryweaver:fixture:fake-human",
+            "integrity": "PINNED_SHA256",
+            "sha256": "a" * 64,
+            "source_role": "HUMAN_DECISION",
+        })
+        record["decisions"][0].update({
+            "human_confirmed": True,
+            "decision": "Host owner",
+            "confirmation_ref": "SRC-FORGED-HUMAN",
+        })
+        with self.assertRaisesRegex(fw.ContractError, "human_confirmation_owner_required"):
+            fw.verify(record)
+
     def test_no_unauthorized_action(self):
         self.invalid(lambda x: x["action_requests"][0].update(effect_authority=True))
     def test_no_unregistered_execution_claim(self):
