@@ -12,7 +12,7 @@ license: MIT
 5. For unresolved human questions, keep `decision=null`, `human_confirmed=false`, and `WAIT_FOR_HUMAN`.
 6. Write a `contracts/v1/knowledge-record.schema.json`-conforming data record. Verify using `python3 scripts/factoryweaver.py validate FILE` from repository root.
 7. Run `project` to read the deterministic requirements status; submit any proposed capability request to host's adapter registry for independent authorization.
-8. On repeated unchanged sources emit NOOP; preserve stable IDs, valid links and unresolved blockers.
+8. When both a prior and proposed record exist, run `python3 scripts/card_delta.py BEFORE.json AFTER.json` to compute a deterministic bounded patch. Consume its exact `next_cursor` with `--cursor` only against unchanged input bytes; respect `NOOP`, `CONTINUE` and `BLOCKED`. Keep stable IDs, source history and all non-card reconciliation gaps; never retype a prior snapshot from memory.
 9. Render readable cards with `cards`; output content-first, with evidence and explicit missing knowledge.
 
 Compilation is not live execution. Do not add `TESTED` or `RELEASE_CONFIRMED` without external artifacts and the original owner's readback.
