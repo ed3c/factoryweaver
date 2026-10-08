@@ -1,0 +1,497 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.org/factoryweaver/contracts/v1/knowledge-record.schema.json",
+  "title": "FactoryWeaver Zettelkasten v7.2 Exchange Contract — preview, host neutral",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "subject",
+    "sources",
+    "requirements",
+    "cards",
+    "action_requests",
+    "progress"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "factoryweaver/v1"
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/source"
+      }
+    },
+    "requirements": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/requirement"
+      }
+    },
+    "cards": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/card"
+      }
+    },
+    "action_requests": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/actionRequest"
+      }
+    },
+    "progress": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "knowledge",
+        "engineering",
+        "delivery"
+      ],
+      "properties": {
+        "knowledge": {
+          "$ref": "#/$defs/progressAxis"
+        },
+        "engineering": {
+          "$ref": "#/$defs/progressAxis"
+        },
+        "delivery": {
+          "$ref": "#/$defs/progressAxis"
+        }
+      }
+    },
+    "decisions": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/decision"
+      }
+    },
+    "subject": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "scope"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 3
+        },
+        "scope": {
+          "type": "string",
+          "minLength": 3
+        },
+        "consumer": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "$defs": {
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_id",
+        "source_type",
+        "source_dependency_key",
+        "locator",
+        "uri"
+      ],
+      "properties": {
+        "source_id": {
+          "type": "string",
+          "minLength": 3
+        },
+        "source_type": {
+          "enum": [
+            "job_description",
+            "official_doc",
+            "code",
+            "log",
+            "test_artifact",
+            "owner_readback",
+            "other",
+            "human_decision"
+          ]
+        },
+        "source_dependency_key": {
+          "type": "string",
+          "minLength": 3
+        },
+        "locator": {
+          "type": "string",
+          "minLength": 1
+        },
+        "uri": {
+          "type": "string",
+          "format": "uri"
+        },
+        "integrity": {
+          "enum": [
+            "UNPINNED",
+            "PINNED_SHA256"
+          ]
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "source_role": {
+          "enum": [
+            "SUBJECT_MATTER",
+            "HUMAN_DECISION",
+            "TEST_ARTIFACT",
+            "OWNER_READBACK"
+          ]
+        }
+      }
+    },
+    "requirement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "statement",
+        "claim_kind",
+        "source_ids",
+        "owner",
+        "acceptance",
+        "knowledge_status",
+        "engineering_status",
+        "delivery_status",
+        "falsifier"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^REQ-[a-z0-9-]+$"
+        },
+        "statement": {
+          "type": "string",
+          "minLength": 5
+        },
+        "claim_kind": {
+          "enum": [
+            "SOURCE_STATEMENT",
+            "OBSERVATION",
+            "INFERENCE",
+            "HYPOTHESIS",
+            "NORMATIVE"
+          ]
+        },
+        "source_ids": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        "owner": {
+          "type": "string",
+          "minLength": 1
+        },
+        "acceptance": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 5
+          }
+        },
+        "knowledge_status": {
+          "enum": [
+            "UNKNOWN",
+            "ANCHORED",
+            "CONFLICTED",
+            "SPECIFIED"
+          ]
+        },
+        "engineering_status": {
+          "enum": [
+            "UNASSESSED",
+            "CODE_OBSERVED",
+            "CONTRACT_DEFINED",
+            "TESTED_SCOPED",
+            "ACTIVATED"
+          ]
+        },
+        "delivery_status": {
+          "enum": [
+            "NOT_STARTED",
+            "WRITER_COMPLETE",
+            "OWNER_WAIT",
+            "RELEASE_CONFIRMED",
+            "BLOCKED"
+          ]
+        },
+        "falsifier": {
+          "type": "string",
+          "minLength": 5
+        },
+        "depends_on": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        }
+      }
+    },
+    "card": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "stable_id",
+        "canonical_key",
+        "series",
+        "revision",
+        "status",
+        "title",
+        "payload",
+        "evidence_ids",
+        "typed_links"
+      ],
+      "properties": {
+        "stable_id": {
+          "type": "string",
+          "minLength": 3
+        },
+        "canonical_key": {
+          "type": "string",
+          "pattern": "^[^|]+\\|[^|]+\\|[^|]+\\|[^|]+\\|[^|]+\\|[^|]+$"
+        },
+        "series": {
+          "enum": [
+            "N",
+            "Q",
+            "C",
+            "D",
+            "S",
+            "P",
+            "T",
+            "R",
+            "G",
+            "E",
+            "V",
+            "X",
+            "K",
+            "REQ",
+            "SPEC"
+          ]
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "status": {
+          "enum": [
+            "ACTIVE",
+            "SUPERSEDED",
+            "RETIRED"
+          ]
+        },
+        "title": {
+          "type": "string",
+          "minLength": 3
+        },
+        "payload": {
+          "type": "string",
+          "minLength": 5
+        },
+        "evidence_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        "typed_links": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/link"
+          }
+        }
+      }
+    },
+    "link": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "relation",
+        "target"
+      ],
+      "properties": {
+        "relation": {
+          "enum": [
+            "based_on",
+            "derived_from",
+            "leads_to",
+            "causes",
+            "enables",
+            "contradicts",
+            "competes_with",
+            "analogous_to",
+            "instance_of",
+            "implements",
+            "validated_by",
+            "supersedes",
+            "depends_on",
+            "mitigates"
+          ]
+        },
+        "target": {
+          "type": "string",
+          "minLength": 3
+        }
+      }
+    },
+    "actionRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "request_id",
+        "operation_id",
+        "target",
+        "intent",
+        "mode",
+        "registered",
+        "effect_authority",
+        "status",
+        "requires",
+        "expect"
+      ],
+      "properties": {
+        "request_id": {
+          "type": "string",
+          "pattern": "^AR-[a-z0-9-]+$"
+        },
+        "operation_id": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9]*(\\.[a-z][a-z0-9_]*)+$"
+        },
+        "target": {
+          "type": "object",
+          "minProperties": 1
+        },
+        "intent": {
+          "enum": [
+            "resolve_unknown",
+            "validate_specification",
+            "observe_owner"
+          ]
+        },
+        "mode": {
+          "enum": [
+            "READ_ONLY",
+            "BOUNDED_TEST"
+          ]
+        },
+        "registered": {
+          "type": "boolean"
+        },
+        "effect_authority": {
+          "const": false
+        },
+        "status": {
+          "enum": [
+            "PROPOSED",
+            "REFUSED",
+            "READY",
+            "RUNNING",
+            "OBSERVED",
+            "BLOCKED"
+          ]
+        },
+        "requires": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "expect": {
+          "type": "object",
+          "minProperties": 1
+        },
+        "observed": {
+          "type": [
+            "object",
+            "null"
+          ]
+        }
+      }
+    },
+    "progressAxis": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "state",
+        "evidence_refs"
+      ],
+      "properties": {
+        "state": {
+          "type": "string",
+          "minLength": 2
+        },
+        "evidence_refs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "decision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "question",
+        "human_confirmed",
+        "decision",
+        "source_ids"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^DEC-[a-z0-9-]+$"
+        },
+        "question": {
+          "type": "string",
+          "minLength": 4
+        },
+        "suggested_answer": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "human_confirmed": {
+          "type": "boolean"
+        },
+        "decision": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "source_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        "confirmation_ref": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    }
+  }
+}
