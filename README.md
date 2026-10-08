@@ -28,6 +28,16 @@ python3 scripts/factoryweaver.py cards examples/openai-plugin-platform/project.j
 python3 -m unittest discover -s tests -v
 ```
 
+## JD clause coverage (Issue #10 candidate)
+
+The [read-only requirement coverage CLI](docs/requirement-coverage.md) compares an **explicit source-clause inventory** with the existing REQ/SPEC record, surfacing omission without claiming the source was fully ingested.
+
+The OpenAI Plugin Developer Platform example intentionally has **six JD responsibility groups, one declared REQ link, five unmapped clauses**. This is structural traceability only; it does not verify the remote source, semantic mapping, tests or delivery.
+
+```bash
+python3 scripts/requirement_coverage.py examples/openai-plugin-platform/project.json examples/openai-plugin-platform/job-clause-inventory.json
+```
+
 ## Architecture
 
 ```text

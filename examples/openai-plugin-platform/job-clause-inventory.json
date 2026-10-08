@@ -1,0 +1,53 @@
+{
+  "protocol": "factoryweaver/requirement-coverage-v1",
+  "subject_id": "openai-platform-example",
+  "source_id": "SRC-OPENAI-JD",
+  "source_dependency_key": "openai-careers-plugin-platform",
+  "source_state": "UNPINNED",
+  "clauses": [
+    {
+      "clause_id": "JD-api-sdk",
+      "locator": "What You'll Do / bullet 1",
+      "summary": "Develop APIs, SDKs and platform services for ChatGPT and Codex extensions.",
+      "claim_kind": "SOURCE_PARAPHRASE",
+      "requirement_ids": [
+        "REQ-api-sdk"
+      ]
+    },
+    {
+      "clause_id": "JD-plugin-lifecycle",
+      "locator": "What You'll Do / bullet 2",
+      "summary": "Improve plugin creation, testing, publication, updates and distribution.",
+      "claim_kind": "SOURCE_PARAPHRASE",
+      "requirement_ids": []
+    },
+    {
+      "clause_id": "JD-cross-product",
+      "locator": "What You'll Do / bullet 3",
+      "summary": "Maintain compatibility across ChatGPT, Codex and interactive application experiences.",
+      "claim_kind": "SOURCE_PARAPHRASE",
+      "requirement_ids": []
+    },
+    {
+      "clause_id": "JD-open-standards",
+      "locator": "What You'll Do / bullet 4",
+      "summary": "Contribute practical developer requirements to MCP and other open standards.",
+      "claim_kind": "SOURCE_PARAPHRASE",
+      "requirement_ids": []
+    },
+    {
+      "clause_id": "JD-developer-feedback",
+      "locator": "What You'll Do / bullet 5",
+      "summary": "Work directly with developers and partners to improve platform tools and documentation.",
+      "claim_kind": "SOURCE_PARAPHRASE",
+      "requirement_ids": []
+    },
+    {
+      "clause_id": "JD-safety-permissions",
+      "locator": "What You'll Do / bullet 6",
+      "summary": "Coordinate product, research, security and safety responsibilities for safe reliable permissioned execution.",
+      "claim_kind": "SOURCE_PARAPHRASE",
+      "requirement_ids": []
+    }
+  ]
+}
