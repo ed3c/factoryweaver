@@ -67,6 +67,8 @@ class PublicContractTests(unittest.TestCase):
     def test_transitive_unpinned_source_blocks_specified_dependency(self):
         record = json.loads(SAMPLE.read_text())
         record["requirements"][0]["knowledge_status"] = "SPECIFIED"
+        # Isolate a missing source pin from the fixture's separate human decision.
+        record["requirements"][0]["depends_on"] = []
         child = copy.deepcopy(record["requirements"][0])
         child["id"] = "REQ-downstream"
         child["depends_on"] = ["REQ-api-sdk"]
