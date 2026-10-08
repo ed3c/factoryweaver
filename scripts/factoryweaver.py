@@ -152,6 +152,9 @@ def project(record):
 
 def route(record, registry=None):
     verify(record)
+    # Bind readiness to the named requirement for validation/readback. A
+    # registered-looking capability cannot bypass unresolved human decisions.
+    projections = {row["requirement"]: row for row in project(record)["projection"]}
     operations = {}
     if registry:
         Draft202012Validator(load(REGISTRY)).validate(registry)
@@ -165,16 +168,26 @@ def route(record, registry=None):
         entry = operations.get(a["operation_id"])
         status = "HOST_REGISTRY_REQUIRED"
         owner = entry["owner"] if entry else None
+        requirement_id = a["target"].get("requirement_id")
+        requirement_state = projections.get(requirement_id, {}).get("state")
         if entry:
             if not entry["enabled"]:
                 status = "CAPABILITY_DISABLED"
             elif a["mode"] not in entry["allowed_modes"] or a["target"].get("kind") not in entry["target_kinds"]:
                 status = "REGISTRY_SCOPE_MISMATCH"
+            elif a["intent"] != "resolve_unknown" and not requirement_id:
+                status = "REQUIREMENT_BINDING_REQUIRED"
+            elif requirement_id is not None and requirement_id not in projections:
+                status = "UNKNOWN_REQUIREMENT"
+            elif a["intent"] != "resolve_unknown" and requirement_state not in ("READY_FOR_OWNER_REVIEW", "SPECIFICATION_ONLY"):
+                status = "REQUIREMENT_BLOCKED"
             elif entry.get("requires_pinned_source", False) and any(s.get("integrity") != "PINNED_SHA256" for s in record["sources"]):
                 status = "WAIT_FOR_SOURCE_PIN"
             else:
                 status = "REGISTERED_CANDIDATE_ONLY"
-        results.append({"request_id": a["request_id"], "operation_id": a["operation_id"], "route": status, "owner": owner, "can_execute": False})
+        results.append({"request_id": a["request_id"], "operation_id": a["operation_id"],
+                        "route": status, "owner": owner,
+                        "requirement_state": requirement_state, "can_execute": False})
     return {"requests": results, "effects": 0, "authority": "NONE"}
 
 def cards(record):
