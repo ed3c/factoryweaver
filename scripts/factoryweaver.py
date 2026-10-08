@@ -55,12 +55,11 @@ def verify(record):
     for d in record.get("decisions", []):
         sources_exist(d["source_ids"], d["id"])
         if d["human_confirmed"]:
-            ref = d.get("confirmation_ref")
-            if not ref or ref not in sources:
-                raise ContractError("missing_human_receipt:" + d["id"])
-            source = sources[ref]
-            if source["source_type"] != "human_decision" or source.get("integrity") != "PINNED_SHA256" or not d["decision"]:
-                raise ContractError("untrusted_human_receipt:" + d["id"])
+            # A record-controlled SHA-256 field proves no human identity or consent.
+            # This reference CLI has no independently trusted human-input owner.
+            # A future host adapter must verify the raw decision outside this
+            # untrusted exchange before issuing any confirmation projection.
+            raise ContractError("human_confirmation_owner_required:" + d["id"])
         elif d.get("decision") is not None or d.get("confirmation_ref"):
             raise ContractError("unconfirmed_decision:" + d["id"])
     for a in record["action_requests"]:
