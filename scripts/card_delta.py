@@ -79,6 +79,13 @@ def compile_delta(before, after, *, batch_size=12, cursor=None):
     new_sources = index(after["sources"], "source_id")
     changed_sources = sorted(k for k in old_sources.keys() | new_sources.keys()
                              if old_sources.get(k) != new_sources.get(k))
+    if set(old_sources) - set(new_sources):
+        raise ContractError("source_history_removed")
+    # Card patches are not a lossless representation of every other exchange
+    # field. Keep all changed non-card sections visible to the original owner.
+    changed_sections = [name for name in
+                        ("sources", "decisions", "requirements", "action_requests", "progress")
+                        if before.get(name) != after.get(name)]
     old_req = index(before["requirements"], "id")
     new_req = index(after["requirements"], "id")
     if set(old_req) - set(new_req):
@@ -138,8 +145,10 @@ def compile_delta(before, after, *, batch_size=12, cursor=None):
     remaining_work = []
     if changed_sources:
         remaining_work.append("original_source_owner_readback_required")
-    if not changes and not noop and not changed_sources:
+    if any(name != "sources" for name in changed_sections):
         remaining_work.append("noncard_change_requires_reconciliation")
+    if not changes and not noop and not changed_sections:
+        remaining_work.append("unmapped_change_requires_reconciliation")
     status = ("NOOP" if noop else "CONTINUE" if next_cursor else
               "BLOCKED" if remaining_work else "DONE")
     return {
@@ -150,11 +159,14 @@ def compile_delta(before, after, *, batch_size=12, cursor=None):
         "patch": selected,
         "next_cursor": next_cursor,
         "source_metadata_changed": changed_sources,
+        "noncard_sections_changed": changed_sections,
         "origin_groups": grouped_sources,
         "source_independence_proven": False,
         "affected_nodes": sorted(affected),
         "change_count": len(changes),
-        "unmapped_changes": [] if noop or changes or affected else ["noncard_record_change"],
+        "unmapped_changes": [name for name in changed_sections if name != "sources"]
+                            + (["other_record_change"] if not noop and not changes and
+                               not changed_sections else []),
         "proof_ceiling": "SCHEMA_FIXTURE_ONLY",
         "source_integrity_proven": False,
         "effect_authority": False,
