@@ -80,6 +80,7 @@ class CardDeltaTests(unittest.TestCase):
         self.assertEqual([x["operation"] for x in diff["patch"]], ["UPDATE", "CREATE"])
         self.assertIn(previous["stable_id"], diff["affected_nodes"])
         previous["status"] = "ACTIVE"
+        previous["revision"] -= 1  # Isolate the supersession gate from spurious revision.
         with self.assertRaisesRegex(ContractError, "supersession_history_not_closed"):
             compile_delta(a, b)
 
