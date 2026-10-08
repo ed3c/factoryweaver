@@ -11,6 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 FILE = ROOT / "scripts/requirement_coverage.py"
 RECORD = ROOT / "examples/openai-plugin-platform/project.json"
 INVENTORY = ROOT / "examples/openai-plugin-platform/job-clause-inventory.json"
+sys.path.insert(0, str(ROOT / "scripts"))
 spec = importlib.util.spec_from_file_location("coverage_auditor", FILE)
 coverage = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(coverage)
