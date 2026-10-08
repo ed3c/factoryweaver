@@ -14,6 +14,25 @@ import build_skill_bundle as builder
 
 
 class PortableBundleTests(unittest.TestCase):
+    def test_source_only_skill_copy_is_incomplete_baseline(self):
+        # Frozen causal baseline: a loader which copies only this source folder
+        # lacks root-owned dependencies. The generated bundle is the treatment.
+        source = ROOT / "skills/factoryweaver"
+        with tempfile.TemporaryDirectory() as tmp:
+            foreign = Path(tmp) / "unrelated-project" / ".agents" / "skills" / "factoryweaver"
+            foreign.mkdir(parents=True)
+            (foreign / "SKILL.md").write_bytes((source / "SKILL.md").read_bytes())
+            original = (foreign / "SKILL.md").read_text(encoding="utf-8")
+            self.assertIn("../../docs/compatibility.md", original)
+            self.assertFalse((foreign / "../../docs/compatibility.md").resolve().is_file())
+            self.assertFalse((foreign / "scripts/factoryweaver.py").is_file())
+            installed = Path(tmp) / "complete-skill"
+            builder.build(installed)
+            self.assertIn("references/compatibility.md",
+                          (installed / "SKILL.md").read_text(encoding="utf-8"))
+            self.assertTrue((installed / "references/compatibility.md").is_file())
+            self.assertTrue((installed / "scripts/factoryweaver.py").is_file())
+
     def test_can_execute_in_foreign_project_root(self):
         with tempfile.TemporaryDirectory() as tmp:
             bundle = Path(tmp) / "other-project" / ".agents" / "skills" / "factoryweaver"
