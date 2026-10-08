@@ -101,13 +101,24 @@ def project(record):
     decisions = {d["id"]: d for d in record.get("decisions", [])}
     requirements_by_id = {r["id"]: r for r in record["requirements"]}
     cards_by_id = {c["stable_id"]: c for c in record["cards"]}
-    result = []
-    for req in record["requirements"]:
-        unresolved = [ref for ref in req.get("depends_on", []) if ref in decisions and not decisions[ref]["human_confirmed"]]
-        unpinned = [ref for ref in req["source_ids"] if next(s for s in record["sources"] if s["source_id"] == ref).get("integrity") != "PINNED_SHA256"]
-        prerequisites = [ref for ref in req.get("depends_on", [])
+    sources_by_id = {source["source_id"]: source for source in record["sources"]}
+    evaluated = {}
+
+    def evaluate(req_id):
+        # Verification already rejects cyclic requirement dependencies.
+        if req_id in evaluated:
+            return evaluated[req_id]
+        req = requirements_by_id[req_id]
+        dependencies = req.get("depends_on", [])
+        unresolved = [ref for ref in dependencies
+                      if ref in decisions and not decisions[ref]["human_confirmed"]]
+        unpinned = [ref for ref in req["source_ids"]
+                    if sources_by_id[ref].get("integrity") != "PINNED_SHA256"]
+        # Knowledge claims do not override missing prerequisites. Walk the
+        # actual dependency DAG, including decisions buried in another REQ.
+        prerequisites = [ref for ref in dependencies
                          if (ref in requirements_by_id and
-                             requirements_by_id[ref]["knowledge_status"] != "SPECIFIED") or
+                             evaluate(ref)[0] not in ("READY_FOR_OWNER_REVIEW", "SPECIFICATION_ONLY")) or
                             (ref in cards_by_id and
                              cards_by_id[ref]["series"] in ("K", "X") and
                              cards_by_id[ref]["status"] == "ACTIVE")]
@@ -125,8 +136,19 @@ def project(record):
             status, missing = "READY_FOR_OWNER_REVIEW", []
         else:
             status, missing = "SPECIFICATION_ONLY", []
-        result.append({"requirement": req["id"], "state": status, "missing": missing, "knowledge": req["knowledge_status"], "engineering": req["engineering_status"], "delivery": req["delivery_status"], "authorizes_effects": False})
-    return {"protocol": "factoryweaver/v1", "subject": record["subject"]["id"], "projection": result, "operation_scope": "READ_ONLY_NO_EXECUTION", "completion": "COMPILED_ONLY"}
+        evaluated[req_id] = (status, missing)
+        return evaluated[req_id]
+
+    result = []
+    for req in record["requirements"]:
+        status, missing = evaluate(req["id"])
+        result.append({"requirement": req["id"], "state": status, "missing": missing,
+                       "knowledge": req["knowledge_status"],
+                       "engineering": req["engineering_status"],
+                       "delivery": req["delivery_status"], "authorizes_effects": False})
+    return {"protocol": "factoryweaver/v1", "subject": record["subject"]["id"],
+            "projection": result, "operation_scope": "READ_ONLY_NO_EXECUTION",
+            "completion": "COMPILED_ONLY"}
 
 def route(record, registry=None):
     verify(record)
