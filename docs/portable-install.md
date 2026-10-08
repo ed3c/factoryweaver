@@ -11,6 +11,8 @@ python3 -m pip install 'jsonschema>=4.20,<5'
 python3 scripts/build_skill_bundle.py .dist/factoryweaver
 ```
 
+After generating the folder, run `python3 scripts/check_bundle.py .dist/factoryweaver` to verify every bundled file against its generated manifest. The result is **self-consistency only**; the manifest can be forged along with the files and does not authenticate the publishing host or Git commit.
+
 The output folder has `SKILL.md`, `references/compiler.md`, `references/verifier.md`, local Zettelkasten/compatibility documentation, `contracts/v1/`, `scripts/factoryweaver.py`, examples, `LICENSE` and a content-bound `bundle-manifest.json`. All generated files come from canonical source: no parallel manually maintained reference implementations.
 
 **Install** by copying the **whole generated `factoryweaver/` folder** into the Agent's supported Skill location, for example a repository's `.agents/skills/factoryweaver/` or another supported Skill directory. The host decides how to load Skills and whether to allow this code; formatting the bundle is not a runtime permission grant.
