@@ -51,6 +51,31 @@ class PublicContractTests(unittest.TestCase):
         self.assertEqual(target["missing"], ["REQ-upstream-unknown"])
         self.assertFalse(target["authorizes_effects"])
 
+    def test_transitive_unconfirmed_human_decision_blocks(self):
+        record = json.loads(EXAMPLE.read_text())
+        child = copy.deepcopy(record["requirements"][0])
+        child["id"] = "REQ-downstream"
+        child["depends_on"] = ["REQ-human-auth"]
+        record["requirements"].append(child)
+        result = fw.project(record)
+        rows = {r["requirement"]: r for r in result["projection"]}
+        self.assertEqual(rows["REQ-human-auth"]["state"], "WAIT_FOR_HUMAN")
+        self.assertEqual(rows["REQ-downstream"]["state"], "WAIT_FOR_PREREQUISITE")
+        self.assertEqual(rows["REQ-downstream"]["missing"], ["REQ-human-auth"])
+        self.assertFalse(rows["REQ-downstream"]["authorizes_effects"])
+
+    def test_transitive_unpinned_source_blocks_specified_dependency(self):
+        record = json.loads(SAMPLE.read_text())
+        record["requirements"][0]["knowledge_status"] = "SPECIFIED"
+        child = copy.deepcopy(record["requirements"][0])
+        child["id"] = "REQ-downstream"
+        child["depends_on"] = ["REQ-api-sdk"]
+        record["requirements"].append(child)
+        rows = {r["requirement"]: r for r in fw.project(record)["projection"]}
+        self.assertEqual(rows["REQ-api-sdk"]["state"], "WAIT_FOR_SOURCE_PIN")
+        self.assertEqual(rows["REQ-downstream"]["state"], "WAIT_FOR_PREREQUISITE")
+        self.assertEqual(rows["REQ-downstream"]["missing"], ["REQ-api-sdk"])
+
     def test_requirement_dependency_cycle_refuses(self):
         record = json.loads(SAMPLE.read_text())
         record["requirements"][0]["depends_on"] = ["REQ-api-sdk"]
