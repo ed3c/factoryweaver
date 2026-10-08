@@ -53,6 +53,13 @@ class PublicContractTests(unittest.TestCase):
         self.invalid(lambda x: x["requirements"][0].update(delivery_status="RELEASE_CONFIRMED"))
     def test_no_phantom_test(self):
         self.invalid(lambda x: x["requirements"][0].update(engineering_status="TESTED_SCOPED"))
+    def test_progress_does_not_self_certify_runtime_or_delivery(self):
+        self.invalid(lambda x: x["progress"]["engineering"].update(state="TESTED_SCOPED"))
+        self.invalid(lambda x: x["progress"]["engineering"].update(state="ACTIVATED"))
+        self.invalid(lambda x: x["progress"]["delivery"].update(state="RELEASE_CONFIRMED"))
+        self.invalid(lambda x: x["progress"]["delivery"].update(state="MERGED"))
+        self.invalid(lambda x: x["progress"]["knowledge"].update(state="INVENTED"))
+
     def test_no_fake_human_answer(self):
         self.invalid(lambda x: x["decisions"][0].update(decision="automatic"))
     def test_no_fake_human_confirmation(self):
