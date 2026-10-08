@@ -6,7 +6,7 @@ license: MIT
 # Zettelkasten Specification Compiler v7.2
 
 1. Read `../../references/zettelkasten-v7.2.md` for compiler invariants and human-readable card forms.
-2. Keep sources, provenance, evidence and decisions separate from the resulting cards.
+2. Keep sources, provenance, evidence and decisions separate from resulting cards. Before promoting a source anchor, request raw bytes and an original-owner manifest; use `python3 scripts/source_lock.py MANIFEST.json SOURCE.txt` only for **byte consistency**, not provenance authentication. See `../../docs/source-lock.md`. Without an independent retrieval Owner, keep source claims unverified.
 3. For each meaningful requirement map actor, capability, outcome, non-case, precondition, falsifier, owner, acceptance and source locator.
 4. Build typed REQ, SPEC, K, X, V cards when evidence permits. Never force every card family to appear.
 5. For unresolved human questions, keep `decision=null`, `human_confirmed=false`, and `WAIT_FOR_HUMAN`.
