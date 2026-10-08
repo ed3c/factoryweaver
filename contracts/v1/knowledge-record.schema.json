@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://example.org/factoryweaver/contracts/v1/knowledge-record.schema.json",
+  "$id": "urn:factoryweaver:contracts:v1:knowledge-record",
   "title": "FactoryWeaver Zettelkasten v7.2 Exchange Contract — preview, host neutral",
   "type": "object",
   "additionalProperties": false,
