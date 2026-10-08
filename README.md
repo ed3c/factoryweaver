@@ -28,6 +28,22 @@ python3 scripts/factoryweaver.py cards examples/openai-plugin-platform/project.j
 python3 -m unittest discover -s tests -v
 ```
 
+## Incremental knowledge card patches (Issue #4 candidate)
+
+```bash
+python3 scripts/card_delta.py examples/openai-plugin-platform/project.json examples/openai-plugin-platform/project.json
+```
+
+This read-only `NOOP` / revision / supersession / dependency-invalidation compiler consumes two source-scope-matching records.
+
+A matching [semantic-golden fixture](docs/semantic-golden.md) exercises curated Narrative / Concept / Practice sections and decision-relevant case partitioning. It is a structural golden check, not a semantic-quality judge; the public host must still obtain independent human review and actual execution evidence. It has a **12-card maximum lossless batch** with a content-bound cursor; see [the precise contract](docs/card-delta-contract.md). This reference feature does **not** claim source authenticity, independent owner verification, original Zettelkasten v7.1 semantic parity or product delivery. It is an unaccepted child PR candidate behind Bootstrap PR #3.
+
+### Source fidelity and blinded semantic review
+
+- [Source-lock CLI](docs/source-lock.md): supply exact GitHub source bytes and a host-frozen manifest to compare Git Blob SHA-1, SHA-256 and unique text anchors. This verifies **supplied byte consistency only**; it cannot authenticate the original retrieval Owner.
+- [Blind v7.1/v7.2 packet CLI](docs/blind-pairwise.md): prepare anonymized A/B outputs and a separately held version key for an **independent** reviewer. This does not generate scores, user decisions or a completed quality evaluation.
+- Both are optional read-only tools referenced by `factoryweaver-verify`. They do not grant Runtime / Noodle / Auto-PR effects, and do not change the v7.2 compiler's proof ceiling.
+
 ## Architecture
 
 ```text
