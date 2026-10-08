@@ -53,6 +53,36 @@ class RequirementCoverageTests(unittest.TestCase):
         self.assertFalse(result["semantic_mapping_verified"])
         self.assertFalse(result["source_exhaustiveness_proven"])
 
+    def test_six_clause_proposed_design_has_six_distinct_reqs_and_specs(self):
+        proposal = ROOT / "examples/openai-plugin-platform/proposed-six-requirements.json"
+        proposed_inventory = ROOT / "examples/openai-plugin-platform/proposed-six-clause-inventory.json"
+        record = json.loads(proposal.read_text())
+        inventory = json.loads(proposed_inventory.read_text())
+        result = coverage.trace(record, inventory)
+        self.assertEqual(result["inventory_clause_count"], 6)
+        self.assertEqual(result["declared_link_count"], 6)
+        self.assertEqual(result["unmapped_clause_ids"], [])
+        self.assertEqual(len({r["requirement_ids"][0] for r in result["rows"]}), 6)
+        self.assertTrue(all(len(r["spec_card_ids"]) == 1 for r in result["rows"]))
+        self.assertFalse(result["semantic_mapping_verified"])
+        self.assertFalse(result["source_origin_authenticated"])
+        self.assertFalse(result["engineering_verified"])
+        self.assertFalse(result["delivery_verified"])
+        self.assertFalse(result["effect_authority"])
+        self.assertEqual({r["engineering_status"] for r in record["requirements"]},
+                         {"UNASSESSED"})
+        self.assertEqual({r["delivery_status"] for r in record["requirements"]},
+                         {"NOT_STARTED"})
+
+    def test_unsupported_source_rename_in_proposal_refuses(self):
+        proposal = ROOT / "examples/openai-plugin-platform/proposed-six-requirements.json"
+        source = ROOT / "examples/openai-plugin-platform/proposed-six-clause-inventory.json"
+        record = json.loads(proposal.read_text())
+        inventory = json.loads(source.read_text())
+        record["requirements"][3]["source_ids"] = ["SRC-unknown"]
+        with self.assertRaises(ContractError):
+            coverage.trace(record, inventory)
+
     def test_unknown_requirement_refuses(self):
         record, inventory = inputs()
         inventory["clauses"][1]["requirement_ids"] = ["REQ-does-not-exist"]
