@@ -38,6 +38,25 @@ class PublicContractTests(unittest.TestCase):
         a, b = self.invoke("project", SAMPLE), self.invoke("project", SAMPLE)
         self.assertEqual(a.returncode, 0, a.stderr)
         self.assertEqual(a.stdout, b.stdout)
+    def test_unresolved_requirement_dependency_blocks_owner_review(self):
+        record = json.loads(SAMPLE.read_text())
+        parent = copy.deepcopy(record["requirements"][0])
+        parent["id"] = "REQ-upstream-unknown"
+        parent["knowledge_status"] = "UNKNOWN"
+        record["requirements"].append(parent)
+        record["requirements"][0]["depends_on"] = ["REQ-upstream-unknown"]
+        result = fw.project(record)
+        target = next(r for r in result["projection"] if r["requirement"] == "REQ-api-sdk")
+        self.assertEqual(target["state"], "WAIT_FOR_PREREQUISITE")
+        self.assertEqual(target["missing"], ["REQ-upstream-unknown"])
+        self.assertFalse(target["authorizes_effects"])
+
+    def test_requirement_dependency_cycle_refuses(self):
+        record = json.loads(SAMPLE.read_text())
+        record["requirements"][0]["depends_on"] = ["REQ-api-sdk"]
+        with self.assertRaisesRegex(fw.ContractError, "requirement_dependency_cycle"):
+            fw.verify(record)
+
     def test_registry_never_executes(self):
         registry = ROOT / "examples/host-registry.example.json"
         p = self.invoke("route", SAMPLE, ("--registry", str(registry)))
