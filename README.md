@@ -38,7 +38,7 @@ Build the complete **standalone** `factoryweaver/` Skill with:
 python3 scripts/build_skill_bundle.py .dist/factoryweaver
 ```
 
-Copy the generated folder into the target host's Skill directory. It contains all reference CLI scripts, JSON Schema contracts and local docs; the generated manifest records exact content hashes. See [Portable Install](docs/portable-install.md). The PR workflow uploads a generated `factoryweaver-portable-reference` artifact. This establishes standalone file/CLI shape only, not runtime Skill discovery or Auto-PR compatibility.
+Copy the generated folder into the target host's Skill directory. It contains all reference CLI scripts, JSON Schema contracts and local docs; the generated manifest records exact content hashes. See [Portable Install](docs/portable-install.md). The PR workflow uploads a generated `factoryweaver-portable-reference` artifact. A pinned Vercel Skills CLI installation test copies the generated Skill into an unrelated Codex-targeted project and invokes its installed reference CLI. This proves **installer and standalone CLI compatibility** for that specific version and CI environment, not real Codex Agent Skill invocation, Human Decision acceptance, Soodles execution, or Auto-PR interoperability.
 
 ## Architecture
 
