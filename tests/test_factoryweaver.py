@@ -91,6 +91,60 @@ class PublicContractTests(unittest.TestCase):
         output = json.loads(p.stdout)
         self.assertEqual(output["effects"], 0)
         self.assertFalse(any(x["can_execute"] for x in output["requests"]))
+    def test_spec_validation_route_cannot_skip_human_frontier(self):
+        record = json.loads(EXAMPLE.read_text())
+        request = {
+            "request_id": "AR-validation",
+            "operation_id": "schema.validate",
+            "target": {"kind": "requirement", "requirement_id": "REQ-human-auth"},
+            "intent": "validate_specification",
+            "mode": "READ_ONLY",
+            "registered": False,
+            "effect_authority": False,
+            "status": "PROPOSED",
+            "requires": [],
+            "expect": {"result": "schema"},
+            "observed": None,
+        }
+        record["action_requests"].append(request)
+        registry = {"protocol": "factoryweaver/registry-v1", "operations": [{
+            "operation_id": "schema.validate", "owner": "example-checker",
+            "allowed_modes": ["READ_ONLY"], "target_kinds": ["requirement"],
+            "enabled": True,
+        }]}
+        row = fw.route(record, registry)["requests"][0]
+        self.assertEqual((row["route"], row["requirement_state"]),
+                         ("REQUIREMENT_BLOCKED", "WAIT_FOR_HUMAN"))
+        self.assertFalse(row["can_execute"])
+        del request["target"]["requirement_id"]
+        self.assertEqual(fw.route(record, registry)["requests"][0]["route"],
+                         "REQUIREMENT_BINDING_REQUIRED")
+        request["target"]["requirement_id"] = "REQ-not-found"
+        self.assertEqual(fw.route(record, registry)["requests"][0]["route"],
+                         "UNKNOWN_REQUIREMENT")
+
+    def test_spec_validation_candidate_still_has_no_effect_authority(self):
+        record = json.loads(SAMPLE.read_text())
+        record["requirements"][0]["knowledge_status"] = "SPECIFIED"
+        record["requirements"][0]["depends_on"] = []
+        # Preview metadata, not an independent source-authenticity proof.
+        record["sources"][0]["integrity"] = "PINNED_SHA256"
+        record["sources"][0]["sha256"] = "a" * 64
+        record["action_requests"][0].update(
+            operation_id="schema.validate",
+            target={"kind": "requirement", "requirement_id": "REQ-api-sdk"},
+            intent="validate_specification")
+        registry = {"protocol": "factoryweaver/registry-v1", "operations": [{
+            "operation_id": "schema.validate", "owner": "example-checker",
+            "allowed_modes": ["READ_ONLY"], "target_kinds": ["requirement"],
+            "enabled": True,
+        }]}
+        projected = fw.project(record)["projection"][0]
+        routed = fw.route(record, registry)["requests"][0]
+        self.assertEqual(projected["state"], "READY_FOR_OWNER_REVIEW")
+        self.assertEqual(routed["route"], "REGISTERED_CANDIDATE_ONLY")
+        self.assertFalse(routed["can_execute"])
+
     def test_cards_human_readable(self):
         p = self.invoke("cards", SAMPLE)
         self.assertEqual(p.returncode, 0, p.stderr)
