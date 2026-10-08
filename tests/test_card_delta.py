@@ -152,6 +152,38 @@ class CardDeltaTests(unittest.TestCase):
         self.assertEqual(result["status"], "BLOCKED")
         self.assertIn("noncard_change_requires_reconciliation", result["remaining_work"])
 
+    def test_mixed_card_and_requirement_delta_is_not_false_done(self):
+        before, after = base_record(), base_record()
+        after["cards"][0]["payload"] += " Separate new rationale."
+        after["cards"][0]["revision"] += 1
+        after["requirements"][0]["statement"] += " Add a precise safety condition."
+        result = compile_delta(before, after)
+        self.assertEqual(len(result["patch"]), 1)
+        self.assertEqual(result["patch"][0]["operation"], "UPDATE")
+        self.assertIn("requirements", result["noncard_sections_changed"])
+        self.assertIn("noncard_change_requires_reconciliation", result["remaining_work"])
+        self.assertEqual(result["status"], "BLOCKED")
+
+    def test_noncard_action_delta_with_new_card_cannot_disappear(self):
+        before, after = base_record(), base_record()
+        after["cards"].append(new_card(210))
+        action = copy.deepcopy(after["action_requests"][0])
+        action["request_id"] = "AR-second-retrieval"
+        after["action_requests"].append(action)
+        result = compile_delta(before, after)
+        self.assertEqual(result["change_count"], 1)
+        self.assertIn("action_requests", result["unmapped_changes"])
+        self.assertEqual(result["status"], "BLOCKED")
+
+    def test_unreferenced_source_history_cannot_be_removed(self):
+        before, after = base_record(), base_record()
+        extra = copy.deepcopy(before["sources"][0])
+        extra["source_id"] = "SRC-retained-history"
+        extra["source_dependency_key"] = "separate-origin"
+        before["sources"].append(extra)
+        with self.assertRaisesRegex(ContractError, "source_history_removed"):
+            compile_delta(before, after)
+
     def test_batch_limit_or_forged_offset_refused(self):
         a, b = base_record(), base_record()
         b["cards"].extend(new_card(n) for n in range(13))
