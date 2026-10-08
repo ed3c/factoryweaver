@@ -65,7 +65,17 @@ def verify(record):
     for a in record["action_requests"]:
         if a["effect_authority"] or a["registered"] or a["status"] in ("READY", "RUNNING", "OBSERVED") or a.get("observed") is not None:
             raise ContractError("untrusted_action_claim:" + a["request_id"])
-    for axis in ("knowledge", "engineering", "delivery"):
+    # Progress is an untrusted author-supplied summary, not a host receipt.
+    # The public reference validator must not accept completion or invented
+    # states that it has no independently verified owner evidence for.
+    allowed_progress_states = {
+        "knowledge": {"UNKNOWN", "ANCHORED", "CONFLICTED", "SPECIFIED", "HUMAN_ANSWER_MISSING"},
+        "engineering": {"NOT_STARTED", "UNASSESSED", "CODE_OBSERVED", "CONTRACT_DEFINED"},
+        "delivery": {"NOT_STARTED", "BLOCKED", "OWNER_WAIT"},
+    }
+    for axis, allowed in allowed_progress_states.items():
+        if record["progress"][axis]["state"] not in allowed:
+            raise ContractError("unsupported_progress_state:" + axis)
         sources_exist(record["progress"][axis]["evidence_refs"], axis)
     return {"valid": True, "requirements": len(record["requirements"]), "cards": len(record["cards"]), "proof_ceiling": "SCHEMA_FIXTURE_ONLY", "effect_authority": False}
 
