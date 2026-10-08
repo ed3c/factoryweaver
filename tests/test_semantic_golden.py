@@ -1,6 +1,7 @@
 """Adversarial fixtures for the curated v7.1/v7.2 semantic contract boundary."""
 import copy
 import json
+import subprocess
 from pathlib import Path
 import sys
 import unittest
@@ -80,6 +81,24 @@ class SemanticGoldenTests(unittest.TestCase):
         data["cases"][1]["id"] = data["cases"][0]["id"]
         with self.assertRaisesRegex(ContractError, "duplicate_case_identity"):
             audit_fixture(data)
+
+    def test_skill_entries_reach_real_readonly_cli(self):
+        compile_skill = (ROOT / "skills/factoryweaver-compile/SKILL.md").read_text()
+        verify_skill = (ROOT / "skills/factoryweaver-verify/SKILL.md").read_text()
+        self.assertIn("scripts/card_delta.py BEFORE.json AFTER.json", compile_skill)
+        self.assertIn("scripts/card_delta.py BEFORE.json AFTER.json", verify_skill)
+        self.assertIn("scripts/semantic_golden.py tests/fixtures/semantic-golden.json",
+                      verify_skill)
+        for path in ("scripts/card_delta.py", "scripts/semantic_golden.py",
+                     "docs/card-delta-contract.md", "docs/semantic-golden.md"):
+            self.assertTrue((ROOT / path).is_file(), path)
+        example = ROOT / "examples/openai-plugin-platform/project.json"
+        out = subprocess.run(
+            [sys.executable, str(ROOT / "scripts/card_delta.py"),
+             str(example), str(example)], capture_output=True, text=True
+        )
+        self.assertEqual(out.returncode, 0, out.stderr)
+        self.assertEqual(json.loads(out.stdout)["status"], "NOOP")
 
     def test_card_without_case_never_counts_as_complete(self):
         data = load_fixture()
