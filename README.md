@@ -62,6 +62,7 @@ The public library does **not** call external skills, infer that they exist on a
 
 - **Skill autonomy preserved**: upstream `grilling` recommendations are not decisions until the human answers; pstack chooses its own playbook; design-audit skills retain their domain decisions.
 - **Unknown is schedulable**: unresolved fact becomes a Knowledge Gap and a proposed read or prototype; no invented commands.
+- **Dependency DAG**: unresolved requirement prerequisites and active K/X card dependencies project `WAIT_FOR_PREREQUISITE`, never `READY_FOR_OWNER_REVIEW`; cycles among requirement dependencies are refused.
 - **Source pins**: original URLs are `UNPINNED` until exact bytes are captured with SHA-256; an owner cannot receive a falsely source-pinned task.
 - **Human confirmation**: the reference CLI rejects every `human_confirmed: true` claim. Even a `human_decision` source with a well-formed SHA-256 is untrusted self-attestation unless an independent host validates the actual human input. Real Grilling confirmation requires a separately verified host adapter; this preview supports `WAIT_FOR_HUMAN` only.
 - **Three progress axes**: knowledge, engineering, and delivery are independent. Code existing is not verified behavior. Local fixtures are not released products.
