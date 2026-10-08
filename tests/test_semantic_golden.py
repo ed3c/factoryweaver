@@ -89,8 +89,12 @@ class SemanticGoldenTests(unittest.TestCase):
         self.assertIn("scripts/card_delta.py BEFORE.json AFTER.json", verify_skill)
         self.assertIn("scripts/semantic_golden.py tests/fixtures/semantic-golden.json",
                       verify_skill)
+        self.assertIn("scripts/source_lock.py MANIFEST.json SOURCE.txt", verify_skill)
+        self.assertIn("scripts/blind_review.py packet CASE.json", verify_skill)
         for path in ("scripts/card_delta.py", "scripts/semantic_golden.py",
-                     "docs/card-delta-contract.md", "docs/semantic-golden.md"):
+                     "scripts/source_lock.py", "scripts/blind_review.py",
+                     "docs/card-delta-contract.md", "docs/semantic-golden.md",
+                     "docs/source-lock.md", "docs/blind-pairwise.md"):
             self.assertTrue((ROOT / path).is_file(), path)
         example = ROOT / "examples/openai-plugin-platform/project.json"
         out = subprocess.run(
