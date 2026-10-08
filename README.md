@@ -34,7 +34,9 @@ python3 -m unittest discover -s tests -v
 python3 scripts/card_delta.py examples/openai-plugin-platform/project.json examples/openai-plugin-platform/project.json
 ```
 
-This read-only `NOOP` / revision / supersession / dependency-invalidation compiler consumes two source-scope-matching records. It has a **12-card maximum lossless batch** with a content-bound cursor; see [the precise contract](docs/card-delta-contract.md). This reference feature does **not** claim source authenticity, independent owner verification, original Zettelkasten v7.1 semantic parity or product delivery. It is an unaccepted child PR candidate behind Bootstrap PR #3.
+This read-only `NOOP` / revision / supersession / dependency-invalidation compiler consumes two source-scope-matching records.
+
+A matching [semantic-golden fixture](docs/semantic-golden.md) exercises curated Narrative / Concept / Practice sections and decision-relevant case partitioning. It is a structural golden check, not a semantic-quality judge; the public host must still obtain independent human review and actual execution evidence. It has a **12-card maximum lossless batch** with a content-bound cursor; see [the precise contract](docs/card-delta-contract.md). This reference feature does **not** claim source authenticity, independent owner verification, original Zettelkasten v7.1 semantic parity or product delivery. It is an unaccepted child PR candidate behind Bootstrap PR #3.
 
 ## Architecture
 
