@@ -110,6 +110,14 @@ def compile_delta(before, after, *, batch_size=12, cursor=None):
                 affected.add(card["stable_id"])
         changed = old_affected != affected
 
+    # Dependency-key grouping is structural, not proof that an arbitrary
+    # writer supplied truthful independent origins.
+    origin_groups = {}
+    for source in after["sources"]:
+        origin_groups.setdefault(source["source_dependency_key"], []).append(source["source_id"])
+    grouped_sources = [{"source_dependency_key": key, "source_ids": sorted(ids)}
+                       for key, ids in sorted(origin_groups.items())]
+
     stamp = fingerprint(before, after)
     offset = 0
     if cursor is not None:
@@ -142,6 +150,8 @@ def compile_delta(before, after, *, batch_size=12, cursor=None):
         "patch": selected,
         "next_cursor": next_cursor,
         "source_metadata_changed": changed_sources,
+        "origin_groups": grouped_sources,
+        "source_independence_proven": False,
         "affected_nodes": sorted(affected),
         "change_count": len(changes),
         "unmapped_changes": [] if noop or changes or affected else ["noncard_record_change"],
