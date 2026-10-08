@@ -17,7 +17,7 @@ This fixture uses **synthetic normative scenarios**, not verified claims about e
 
 ```bash
 python3 scripts/semantic_golden.py tests/fixtures/semantic-golden.json
-python3 -m unittest tests.test_semantic_golden -v
+python3 -m unittest discover -s tests -p 'test_semantic_golden.py' -v
 ```
 
 The fixture has four observations mapping to three decision-relevant cases and three cards. Two observations of the same interview episode belong to one N card; Source Drift and Delivery Readback have different falsifiers and therefore map to distinct C/P cards.
