@@ -73,6 +73,36 @@ class PortableBundleTests(unittest.TestCase):
             with self.assertRaisesRegex(builder.BundleError, "existing_bundle_file_set_changed"):
                 builder.build(bundle)
 
+    def test_generated_bundle_checks_itself_without_source_checkout(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            bundle = Path(tmp) / "foreign" / "factoryweaver"
+            builder.build(bundle)
+            checker = str(bundle / "scripts/check_bundle.py")
+            def run():
+                return subprocess.run([sys.executable, checker, str(bundle)],
+                                      cwd=Path(tmp), text=True, capture_output=True)
+            result = run()
+            self.assertEqual(result.returncode, 0, result.stderr)
+            status = json.loads(result.stdout)
+            self.assertEqual(status["status"], "SELF_CONSISTENT")
+            self.assertFalse(status["external_publisher_authenticated"])
+            self.assertFalse(status["effect_authority"])
+            (bundle / "SKILL.md").write_text("tampered entry", encoding="utf-8")
+            result = run()
+            self.assertEqual(result.returncode, 2)
+            self.assertIn("content_digest_mismatch", result.stderr)
+
+    def test_extra_bundle_file_and_symlink_rejected(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            folder = Path(tmp) / "factoryweaver"
+            builder.build(folder)
+            checker = folder / "scripts/check_bundle.py"
+            subprocess_args = [sys.executable, str(checker), str(folder)]
+            (folder / "unregistered.sh").write_text("echo unauthorized")
+            p = subprocess.run(subprocess_args, capture_output=True, text=True)
+            self.assertEqual(p.returncode, 2)
+            self.assertIn("untracked_or_missing_bundle_file", p.stderr)
+
     def test_missing_canonical_source_is_a_hard_refusal(self):
         old = builder.FILES["references/compatibility.md"]
         try:
