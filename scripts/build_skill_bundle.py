@@ -11,6 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 FILES = {
     "LICENSE": "LICENSE",
     "scripts/factoryweaver.py": "scripts/factoryweaver.py",
+    "scripts/check_bundle.py": "scripts/check_bundle.py",
     "contracts/v1/knowledge-record.schema.json": "contracts/v1/knowledge-record.schema.json",
     "contracts/v1/adapter-registry.schema.json": "contracts/v1/adapter-registry.schema.json",
     "references/zettelkasten-v7.2.md": "references/zettelkasten-v7.2.md",
