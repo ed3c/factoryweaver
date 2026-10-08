@@ -6,7 +6,7 @@ license: MIT
 # FactoryWeaver verification
 
 1. Load `../../contracts/v1/knowledge-record.schema.json` and run the read-only CLI `validate`.
-2. Check Source ID uniqueness, dependency and typed link reachability, and stable card IDs.
+2. Check Source ID uniqueness, dependency and typed link reachability, and stable card IDs. If raw source bytes plus an independently supplied pinned manifest exist, run `python3 scripts/source_lock.py MANIFEST.json SOURCE.txt`; it checks Git blob/SHA-256/text anchors but does **not** authenticate original retrieval or provider authority. See `../../docs/source-lock.md`.
 3. Require provenance before SUPPORTED, raw test evidence before TESTED, and named original owner readback before RELEASE_CONFIRMED.
 4. `READY` is only a proposal. Never launch an adapter from this skill; host must check registry, identity, permission, source pins and effect boundaries.
 5. Negative cases: hallucinated operation, unconfirmed human answer, invalid link, duplicate key, empty delivery receipt, unknown effect and source drift.
