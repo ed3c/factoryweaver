@@ -18,7 +18,7 @@ The calling owner supplies two JSON records under `contracts/v1/knowledge-record
 - New cards begin at revision 1; a reused stable ID is rejected.
 - Source metadata changes yield `source_metadata_changed` and **advisory** `affected_nodes` via the exact `source_ids/evidence_ids/depends_on/typed_links` graph. This does **not** invalidate original owner receipts or authenticate source bytes.
 - Output patches use deterministic after-record order. At most 12 card changes per batch. `next_cursor` binds **both record contents** with SHA-256 plus an offset. Never treat a cursor as authorization or independent source integrity.
-- Identical records return `NOOP`. `DONE` means the current bounded **patch compilation** is complete. It does not mean software, tests, product delivery, or original v7.1 semantic parity are complete.
+- Identical records return `NOOP`. `DONE` means the current bounded **patch compilation** is complete. `BLOCKED` with `original_source_owner_readback_required` means input Source metadata changed but no trusted producer validated the new bytes; `BLOCKED` with `noncard_change_requires_reconciliation` prevents silently treating changed project-only fields as verified card output. Neither status means software, tests, product delivery, or original v7.1 semantic parity are complete.
 - This module implements **only** stable revision, supersession, dependency metadata and lossless batching. It does not implement semantic contradiction resolution, time-anchor fidelity, anti-fragmentation judging, narrative-richness judging, full I-01–I-16 / QG-01–QG-34 or actual original source retrieval. These stay open in Issue #4.
 
 ## Verification
