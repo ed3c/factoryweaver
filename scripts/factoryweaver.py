@@ -48,6 +48,23 @@ def verify(record):
             raise ContractError("untrusted_test_claim:" + r["id"])
         if r["delivery_status"] == "RELEASE_CONFIRMED":
             raise ContractError("untrusted_delivery_claim:" + r["id"])
+    # A typed dependency graph may be consulted by other hosts. Refuse
+    # cyclic requirement prerequisites instead of projecting an apparent READY.
+    requirements_by_id = {r["id"]: r for r in record["requirements"]}
+    visiting, visited = set(), set()
+    def visit_requirement(key):
+        if key in visiting:
+            raise ContractError("requirement_dependency_cycle:" + key)
+        if key in visited:
+            return
+        visiting.add(key)
+        for dep in requirements_by_id[key].get("depends_on", []):
+            if dep in requirements_by_id:
+                visit_requirement(dep)
+        visiting.remove(key)
+        visited.add(key)
+    for key in requirements_by_id:
+        visit_requirement(key)
     for c in record["cards"]:
         sources_exist(c["evidence_ids"], c["stable_id"])
         if any(edge["target"] not in targets for edge in c["typed_links"]):
@@ -82,12 +99,22 @@ def verify(record):
 def project(record):
     verify(record)
     decisions = {d["id"]: d for d in record.get("decisions", [])}
+    requirements_by_id = {r["id"]: r for r in record["requirements"]}
+    cards_by_id = {c["stable_id"]: c for c in record["cards"]}
     result = []
     for req in record["requirements"]:
         unresolved = [ref for ref in req.get("depends_on", []) if ref in decisions and not decisions[ref]["human_confirmed"]]
         unpinned = [ref for ref in req["source_ids"] if next(s for s in record["sources"] if s["source_id"] == ref).get("integrity") != "PINNED_SHA256"]
+        prerequisites = [ref for ref in req.get("depends_on", [])
+                         if (ref in requirements_by_id and
+                             requirements_by_id[ref]["knowledge_status"] != "SPECIFIED") or
+                            (ref in cards_by_id and
+                             cards_by_id[ref]["series"] in ("K", "X") and
+                             cards_by_id[ref]["status"] == "ACTIVE")]
         if unresolved:
             status, missing = "WAIT_FOR_HUMAN", unresolved
+        elif prerequisites:
+            status, missing = "WAIT_FOR_PREREQUISITE", prerequisites
         elif req["knowledge_status"] == "CONFLICTED":
             status, missing = "CONTESTED", []
         elif req["knowledge_status"] == "UNKNOWN":
