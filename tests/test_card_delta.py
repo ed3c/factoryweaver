@@ -127,6 +127,8 @@ class CardDeltaTests(unittest.TestCase):
         self.assertIn(a["cards"][0]["stable_id"], outcome["affected_nodes"])
         self.assertNotIn("C-fixture-50", outcome["affected_nodes"])
         self.assertFalse(outcome["source_integrity_proven"])
+        self.assertEqual(outcome["status"], "BLOCKED")
+        self.assertIn("original_source_owner_readback_required", outcome["remaining_work"])
 
     def test_same_source_two_attributions_are_not_corroboration(self):
         a, b = base_record(), base_record()
@@ -136,6 +138,14 @@ class CardDeltaTests(unittest.TestCase):
         result = compile_delta(a, b)
         self.assertFalse(result["source_integrity_proven"])
         self.assertEqual(result["patch"], [])
+
+    def test_noncard_record_change_never_false_done(self):
+        a, b = base_record(), base_record()
+        b["progress"]["knowledge"]["state"] = "SPECIFIED"
+        result = compile_delta(a, b)
+        self.assertEqual(result["patch"], [])
+        self.assertEqual(result["status"], "BLOCKED")
+        self.assertIn("noncard_change_requires_reconciliation", result["remaining_work"])
 
     def test_batch_limit_or_forged_offset_refused(self):
         a, b = base_record(), base_record()
