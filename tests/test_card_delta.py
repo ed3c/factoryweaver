@@ -130,14 +130,19 @@ class CardDeltaTests(unittest.TestCase):
         self.assertEqual(outcome["status"], "BLOCKED")
         self.assertIn("original_source_owner_readback_required", outcome["remaining_work"])
 
-    def test_same_source_two_attributions_are_not_corroboration(self):
-        a, b = base_record(), base_record()
-        b["sources"][0]["source_dependency_key"] = a["sources"][0]["source_dependency_key"]
-        # Reference compiler reports metadata only; it cannot promote
-        # quotations from one independent origin into corroboration.
-        result = compile_delta(a, b)
-        self.assertFalse(result["source_integrity_proven"])
-        self.assertEqual(result["patch"], [])
+    def test_two_attributions_from_one_origin_are_one_group(self):
+        before, after = base_record(), base_record()
+        duplicate = copy.deepcopy(after["sources"][0])
+        duplicate["source_id"] = "SRC-SECOND-ATTRIBUTION"
+        duplicate["locator"] = "A different paragraph from the same article"
+        after["sources"].append(duplicate)
+        result = compile_delta(before, after)
+        self.assertEqual(len(result["origin_groups"]), 1)
+        self.assertEqual(result["origin_groups"][0]["source_ids"],
+                         ["SRC-OPENAI-JD", "SRC-SECOND-ATTRIBUTION"])
+        self.assertFalse(result["source_independence_proven"])
+        self.assertEqual(result["status"], "BLOCKED")
+        self.assertIn("original_source_owner_readback_required", result["remaining_work"])
 
     def test_noncard_record_change_never_false_done(self):
         a, b = base_record(), base_record()
