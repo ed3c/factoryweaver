@@ -28,6 +28,14 @@ python3 scripts/factoryweaver.py cards examples/openai-plugin-platform/project.j
 python3 -m unittest discover -s tests -v
 ```
 
+## Incremental knowledge card patches (Issue #4 candidate)
+
+```bash
+python3 scripts/card_delta.py examples/openai-plugin-platform/project.json examples/openai-plugin-platform/project.json
+```
+
+This read-only `NOOP` / revision / supersession / dependency-invalidation compiler consumes two source-scope-matching records. It has a **12-card maximum lossless batch** with a content-bound cursor; see [the precise contract](docs/card-delta-contract.md). This reference feature does **not** claim source authenticity, independent owner verification, original Zettelkasten v7.1 semantic parity or product delivery. It is an unaccepted child PR candidate behind Bootstrap PR #3.
+
 ## Architecture
 
 ```text
