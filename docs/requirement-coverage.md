@@ -24,6 +24,20 @@ python3 scripts/requirement_coverage.py \
 
 Expected structural result: `inventory_clause_count=6`, `declared_link_count=1`, and five `unmapped_clause_ids`. Existing first clause has one declared REQ and linked SPEC card.
 
+## Proposed target: six distinct REQ/SPEC links (NOT VERIFIED)
+
+A second fixture models **how the same six JD groups might be represented as portfolio engineering proposals**, with six separate REQ and six SPEC cards:
+
+```bash
+python3 scripts/requirement_coverage.py \
+  examples/openai-plugin-platform/proposed-six-requirements.json \
+  examples/openai-plugin-platform/proposed-six-clause-inventory.json
+```
+
+Expected *declared trace* count is six of six, with no omitted inventory clauses. These are **proposed normative FactoryWeaver design decisions**, not claims that the official JD prescribes FactoryWeaver architecture. Their `knowledge_status=ANCHORED`, `engineering_status=UNASSESSED`, and `delivery_status=NOT_STARTED` intentionally prevent inflated completeness.
+
+The baseline (1/6) is preserved as a separate fixture. The proposed 6/6 inventory can still be wrong or incomplete; it has no original-source authentication, no independently checked semantic mapping, and no verified hosted Software Factory behavior. Do not treat this second fixture as completion of Issue #1, #5 or Soodles #300.
+
 ## Fail-closed criteria
 
 - Clause inventory subject must match the knowledge-record subject exactly.
