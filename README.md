@@ -28,6 +28,18 @@ python3 scripts/factoryweaver.py cards examples/openai-plugin-platform/project.j
 python3 -m unittest discover -s tests -v
 ```
 
+## Standalone Skill distribution (experimental)
+
+The source-layout `skills/factoryweaver/SKILL.md` references canonical repository-level resources. It is **not** portable by itself if an installer copies only that one directory.
+
+Build the complete **standalone** `factoryweaver/` Skill with:
+
+```bash
+python3 scripts/build_skill_bundle.py .dist/factoryweaver
+```
+
+Copy the generated folder into the target host's Skill directory. It contains all reference CLI scripts, JSON Schema contracts and local docs; the generated manifest records exact content hashes. See [Portable Install](docs/portable-install.md). The PR workflow uploads a generated `factoryweaver-portable-reference` artifact. A pinned Vercel Skills CLI installation test copies the generated Skill into an unrelated Codex-targeted project and invokes its installed reference CLI. This proves **installer and standalone CLI compatibility** for that specific version and CI environment, not real Codex Agent Skill invocation, Human Decision acceptance, Soodles execution, or Auto-PR interoperability.
+
 ## Architecture
 
 ```text

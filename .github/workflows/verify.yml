@@ -15,5 +15,22 @@ jobs:
           python-version: '3.12'
       - run: python -m pip install 'jsonschema>=4.20,<5'
       - run: python -m unittest discover -s tests -v
+      - run: python scripts/build_skill_bundle.py .dist/factoryweaver
+      - run: python scripts/check_bundle.py .dist/factoryweaver
+      - name: Install with skills CLI in isolated consumer
+        env:
+          DISABLE_TELEMETRY: "1"
+        run: |
+          mkdir -p .dist/foreign-consumer
+          (
+            cd .dist/foreign-consumer
+            npx --yes skills@1.7.1 add ../factoryweaver --skill factoryweaver -a codex -y --copy
+          )
+          python scripts/verify_installed_skill.py .dist/foreign-consumer
+      - uses: actions/upload-artifact@v4
+        with:
+          name: factoryweaver-portable-reference
+          path: .dist/factoryweaver/
+          retention-days: 7
       - run: python scripts/factoryweaver.py validate examples/matt-grilling/project.json
       - run: python scripts/factoryweaver.py project examples/openai-plugin-platform/project.json
