@@ -1,0 +1,37 @@
+{
+  "protocol": "factoryweaver/factory-binding-v1",
+  "profile_sha256": "d248e86896b2a7cb1eef15212eac40fa8086d5cdff6b9718291917f80488002e",
+  "work_order": {
+    "id": "synthetic/example#1",
+    "repository": "synthetic/example",
+    "base_sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+  },
+  "carrier": {
+    "id": "noodle-fixture-not-launched",
+    "capabilities": [
+      "isolated_git_worktree",
+      "skill_discovery",
+      "session_readback",
+      "source_pinning"
+    ]
+  },
+  "session": {
+    "id": "synthetic-session",
+    "worktree_id": "synthetic-worktree",
+    "worktree_path": "/disposable/not-a-real-worker",
+    "repository": "synthetic/example",
+    "entry_skill": "poteto-mode",
+    "profile_sha256": "d248e86896b2a7cb1eef15212eac40fa8086d5cdff6b9718291917f80488002e",
+    "skill_view": [
+      {
+        "name": "poteto-mode",
+        "tree_sha256": "1111111111111111111111111111111111111111111111111111111111111111"
+      },
+      {
+        "name": "factoryweaver",
+        "tree_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+      }
+    ]
+  },
+  "effect_authority": false
+}
