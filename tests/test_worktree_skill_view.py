@@ -131,11 +131,10 @@ class LocalSkillViewTests(unittest.TestCase):
         with self.assertRaisesRegex(ProfileError, "worktree_origin_changed"):
             observe_local_skill_view(self.p[0], self.bindings[0])
 
-    def test_unbound_origin_is_not_reported_as_authenticated(self):
+    def test_unbound_origin_refuses_physical_checkout_claim(self):
         self.bindings[0]["work_order"].pop("origin_url")
-        result = observe_local_skill_view(self.p[0], self.bindings[0])
-        self.assertFalse(result["selected_origin_config_matched"])
-        self.assertFalse(result["original_owner_readback_verified"])
+        with self.assertRaisesRegex(ProfileError, "worktree_origin_pin_required"):
+            observe_local_skill_view(self.p[0], self.bindings[0])
 
     def test_owner_selected_origin_for_different_repository_is_refused(self):
         self.bindings[0]["work_order"]["origin_url"] = (
