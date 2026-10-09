@@ -106,6 +106,31 @@ class LocalSkillViewTests(unittest.TestCase):
             with self.assertRaisesRegex(ProfileError, "worktree_not_registered"):
                 observe_local_skill_view(self.p[0], self.bindings[0])
 
+    def test_registered_worktree_with_trailing_whitespace_is_observed(self):
+        for name in ("trailing-space ", "trailing-tab\t", "trailing-newline\n"):
+            with self.subTest(name=name):
+                moved = Path(self.tmp.name) / name
+                git("-C", str(self.root), "worktree", "move", str(self.a), str(moved))
+                self.a = moved
+                self.bindings[0]["session"]["worktree_path"] = str(moved)
+                result = observe_local_skill_view(self.p[0], self.bindings[0])
+                self.assertEqual(result["status"], "LOCAL_WORKTREE_SKILL_FILES_MATCH")
+                self.assertEqual(result["observed_worktree_head_sha"],
+                                 self.bindings[0]["session"]["head_sha"])
+                self.assertFalse(result["worker_session_observed"])
+                self.assertFalse(result["effect_authority"])
+
+    def test_wrong_head_on_trailing_whitespace_worktree_is_refused(self):
+        for name in ("trailing-space ", "trailing-tab\t", "trailing-newline\n"):
+            with self.subTest(name=name):
+                moved = Path(self.tmp.name) / name
+                git("-C", str(self.root), "worktree", "move", str(self.a), str(moved))
+                self.a = moved
+                self.bindings[0]["session"]["worktree_path"] = str(moved)
+                self.bindings[0]["session"]["head_sha"] = "e" * 40
+                with self.assertRaisesRegex(ProfileError, "worktree_head_changed"):
+                    observe_local_skill_view(self.p[0], self.bindings[0])
+
     def test_inject_foreign_factory_skill_fails_closed(self):
         path = self.a / ".agents" / "skills" / "builder-bug-factory"
         path.mkdir()
@@ -152,6 +177,16 @@ class LocalSkillViewTests(unittest.TestCase):
     def test_changed_origin_before_worktree_readback_is_refused(self):
         git("-C", str(self.root), "remote", "set-url", "origin",
             "https://github.com/attacker/wrong-target.git")
+        with self.assertRaisesRegex(ProfileError, "worktree_origin_changed"):
+            observe_local_skill_view(self.p[0], self.bindings[0])
+
+    def test_origin_with_added_trailing_space_is_refused(self):
+        changed_origin = self.origin_url + " "
+        git("-C", str(self.root), "remote", "set-url", "origin", changed_origin)
+        readback = subprocess.run(
+            ["git", "-C", str(self.a), "remote", "get-url", "origin"],
+            text=True, capture_output=True, check=True)
+        self.assertEqual(readback.stdout, changed_origin + "\n")
         with self.assertRaisesRegex(ProfileError, "worktree_origin_changed"):
             observe_local_skill_view(self.p[0], self.bindings[0])
 
