@@ -317,12 +317,39 @@ def compare(profile_a, binding_a, profile_b, binding_b):
             "original_owner_readback_verified": False,
             "effect_authority": False}
 
+def compare_carriers(profile, baseline, alternative):
+    """Preflight two *claimed* carrier bindings for the exact same Work Order."""
+    one = validate_binding(profile, baseline)
+    two = validate_binding(profile, alternative)
+    if baseline["work_order"] != alternative["work_order"]:
+        raise ProfileError("carrier_work_order_mismatch")
+    if baseline["carrier"]["id"] == alternative["carrier"]["id"]:
+        raise ProfileError("alternative_carrier_identity_required")
+    a, b = baseline["session"], alternative["session"]
+    if a["id"] == b["id"] or a["worktree_id"] == b["worktree_id"]:
+        raise ProfileError("carrier_session_or_worktree_reused")
+    left, right = checked_path(a["worktree_path"]), checked_path(b["worktree_path"])
+    if left == right or posixpath.commonpath((left, right)) in (left, right):
+        raise ProfileError("carrier_worktree_paths_overlap")
+    return {
+        "status": "DECLARED_CARRIER_INPUTS_COMPARABLE",
+        "work_order": baseline["work_order"]["id"],
+        "profile_sha256": one["profile_sha256"],
+        "baseline_carrier": one["carrier_id"],
+        "alternative_carrier": two["carrier_id"],
+        "observed_worker_runs": 0,
+        "runtime_interoperability_verified": False,
+        "original_owner_readback_verified": False,
+        "effect_authority": False,
+    }
+
+
 def main(argv=None):
     parser = argparse.ArgumentParser()
-    parser.add_argument("command", choices=("validate", "bind-check", "compare", "observe-worktree", "observe-local-skills", "audit-catalog"))
+    parser.add_argument("command", choices=("validate", "bind-check", "compare", "observe-worktree", "observe-local-skills", "audit-catalog", "compare-carriers"))
     parser.add_argument("files", nargs="+")
     args = parser.parse_args(argv)
-    expected = {"validate": 1, "bind-check": 2, "compare": 4, "observe-worktree": 2, "observe-local-skills": 2, "audit-catalog": 3}[args.command]
+    expected = {"validate": 1, "bind-check": 2, "compare": 4, "observe-worktree": 2, "observe-local-skills": 2, "audit-catalog": 3, "compare-carriers": 3}[args.command]
     if len(args.files) != expected:
         parser.error(args.command + " requires " + str(expected) + " file(s)")
     try:
@@ -332,7 +359,8 @@ def main(argv=None):
                   "compare": lambda: compare(*records),
                   "observe-worktree": lambda: observe_git_worktree(*records),
                   "observe-local-skills": lambda: observe_local_skill_view(*records),
-                  "audit-catalog": lambda: audit_effective_catalog(*records)}[args.command]()
+                  "audit-catalog": lambda: audit_effective_catalog(*records),
+                  "compare-carriers": lambda: compare_carriers(*records)}[args.command]()
         print(json.dumps(output, ensure_ascii=False, sort_keys=True))
         return 0
     except (OSError, ValueError, ValidationError) as exc:
