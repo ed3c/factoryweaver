@@ -60,7 +60,7 @@ A declared Profile/Binding does not prove a real checkout. If the original Host 
 python3 scripts/factory_profile.py observe-worktree PROFILE.json BINDING.json
 ```
 
-This read-only probe requires a real linked Git Worktree (`.git` file), checks `git rev-parse HEAD` matches the pinned `session.head_sha`, verifies exact toplevel and `git worktree list --porcelain`, and distinguishes the linked Git directory from the shared common Git directory. A wrong head, main checkout or missing Worktree fails closed.
+This read-only probe requires a real linked Git Worktree (`.git` file), checks `git rev-parse HEAD` matches the pinned `session.head_sha`, verifies the selected `work_order.base_sha` is an ancestor of the observed HEAD (allowing actual descendant candidate commits), verifies exact toplevel and `git worktree list --porcelain`, and distinguishes the linked Git directory from the shared common Git directory. A wrong head, main checkout or missing Worktree fails closed.
 
 The outcome is strictly `LOCAL_GIT_WORKTREE_OBSERVED`. It proves **local Git checkout identity at the time of the probe**, not Noodle Worker Session provenance, Skill Discovery reality, OS/process isolation, cross-profile global Skill isolation, permission scope or Owner-delivery readback. Those are original Soodles/Noodle or selected Carrier responsibilities. This CLI does not create worktrees, launch agents, mutate Git or grant authority.
 
