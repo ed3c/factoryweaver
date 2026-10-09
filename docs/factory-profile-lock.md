@@ -66,7 +66,7 @@ The outcome is strictly `LOCAL_GIT_WORKTREE_OBSERVED`. It proves **local Git che
 
 ## Noodle integration and replaceability
 
-The existing `ed3c/noodles` control extension already pins Noodle Runtime in `policy/runtime.lock.json` and Skills in `policy/providers.lock.json`, and has a fixed `.noodle.toml [skills].paths` list. The current default Engineering Entry in Soodles `execute/SKILL.md` is `poteto-mode`; these facts do **not** mean Soodles accepts arbitrary Builder/HumanLayer whole-Issue Workflows today.
+The former auxiliary Noodle control repository has been deleted and is **not** a valid source for current runtime, provider locks, worker Skill paths, permissions or carrier readiness. For active behavior, read the selected Noodle carrier and its actual launch/Skill discovery through the authorized Soodles original Owner. Current Soodles `execute/SKILL.md` still uses `poteto-mode` as the default Whole-Issue Engineering Entry; this does **not** prove that Builder, HumanLayer or other Factory roots are currently admissible. The selected Carrier may be replaceable only after a real independently admitted alternative meets the same source, session, Worktree and owner-readback controls.
 
 Before a native admission, Soodles must independently select and pin the Factory Profile and actual Worker Carrier, then verify the exact installed Skill set is discoverable in the worker itself. Only the host may produce immutable authorization and exact continuation (`next.argv`, `next.environment`); never let a Factory Profile, candidate Writer or Skills Installer grant these.
 
