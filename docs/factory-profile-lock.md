@@ -68,7 +68,7 @@ The outcome is strictly `LOCAL_GIT_WORKTREE_OBSERVED`. It proves **local Git che
 
 If the authorized worker owner has a catalog capture, `factory_profile.py audit-catalog PROFILE.json BINDING.json CATALOG.json` checks the declared profile digest, work order, carrier, session and worktree IDs against that catalog. It also rejects undeclared Skills, wrong digests and global/user/system scope claims. A synthetic example is in `examples/factory-profiles/pstack-catalog-synthetic.json`.
 
-This is **input consistency**, not verification that an actual Agent loaded only those Skills. Original Soodles owner must independently capture the real worker's effective catalog and retain exact raw provenance; public CLI reports `actual_worker_skill_discovery_verified=false` and `original_owner_capture_verified=false`.
+This is **input consistency**, not verification that an actual Agent loaded only those Skills. For a source-stable handoff, the original Soodles Owner may independently pin the **raw catalog bytes** before passing them to `factory_profile.py audit-catalog-pinned PROFILE.json BINDING.json CATALOG.json --catalog-sha256 SHA256`. Missing, invalid or changed raw hashes refuse before parsing the claimed catalog. This proves equality to the **supplied pin**, not who produced the pin. Original Soodles owner must separately capture the real worker's effective catalog and retain exact raw provenance; both `audit-catalog` and the pinned variant report `actual_worker_skill_discovery_verified=false` and `original_owner_capture_verified=false`.
 
 ## Noodle integration and replaceability
 
