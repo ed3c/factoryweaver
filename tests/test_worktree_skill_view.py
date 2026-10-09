@@ -115,6 +115,24 @@ class LocalSkillViewTests(unittest.TestCase):
         with self.assertRaisesRegex(ProfileError, "worktree_skill_parent_symlink"):
             observe_local_skill_view(self.p[0], self.bindings[0])
 
+    def test_wrong_admission_base_does_not_get_git_identity_pass(self):
+        self.bindings[0]["work_order"]["base_sha"] = "e" * 40
+        with self.assertRaisesRegex(ProfileError, "work_order_base_not_ancestor"):
+            observe_local_skill_view(self.p[0], self.bindings[0])
+
+    def test_candidate_commit_descended_from_base_remains_valid(self):
+        folder = self.a
+        (folder / "candidate.txt").write_text("one bounded candidate change\n")
+        git("-C", str(folder), "add", "candidate.txt")
+        git("-C", str(folder), "commit", "-qm", "candidate")
+        newer_head = git("-C", str(folder), "rev-parse", "HEAD")
+        self.assertNotEqual(newer_head, self.bindings[0]["work_order"]["base_sha"])
+        self.bindings[0]["session"]["head_sha"] = newer_head
+        result = observe_local_skill_view(self.p[0], self.bindings[0])
+        self.assertEqual(result["observed_worktree_head_sha"], newer_head)
+        self.assertTrue(result["local_skill_files_verified"])
+        self.assertFalse(result["worker_session_observed"])
+
     def test_wrong_linked_git_head_fails_before_skill_check(self):
         self.bindings[0]["session"]["head_sha"] = "e" * 40
         with self.assertRaisesRegex(ProfileError, "worktree_head_changed"):
