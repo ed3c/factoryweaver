@@ -105,6 +105,16 @@ class LocalSkillViewTests(unittest.TestCase):
         with self.assertRaisesRegex(ProfileError, "unexpected_worktree_skill_surface"):
             observe_local_skill_view(self.p[0], self.bindings[0])
 
+    def test_symlinked_agents_parent_is_refused(self):
+        # Replacing .agents by a link must not let a worker inspect outside the
+        # selected worktree even if the ultimate skills/ subtree exists.
+        agents = self.a / ".agents"
+        outside = Path(self.tmp.name) / "outside-agents"
+        agents.rename(outside)
+        agents.symlink_to(outside, target_is_directory=True)
+        with self.assertRaisesRegex(ProfileError, "worktree_skill_parent_symlink"):
+            observe_local_skill_view(self.p[0], self.bindings[0])
+
     def test_wrong_linked_git_head_fails_before_skill_check(self):
         self.bindings[0]["session"]["head_sha"] = "e" * 40
         with self.assertRaisesRegex(ProfileError, "worktree_head_changed"):
