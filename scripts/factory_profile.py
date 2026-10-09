@@ -234,6 +234,71 @@ def observe_local_skill_view(profile, binding):
             "effect_authority": False}
 
 
+def audit_effective_catalog(profile, binding, catalog):
+    """Compare a carrier-supplied catalog claim, never trust its source."""
+    validate_binding(profile, binding)
+    required = {
+        "protocol", "producer_claim", "profile_sha256", "work_order_id",
+        "carrier_id", "session_id", "worktree_id", "entry_skill", "skills"
+    }
+    if not isinstance(catalog, dict) or set(catalog) != required:
+        raise ProfileError("catalog_shape")
+    if (catalog["protocol"] != "factoryweaver/effective-skill-catalog-v1" or
+        catalog["producer_claim"] != "UNVERIFIED_CARRIER_OUTPUT"):
+        raise ProfileError("catalog_producer_claim_invalid")
+    session = binding["session"]
+    matches = {
+        "profile_sha256": profile_digest(profile),
+        "work_order_id": binding["work_order"]["id"],
+        "carrier_id": binding["carrier"]["id"],
+        "session_id": session["id"],
+        "worktree_id": session["worktree_id"],
+        "entry_skill": profile["workflow_entry"],
+    }
+    for field, expected in matches.items():
+        if catalog[field] != expected:
+            raise ProfileError("catalog_identity_mismatch:" + field)
+    skills = catalog["skills"]
+    if not isinstance(skills, list) or not skills:
+        raise ProfileError("catalog_skills_missing")
+    actual = {}
+    for item in skills:
+        if not isinstance(item, dict) or set(item) != {"name", "tree_sha256", "scope"}:
+            raise ProfileError("catalog_entry_shape")
+        name = item["name"]
+        if not isinstance(name, str) or name in actual:
+            raise ProfileError("catalog_duplicate_skill")
+        if item["scope"] not in ("worktree", "global", "user", "system"):
+            raise ProfileError("catalog_scope_unknown")
+        if not isinstance(item["tree_sha256"], str) or len(item["tree_sha256"]) != 64 or any(
+            letter not in "0123456789abcdef" for letter in item["tree_sha256"]
+        ):
+            raise ProfileError("catalog_digest_invalid")
+        actual[name] = item
+    pinned = {s["name"]: s["tree_sha256"] for s in profile["skills"]}
+    extras = sorted(set(actual) - set(pinned))
+    if extras:
+        raise ProfileError("catalog_unlisted_skill:" + ",".join(extras))
+    missing = sorted(set(pinned) - set(actual))
+    if missing:
+        raise ProfileError("catalog_missing_skill:" + ",".join(missing))
+    inherited = sorted(name for name in pinned if actual[name]["scope"] != "worktree")
+    if inherited:
+        raise ProfileError("catalog_nonworktree_inheritance:" + ",".join(inherited))
+    drift = sorted(name for name in pinned if actual[name]["tree_sha256"] != pinned[name])
+    if drift:
+        raise ProfileError("catalog_skill_digest_drift:" + ",".join(drift))
+    return {
+        "status": "EFFECTIVE_CATALOG_CLAIM_MATCHES",
+        "profile_sha256": matches["profile_sha256"],
+        "declared_skill_count": len(pinned),
+        "original_owner_capture_verified": False,
+        "actual_worker_skill_discovery_verified": False,
+        "global_skill_exclusion_verified": False,
+        "effect_authority": False,
+    }
+
+
 def compare(profile_a, binding_a, profile_b, binding_b):
     a = validate_binding(profile_a, binding_a)
     b = validate_binding(profile_b, binding_b)
@@ -254,10 +319,10 @@ def compare(profile_a, binding_a, profile_b, binding_b):
 
 def main(argv=None):
     parser = argparse.ArgumentParser()
-    parser.add_argument("command", choices=("validate", "bind-check", "compare", "observe-worktree", "observe-local-skills"))
+    parser.add_argument("command", choices=("validate", "bind-check", "compare", "observe-worktree", "observe-local-skills", "audit-catalog"))
     parser.add_argument("files", nargs="+")
     args = parser.parse_args(argv)
-    expected = {"validate": 1, "bind-check": 2, "compare": 4, "observe-worktree": 2, "observe-local-skills": 2}[args.command]
+    expected = {"validate": 1, "bind-check": 2, "compare": 4, "observe-worktree": 2, "observe-local-skills": 2, "audit-catalog": 3}[args.command]
     if len(args.files) != expected:
         parser.error(args.command + " requires " + str(expected) + " file(s)")
     try:
@@ -266,7 +331,8 @@ def main(argv=None):
                   "bind-check": lambda: validate_binding(*records),
                   "compare": lambda: compare(*records),
                   "observe-worktree": lambda: observe_git_worktree(*records),
-                  "observe-local-skills": lambda: observe_local_skill_view(*records)}[args.command]()
+                  "observe-local-skills": lambda: observe_local_skill_view(*records),
+                  "audit-catalog": lambda: audit_effective_catalog(*records)}[args.command]()
         print(json.dumps(output, ensure_ascii=False, sort_keys=True))
         return 0
     except (OSError, ValueError, ValidationError) as exc:
