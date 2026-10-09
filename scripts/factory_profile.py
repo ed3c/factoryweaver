@@ -170,7 +170,7 @@ def observe_git_worktree(profile, binding):
             raise ProfileError("git_observation_unavailable") from error
         if result.returncode != 0:
             raise ProfileError("git_readback_failed:" + " ".join(arguments))
-        return result.stdout.strip()
+        return result.stdout.removesuffix("\n")
     if Path(git("rev-parse", "--show-toplevel")).resolve() != root:
         raise ProfileError("worktree_root_mismatch")
     origin_selected = binding["work_order"].get("origin_url")
