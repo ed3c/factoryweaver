@@ -15,7 +15,8 @@ import unittest
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 from factory_profile import (
-    ProfileError, profile_digest, validate_profile, validate_binding, compare
+    ProfileError, profile_digest, validate_profile, validate_binding, compare,
+    observe_git_worktree
 )
 
 EXAMPLES = ROOT / "examples/factory-profiles"
@@ -194,6 +195,29 @@ class FactoryProfileTests(unittest.TestCase):
                                 git("-C", str(b), "rev-parse", "--git-dir"))
             self.assertEqual(git("-C", str(a), "rev-parse", "--git-common-dir"),
                              git("-C", str(b), "rev-parse", "--git-common-dir"))
+            # The public read-only probe can confirm local checkout identity,
+            # not the Noodle process that supposedly owns that checkout.
+            profile = load_profile()
+            claimed = binding(profile, path=str(a))
+            claimed["session"]["head_sha"] = git("-C", str(a), "rev-parse", "HEAD")
+            observed = observe_git_worktree(profile, claimed)
+            self.assertEqual(observed["status"], "LOCAL_GIT_WORKTREE_OBSERVED")
+            self.assertTrue(observed["physical_git_checkout_observed"])
+            self.assertFalse(observed["worker_session_observed"])
+            self.assertFalse(observed["skill_view_physically_observed"])
+            claimed["session"]["head_sha"] = "c" * 40
+            with self.assertRaisesRegex(ProfileError, "worktree_head_changed"):
+                observe_git_worktree(profile, claimed)
+            claimed["session"]["head_sha"] = git("-C", str(repo), "rev-parse", "HEAD")
+            claimed["session"]["worktree_path"] = str(repo)
+            with self.assertRaisesRegex(ProfileError, "linked_worktree_gitfile_required"):
+                observe_git_worktree(profile, claimed)
+
+    def test_unobserved_git_worktree_head_is_named_blocker(self):
+        profile = load_profile()
+        claim = binding(profile)
+        with self.assertRaisesRegex(ProfileError, "worktree_head_pin_required"):
+            observe_git_worktree(profile, claim)
 
     def test_cli_profiles_have_no_authority(self):
         script = ROOT / "scripts/factory_profile.py"
