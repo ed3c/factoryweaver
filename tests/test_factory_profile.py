@@ -16,7 +16,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 from factory_profile import (
     ProfileError, profile_digest, validate_profile, validate_binding, compare,
-    compare_carriers,
+    compare_carriers, origin_repository_identity,
     observe_git_worktree
 )
 
@@ -196,6 +196,27 @@ class FactoryProfileTests(unittest.TestCase):
         b["session"]["repository"] = "attacker/foreign"
         with self.assertRaisesRegex(ProfileError, "worktree_repository_mismatch"):
             validate_binding(p, b)
+
+    def test_selected_origin_url_matches_repository_not_just_same_worktree(self):
+        p = load_profile()
+        claim = binding(p)
+        claim["work_order"]["origin_url"] = "https://github.com/fictional/target.git"
+        self.assertEqual(validate_binding(p, claim)["status"], "ADVISORY_MATCH_ONLY")
+        claim["work_order"]["origin_url"] = "https://github.com/another/repository.git"
+        with self.assertRaisesRegex(ProfileError, "selected_origin_repository_mismatch"):
+            validate_binding(p, claim)
+
+    def test_source_remote_syntax_has_explicit_limits(self):
+        valid = ["https://github.com/fictional/target.git",
+                 "git@github.com:fictional/target.git",
+                 "ssh://git@github.com/fictional/target.git"]
+        for remote in valid:
+            self.assertEqual(origin_repository_identity(remote), "fictional/target")
+        for remote in ["file:///tmp/fictional/target", "../fictional/target",
+                       "https://credential@github.com/fictional/target",
+                       "https://github.com/fictional/target?token=secret"]:
+            with self.assertRaisesRegex(ProfileError, "git_origin_format_unrecognized"):
+                origin_repository_identity(remote)
 
     def test_profile_refuses_mutable_git_source_and_duplicate_skill(self):
         p = load_profile()
