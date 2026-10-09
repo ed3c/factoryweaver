@@ -28,6 +28,14 @@ python3 scripts/factoryweaver.py cards examples/openai-plugin-platform/project.j
 python3 -m unittest discover -s tests -v
 ```
 
+## Factory Profile Lock (Issue #12 candidate)
+
+The portable [Factory Profile Lock](docs/factory-profile-lock.md) describes exactly **one outer Factory workflow entry per Work Order**, pinned Skill allowlists and replaceable Worker Carrier **requirements**. It cannot start Noodle, select a real Soodles Supervisor or prove physical Worktree isolation from a claimed Session manifest. Public synthetic pstack/Builder examples are illustrative, not imported third-party implementations.
+
+```bash
+python3 scripts/factory_profile.py validate examples/factory-profiles/pstack-synthetic.json
+```
+
 ## Architecture
 
 ```text
