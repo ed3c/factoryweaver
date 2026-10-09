@@ -4,6 +4,7 @@ import json
 from pathlib import Path
 import subprocess
 import sys
+import tempfile
 import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -34,6 +35,108 @@ class PublicContractTests(unittest.TestCase):
         row = json.loads(p.stdout)["projection"][0]
         self.assertEqual(row["state"], "WAIT_FOR_HUMAN")
         self.assertEqual(row["missing"], ["DEC-auth-owner"])
+
+    def invoke_raw(self, action, record_text, registry_text=None):
+        with tempfile.TemporaryDirectory() as directory:
+            record_path = Path(directory) / "record.json"
+            record_path.write_text(record_text, encoding="utf-8")
+            args = ()
+            if registry_text is not None:
+                registry_path = Path(directory) / "registry.json"
+                registry_path.write_text(registry_text, encoding="utf-8")
+                args = ("--registry", str(registry_path))
+            return self.invoke(action, record_path, args)
+
+    def assert_duplicate_refused(self, action, record_text, key, registry_text=None):
+        result = self.invoke_raw(action, record_text, registry_text)
+        self.assertEqual(result.returncode, 2, result.stdout + result.stderr)
+        self.assertEqual(result.stdout, "")
+        refusal = json.loads(result.stderr)
+        self.assertFalse(refusal["valid"])
+        self.assertEqual(refusal["error"], "duplicate_json_key:" + key)
+
+    def test_duplicate_requirement_dependency_fields_refuse(self):
+        record = json.loads(EXAMPLE.read_text())
+        selected = json.dumps(record)
+        token = '"depends_on": ' + json.dumps(record["requirements"][0]["depends_on"])
+        for key, value in (("depends_on", []),
+                           ("depends_on", ["DEC-auth-owner"]),
+                           (r"depends\u005fon", [])):
+            with self.subTest(key=key, value=value):
+                text = selected.replace(token, token + ', "' + key + '": '
+                                        + json.dumps(value), 1)
+                self.assert_duplicate_refused("project", text, "depends_on")
+
+    def test_duplicate_top_level_requirement_arrays_refuse(self):
+        record = json.loads(EXAMPLE.read_text())
+        changed = copy.deepcopy(record["requirements"])
+        changed[0]["depends_on"] = []
+        selected = json.dumps(record)
+        token = '"requirements": ' + json.dumps(record["requirements"])
+        for key, value in (("requirements", changed),
+                           ("requirements", record["requirements"]),
+                           (r"requirem\u0065nts", changed)):
+            with self.subTest(key=key, value=value):
+                text = selected.replace(token, token + ', "' + key + '": '
+                                        + json.dumps(value), 1)
+                self.assert_duplicate_refused("project", text, "requirements")
+
+    def test_duplicate_registry_enabled_fields_refuse(self):
+        record, registry = self.pinned_route_fixture()
+        registry["operations"][0]["enabled"] = False
+        selected = json.dumps(registry)
+        token = '"enabled": false'
+        for key, value in (("enabled", True), ("enabled", False),
+                           (r"enabl\u0065d", True)):
+            with self.subTest(key=key, value=value):
+                text = selected.replace(token, token + ', "' + key + '": '
+                                        + json.dumps(value), 1)
+                self.assert_duplicate_refused("route", json.dumps(record), "enabled", text)
+
+    def test_duplicate_top_level_registry_operations_refuse(self):
+        record, registry = self.pinned_route_fixture()
+        registry["operations"][0]["enabled"] = False
+        changed = copy.deepcopy(registry["operations"])
+        changed[0]["enabled"] = True
+        selected = json.dumps(registry)
+        token = '"operations": ' + json.dumps(registry["operations"])
+        for key, value in (("operations", changed),
+                           ("operations", registry["operations"]),
+                           (r"operat\u0069ons", changed)):
+            with self.subTest(key=key, value=value):
+                text = selected.replace(token, token + ', "' + key + '": '
+                                        + json.dumps(value), 1)
+                self.assert_duplicate_refused("route", json.dumps(record), "operations", text)
+
+    def test_dependency_keys_in_distinct_objects_and_strings_remain_valid(self):
+        record = json.loads(EXAMPLE.read_text())
+        child = copy.deepcopy(record["requirements"][0])
+        child["id"] = "REQ-second-human"
+        child["statement"] = 'Literal "depends_on": [] text is not a JSON field.'
+        record["requirements"].append(child)
+        result = self.invoke_raw("project", json.dumps(record))
+        self.assertEqual(result.returncode, 0, result.stderr)
+        projection = json.loads(result.stdout)
+        self.assertEqual(len(projection["projection"]), 2)
+        for row in projection["projection"]:
+            self.assertEqual((row["state"], row["missing"]),
+                             ("WAIT_FOR_HUMAN", ["DEC-auth-owner"]))
+            self.assertFalse(row["authorizes_effects"])
+        self.assertEqual(projection["completion"], "COMPILED_ONLY")
+
+    def test_registry_keys_in_distinct_objects_and_strings_remain_valid(self):
+        record, registry = self.pinned_route_fixture()
+        other = copy.deepcopy(registry["operations"][0])
+        other["operation_id"] = "schema.inspect"
+        other["owner"] = 'Literal "enabled": false text is not a JSON field.'
+        registry["operations"].append(other)
+        result = self.invoke_raw("route", json.dumps(record), json.dumps(registry))
+        self.assertEqual(result.returncode, 0, result.stderr)
+        routed = json.loads(result.stdout)
+        self.assertEqual(routed["requests"][0]["route"], "REGISTERED_CANDIDATE_ONLY")
+        self.assertFalse(routed["requests"][0]["can_execute"])
+        self.assertEqual((routed["effects"], routed["authority"]), (0, "NONE"))
+
     def test_project_is_deterministic(self):
         a, b = self.invoke("project", SAMPLE), self.invoke("project", SAMPLE)
         self.assertEqual(a.returncode, 0, a.stderr)
