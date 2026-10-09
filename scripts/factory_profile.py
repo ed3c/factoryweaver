@@ -174,11 +174,12 @@ def observe_git_worktree(profile, binding):
     if Path(git("rev-parse", "--show-toplevel")).resolve() != root:
         raise ProfileError("worktree_root_mismatch")
     origin_selected = binding["work_order"].get("origin_url")
-    if origin_selected is not None:
-        # A Git remote is only local configuration, not a GitHub identity
-        # attestation. Still reject changed remote bytes before trusting HEAD.
-        if git("remote", "get-url", "origin") != origin_selected:
-            raise ProfileError("worktree_origin_changed")
+    if not origin_selected:
+        raise ProfileError("worktree_origin_pin_required")
+    # A Git remote is only local configuration, not a provider identity
+    # attestation. Still reject changed remote bytes before trusting HEAD.
+    if git("remote", "get-url", "origin") != origin_selected:
+        raise ProfileError("worktree_origin_changed")
     actual_head = git("rev-parse", "HEAD")
     if actual_head != expected_head:
         raise ProfileError("worktree_head_changed")
@@ -203,7 +204,7 @@ def observe_git_worktree(profile, binding):
             "observed_head_sha": actual_head,
             "worktree_path": str(root),
             "physical_git_checkout_observed": True,
-            "selected_origin_config_matched": origin_selected is not None,
+            "selected_origin_config_matched": True,
             "remote_provider_identity_authenticated": False,
             "worker_session_observed": False,
             "skill_view_physically_observed": False,
