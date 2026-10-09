@@ -168,6 +168,59 @@ def observe_git_worktree(profile, binding):
             "effect_authority": False}
 
 
+
+def skill_tree_sha256(directory):
+    """Canonical sorted file manifest digest; no installer or model interaction."""
+    if not directory.is_dir() or directory.is_symlink():
+        raise ProfileError("local_skill_not_directory")
+    manifest = []
+    for p in sorted(directory.rglob("*")):
+        if p.is_symlink():
+            raise ProfileError("symlink_in_skill_tree")
+        if p.is_dir():
+            continue
+        if not p.is_file() or p.stat().st_size > 2_000_000:
+            raise ProfileError("unsupported_local_skill_file")
+        manifest.append([p.relative_to(directory).as_posix(),
+                         hashlib.sha256(p.read_bytes()).hexdigest()])
+        if len(manifest) > 200:
+            raise ProfileError("skill_tree_file_count_exceeded")
+    if not manifest or not (directory / "SKILL.md").is_file():
+        raise ProfileError("local_skill_entry_missing")
+    return hashlib.sha256(canonical(manifest)).hexdigest()
+
+
+def observe_local_skill_view(profile, binding):
+    """Read only local worktree Skills; never claim the agent's effective catalog."""
+    observed = observe_git_worktree(profile, binding)
+    directory = Path(observed["worktree_path"]) / ".agents" / "skills"
+    if not directory.is_dir() or directory.is_symlink():
+        raise ProfileError("worktree_skill_directory_missing")
+    candidates = sorted(directory.iterdir())
+    if any(p.is_symlink() or not p.is_dir() for p in candidates):
+        raise ProfileError("unexpected_worktree_skill_surface")
+    actual = {p.name: skill_tree_sha256(p) for p in candidates}
+    pinned = {s["name"]: s["tree_sha256"] for s in profile["skills"]}
+    unlisted = sorted(set(actual) - set(pinned))
+    missing = sorted(set(pinned) - set(actual))
+    if unlisted:
+        raise ProfileError("unlisted_worktree_skill:" + ",".join(unlisted))
+    if missing:
+        raise ProfileError("missing_worktree_skill:" + ",".join(missing))
+    drifted = sorted(name for name in pinned if actual[name] != pinned[name])
+    if drifted:
+        raise ProfileError("worktree_skill_content_drift:" + ",".join(drifted))
+    return {"status": "LOCAL_WORKTREE_SKILL_FILES_MATCH",
+            "observed_worktree_head_sha": observed["observed_head_sha"],
+            "local_skill_names": sorted(actual),
+            "local_skill_files_verified": True,
+            "agent_effective_skill_catalog_verified": False,
+            "global_skill_inheritance_excluded": False,
+            "worker_session_observed": False,
+            "original_owner_readback_verified": False,
+            "effect_authority": False}
+
+
 def compare(profile_a, binding_a, profile_b, binding_b):
     a = validate_binding(profile_a, binding_a)
     b = validate_binding(profile_b, binding_b)
@@ -188,10 +241,10 @@ def compare(profile_a, binding_a, profile_b, binding_b):
 
 def main(argv=None):
     parser = argparse.ArgumentParser()
-    parser.add_argument("command", choices=("validate", "bind-check", "compare", "observe-worktree"))
+    parser.add_argument("command", choices=("validate", "bind-check", "compare", "observe-worktree", "observe-local-skills"))
     parser.add_argument("files", nargs="+")
     args = parser.parse_args(argv)
-    expected = {"validate": 1, "bind-check": 2, "compare": 4, "observe-worktree": 2}[args.command]
+    expected = {"validate": 1, "bind-check": 2, "compare": 4, "observe-worktree": 2, "observe-local-skills": 2}[args.command]
     if len(args.files) != expected:
         parser.error(args.command + " requires " + str(expected) + " file(s)")
     try:
@@ -199,7 +252,8 @@ def main(argv=None):
         output = {"validate": lambda: validate_profile(records[0]),
                   "bind-check": lambda: validate_binding(*records),
                   "compare": lambda: compare(*records),
-                  "observe-worktree": lambda: observe_git_worktree(*records)}[args.command]()
+                  "observe-worktree": lambda: observe_git_worktree(*records),
+                  "observe-local-skills": lambda: observe_local_skill_view(*records)}[args.command]()
         print(json.dumps(output, ensure_ascii=False, sort_keys=True))
         return 0
     except (OSError, ValueError, ValidationError) as exc:
