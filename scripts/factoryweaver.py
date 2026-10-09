@@ -14,8 +14,17 @@ REGISTRY = ROOT / "contracts/v1/adapter-registry.schema.json"
 class ContractError(ValueError):
     pass
 
+def _unique_json_fields(pairs):
+    fields = {}
+    for key, value in pairs:
+        if key in fields:
+            raise ContractError("duplicate_json_key:" + key)
+        fields[key] = value
+    return fields
+
 def load(path):
-    return json.loads(Path(path).read_text(encoding="utf-8"))
+    return json.loads(Path(path).read_text(encoding="utf-8"),
+                      object_pairs_hook=_unique_json_fields)
 
 def _check_unique(name, items):
     if len(items) != len(set(items)):
