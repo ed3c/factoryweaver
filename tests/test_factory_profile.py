@@ -200,6 +200,7 @@ class FactoryProfileTests(unittest.TestCase):
             profile = load_profile()
             claimed = binding(profile, path=str(a))
             claimed["session"]["head_sha"] = git("-C", str(a), "rev-parse", "HEAD")
+            claimed["work_order"]["base_sha"] = claimed["session"]["head_sha"]
             observed = observe_git_worktree(profile, claimed)
             self.assertEqual(observed["status"], "LOCAL_GIT_WORKTREE_OBSERVED")
             self.assertTrue(observed["physical_git_checkout_observed"])
