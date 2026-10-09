@@ -223,6 +223,8 @@ class FactoryProfileTests(unittest.TestCase):
             (repo / "readme.txt").write_text("fixture")
             git("-C", str(repo), "add", "readme.txt")
             git("-C", str(repo), "commit", "-qm", "base")
+            selected_remote = "https://github.com/fictional/target.git"
+            git("-C", str(repo), "remote", "add", "origin", selected_remote)
             git("-C", str(repo), "worktree", "add", "-q", "-b", "factory-a", str(a))
             git("-C", str(repo), "worktree", "add", "-q", "-b", "factory-b", str(b))
             (a / "only-a.txt").write_text("factory-a")
@@ -239,6 +241,7 @@ class FactoryProfileTests(unittest.TestCase):
             claimed = binding(profile, path=str(a))
             claimed["session"]["head_sha"] = git("-C", str(a), "rev-parse", "HEAD")
             claimed["work_order"]["base_sha"] = claimed["session"]["head_sha"]
+            claimed["work_order"]["origin_url"] = selected_remote
             observed = observe_git_worktree(profile, claimed)
             self.assertEqual(observed["status"], "LOCAL_GIT_WORKTREE_OBSERVED")
             self.assertTrue(observed["physical_git_checkout_observed"])
