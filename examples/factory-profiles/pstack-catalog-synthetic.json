@@ -1,0 +1,22 @@
+{
+  "protocol": "factoryweaver/effective-skill-catalog-v1",
+  "producer_claim": "UNVERIFIED_CARRIER_OUTPUT",
+  "profile_sha256": "d248e86896b2a7cb1eef15212eac40fa8086d5cdff6b9718291917f80488002e",
+  "work_order_id": "synthetic/example#1",
+  "carrier_id": "noodle-fixture-not-launched",
+  "session_id": "synthetic-session",
+  "worktree_id": "synthetic-worktree",
+  "entry_skill": "poteto-mode",
+  "skills": [
+    {
+      "name": "poteto-mode",
+      "tree_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+      "scope": "worktree"
+    },
+    {
+      "name": "factoryweaver",
+      "tree_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+      "scope": "worktree"
+    }
+  ]
+}
