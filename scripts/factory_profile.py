@@ -11,6 +11,7 @@ import argparse
 import hashlib
 import json
 import posixpath
+import subprocess
 import sys
 from pathlib import Path
 
@@ -115,6 +116,58 @@ def validate_binding(profile, binding):
             "effect_authority": False,
             "proof_ceiling": "DECLARED_PROFILE_CONTRACT_ONLY"}
 
+def observe_git_worktree(profile, binding):
+    """Corroborate a supplied Git checkout with real local read-only commands.
+
+    No information from this operation authenticates Noodle worker identity,
+    installed Skills, secrets, provider permission or host admission.
+    """
+    validate_binding(profile, binding)
+    session = binding["session"]
+    expected_head = session.get("head_sha")
+    if not expected_head:
+        raise ProfileError("worktree_head_pin_required")
+    root = Path(checked_path(session["worktree_path"]))
+    if not root.is_dir() or root.is_symlink() or root.resolve() != root:
+        raise ProfileError("worktree_path_missing_or_symlink")
+    # A separate linked Git worktree has a .git *file*, unlike main checkout.
+    if not (root / ".git").is_file() or (root / ".git").is_symlink():
+        raise ProfileError("linked_worktree_gitfile_required")
+    def git(*arguments):
+        try:
+            result = subprocess.run(
+                ["git", "-C", str(root), *arguments],
+                text=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                timeout=10, check=False)
+        except (OSError, subprocess.TimeoutExpired) as error:
+            raise ProfileError("git_observation_unavailable") from error
+        if result.returncode != 0:
+            raise ProfileError("git_readback_failed:" + " ".join(arguments))
+        return result.stdout.strip()
+    if Path(git("rev-parse", "--show-toplevel")).resolve() != root:
+        raise ProfileError("worktree_root_mismatch")
+    actual_head = git("rev-parse", "HEAD")
+    if actual_head != expected_head:
+        raise ProfileError("worktree_head_changed")
+    git_dir = Path(git("rev-parse", "--absolute-git-dir")).resolve()
+    common = Path(git("rev-parse", "--path-format=absolute", "--git-common-dir")).resolve()
+    if git_dir == common:
+        raise ProfileError("independent_linked_worktree_required")
+    rows = git("worktree", "list", "--porcelain").splitlines()
+    actual_roots = [line[9:] for line in rows if line.startswith("worktree ")]
+    if str(root) not in actual_roots:
+        raise ProfileError("worktree_not_registered")
+    return {"status": "LOCAL_GIT_WORKTREE_OBSERVED",
+            "observed_head_sha": actual_head,
+            "worktree_path": str(root),
+            "physical_git_checkout_observed": True,
+            "worker_session_observed": False,
+            "skill_view_physically_observed": False,
+            "process_and_secret_isolation_verified": False,
+            "original_owner_readback_verified": False,
+            "effect_authority": False}
+
+
 def compare(profile_a, binding_a, profile_b, binding_b):
     a = validate_binding(profile_a, binding_a)
     b = validate_binding(profile_b, binding_b)
@@ -135,17 +188,18 @@ def compare(profile_a, binding_a, profile_b, binding_b):
 
 def main(argv=None):
     parser = argparse.ArgumentParser()
-    parser.add_argument("command", choices=("validate", "bind-check", "compare"))
+    parser.add_argument("command", choices=("validate", "bind-check", "compare", "observe-worktree"))
     parser.add_argument("files", nargs="+")
     args = parser.parse_args(argv)
-    expected = {"validate": 1, "bind-check": 2, "compare": 4}[args.command]
+    expected = {"validate": 1, "bind-check": 2, "compare": 4, "observe-worktree": 2}[args.command]
     if len(args.files) != expected:
         parser.error(args.command + " requires " + str(expected) + " file(s)")
     try:
         records = [load(path) for path in args.files]
         output = {"validate": lambda: validate_profile(records[0]),
                   "bind-check": lambda: validate_binding(*records),
-                  "compare": lambda: compare(*records)}[args.command]()
+                  "compare": lambda: compare(*records),
+                  "observe-worktree": lambda: observe_git_worktree(*records)}[args.command]()
         print(json.dumps(output, ensure_ascii=False, sort_keys=True))
         return 0
     except (OSError, ValueError, ValidationError) as exc:
