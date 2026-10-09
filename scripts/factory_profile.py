@@ -260,6 +260,8 @@ def observe_local_skill_view(profile, binding):
         raise ProfileError("worktree_skill_content_drift:" + ",".join(drifted))
     return {"status": "LOCAL_WORKTREE_SKILL_FILES_MATCH",
             "observed_worktree_head_sha": observed["observed_head_sha"],
+            "selected_origin_config_matched": observed["selected_origin_config_matched"],
+            "remote_provider_identity_authenticated": False,
             "local_skill_names": sorted(actual),
             "local_skill_files_verified": True,
             "agent_effective_skill_catalog_verified": False,
