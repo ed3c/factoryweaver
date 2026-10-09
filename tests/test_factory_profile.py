@@ -107,6 +107,16 @@ class FactoryProfileTests(unittest.TestCase):
         with self.assertRaisesRegex(ProfileError, "alternative_carrier_identity_required"):
             compare_carriers(p, a, b)
 
+    def test_two_carriers_with_different_selected_origin_hosts_are_not_comparable(self):
+        p = load_profile()
+        a = binding(p)
+        b = binding(p, carrier="alternate", session="worker-2",
+                    tree="tree-2", path="/fixtures/worktrees/two")
+        a["work_order"]["origin_url"] = "https://github.com/fictional/target.git"
+        b["work_order"]["origin_url"] = "https://gitlab.com/fictional/target.git"
+        with self.assertRaisesRegex(ProfileError, "carrier_work_order_mismatch"):
+            compare_carriers(p, a, b)
+
     def test_carrier_comparison_rejects_reused_worker_or_overlapping_path(self):
         p = load_profile()
         a = binding(p)
