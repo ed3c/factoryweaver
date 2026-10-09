@@ -64,6 +64,12 @@ This read-only probe requires a real linked Git Worktree (`.git` file), checks `
 
 The outcome is strictly `LOCAL_GIT_WORKTREE_OBSERVED`. It proves **local Git checkout identity at the time of the probe**, not Noodle Worker Session provenance, Skill Discovery reality, OS/process isolation, cross-profile global Skill isolation, permission scope or Owner-delivery readback. Those are original Soodles/Noodle or selected Carrier responsibilities. This CLI does not create worktrees, launch agents, mutate Git or grant authority.
 
+## Claimed Agent Skill Catalog comparison
+
+If the authorized worker owner has a catalog capture, `factory_profile.py audit-catalog PROFILE.json BINDING.json CATALOG.json` checks the declared profile digest, work order, carrier, session and worktree IDs against that catalog. It also rejects undeclared Skills, wrong digests and global/user/system scope claims. A synthetic example is in `examples/factory-profiles/pstack-catalog-synthetic.json`.
+
+This is **input consistency**, not verification that an actual Agent loaded only those Skills. Original Soodles owner must independently capture the real worker's effective catalog and retain exact raw provenance; public CLI reports `actual_worker_skill_discovery_verified=false` and `original_owner_capture_verified=false`.
+
 ## Noodle integration and replaceability
 
 The former auxiliary Noodle control repository has been deleted and is **not** a valid source for current runtime, provider locks, worker Skill paths, permissions or carrier readiness. For active behavior, read the selected Noodle carrier and its actual launch/Skill discovery through the authorized Soodles original Owner. Current Soodles `execute/SKILL.md` still uses `poteto-mode` as the default Whole-Issue Engineering Entry; this does **not** prove that Builder, HumanLayer or other Factory roots are currently admissible. The selected Carrier may be replaceable only after a real independently admitted alternative meets the same source, session, Worktree and owner-readback controls.
