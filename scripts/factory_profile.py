@@ -149,6 +149,15 @@ def observe_git_worktree(profile, binding):
     actual_head = git("rev-parse", "HEAD")
     if actual_head != expected_head:
         raise ProfileError("worktree_head_changed")
+    # Candidate HEAD may advance beyond the admitted base. It may NOT come
+    # from an unrelated branch or an object absent from this Git repository.
+    base = binding["work_order"]["base_sha"]
+    if subprocess.run(
+        ["git", "-C", str(root), "merge-base", "--is-ancestor", base, actual_head],
+        stdout=subprocess.PIPE, stderr=subprocess.PIPE, timeout=10,
+        check=False
+    ).returncode != 0:
+        raise ProfileError("work_order_base_not_ancestor")
     git_dir = Path(git("rev-parse", "--absolute-git-dir")).resolve()
     common = Path(git("rev-parse", "--path-format=absolute", "--git-common-dir")).resolve()
     if git_dir == common:
