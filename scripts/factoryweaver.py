@@ -155,6 +155,10 @@ def route(record, registry=None):
     # Bind readiness to the named requirement for validation/readback. A
     # registered-looking capability cannot bypass unresolved human decisions.
     projections = {row["requirement"]: row for row in project(record)["projection"]}
+    requirements_by_id = {r["id"]: r for r in record["requirements"]}
+    cards_by_id = {c["stable_id"]: c for c in record["cards"]}
+    decisions_by_id = {d["id"]: d for d in record.get("decisions", [])}
+    sources_by_id = {s["source_id"]: s for s in record["sources"]}
     operations = {}
     if registry:
         Draft202012Validator(load(REGISTRY)).validate(registry)
@@ -181,10 +185,29 @@ def route(record, registry=None):
                 status = "UNKNOWN_REQUIREMENT"
             elif a["intent"] != "resolve_unknown" and requirement_state not in ("READY_FOR_OWNER_REVIEW", "SPECIFICATION_ONLY"):
                 status = "REQUIREMENT_BLOCKED"
-            elif entry.get("requires_pinned_source", False) and any(s.get("integrity") != "PINNED_SHA256" for s in record["sources"]):
-                status = "WAIT_FOR_SOURCE_PIN"
             else:
                 status = "REGISTERED_CANDIDATE_ONLY"
+                if entry.get("requires_pinned_source", False):
+                    source_ids = set(sources_by_id)
+                    if requirement_id is not None:
+                        source_ids = set()
+                        pending, seen = [requirement_id], set()
+                        while pending:
+                            dependency = pending.pop()
+                            if dependency in seen:
+                                continue
+                            seen.add(dependency)
+                            if dependency in requirements_by_id:
+                                req = requirements_by_id[dependency]
+                                source_ids.update(req["source_ids"])
+                                pending.extend(req.get("depends_on", []))
+                            if dependency in cards_by_id:
+                                source_ids.update(cards_by_id[dependency]["evidence_ids"])
+                            if dependency in decisions_by_id:
+                                source_ids.update(decisions_by_id[dependency]["source_ids"])
+                    if any(sources_by_id[ref].get("integrity") != "PINNED_SHA256"
+                           for ref in source_ids):
+                        status = "WAIT_FOR_SOURCE_PIN"
         results.append({"request_id": a["request_id"], "operation_id": a["operation_id"],
                         "route": status, "owner": owner,
                         "requirement_state": requirement_state, "can_execute": False})
