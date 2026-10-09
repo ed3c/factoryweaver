@@ -11,7 +11,9 @@ import argparse
 import hashlib
 import json
 import posixpath
+import re
 import subprocess
+from urllib.parse import urlsplit
 import sys
 from pathlib import Path
 
@@ -71,6 +73,27 @@ def checked_path(value):
         raise ProfileError("unsafe_declared_worktree_path")
     return posixpath.normpath(value)
 
+def origin_repository_identity(value):
+    """Extract owner/repository from conventional remote syntax; no network."""
+    if not isinstance(value, str):
+        raise ProfileError("git_origin_format_unrecognized")
+    if value.startswith("git@"):
+        match = re.fullmatch(r"git@([a-zA-Z0-9.-]+):([a-zA-Z0-9_.-]+)/([a-zA-Z0-9_.-]+?)(?:\.git)?", value)
+        if not match:
+            raise ProfileError("git_origin_format_unrecognized")
+        return match.group(2) + "/" + match.group(3)
+    parsed = urlsplit(value)
+    if (parsed.scheme not in ("https", "ssh") or not parsed.hostname or
+        parsed.password or parsed.query or parsed.fragment or
+        parsed.port not in (None, 22, 443) or
+        (parsed.username not in (None, "git"))):
+        raise ProfileError("git_origin_format_unrecognized")
+    match = re.fullmatch(r"/([a-zA-Z0-9_.-]+)/([a-zA-Z0-9_.-]+?)(?:\.git)?", parsed.path)
+    if not match:
+        raise ProfileError("git_origin_format_unrecognized")
+    return match.group(1) + "/" + match.group(2)
+
+
 def validate_binding(profile, binding):
     info = validate_profile(profile)
     Draft202012Validator(load(BINDING_SCHEMA)).validate(binding)
@@ -80,6 +103,10 @@ def validate_binding(profile, binding):
         raise ProfileError("profile_sha256_mismatch")
     if binding["session"]["repository"] != binding["work_order"]["repository"]:
         raise ProfileError("worktree_repository_mismatch")
+    if "origin_url" in binding["work_order"] and origin_repository_identity(
+        binding["work_order"]["origin_url"]
+    ) != binding["work_order"]["repository"]:
+        raise ProfileError("selected_origin_repository_mismatch")
     if binding["session"]["entry_skill"] != profile["workflow_entry"]:
         raise ProfileError("workflow_entry_mismatch")
     missing = set(profile["carrier_capabilities"]) - set(binding["carrier"]["capabilities"])
@@ -146,6 +173,12 @@ def observe_git_worktree(profile, binding):
         return result.stdout.strip()
     if Path(git("rev-parse", "--show-toplevel")).resolve() != root:
         raise ProfileError("worktree_root_mismatch")
+    origin_selected = binding["work_order"].get("origin_url")
+    if origin_selected is not None:
+        # A Git remote is only local configuration, not a GitHub identity
+        # attestation. Still reject changed remote bytes before trusting HEAD.
+        if git("remote", "get-url", "origin") != origin_selected:
+            raise ProfileError("worktree_origin_changed")
     actual_head = git("rev-parse", "HEAD")
     if actual_head != expected_head:
         raise ProfileError("worktree_head_changed")
@@ -170,6 +203,8 @@ def observe_git_worktree(profile, binding):
             "observed_head_sha": actual_head,
             "worktree_path": str(root),
             "physical_git_checkout_observed": True,
+            "selected_origin_config_matched": origin_selected is not None,
+            "remote_provider_identity_authenticated": False,
             "worker_session_observed": False,
             "skill_view_physically_observed": False,
             "process_and_secret_isolation_verified": False,
