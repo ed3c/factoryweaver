@@ -1,0 +1,143 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:factoryweaver:contracts:v1:factory-binding",
+  "title": "Advisory Factory Profile Binding (host attestations required)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "protocol",
+    "profile_sha256",
+    "work_order",
+    "carrier",
+    "session",
+    "effect_authority"
+  ],
+  "properties": {
+    "protocol": {
+      "const": "factoryweaver/factory-binding-v1"
+    },
+    "profile_sha256": {
+      "$ref": "#/$defs/sha256"
+    },
+    "work_order": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "repository",
+        "base_sha"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 4
+        },
+        "repository": {
+          "type": "string",
+          "minLength": 3
+        },
+        "base_sha": {
+          "$ref": "#/$defs/git"
+        }
+      }
+    },
+    "carrier": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "capabilities"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 2
+        },
+        "capabilities": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "isolated_git_worktree",
+              "skill_discovery",
+              "session_readback",
+              "source_pinning",
+              "bounded_process_lifecycle"
+            ]
+          }
+        }
+      }
+    },
+    "session": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "worktree_id",
+        "worktree_path",
+        "repository",
+        "entry_skill",
+        "profile_sha256",
+        "skill_view"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 2
+        },
+        "worktree_id": {
+          "type": "string",
+          "minLength": 2
+        },
+        "worktree_path": {
+          "type": "string",
+          "minLength": 2
+        },
+        "repository": {
+          "type": "string",
+          "minLength": 3
+        },
+        "entry_skill": {
+          "type": "string",
+          "minLength": 3
+        },
+        "profile_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "skill_view": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "name",
+              "tree_sha256"
+            ],
+            "properties": {
+              "name": {
+                "type": "string",
+                "minLength": 3
+              },
+              "tree_sha256": {
+                "$ref": "#/$defs/sha256"
+              }
+            }
+          }
+        }
+      }
+    },
+    "effect_authority": {
+      "const": false
+    }
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "git": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{40}$"
+    }
+  }
+}
