@@ -52,6 +52,12 @@ def inputs():
 
 
 class EffectiveCatalogTests(unittest.TestCase):
+    def test_verifier_skill_references_executable_audit(self):
+        instructions = (ROOT / "skills/factoryweaver-verify/SKILL.md").read_text()
+        self.assertIn("scripts/factory_profile.py audit-catalog", instructions)
+        self.assertIn("EFFECTIVE_CATALOG_CLAIM_MATCHES", instructions)
+        self.assertTrue((ROOT / "scripts/factory_profile.py").is_file())
+
     def test_good_declared_catalog_is_never_owner_receipt(self):
         profile, binding, catalog = inputs()
         result = audit_effective_catalog(profile, binding, catalog)
