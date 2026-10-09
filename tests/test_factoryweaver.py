@@ -145,6 +145,154 @@ class PublicContractTests(unittest.TestCase):
         self.assertEqual(routed["route"], "REGISTERED_CANDIDATE_ONLY")
         self.assertFalse(routed["can_execute"])
 
+    def pinned_route_fixture(self):
+        record = json.loads(SAMPLE.read_text())
+        record["requirements"][0].update(knowledge_status="SPECIFIED", depends_on=[])
+        record["sources"][0].update(integrity="PINNED_SHA256", sha256="a" * 64)
+        record["action_requests"][0].update(
+            operation_id="schema.validate", intent="validate_specification",
+            target={"kind": "requirement", "requirement_id": "REQ-api-sdk"})
+        registry = {"protocol": "factoryweaver/registry-v1", "operations": [{
+            "operation_id": "schema.validate", "owner": "example-checker",
+            "allowed_modes": ["READ_ONLY"], "target_kinds": ["requirement"],
+            "enabled": True, "requires_pinned_source": True,
+        }]}
+        return record, registry
+
+    def add_route_source(self, record):
+        source = copy.deepcopy(record["sources"][0])
+        source.update(source_id="SRC-OTHER", source_dependency_key="other-source",
+                      integrity="UNPINNED")
+        source.pop("sha256", None)
+        record["sources"].append(source)
+
+    def test_pinned_route_ignores_independent_unknown_requirement(self):
+        for has_requirement in (False, True):
+            with self.subTest(has_requirement=has_requirement):
+                record, registry = self.pinned_route_fixture()
+                self.add_route_source(record)
+                if has_requirement:
+                    other = copy.deepcopy(record["requirements"][0])
+                    other.update(id="REQ-independent", knowledge_status="UNKNOWN",
+                                 source_ids=["SRC-OTHER"])
+                    record["requirements"].append(other)
+                result = fw.route(record, registry)
+                self.assertEqual(result, {"requests": [{
+                    "request_id": "AR-docs", "operation_id": "schema.validate",
+                    "route": "REGISTERED_CANDIDATE_ONLY", "owner": "example-checker",
+                    "requirement_state": "READY_FOR_OWNER_REVIEW", "can_execute": False,
+                }], "effects": 0, "authority": "NONE"})
+
+    def test_pinned_transitive_route_ignores_unrelated_source(self):
+        record, registry = self.pinned_route_fixture()
+        self.add_route_source(record)
+        parent = copy.deepcopy(record["requirements"][0])
+        parent.update(id="REQ-parent", depends_on=["SPEC-api-contract", "DEC-auth-owner"])
+        grandparent = copy.deepcopy(record["requirements"][0])
+        grandparent.update(id="REQ-grandparent")
+        parent["depends_on"].append("REQ-grandparent")
+        record["requirements"].extend([parent, grandparent])
+        record["requirements"][0]["depends_on"] = ["REQ-parent"]
+        record["action_requests"][0]["intent"] = "resolve_unknown"
+        result = fw.route(record, registry)
+        row = result["requests"][0]
+        self.assertEqual((row["route"], row["requirement_state"]),
+                         ("REGISTERED_CANDIDATE_ONLY", "WAIT_FOR_PREREQUISITE"))
+        self.assertEqual((row["can_execute"], result["effects"], result["authority"]),
+                         (False, 0, "NONE"))
+
+    def test_route_requires_pins_for_explicit_dependency_sources(self):
+        for contributor in ("direct", "requirement", "card", "decision"):
+            with self.subTest(contributor=contributor):
+                record, registry = self.pinned_route_fixture()
+                self.add_route_source(record)
+                record["action_requests"][0]["intent"] = "resolve_unknown"
+                if contributor == "direct":
+                    record["requirements"][0]["source_ids"] = ["SRC-OTHER"]
+                elif contributor == "requirement":
+                    parent = copy.deepcopy(record["requirements"][0])
+                    parent.update(id="REQ-parent", source_ids=["SRC-OTHER"])
+                    child = copy.deepcopy(record["requirements"][0])
+                    child.update(id="REQ-child", depends_on=["REQ-parent"])
+                    record["requirements"].extend([parent, child])
+                    record["requirements"][0]["depends_on"] = ["REQ-child"]
+                elif contributor == "card":
+                    record["cards"][0]["evidence_ids"] = ["SRC-OTHER"]
+                    record["requirements"][0]["depends_on"] = ["SPEC-api-contract"]
+                else:
+                    record["decisions"][0]["source_ids"] = ["SRC-OTHER"]
+                    record["requirements"][0]["depends_on"] = ["DEC-auth-owner"]
+                row = fw.route(record, registry)["requests"][0]
+                self.assertEqual(row["route"], "WAIT_FOR_SOURCE_PIN")
+                self.assertFalse(row["can_execute"])
+
+    def test_typed_card_links_do_not_become_route_prerequisites(self):
+        record, registry = self.pinned_route_fixture()
+        self.add_route_source(record)
+        record["requirements"][0]["depends_on"] = ["SPEC-api-contract"]
+        other = copy.deepcopy(record["requirements"][0])
+        other.update(id="REQ-independent", knowledge_status="UNKNOWN",
+                     source_ids=["SRC-OTHER"], depends_on=[])
+        record["requirements"].append(other)
+        record["cards"][0]["typed_links"] = [
+            {"relation": "implements", "target": "REQ-independent"}]
+        row = fw.route(record, registry)["requests"][0]
+        self.assertEqual((row["route"], row["requirement_state"]),
+                         ("REGISTERED_CANDIDATE_ONLY", "READY_FOR_OWNER_REVIEW"))
+        self.assertFalse(row["can_execute"])
+
+    def test_colliding_requirement_and_card_ids_keep_both_source_contributors(self):
+        for unpinned_contributor in ("requirement", "card"):
+            with self.subTest(unpinned_contributor=unpinned_contributor):
+                record, registry = self.pinned_route_fixture()
+                self.add_route_source(record)
+                record["cards"][0]["stable_id"] = "REQ-api-sdk"
+                if unpinned_contributor == "requirement":
+                    record["requirements"][0]["source_ids"] = ["SRC-OTHER"]
+                else:
+                    record["cards"][0]["evidence_ids"] = ["SRC-OTHER"]
+                record["action_requests"][0]["intent"] = "resolve_unknown"
+                row = fw.route(record, registry)["requests"][0]
+                self.assertEqual(row["route"], "WAIT_FOR_SOURCE_PIN")
+                self.assertFalse(row["can_execute"])
+
+    def test_unbound_unknown_resolution_remains_conservative(self):
+        record, registry = self.pinned_route_fixture()
+        self.add_route_source(record)
+        request = record["action_requests"][0]
+        request["intent"] = "resolve_unknown"
+        del request["target"]["requirement_id"]
+        self.assertEqual(fw.route(record, registry)["requests"][0]["route"],
+                         "WAIT_FOR_SOURCE_PIN")
+        registry["operations"][0]["requires_pinned_source"] = False
+        self.assertEqual(fw.route(record, registry)["requests"][0]["route"],
+                         "REGISTERED_CANDIDATE_ONLY")
+
+    def test_route_precedence_still_refuses_invalid_bindings_and_scope(self):
+        for mutation, expected in (("unbound", "REQUIREMENT_BINDING_REQUIRED"),
+                                   ("unknown", "UNKNOWN_REQUIREMENT"),
+                                   ("disabled", "CAPABILITY_DISABLED"),
+                                   ("scope", "REGISTRY_SCOPE_MISMATCH"),
+                                   ("human", "REQUIREMENT_BLOCKED")):
+            with self.subTest(mutation=mutation):
+                record, registry = self.pinned_route_fixture()
+                self.add_route_source(record)
+                request = record["action_requests"][0]
+                entry = registry["operations"][0]
+                if mutation == "unbound":
+                    del request["target"]["requirement_id"]
+                elif mutation == "unknown":
+                    request["target"]["requirement_id"] = "REQ-not-found"
+                elif mutation == "disabled":
+                    entry["enabled"] = False
+                elif mutation == "scope":
+                    entry["target_kinds"] = ["official_doc"]
+                else:
+                    record["requirements"][0]["depends_on"] = ["DEC-auth-owner"]
+                row = fw.route(record, registry)["requests"][0]
+                self.assertEqual(row["route"], expected)
+                self.assertFalse(row["can_execute"])
+
     def test_cards_human_readable(self):
         p = self.invoke("cards", SAMPLE)
         self.assertEqual(p.returncode, 0, p.stderr)
