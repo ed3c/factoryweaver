@@ -193,8 +193,12 @@ def skill_tree_sha256(directory):
 def observe_local_skill_view(profile, binding):
     """Read only local worktree Skills; never claim the agent's effective catalog."""
     observed = observe_git_worktree(profile, binding)
-    directory = Path(observed["worktree_path"]) / ".agents" / "skills"
-    if not directory.is_dir() or directory.is_symlink():
+    worktree = Path(observed["worktree_path"])
+    agents_dir = worktree / ".agents"
+    directory = agents_dir / "skills"
+    if agents_dir.is_symlink() or directory.is_symlink():
+        raise ProfileError("worktree_skill_parent_symlink")
+    if not directory.is_dir() or directory.resolve() != directory:
         raise ProfileError("worktree_skill_directory_missing")
     candidates = sorted(directory.iterdir())
     if any(p.is_symlink() or not p.is_dir() for p in candidates):
