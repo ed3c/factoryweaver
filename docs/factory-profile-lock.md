@@ -78,6 +78,12 @@ Before a native admission, Soodles must independently select and pin the Factory
 
 For alternative Carrier adoption, require same Work Order and acceptance oracles, but keep Carrier-specific launch, Session, Worktree, resume, release and external Owner readback in a real, independently admitted Host adapter. An `other-worker` ID in a fixture establishes **schema openness**, not runtime replacement.
 
+## Replaceable Carrier input comparison
+
+Use `factory_profile.py compare-carriers PROFILE.json NOODLE_BINDING.json ALTERNATIVE_BINDING.json` to ensure **both** claimed Carrier records bind the *same* Work Order, selected Base and Factory Profile while using distinct Carrier, Session, Worktree IDs and disjoint paths. It fails closed on drift, but the result is strictly `DECLARED_CARRIER_INPUTS_COMPARABLE`; `observed_worker_runs=0`, `runtime_interoperability_verified=false`, and `original_owner_readback_verified=false`.
+
+This operation does not claim an alternative Worker can launch, stop, resume, isolate global Skills, perform PR landing or replace Noodle in production. Those remain Soodles original-owner observations under its existing authorization and provider verification gates.
+
 ## Initial negative experiments
 
 Public tests use two synthetic profiles: pstack-like and Builder-like. They assert no mixed workflow roots, no inherited global skills, no swapped pin, no overlapping/reused declared Worktrees or Sessions, and refusal when required Carrier capability is absent. A **real disposable Git repository** spawns two Git Worktrees in CI: each has its own untracked file and separate Git directory, while both deliberately share the same common Git object directory. This proves filesystem separation **in that temporary Git fixture only**; it is not a real Noodle run or OS isolation test.
