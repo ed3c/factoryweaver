@@ -29,6 +29,8 @@ class LocalSkillViewTests(unittest.TestCase):
         (self.root / "README.md").write_text("disposable\n", encoding="utf-8")
         git("-C", str(self.root), "add", "README.md")
         git("-C", str(self.root), "commit", "-qm", "base")
+        self.origin_url = "https://github.com/fictional/target.git"
+        git("-C", str(self.root), "remote", "add", "origin", self.origin_url)
         git("-C", str(self.root), "worktree", "add", "-q", "-b", "lane-a", str(self.a))
         git("-C", str(self.root), "worktree", "add", "-q", "-b", "lane-b", str(self.b))
         self.p = []
@@ -50,7 +52,8 @@ class LocalSkillViewTests(unittest.TestCase):
                 "profile_sha256": profile_digest(record),
                 "work_order": {"id": f"fictional/target#{index+1}",
                                "repository": "fictional/target",
-                               "base_sha": git("-C", str(folder), "rev-parse", "HEAD")},
+                               "base_sha": git("-C", str(folder), "rev-parse", "HEAD"),
+                               "origin_url": self.origin_url},
                 "carrier": {"id": "noodle" if index == 0 else "alternate",
                             "capabilities": record["carrier_capabilities"]},
                 "session": {"id": "session-" + str(index), "worktree_id": "tree-" + str(index),
@@ -113,6 +116,28 @@ class LocalSkillViewTests(unittest.TestCase):
         agents.rename(outside)
         agents.symlink_to(outside, target_is_directory=True)
         with self.assertRaisesRegex(ProfileError, "worktree_skill_parent_symlink"):
+            observe_local_skill_view(self.p[0], self.bindings[0])
+
+    def test_selected_git_remote_matches_local_config_only(self):
+        result = observe_local_skill_view(self.p[0], self.bindings[0])
+        self.assertTrue(result["local_skill_files_verified"])
+        self.assertFalse(result["original_owner_readback_verified"])
+
+    def test_changed_origin_before_worktree_readback_is_refused(self):
+        git("-C", str(self.root), "remote", "set-url", "origin",
+            "https://github.com/attacker/wrong-target.git")
+        with self.assertRaisesRegex(ProfileError, "worktree_origin_changed"):
+            observe_local_skill_view(self.p[0], self.bindings[0])
+
+    def test_unbound_origin_is_not_reported_as_authenticated(self):
+        self.bindings[0]["work_order"].pop("origin_url")
+        result = observe_local_skill_view(self.p[0], self.bindings[0])
+        self.assertFalse(result["original_owner_readback_verified"])
+
+    def test_owner_selected_origin_for_different_repository_is_refused(self):
+        self.bindings[0]["work_order"]["origin_url"] = (
+            "https://github.com/another/example.git")
+        with self.assertRaisesRegex(ProfileError, "selected_origin_repository_mismatch"):
             observe_local_skill_view(self.p[0], self.bindings[0])
 
     def test_wrong_admission_base_does_not_get_git_identity_pass(self):
