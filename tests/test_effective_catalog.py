@@ -1,13 +1,16 @@
 """Carrier-supplied effective Skill catalog is *untrusted* until owner readback."""
 import json
+import hashlib
 from pathlib import Path
+import subprocess
 import sys
+import tempfile
 import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 from factory_profile import (
-    ProfileError, profile_digest, audit_effective_catalog
+    ProfileError, profile_digest, audit_effective_catalog, audit_catalog_bytes
 )
 
 
@@ -66,6 +69,50 @@ class EffectiveCatalogTests(unittest.TestCase):
         self.assertFalse(result["actual_worker_skill_discovery_verified"])
         self.assertFalse(result["global_skill_exclusion_verified"])
         self.assertFalse(result["effect_authority"])
+
+    def test_raw_catalog_digest_pin_matches_but_never_grants_owner_proof(self):
+        profile, binding, catalog = inputs()
+        raw = (json.dumps(catalog, ensure_ascii=False, sort_keys=True) + "\n").encode()
+        pinned = hashlib.sha256(raw).hexdigest()
+        result = audit_catalog_bytes(profile, binding, raw, pinned)
+        self.assertEqual(result["catalog_sha256"], pinned)
+        self.assertTrue(result["catalog_bytes_match_supplied_pin"])
+        self.assertFalse(result["original_owner_capture_verified"])
+        self.assertFalse(result["actual_worker_skill_discovery_verified"])
+        self.assertFalse(result["effect_authority"])
+
+    def test_raw_catalog_mutation_refuses_prior_exact_pin(self):
+        profile, binding, catalog = inputs()
+        raw = json.dumps(catalog, sort_keys=True).encode()
+        pinned = hashlib.sha256(raw).hexdigest()
+        changed = raw + b" "
+        with self.assertRaisesRegex(ProfileError, "catalog_raw_bytes_changed"):
+            audit_catalog_bytes(profile, binding, changed, pinned)
+
+    def test_malformed_or_missing_external_raw_pin_refuses(self):
+        profile, binding, catalog = inputs()
+        raw = json.dumps(catalog).encode()
+        for bad in ("", "main", "0" * 63, "g" * 64):
+            with self.assertRaisesRegex(ProfileError, "original_catalog_digest_required"):
+                audit_catalog_bytes(profile, binding, raw, bad)
+
+    def test_pinned_catalog_cli_requires_explicit_digest(self):
+        profile = ROOT / "examples/factory-profiles/pstack-synthetic.json"
+        binding = ROOT / "examples/factory-profiles/pstack-binding-synthetic.json"
+        catalog = ROOT / "examples/factory-profiles/pstack-catalog-synthetic.json"
+        script = ROOT / "scripts/factory_profile.py"
+        argv = [sys.executable, str(script), "audit-catalog-pinned",
+                str(profile), str(binding), str(catalog)]
+        fail = subprocess.run(argv, capture_output=True, text=True)
+        self.assertEqual(fail.returncode, 2)
+        self.assertIn("original_catalog_digest_required", fail.stderr)
+        pinned = hashlib.sha256(catalog.read_bytes()).hexdigest()
+        success = subprocess.run(argv + ["--catalog-sha256", pinned],
+                                 capture_output=True, text=True)
+        self.assertEqual(success.returncode, 0, success.stderr)
+        receipt = json.loads(success.stdout)
+        self.assertTrue(receipt["catalog_bytes_match_supplied_pin"])
+        self.assertFalse(receipt["original_owner_capture_verified"])
 
     def test_global_skill_injection_refuses(self):
         profile, binding, catalog = inputs()
