@@ -52,6 +52,18 @@ python3 scripts/factory_profile.py compare PROFILE_A.json BINDING_A.json PROFILE
 
 A binding is only a **claim** about what a Host supposedly installed and launched. The verifier refuses mismatched profile digest, wrong Skill revision, undeclared or globally inherited Skill, two outer Workflow Entries, a missing Carrier capability, inconsistent target repository, malformed Worktree path, reused Session/Worktree ID and overlapping declared paths. It always reports `original_owner_readback_verified=false`, `physical_worktree_verified=false` and `effect_authority=false`. It does not run a Carrier, mount Skills, create a Git worktree, authenticate arbitrary user-supplied observations or perform provider writes.
 
+## Optional physical Git Worktree readback
+
+A declared Profile/Binding does not prove a real checkout. If the original Host can supply the exact actual linked Worktree path and `session.head_sha` of a Worker under its authorization, run:
+
+```bash
+python3 scripts/factory_profile.py observe-worktree PROFILE.json BINDING.json
+```
+
+This read-only probe requires a real linked Git Worktree (`.git` file), checks `git rev-parse HEAD` matches the pinned `session.head_sha`, verifies exact toplevel and `git worktree list --porcelain`, and distinguishes the linked Git directory from the shared common Git directory. A wrong head, main checkout or missing Worktree fails closed.
+
+The outcome is strictly `LOCAL_GIT_WORKTREE_OBSERVED`. It proves **local Git checkout identity at the time of the probe**, not Noodle Worker Session provenance, Skill Discovery reality, OS/process isolation, cross-profile global Skill isolation, permission scope or Owner-delivery readback. Those are original Soodles/Noodle or selected Carrier responsibilities. This CLI does not create worktrees, launch agents, mutate Git or grant authority.
+
 ## Noodle integration and replaceability
 
 The existing `ed3c/noodles` control extension already pins Noodle Runtime in `policy/runtime.lock.json` and Skills in `policy/providers.lock.json`, and has a fixed `.noodle.toml [skills].paths` list. The current default Engineering Entry in Soodles `execute/SKILL.md` is `poteto-mode`; these facts do **not** mean Soodles accepts arbitrary Builder/HumanLayer whole-Issue Workflows today.
