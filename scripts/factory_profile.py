@@ -196,7 +196,7 @@ def observe_git_worktree(profile, binding):
     common = Path(git("rev-parse", "--path-format=absolute", "--git-common-dir")).resolve()
     if git_dir == common:
         raise ProfileError("independent_linked_worktree_required")
-    rows = git("worktree", "list", "--porcelain").splitlines()
+    rows = git("worktree", "list", "--porcelain", "-z").split("\0")
     actual_roots = [line[9:] for line in rows if line.startswith("worktree ")]
     if str(root) not in actual_roots:
         raise ProfileError("worktree_not_registered")

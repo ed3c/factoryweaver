@@ -5,6 +5,7 @@ import subprocess
 import sys
 import tempfile
 import unittest
+from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
@@ -81,6 +82,29 @@ class LocalSkillViewTests(unittest.TestCase):
         self.assertNotIn("poteto-mode", b["local_skill_names"])
         self.assertFalse(a["agent_effective_skill_catalog_verified"])
         self.assertFalse(b["global_skill_inheritance_excluded"])
+
+    def test_registered_worktree_with_special_path_is_observed(self):
+        for name in ("技能工作樹", 'quoted"worktree', "tab\tworktree", "line\nworktree"):
+            with self.subTest(name=name):
+                moved = Path(self.tmp.name) / name
+                git("-C", str(self.root), "worktree", "move", str(self.a), str(moved))
+                self.a = moved
+                self.bindings[0]["session"]["worktree_path"] = str(moved)
+                result = observe_local_skill_view(self.p[0], self.bindings[0])
+                self.assertEqual(result["status"], "LOCAL_WORKTREE_SKILL_FILES_MATCH")
+                self.assertFalse(result["worker_session_observed"])
+
+    def test_worktree_absent_from_git_registration_is_refused(self):
+        real_run = subprocess.run
+
+        def without_registration(argv, **kwargs):
+            if argv[3:5] == ["worktree", "list"]:
+                return subprocess.CompletedProcess(argv, 0, stdout="", stderr="")
+            return real_run(argv, **kwargs)
+
+        with patch("factory_profile.subprocess.run", side_effect=without_registration):
+            with self.assertRaisesRegex(ProfileError, "worktree_not_registered"):
+                observe_local_skill_view(self.p[0], self.bindings[0])
 
     def test_inject_foreign_factory_skill_fails_closed(self):
         path = self.a / ".agents" / "skills" / "builder-bug-factory"
