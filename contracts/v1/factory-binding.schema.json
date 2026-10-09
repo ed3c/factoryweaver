@@ -38,6 +38,11 @@
         },
         "base_sha": {
           "$ref": "#/$defs/git"
+        },
+        "origin_url": {
+          "type": "string",
+          "minLength": 10,
+          "maxLength": 512
         }
       }
     },
