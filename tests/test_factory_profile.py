@@ -16,6 +16,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 from factory_profile import (
     ProfileError, profile_digest, validate_profile, validate_binding, compare,
+    compare_carriers,
     observe_git_worktree
 )
 
@@ -81,6 +82,43 @@ class FactoryProfileTests(unittest.TestCase):
         self.assertEqual(other["carrier_id"], "alternate-worker")
         self.assertFalse(one["original_owner_readback_verified"])
         self.assertFalse(other["original_owner_readback_verified"])
+
+    def test_two_carriers_same_work_order_are_only_claim_comparable(self):
+        p = load_profile()
+        a = binding(p)
+        b = binding(p, carrier="another-carrier", session="session-2",
+                    tree="tree-2", path="/fixtures/worktrees/two")
+        result = compare_carriers(p, a, b)
+        self.assertEqual(result["status"], "DECLARED_CARRIER_INPUTS_COMPARABLE")
+        self.assertFalse(result["runtime_interoperability_verified"])
+        self.assertFalse(result["original_owner_readback_verified"])
+        self.assertEqual(result["observed_worker_runs"], 0)
+
+    def test_carrier_comparison_rejects_different_work_order_or_same_carrier(self):
+        p = load_profile()
+        a = binding(p)
+        b = binding(p, carrier="another-carrier", session="session-2",
+                    tree="tree-2", path="/fixtures/worktrees/two")
+        b["work_order"]["base_sha"] = "e" * 40
+        with self.assertRaisesRegex(ProfileError, "carrier_work_order_mismatch"):
+            compare_carriers(p, a, b)
+        b["work_order"]["base_sha"] = a["work_order"]["base_sha"]
+        b["carrier"]["id"] = "noodle"
+        with self.assertRaisesRegex(ProfileError, "alternative_carrier_identity_required"):
+            compare_carriers(p, a, b)
+
+    def test_carrier_comparison_rejects_reused_worker_or_overlapping_path(self):
+        p = load_profile()
+        a = binding(p)
+        b = binding(p, carrier="another-carrier", session="session-2",
+                    tree="tree-2", path="/fixtures/worktrees/two")
+        b["session"]["worktree_id"] = a["session"]["worktree_id"]
+        with self.assertRaisesRegex(ProfileError, "carrier_session_or_worktree_reused"):
+            compare_carriers(p, a, b)
+        b["session"]["worktree_id"] = "tree-2"
+        b["session"]["worktree_path"] = "/fixtures/worktrees/one/child"
+        with self.assertRaisesRegex(ProfileError, "carrier_worktree_paths_overlap"):
+            compare_carriers(p, a, b)
 
     def test_multiple_software_factories_cannot_be_workflow_roots(self):
         profile = load_profile()
