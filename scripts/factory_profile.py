@@ -355,6 +355,25 @@ def compare(profile_a, binding_a, profile_b, binding_b):
             "original_owner_readback_verified": False,
             "effect_authority": False}
 
+def audit_catalog_bytes(profile, binding, catalog_bytes, expected_sha256):
+    """Pin raw catalog bytes before decoding any self-declared Skill claims."""
+    if (not isinstance(expected_sha256, str) or
+        len(expected_sha256) != 64 or any(
+            character not in "0123456789abcdef" for character in expected_sha256
+        )):
+        raise ProfileError("original_catalog_digest_required")
+    if hashlib.sha256(catalog_bytes).hexdigest() != expected_sha256:
+        raise ProfileError("catalog_raw_bytes_changed")
+    try:
+        catalog = json.loads(catalog_bytes.decode("utf-8", "strict"))
+    except (UnicodeDecodeError, json.JSONDecodeError) as exc:
+        raise ProfileError("catalog_raw_data_invalid") from exc
+    result = audit_effective_catalog(profile, binding, catalog)
+    return {**result, "catalog_bytes_match_supplied_pin": True,
+            "catalog_sha256": expected_sha256,
+            "original_owner_capture_verified": False}
+
+
 def compare_carriers(profile, baseline, alternative):
     """Preflight two *claimed* carrier bindings for the exact same Work Order."""
     one = validate_binding(profile, baseline)
@@ -384,13 +403,23 @@ def compare_carriers(profile, baseline, alternative):
 
 def main(argv=None):
     parser = argparse.ArgumentParser()
-    parser.add_argument("command", choices=("validate", "bind-check", "compare", "observe-worktree", "observe-local-skills", "audit-catalog", "compare-carriers"))
+    parser.add_argument("command", choices=("validate", "bind-check", "compare", "observe-worktree", "observe-local-skills", "audit-catalog", "compare-carriers", "audit-catalog-pinned"))
     parser.add_argument("files", nargs="+")
+    parser.add_argument("--catalog-sha256", help="Digest from a separate original Owner readback")
     args = parser.parse_args(argv)
-    expected = {"validate": 1, "bind-check": 2, "compare": 4, "observe-worktree": 2, "observe-local-skills": 2, "audit-catalog": 3, "compare-carriers": 3}[args.command]
+    expected = {"validate": 1, "bind-check": 2, "compare": 4, "observe-worktree": 2, "observe-local-skills": 2, "audit-catalog": 3, "compare-carriers": 3, "audit-catalog-pinned": 3}[args.command]
     if len(args.files) != expected:
         parser.error(args.command + " requires " + str(expected) + " file(s)")
     try:
+        if args.command == "audit-catalog-pinned":
+            records = [load(path) for path in args.files[:2]]
+            if args.catalog_sha256 is None:
+                raise ProfileError("original_catalog_digest_required")
+            output = audit_catalog_bytes(
+                records[0], records[1], Path(args.files[2]).read_bytes(),
+                args.catalog_sha256)
+            print(json.dumps(output, ensure_ascii=False, sort_keys=True))
+            return 0
         records = [load(path) for path in args.files]
         output = {"validate": lambda: validate_profile(records[0]),
                   "bind-check": lambda: validate_binding(*records),
