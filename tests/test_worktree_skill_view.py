@@ -121,6 +121,8 @@ class LocalSkillViewTests(unittest.TestCase):
     def test_selected_git_remote_matches_local_config_only(self):
         result = observe_local_skill_view(self.p[0], self.bindings[0])
         self.assertTrue(result["local_skill_files_verified"])
+        self.assertTrue(result["selected_origin_config_matched"])
+        self.assertFalse(result["remote_provider_identity_authenticated"])
         self.assertFalse(result["original_owner_readback_verified"])
 
     def test_changed_origin_before_worktree_readback_is_refused(self):
@@ -132,6 +134,7 @@ class LocalSkillViewTests(unittest.TestCase):
     def test_unbound_origin_is_not_reported_as_authenticated(self):
         self.bindings[0]["work_order"].pop("origin_url")
         result = observe_local_skill_view(self.p[0], self.bindings[0])
+        self.assertFalse(result["selected_origin_config_matched"])
         self.assertFalse(result["original_owner_readback_verified"])
 
     def test_owner_selected_origin_for_different_repository_is_refused(self):
