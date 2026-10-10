@@ -1,0 +1,17 @@
+{
+  "protocol": "factoryweaver/registry-v1",
+  "operations": [
+    {
+      "operation_id": "docs.search_official",
+      "owner": "external-readonly-retrieval-owner",
+      "allowed_modes": [
+        "READ_ONLY"
+      ],
+      "target_kinds": [
+        "official_doc"
+      ],
+      "enabled": true,
+      "requires_pinned_source": false
+    }
+  ]
+}

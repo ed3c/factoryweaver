@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "protocol",
+    "operations"
+  ],
+  "properties": {
+    "protocol": {
+      "const": "factoryweaver/registry-v1"
+    },
+    "operations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "operation_id",
+          "owner",
+          "allowed_modes",
+          "target_kinds",
+          "enabled"
+        ],
+        "properties": {
+          "operation_id": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9]*(\\.[a-z][a-z0-9_]*)+$"
+          },
+          "owner": {
+            "type": "string",
+            "minLength": 3
+          },
+          "allowed_modes": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "READ_ONLY",
+                "BOUNDED_TEST"
+              ]
+            },
+            "minItems": 1,
+            "uniqueItems": true
+          },
+          "target_kinds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 2
+            },
+            "minItems": 1,
+            "uniqueItems": true
+          },
+          "enabled": {
+            "type": "boolean"
+          },
+          "requires_pinned_source": {
+            "type": "boolean"
+          }
+        }
+      }
+    }
+  }
+}

@@ -10,4 +10,4 @@
 
 本次交付是規格及有限 eval。全部 runtime REQ 保持 engineering=UNASSESSED、delivery=NOT_STARTED；adapter 為 UNBOUND、task unit 為 NOT_RUN。文件 PR 的 merge 只驗收筆記交付，不啟用 native Hook／Cron 或啟動 Noodle。
 
-本 main 沒有安裝 reference compiler CLI。contracts 與 reference 從已有 public 參考來源保留，用於此文件交付，不代表 bootstrap 或其他 Draft 已獲 runtime 驗收。
+PR #15 的規格交付時尚未包含 reference compiler CLI。現在的純讀取 CLI 可驗證與投影這份規格，不能據此宣稱原 Noodle、四個 Manager 或 native Hook／Cron 已完成 runtime 驗收。

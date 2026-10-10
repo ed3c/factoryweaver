@@ -1,0 +1,27 @@
+name: verify-public-contract
+on:
+  pull_request:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  reference-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install verification dependency
+        run: python -m pip install 'jsonschema>=4.20,<5'
+      - name: Run public contract controls
+        run: python -m unittest discover -s tests -v
+      - name: Validate human decision fixture
+        run: python scripts/factoryweaver.py validate examples/matt-grilling/project.json
+      - name: Project source fixture
+        run: python scripts/factoryweaver.py project examples/openai-plugin-platform/project.json
+      - name: Validate closed-loop requirements
+        run: python scripts/factoryweaver.py validate docs/closed-loop-v72/project.json
