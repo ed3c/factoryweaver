@@ -1,0 +1,281 @@
+{
+  "coverage_kind": "STRUCTURAL_TRACE_ONLY",
+  "source_exhaustiveness_proven": false,
+  "semantic_mapping_verified": false,
+  "runtime_verified": false,
+  "clauses": [
+    {
+      "id": "CL-01",
+      "source_quote": "merge main",
+      "requirements": [
+        "REQ-publication"
+      ]
+    },
+    {
+      "id": "CL-02",
+      "source_quote": "用 Zettelkasten Specification Compiler v7.2",
+      "requirements": [
+        "REQ-coverage",
+        "REQ-spec-data",
+        "REQ-compiler-audit"
+      ]
+    },
+    {
+      "id": "CL-03",
+      "source_quote": "按照 soodles thinking router & schema manager 產生需求",
+      "requirements": [
+        "REQ-intent",
+        "REQ-schema",
+        "REQ-thinking-router",
+        "REQ-adapters"
+      ]
+    },
+    {
+      "id": "CL-04",
+      "source_quote": "閉環資料流",
+      "requirements": [
+        "REQ-identity",
+        "REQ-events",
+        "REQ-schema",
+        "REQ-hook",
+        "REQ-cron",
+        "REQ-manager-feedback",
+        "REQ-consumption",
+        "REQ-completion",
+        "REQ-replay",
+        "REQ-unknown-effect",
+        "REQ-safety",
+        "REQ-cost"
+      ]
+    },
+    {
+      "id": "CL-05",
+      "source_quote": "小迴圈執行常常無法驗收到真的 data 驅動閉環",
+      "requirements": [
+        "REQ-test",
+        "REQ-inner-loop",
+        "REQ-outer-loop",
+        "REQ-consumption",
+        "REQ-completion",
+        "REQ-eval-evidence",
+        "REQ-cost"
+      ]
+    },
+    {
+      "id": "CL-06",
+      "source_quote": "Data 驅動沒有自動觸發 schema, test, hook, cron job manager 的功能",
+      "requirements": [
+        "REQ-identity",
+        "REQ-events",
+        "REQ-schema",
+        "REQ-test",
+        "REQ-hook",
+        "REQ-cron",
+        "REQ-manager-feedback",
+        "REQ-consumption",
+        "REQ-replay",
+        "REQ-unknown-effect",
+        "REQ-adapters",
+        "REQ-safety",
+        "REQ-cost"
+      ]
+    },
+    {
+      "id": "CL-07",
+      "source_quote": "生成規格的卡片盒筆記",
+      "requirements": [
+        "REQ-coverage",
+        "REQ-stable-update",
+        "REQ-handoff"
+      ]
+    },
+    {
+      "id": "CL-08",
+      "source_quote": "必須能交接 noodle poteto mode 小迴圈按照不遺漏的需求條列並解決已知需求",
+      "requirements": [
+        "REQ-intent",
+        "REQ-coverage",
+        "REQ-dependencies",
+        "REQ-inner-loop",
+        "REQ-outer-loop",
+        "REQ-completion",
+        "REQ-retry-budget",
+        "REQ-adapters",
+        "REQ-handoff"
+      ]
+    },
+    {
+      "id": "CL-09",
+      "source_quote": "未知的部分可以直接擴展",
+      "requirements": [
+        "REQ-dependencies",
+        "REQ-stable-update",
+        "REQ-handoff"
+      ]
+    },
+    {
+      "id": "CL-10",
+      "source_quote": "錯誤推論或是需要更新事實也直接改",
+      "requirements": [
+        "REQ-stable-update",
+        "REQ-correction",
+        "REQ-invalidation",
+        "REQ-retry-budget"
+      ]
+    },
+    {
+      "id": "CL-11",
+      "source_quote": "必須結合規格驅動開發與 schema data 驅動開發",
+      "requirements": [
+        "REQ-spec-data",
+        "REQ-identity",
+        "REQ-schema",
+        "REQ-test",
+        "REQ-manager-feedback",
+        "REQ-invalidation",
+        "REQ-safety"
+      ]
+    },
+    {
+      "id": "CL-12",
+      "source_quote": "用 evals skills 評估Zettelkasten Specification Compiler v7.2",
+      "requirements": [
+        "REQ-eval-evidence",
+        "REQ-compiler-audit"
+      ]
+    },
+    {
+      "id": "CL-13",
+      "source_quote": "soodles outer loop + noodle poteto mode inner loop",
+      "requirements": [
+        "REQ-dependencies",
+        "REQ-inner-loop",
+        "REQ-outer-loop",
+        "REQ-completion",
+        "REQ-unknown-effect",
+        "REQ-retry-budget",
+        "REQ-ponytail",
+        "REQ-compiler-audit",
+        "REQ-adapters",
+        "REQ-handoff",
+        "REQ-cost"
+      ]
+    },
+    {
+      "id": "CL-14",
+      "source_quote": "需要考慮 thinking router & ponytail",
+      "requirements": [
+        "REQ-intent",
+        "REQ-thinking-router",
+        "REQ-ponytail",
+        "REQ-compiler-audit"
+      ]
+    }
+  ],
+  "batches": [
+    {
+      "batch": 1,
+      "card_ids": [
+        "CARD-REQ-intent",
+        "SPEC-intent",
+        "CARD-REQ-coverage",
+        "SPEC-coverage",
+        "CARD-REQ-dependencies",
+        "SPEC-dependencies",
+        "CARD-REQ-spec-data",
+        "SPEC-spec-data",
+        "CARD-REQ-stable-update",
+        "SPEC-stable-update",
+        "CARD-REQ-correction",
+        "SPEC-correction"
+      ],
+      "next_cursor": 12
+    },
+    {
+      "batch": 2,
+      "card_ids": [
+        "CARD-REQ-identity",
+        "SPEC-identity",
+        "CARD-REQ-events",
+        "SPEC-events",
+        "CARD-REQ-schema",
+        "SPEC-schema",
+        "CARD-REQ-test",
+        "SPEC-test",
+        "CARD-REQ-hook",
+        "SPEC-hook",
+        "CARD-REQ-cron",
+        "SPEC-cron"
+      ],
+      "next_cursor": 24
+    },
+    {
+      "batch": 3,
+      "card_ids": [
+        "CARD-REQ-inner-loop",
+        "SPEC-inner-loop",
+        "CARD-REQ-outer-loop",
+        "SPEC-outer-loop",
+        "CARD-REQ-manager-feedback",
+        "SPEC-manager-feedback",
+        "CARD-REQ-consumption",
+        "SPEC-consumption",
+        "CARD-REQ-completion",
+        "SPEC-completion",
+        "CARD-REQ-invalidation",
+        "SPEC-invalidation"
+      ],
+      "next_cursor": 36
+    },
+    {
+      "batch": 4,
+      "card_ids": [
+        "CARD-REQ-replay",
+        "SPEC-replay",
+        "CARD-REQ-unknown-effect",
+        "SPEC-unknown-effect",
+        "CARD-REQ-retry-budget",
+        "SPEC-retry-budget",
+        "CARD-REQ-thinking-router",
+        "SPEC-thinking-router",
+        "CARD-REQ-ponytail",
+        "SPEC-ponytail",
+        "CARD-REQ-eval-evidence",
+        "SPEC-eval-evidence"
+      ],
+      "next_cursor": 48
+    },
+    {
+      "batch": 5,
+      "card_ids": [
+        "CARD-REQ-compiler-audit",
+        "SPEC-compiler-audit",
+        "CARD-REQ-adapters",
+        "SPEC-adapters",
+        "CARD-REQ-safety",
+        "SPEC-safety",
+        "CARD-REQ-handoff",
+        "SPEC-handoff",
+        "CARD-REQ-cost",
+        "SPEC-cost",
+        "CARD-REQ-publication",
+        "SPEC-publication"
+      ],
+      "next_cursor": 60
+    },
+    {
+      "batch": 6,
+      "card_ids": [
+        "N-whole-task",
+        "C-data-loop",
+        "R-delivery-order",
+        "T-architecture-choice",
+        "V-runtime-gap",
+        "X-no-managers",
+        "K-native-bindings",
+        "K-legacy-v71"
+      ],
+      "next_cursor": null
+    }
+  ]
+}

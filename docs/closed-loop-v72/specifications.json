@@ -1,0 +1,990 @@
+{
+  "profile": "factoryweaver/closed-loop-specifications-v1",
+  "status": "PROPOSED",
+  "project": "project.json",
+  "specifications": [
+    {
+      "requirement_id": "REQ-intent",
+      "spec_card_id": "SPEC-intent",
+      "source_clauses": [
+        "CL-03",
+        "CL-08",
+        "CL-14"
+      ],
+      "actor": "Session／Thinking Router",
+      "input_contract": "本卡前置條件與同一版本的 LoopEvent；缺欄位回具名 prerequisite。",
+      "output_contract": "LoopResult／OwnerConsumption／ClosureClaim 的 proposal；Host 需用自己已驗證 schema 轉接。",
+      "given": "原要求與約束來源可讀",
+      "when": "產生需求提案",
+      "then": "保留原文定位、硬約束、偏好、假設、prompt delta 與未決問題",
+      "non_cases": [
+        "把建議當確認時拒絕晉級",
+        "選定方法不證明方法已執行，也不產生 admission"
+      ],
+      "cases": {
+        "positive": "保留原文定位、硬約束、偏好、假設、prompt delta 與未決問題",
+        "negative": "把建議當確認時拒絕晉級",
+        "unknown_effect": "缺原文時保持來源未知，只阻塞依賴分支",
+        "replay": "原意未變時重用已回答問題"
+      },
+      "auth_boundary": "選定方法不證明方法已執行，也不產生 admission",
+      "verification_oracle": "原 owner 的條件審查、必要 control 與實際讀回；把建議當確認時拒絕晉級",
+      "rollback": "還原前一個來源綁定的提案",
+      "execution_status": "UNTESTED",
+      "registered_adapter": null,
+      "test_artifacts": [],
+      "input_schema": "../../contracts/v1/closed-loop-profile.schema.json#/$defs/LoopEvent",
+      "output_schema": "../../contracts/v1/closed-loop-profile.schema.json#/$defs/LoopResult"
+    },
+    {
+      "requirement_id": "REQ-coverage",
+      "spec_card_id": "SPEC-coverage",
+      "source_clauses": [
+        "CL-02",
+        "CL-07",
+        "CL-08"
+      ],
+      "actor": "需求 compiler／task owner",
+      "input_contract": "本卡前置條件與同一版本的 LoopEvent；缺欄位回具名 prerequisite。",
+      "output_contract": "LoopResult／OwnerConsumption／ClosureClaim 的 proposal；Host 需用自己已驗證 schema 轉接。",
+      "given": "已固定整份原要求",
+      "when": "拆解需求並分批輸出",
+      "then": "每個 CL 對應具名 REQ／SPEC 或明示未映射；每批最多 12 卡且 cursor 不丟失",
+      "non_cases": [
+        "遺漏原句或縮小分母時不得宣告編譯完成",
+        "結構映射不是語義無遺漏的證明"
+      ],
+      "cases": {
+        "positive": "每個 CL 對應具名 REQ／SPEC 或明示未映射；每批最多 12 卡且 cursor 不丟失",
+        "negative": "遺漏原句或縮小分母時不得宣告編譯完成",
+        "unknown_effect": "語義完整性未審時保留 unknown，不能靠連結數證明",
+        "replay": "同一 canonical key 保留 ID，不重新生成"
+      },
+      "auth_boundary": "結構映射不是語義無遺漏的證明",
+      "verification_oracle": "原 owner 的條件審查、必要 control 與實際讀回；遺漏原句或縮小分母時不得宣告編譯完成",
+      "rollback": "還原 inventory，保留差異與未映射清單",
+      "execution_status": "UNTESTED",
+      "registered_adapter": null,
+      "test_artifacts": [],
+      "input_schema": "../../contracts/v1/closed-loop-profile.schema.json#/$defs/LoopEvent",
+      "output_schema": "../../contracts/v1/closed-loop-profile.schema.json#/$defs/LoopResult"
+    },
+    {
+      "requirement_id": "REQ-dependencies",
+      "spec_card_id": "SPEC-dependencies",
+      "source_clauses": [
+        "CL-08",
+        "CL-09",
+        "CL-13"
+      ],
+      "actor": "compiler／Schema Manager",
+      "input_contract": "本卡前置條件與同一版本的 LoopEvent；缺欄位回具名 prerequisite。",
+      "output_contract": "LoopResult／OwnerConsumption／ClosureClaim 的 proposal；Host 需用自己已驗證 schema 轉接。",
+      "given": "需求與 K／X 的依賴已列明",
+      "when": "一項必要輸入未知或矛盾",
+      "then": "僅相依 REQ 等待，獨立且授權內的已知需求繼續",
+      "non_cases": [
+        "循環、懸空 ID 與未審矛盾拒絕 ready",
+        "需求 DAG 不是第二個 scheduler"
+      ],
+      "cases": {
+        "positive": "僅相依 REQ 等待，獨立且授權內的已知需求繼續",
+        "negative": "循環、懸空 ID 與未審矛盾拒絕 ready",
+        "unknown_effect": "未查 producer 的缺件標待查，不直接稱外部阻塞",
+        "replay": "相同缺件不重跑，但新輸入到齊可接續"
+      },
+      "auth_boundary": "需求 DAG 不是第二個 scheduler",
+      "verification_oracle": "原 owner 的條件審查、必要 control 與實際讀回；循環、懸空 ID 與未審矛盾拒絕 ready",
+      "rollback": "撤回受影響 ready 與其下游證據",
+      "execution_status": "UNTESTED",
+      "registered_adapter": null,
+      "test_artifacts": [],
+      "input_schema": "../../contracts/v1/closed-loop-profile.schema.json#/$defs/LoopEvent",
+      "output_schema": "../../contracts/v1/closed-loop-profile.schema.json#/$defs/LoopResult"
+    },
+    {
+      "requirement_id": "REQ-spec-data",
+      "spec_card_id": "SPEC-spec-data",
+      "source_clauses": [
+        "CL-02",
+        "CL-11"
+      ],
+      "actor": "compiler／契約 owner",
+      "input_contract": "本卡前置條件與同一版本的 LoopEvent；缺欄位回具名 prerequisite。",
+      "output_contract": "LoopResult／OwnerConsumption／ClosureClaim 的 proposal；Host 需用自己已驗證 schema 轉接。",
+      "given": "原要求已映射為具名 SPEC",
+      "when": "定義輸入輸出及資料欄位",
+      "then": "每個規格有 actor、前置、結果、non-case、oracle、回滾及型別；用同一契約產生人讀和機讀輸出",
+      "non_cases": [
+        "資料與 Given/When/Then 矛盾時拒絕升級",
+        "本附錄是提案，不是任意 Host 已支援的 schema"
+      ],
+      "cases": {
+        "positive": "每個規格有 actor、前置、結果、non-case、oracle、回滾及型別；用同一契約產生人讀和機讀輸出",
+        "negative": "資料與 Given/When/Then 矛盾時拒絕升級",
+        "unknown_effect": "無法表示必要語義時新增 K，不靜默丟欄位",
+        "replay": "資料不變時輸出 NOOP"
+      },
+      "auth_boundary": "本附錄是提案，不是任意 Host 已支援的 schema",
+      "verification_oracle": "原 owner 的條件審查、必要 control 與實際讀回；資料與 Given/When/Then 矛盾時拒絕升級",
+      "rollback": "保留上一契約版本與兼容性差異",
+      "execution_status": "UNTESTED",
+      "registered_adapter": null,
+      "test_artifacts": [],
+      "input_schema": "../../contracts/v1/closed-loop-profile.schema.json#/$defs/LoopEvent",
+      "output_schema": "../../contracts/v1/closed-loop-profile.schema.json#/$defs/LoopResult"
+    },
+    {
+      "requirement_id": "REQ-stable-update",
+      "spec_card_id": "SPEC-stable-update",
+      "source_clauses": [
+        "CL-07",
+        "CL-09",
+        "CL-10"
+      ],
+      "actor": "compiler／卡片 owner",
+      "input_contract": "本卡前置條件與同一版本的 LoopEvent；缺欄位回具名 prerequisite。",
+      "output_contract": "LoopResult／OwnerConsumption／ClosureClaim 的 proposal；Host 需用自己已驗證 schema 轉接。",
+      "given": "已有 stable ID 與 canonical key",
+      "when": "新事實或必要未知出現",
+      "then": "就地更新現行 revision；保留原版、差異、理由及 supersedes；必要新問題新增 K／X",
+      "non_cases": [
+        "不得刪原要求以消除 FAIL",
+        "重寫現行文字不改原始 logs／receipts"
+      ],
+      "cases": {
+        "positive": "就地更新現行 revision；保留原版、差異、理由及 supersedes；必要新問題新增 K／X",
+        "negative": "不得刪原要求以消除 FAIL",
+        "unknown_effect": "無新證據的現況主張保持假設",
+        "replay": "相同新證據重送不增加 revision"
+      },
+      "auth_boundary": "重寫現行文字不改原始 logs／receipts",
+      "verification_oracle": "原 owner 的條件審查、必要 control 與實際讀回；不得刪原要求以消除 FAIL",
+      "rollback": "切回上一 revision，保持 superseded 關係",
+      "execution_status": "UNTESTED",
+      "registered_adapter": null,
+      "test_artifacts": [],
+      "input_schema": "../../contracts/v1/closed-loop-profile.schema.json#/$defs/LoopEvent",
+      "output_schema": "../../contracts/v1/closed-loop-profile.schema.json#/$defs/LoopResult"
+    },
+    {
+      "requirement_id": "REQ-correction",
+      "spec_card_id": "SPEC-correction",
+      "source_clauses": [
+        "CL-10"
+      ],
+      "actor": "Session／原 owner",
+      "input_contract": "本卡前置條件與同一版本的 LoopEvent；缺欄位回具名 prerequisite。",
+      "output_contract": "LoopResult／OwnerConsumption／ClosureClaim 的 proposal；Host 需用自己已驗證 schema 轉接。",
+      "given": "主張、前提與來源可定位",
+      "when": "新觀察推翻推論或事實",
+      "then": "記錄原主張、前提、證據、失效點、支持結論及對下一步的影響",
+      "non_cases": [
+        "不能只調整驗收文字使候選變綠",
+        "修正事實不授權未知外部效果"
+      ],
+      "cases": {
+        "positive": "記錄原主張、前提、證據、失效點、支持結論及對下一步的影響",
+        "negative": "不能只調整驗收文字使候選變綠",
+        "unknown_effect": "尚不能判定的因果保持 hypothesis",
+        "replay": "未變的已修事實不重做調查"
+      },
+      "auth_boundary": "修正事實不授權未知外部效果",
+      "verification_oracle": "原 owner 的條件審查、必要 control 與實際讀回；不能只調整驗收文字使候選變綠",
+      "rollback": "還原候選資料，保留已證偽的主張與原因",
+      "execution_status": "UNTESTED",
+      "registered_adapter": null,
+      "test_artifacts": [],
+      "input_schema": "../../contracts/v1/closed-loop-profile.schema.json#/$defs/LoopEvent",
+      "output_schema": "../../contracts/v1/closed-loop-profile.schema.json#/$defs/LoopResult"
+    },
+    {
+      "requirement_id": "REQ-identity",
+      "spec_card_id": "SPEC-identity",
+      "source_clauses": [
+        "CL-04",
+        "CL-06",
+        "CL-11"
+      ],
+      "actor": "Schema Manager／證據 producer",
+      "input_contract": "本卡前置條件與同一版本的 LoopEvent；缺欄位回具名 prerequisite。",
+      "output_contract": "LoopResult／OwnerConsumption／ClosureClaim 的 proposal；Host 需用自己已驗證 schema 轉接。",
+      "given": "選定 task、REQ、SPEC、來源與候選版本",
+      "when": "接收事件或驗收產物",
+      "then": "核對 task、owner、session 或 N/A、head、需求與規格摘要、plan、環境、producer、sequence 及 artifact identity",
+      "non_cases": [
+        "跨任務／版本／producer 的 PASS 不得重用",
+        "hash 證明 bytes，不能證明可信 producer 或授權"
+      ],
+      "cases": {
+        "positive": "核對 task、owner、session 或 N/A、head、需求與規格摘要、plan、環境、producer、sequence 及 artifact identity",
+        "negative": "跨任務／版本／producer 的 PASS 不得重用",
+        "unknown_effect": "缺身分時要求原 owner 讀回，只停相依操作",
+        "replay": "重送同一事件識別回原結果；衝突拒絕"
+      },
+      "auth_boundary": "hash 證明 bytes，不能證明可信 producer 或授權",
+      "verification_oracle": "原 owner 的條件審查、必要 control 與實際讀回；跨任務／版本／producer 的 PASS 不得重用",
+      "rollback": "撤回錯配投影，不改原始產物",
+      "execution_status": "UNTESTED",
+      "registered_adapter": null,
+      "test_artifacts": [],
+      "input_schema": "../../contracts/v1/closed-loop-profile.schema.json#/$defs/LoopEvent",
+      "output_schema": "../../contracts/v1/closed-loop-profile.schema.json#/$defs/LoopResult"
+    },
+    {
+      "requirement_id": "REQ-events",
+      "spec_card_id": "SPEC-events",
+      "source_clauses": [
+        "CL-04",
+        "CL-06"
+      ],
+      "actor": "既有事件／lifecycle owner",
+      "input_contract": "本卡前置條件與同一版本的 LoopEvent；缺欄位回具名 prerequisite。",
+      "output_contract": "LoopResult／OwnerConsumption／ClosureClaim 的 proposal；Host 需用自己已驗證 schema 轉接。",
+      "given": "Host 已獨立登錄事件 adapter 與授權",
+      "when": "需求、來源、結果、hook 設定或等待條件改變",
+      "then": "以驗證後事件觸發必要 Manager；owner 持續接續，不等新使用者提示；保存 request/result/consumption 關係",
+      "non_cases": [
+        "未註冊事件或任意 argv 不得執行",
+        "自動觸發沿原 owner，不新增排程器或 compiler 執行權"
+      ],
+      "cases": {
+        "positive": "以驗證後事件觸發必要 Manager；owner 持續接續，不等新使用者提示；保存 request/result/consumption 關係",
+        "negative": "未註冊事件或任意 argv 不得執行",
+        "unknown_effect": "投遞結果未知先讀回；缺 adapter 回具名工程工作",
+        "replay": "duplicate 不再產生效果；out-of-order 不覆蓋新結果"
+      },
+      "auth_boundary": "自動觸發沿原 owner，不新增排程器或 compiler 執行權",
+      "verification_oracle": "原 owner 的條件審查、必要 control 與實際讀回；未註冊事件或任意 argv 不得執行",
+      "rollback": "停用本次新增 binding，由原設定 owner 恢復上一版本",
+      "execution_status": "UNTESTED",
+      "registered_adapter": null,
+      "test_artifacts": [],
+      "input_schema": "../../contracts/v1/closed-loop-profile.schema.json#/$defs/LoopEvent",
+      "output_schema": "../../contracts/v1/closed-loop-profile.schema.json#/$defs/LoopResult"
+    },
+    {
+      "requirement_id": "REQ-schema",
+      "spec_card_id": "SPEC-schema",
+      "source_clauses": [
+        "CL-03",
+        "CL-04",
+        "CL-06",
+        "CL-11"
+      ],
+      "actor": "Schema Manager",
+      "input_contract": "本卡前置條件與同一版本的 LoopEvent；缺欄位回具名 prerequisite。",
+      "output_contract": "LoopResult／OwnerConsumption／ClosureClaim 的 proposal；Host 需用自己已驗證 schema 轉接。",
+      "given": "事件身分與依賴有效",
+      "when": "原 owner 提交已驗證的新資料",
+      "then": "回傳 current state、前提證據、known/unknown、影響 REQ 及唯一支持的 next 或工程缺口",
+      "non_cases": [
+        "無證據不能把 projected success 當實際成功",
+        "Schema 投影不授予 Test／Hook／Cron／landing 效果"
+      ],
+      "cases": {
+        "positive": "回傳 current state、前提證據、known/unknown、影響 REQ 及唯一支持的 next 或工程缺口",
+        "negative": "無證據不能把 projected success 當實際成功",
+        "unknown_effect": "missing 欄位指明 producer 與下一個必要輸入",
+        "replay": "同一資料得同一投影；未消費 next 仍須接續"
+      },
+      "auth_boundary": "Schema 投影不授予 Test／Hook／Cron／landing 效果",
+      "verification_oracle": "原 owner 的條件審查、必要 control 與實際讀回；無證據不能把 projected success 當實際成功",
+      "rollback": "撤回受影響快取投影，以保存 facts 重算",
+      "execution_status": "UNTESTED",
+      "registered_adapter": null,
+      "test_artifacts": [],
+      "input_schema": "../../contracts/v1/closed-loop-profile.schema.json#/$defs/LoopEvent",
+      "output_schema": "../../contracts/v1/closed-loop-profile.schema.json#/$defs/LoopResult"
+    },
+    {
+      "requirement_id": "REQ-test",
+      "spec_card_id": "SPEC-test",
+      "source_clauses": [
+        "CL-05",
+        "CL-06",
+        "CL-11"
+      ],
+      "actor": "Test Manager",
+      "input_contract": "本卡前置條件與同一版本的 LoopEvent；缺欄位回具名 prerequisite。",
+      "output_contract": "LoopResult／OwnerConsumption／ClosureClaim 的 proposal；Host 需用自己已驗證 schema 轉接。",
+      "given": "有變更範圍及原 oracle",
+      "when": "新規格或結果需要判別行為",
+      "then": "選 focused controls／必要 consumer observations；保存 exact selection、實際執行及原始產物，再回 Schema",
+      "non_cases": [
+        "格式檢查或 scope plan 不得算行為 PASS；不得推定 full suite",
+        "scope owner 不兼任外部驗收 owner"
+      ],
+      "cases": {
+        "positive": "選 focused controls／必要 consumer observations；保存 exact selection、實際執行及原始產物，再回 Schema",
+        "negative": "格式檢查或 scope plan 不得算行為 PASS；不得推定 full suite",
+        "unknown_effect": "known deterministic fault 用既有 control；缺憑證不觸發 eval",
+        "replay": "相同 bytes／inputs／claim 重用已涵蓋結果"
+      },
+      "auth_boundary": "scope owner 不兼任外部驗收 owner",
+      "verification_oracle": "原 owner 的條件審查、必要 control 與實際讀回；格式檢查或 scope plan 不得算行為 PASS；不得推定 full suite",
+      "rollback": "回復候選，重驗受到影響的有限邊界",
+      "execution_status": "UNTESTED",
+      "registered_adapter": null,
+      "test_artifacts": [],
+      "input_schema": "../../contracts/v1/closed-loop-profile.schema.json#/$defs/LoopEvent",
+      "output_schema": "../../contracts/v1/closed-loop-profile.schema.json#/$defs/LoopResult"
+    },
+    {
+      "requirement_id": "REQ-hook",
+      "spec_card_id": "SPEC-hook",
+      "source_clauses": [
+        "CL-04",
+        "CL-06"
+      ],
+      "actor": "Hook Manager／原生設定 owner",
+      "input_contract": "本卡前置條件與同一版本的 LoopEvent；缺欄位回具名 prerequisite。",
+      "output_contract": "LoopResult／OwnerConsumption／ClosureClaim 的 proposal；Host 需用自己已驗證 schema 轉接。",
+      "given": "carrier 與精確 hook 定義已選定",
+      "when": "定義或事件接線改變",
+      "then": "記錄 native trust、loaded、matched、invoked、completed、delivered 及原 owner effect readback",
+      "non_cases": [
+        "設定檔存在或 fixture 綠不能算原生 hook 已啟用",
+        "不同 carrier 需各自證據；Codex App 無此能力不能冒稱 CLI hook"
+      ],
+      "cases": {
+        "positive": "記錄 native trust、loaded、matched、invoked、completed、delivered 及原 owner effect readback",
+        "negative": "設定檔存在或 fixture 綠不能算原生 hook 已啟用",
+        "unknown_effect": "carrier 不支持 hook 時 K 保持未知，獨立工作繼續",
+        "replay": "同一事件不反覆要求續作；取消或終態不復活"
+      },
+      "auth_boundary": "不同 carrier 需各自證據；Codex App 無此能力不能冒稱 CLI hook",
+      "verification_oracle": "原 owner 的條件審查、必要 control 與實際讀回；設定檔存在或 fixture 綠不能算原生 hook 已啟用",
+      "rollback": "由原設定 owner 撤 binding 並讀回停用結果",
+      "execution_status": "UNTESTED",
+      "registered_adapter": null,
+      "test_artifacts": [],
+      "input_schema": "../../contracts/v1/closed-loop-profile.schema.json#/$defs/LoopEvent",
+      "output_schema": "../../contracts/v1/closed-loop-profile.schema.json#/$defs/LoopResult"
+    },
+    {
+      "requirement_id": "REQ-cron",
+      "spec_card_id": "SPEC-cron",
+      "source_clauses": [
+        "CL-04",
+        "CL-06"
+      ],
+      "actor": "Cron Manager／既有 scheduler owner",
+      "input_contract": "本卡前置條件與同一版本的 LoopEvent；缺欄位回具名 prerequisite。",
+      "output_contract": "LoopResult／OwnerConsumption／ClosureClaim 的 proposal；Host 需用自己已驗證 schema 轉接。",
+      "given": "同一任務仍有效且存在必要等待或接續",
+      "when": "等待條件、deadline、授權或終態改變",
+      "then": "以原 scheduler 建立／更新／取消具名 wakeup；醒來重查身分與 prerequisites，消費原 next",
+      "non_cases": [
+        "無可做事項且阻塞未變不得重跑寫入；不得醒後重設预算",
+        "Cron 只喚醒 owner，不決定需求或驗收"
+      ],
+      "cases": {
+        "positive": "以原 scheduler 建立／更新／取消具名 wakeup；醒來重查身分與 prerequisites，消費原 next",
+        "negative": "無可做事項且阻塞未變不得重跑寫入；不得醒後重設预算",
+        "unknown_effect": "缺平台能力或設定讀回時保留 K",
+        "replay": "重送同一排程 identity 不建第二份；終態與取消停止喚醒"
+      },
+      "auth_boundary": "Cron 只喚醒 owner，不決定需求或驗收",
+      "verification_oracle": "原 owner 的條件審查、必要 control 與實際讀回；無可做事項且阻塞未變不得重跑寫入；不得醒後重設预算",
+      "rollback": "取消本次具名排程並取得原 scheduler 讀回",
+      "execution_status": "UNTESTED",
+      "registered_adapter": null,
+      "test_artifacts": [],
+      "input_schema": "../../contracts/v1/closed-loop-profile.schema.json#/$defs/LoopEvent",
+      "output_schema": "../../contracts/v1/closed-loop-profile.schema.json#/$defs/LoopResult"
+    },
+    {
+      "requirement_id": "REQ-inner-loop",
+      "spec_card_id": "SPEC-inner-loop",
+      "source_clauses": [
+        "CL-05",
+        "CL-08",
+        "CL-13"
+      ],
+      "actor": "原 Noodle execute session",
+      "input_contract": "本卡前置條件與同一版本的 LoopEvent；缺欄位回具名 prerequisite。",
+      "output_contract": "LoopResult／OwnerConsumption／ClosureClaim 的 proposal；Host 需用自己已驗證 schema 轉接。",
+      "given": "原 admission／execution envelope 固定且工作授權有效",
+      "when": "已有可執行 task unit",
+      "then": "選原 Poteto playbook，讀相似實作，小步修改、必要驗證、自審 diff，回填本單位結果後继续其他可做需求",
+      "non_cases": [
+        "局部 commit／PASS 不能作整份任務 stopping point",
+        "本次交接不啟動 Noodle、不製造 admission"
+      ],
+      "cases": {
+        "positive": "選原 Poteto playbook，讀相似實作，小步修改、必要驗證、自審 diff，回填本單位結果後继续其他可做需求",
+        "negative": "局部 commit／PASS 不能作整份任務 stopping point",
+        "unknown_effect": "缺原 session 身分只停需要該身分的效果",
+        "replay": "原終態 session 不自行重啟；重送結果回原紀錄"
+      },
+      "auth_boundary": "本次交接不啟動 Noodle、不製造 admission",
+      "verification_oracle": "原 owner 的條件審查、必要 control 與實際讀回；局部 commit／PASS 不能作整份任務 stopping point",
+      "rollback": "由原 owner 回滾該單位，保留失敗歷史",
+      "execution_status": "UNTESTED",
+      "registered_adapter": null,
+      "test_artifacts": [],
+      "input_schema": "../../contracts/v1/closed-loop-profile.schema.json#/$defs/LoopEvent",
+      "output_schema": "../../contracts/v1/closed-loop-profile.schema.json#/$defs/LoopResult"
+    },
+    {
+      "requirement_id": "REQ-outer-loop",
+      "spec_card_id": "SPEC-outer-loop",
+      "source_clauses": [
+        "CL-05",
+        "CL-08",
+        "CL-13"
+      ],
+      "actor": "原 Soodles task／Issue owner",
+      "input_contract": "本卡前置條件與同一版本的 LoopEvent；缺欄位回具名 prerequisite。",
+      "output_contract": "LoopResult／OwnerConsumption／ClosureClaim 的 proposal；Host 需用自己已驗證 schema 轉接。",
+      "given": "整份需求及全部局部結果仍可讀",
+      "when": "一個小迴圈返回結果",
+      "then": "核對全部 REQ、未映射原句、缺件與下一步；可做項目继续，只有全要求具證據才整體完成",
+      "non_cases": [
+        "單一 owner next=null 或無新 bug 不能結束整份能力工作",
+        "外迴圈不把 runtime 確認責任塞回 compiler"
+      ],
+      "cases": {
+        "positive": "核對全部 REQ、未映射原句、缺件與下一步；可做項目继续，只有全要求具證據才整體完成",
+        "negative": "單一 owner next=null 或無新 bug 不能結束整份能力工作",
+        "unknown_effect": "沒有原身份的歷史欠帳保留在原任務，不阻塞獨立新工作",
+        "replay": "終態新證據按原任務邊界處理，不重開生命週期"
+      },
+      "auth_boundary": "外迴圈不把 runtime 確認責任塞回 compiler",
+      "verification_oracle": "原 owner 的條件審查、必要 control 與實際讀回；單一 owner next=null 或無新 bug 不能結束整份能力工作",
+      "rollback": "撤回錯誤 whole-task complete，回到剩餘需求",
+      "execution_status": "UNTESTED",
+      "registered_adapter": null,
+      "test_artifacts": [],
+      "input_schema": "../../contracts/v1/closed-loop-profile.schema.json#/$defs/LoopEvent",
+      "output_schema": "../../contracts/v1/closed-loop-profile.schema.json#/$defs/LoopResult"
+    },
+    {
+      "requirement_id": "REQ-manager-feedback",
+      "spec_card_id": "SPEC-manager-feedback",
+      "source_clauses": [
+        "CL-04",
+        "CL-06",
+        "CL-11"
+      ],
+      "actor": "Manager producer／Schema consumer",
+      "input_contract": "本卡前置條件與同一版本的 LoopEvent；缺欄位回具名 prerequisite。",
+      "output_contract": "LoopResult／OwnerConsumption／ClosureClaim 的 proposal；Host 需用自己已驗證 schema 轉接。",
+      "given": "已取得 selected Manager 的实际輸出",
+      "when": "原 producer 發出結果事件",
+      "then": "引用原 requirements digest 與 REQ ID，保存 Manager request/result、範圍、缺口和返回 next；再更新同一 handoff",
+      "non_cases": [
+        "分類 PASS、清冊或新檔名不能當原需求完成",
+        "資料按原 owner schema 轉換，不能假造互操作已成立"
+      ],
+      "cases": {
+        "positive": "引用原 requirements digest 與 REQ ID，保存 Manager request/result、範圍、缺口和返回 next；再更新同一 handoff",
+        "negative": "分類 PASS、清冊或新檔名不能當原需求完成",
+        "unknown_effect": "result 尚未到齊保持 pending，不填 expected",
+        "replay": "同一 result identity 不產生第二份 state store"
+      },
+      "auth_boundary": "資料按原 owner schema 轉換，不能假造互操作已成立",
+      "verification_oracle": "原 owner 的條件審查、必要 control 與實際讀回；分類 PASS、清冊或新檔名不能當原需求完成",
+      "rollback": "撤回錯誤映射，保留 producer 原結果",
+      "execution_status": "UNTESTED",
+      "registered_adapter": null,
+      "test_artifacts": [],
+      "input_schema": "../../contracts/v1/closed-loop-profile.schema.json#/$defs/LoopEvent",
+      "output_schema": "../../contracts/v1/closed-loop-profile.schema.json#/$defs/LoopResult"
+    },
+    {
+      "requirement_id": "REQ-consumption",
+      "spec_card_id": "SPEC-consumption",
+      "source_clauses": [
+        "CL-04",
+        "CL-05",
+        "CL-06"
+      ],
+      "actor": "原效果／狀態 owner",
+      "input_contract": "本卡前置條件與同一版本的 LoopEvent；缺欄位回具名 prerequisite。",
+      "output_contract": "LoopResult／OwnerConsumption／ClosureClaim 的 proposal；Host 需用自己已驗證 schema 轉接。",
+      "given": "Manager 返回具名 next",
+      "when": "原 Session 有合法接續且前提到齊",
+      "then": "保存原 returned_next、實際 actor、合法輸入、執行結果及 owner readback；結果再回 Schema",
+      "non_cases": [
+        "只寫 consumed=true 或摘要不能算效果完成",
+        "owner 是職責來源，不必是另一帳號或另一 chat"
+      ],
+      "cases": {
+        "positive": "保存原 returned_next、實際 actor、合法輸入、執行結果及 owner readback；結果再回 Schema",
+        "negative": "只寫 consumed=true 或摘要不能算效果完成",
+        "unknown_effect": "next 無 argv 時处理具名工程工作；寫入未知先讀回",
+        "replay": "未消費 next 即使無新 bytes 仍可做；已完成的效果不重播"
+      },
+      "auth_boundary": "owner 是職責來源，不必是另一帳號或另一 chat",
+      "verification_oracle": "原 owner 的條件審查、必要 control 與實際讀回；只寫 consumed=true 或摘要不能算效果完成",
+      "rollback": "由原效果 owner 撤回並讀回殘留效果",
+      "execution_status": "UNTESTED",
+      "registered_adapter": null,
+      "test_artifacts": [],
+      "input_schema": "../../contracts/v1/closed-loop-profile.schema.json#/$defs/LoopEvent",
+      "output_schema": "../../contracts/v1/closed-loop-profile.schema.json#/$defs/LoopResult"
+    },
+    {
+      "requirement_id": "REQ-completion",
+      "spec_card_id": "SPEC-completion",
+      "source_clauses": [
+        "CL-04",
+        "CL-05",
+        "CL-08",
+        "CL-13"
+      ],
+      "actor": "外迴圈 task owner／驗收 owner",
+      "input_contract": "本卡前置條件與同一版本的 LoopEvent；缺欄位回具名 prerequisite。",
+      "output_contract": "LoopResult／OwnerConsumption／ClosureClaim 的 proposal；Host 需用自己已驗證 schema 轉接。",
+      "given": "整份要求無未映射項且必要結果存在",
+      "when": "申報 whole-task complete",
+      "then": "逐 REQ 核對來源、SPEC、必要 Manager 結果、owner consumption、效果及交付 readback；保留 knowledge/engineering/delivery 三軸",
+      "non_cases": [
+        "schema 合法、CI 綠、report 自述或編譯 DONE 不能代替整體完成",
+        "有限案例閉環不證明所有未知錯誤都可自動修復"
+      ],
+      "cases": {
+        "positive": "逐 REQ 核對來源、SPEC、必要 Manager 結果、owner consumption、效果及交付 readback；保留 knowledge/engineering/delivery 三軸",
+        "negative": "schema 合法、CI 綠、report 自述或編譯 DONE 不能代替整體完成",
+        "unknown_effect": "全部剩餘項不可取得且有 producer 查證才申報 scoped blocked",
+        "replay": "已驗範圍與原始 failure history 保留"
+      },
+      "auth_boundary": "有限案例閉環不證明所有未知錯誤都可自動修復",
+      "verification_oracle": "原 owner 的條件審查、必要 control 與實際讀回；schema 合法、CI 綠、report 自述或編譯 DONE 不能代替整體完成",
+      "rollback": "撤回不符範圍的完成宣告，保留局部驗證",
+      "execution_status": "UNTESTED",
+      "registered_adapter": null,
+      "test_artifacts": [],
+      "input_schema": "../../contracts/v1/closed-loop-profile.schema.json#/$defs/LoopEvent",
+      "output_schema": "../../contracts/v1/closed-loop-profile.schema.json#/$defs/LoopResult"
+    },
+    {
+      "requirement_id": "REQ-invalidation",
+      "spec_card_id": "SPEC-invalidation",
+      "source_clauses": [
+        "CL-10",
+        "CL-11"
+      ],
+      "actor": "資料 reducer／原 evidence owner",
+      "input_contract": "本卡前置條件與同一版本的 LoopEvent；缺欄位回具名 prerequisite。",
+      "output_contract": "LoopResult／OwnerConsumption／ClosureClaim 的 proposal；Host 需用自己已驗證 schema 轉接。",
+      "given": "有具名 evidence dependency edges",
+      "when": "source／head／plan／SPEC／環境／readback 改變",
+      "then": "只失效其傳遞依賴的證據、confirmation 與 ready；保留不相依成果及舊版來源",
+      "non_cases": [
+        "舊 PASS 不得覆蓋目前 FAIL",
+        "保留歷史，不把 hash 當外部確認"
+      ],
+      "cases": {
+        "positive": "只失效其傳遞依賴的證據、confirmation 與 ready；保留不相依成果及舊版來源",
+        "negative": "舊 PASS 不得覆蓋目前 FAIL",
+        "unknown_effect": "未知依賴須先查 owner，不猜全部通過",
+        "replay": "相同身份重送不失效；相同時間不代表無可做 next"
+      },
+      "auth_boundary": "保留歷史，不把 hash 當外部確認",
+      "verification_oracle": "原 owner 的條件審查、必要 control 與實際讀回；舊 PASS 不得覆蓋目前 FAIL",
+      "rollback": "從保留的事實與依賴重新投影",
+      "execution_status": "UNTESTED",
+      "registered_adapter": null,
+      "test_artifacts": [],
+      "input_schema": "../../contracts/v1/closed-loop-profile.schema.json#/$defs/LoopEvent",
+      "output_schema": "../../contracts/v1/closed-loop-profile.schema.json#/$defs/LoopResult"
+    },
+    {
+      "requirement_id": "REQ-replay",
+      "spec_card_id": "SPEC-replay",
+      "source_clauses": [
+        "CL-04",
+        "CL-06"
+      ],
+      "actor": "事件／效果 owner",
+      "input_contract": "本卡前置條件與同一版本的 LoopEvent；缺欄位回具名 prerequisite。",
+      "output_contract": "LoopResult／OwnerConsumption／ClosureClaim 的 proposal；Host 需用自己已驗證 schema 轉接。",
+      "given": "同一 task、producer、event identity 與 payload digest",
+      "when": "重送或亂序到達",
+      "then": "精確 duplicate 返回原 receipt；同 ID 不同 payload 拒絕；舊 sequence 不覆蓋新狀態",
+      "non_cases": [
+        "不得靠新檔名／新 request ID 繞去重",
+        "以原事件 writer 保留歷史，不新增重試 engine"
+      ],
+      "cases": {
+        "positive": "精確 duplicate 返回原 receipt；同 ID 不同 payload 拒絕；舊 sequence 不覆蓋新狀態",
+        "negative": "不得靠新檔名／新 request ID 繞去重",
+        "unknown_effect": "先前 effects unknown 時沿原 owner 讀回，不執行同一寫入",
+        "replay": "duplicate 本身不產生新 effects 或 retry attempt"
+      },
+      "auth_boundary": "以原事件 writer 保留歷史，不新增重試 engine",
+      "verification_oracle": "原 owner 的條件審查、必要 control 與實際讀回；不得靠新檔名／新 request ID 繞去重",
+      "rollback": "停止本次投遞，查明原 event writer",
+      "execution_status": "UNTESTED",
+      "registered_adapter": null,
+      "test_artifacts": [],
+      "input_schema": "../../contracts/v1/closed-loop-profile.schema.json#/$defs/LoopEvent",
+      "output_schema": "../../contracts/v1/closed-loop-profile.schema.json#/$defs/LoopResult"
+    },
+    {
+      "requirement_id": "REQ-unknown-effect",
+      "spec_card_id": "SPEC-unknown-effect",
+      "source_clauses": [
+        "CL-04",
+        "CL-06",
+        "CL-13"
+      ],
+      "actor": "原 write owner",
+      "input_contract": "本卡前置條件與同一版本的 LoopEvent；缺欄位回具名 prerequisite。",
+      "output_contract": "LoopResult／OwnerConsumption／ClosureClaim 的 proposal；Host 需用自己已驗證 schema 轉接。",
+      "given": "已尝試写入且結果未明",
+      "when": "沒有確定 receipt 或 transport 中斷",
+      "then": "停止同一效果重送，沿原 owner 查 readback；其他已知需求继续",
+      "non_cases": [
+        "改 identity、credentials 或換 session 重寫不合法",
+        "不能把正確拒絕叫恢復成功"
+      ],
+      "cases": {
+        "positive": "停止同一效果重送，沿原 owner 查 readback；其他已知需求继续",
+        "negative": "改 identity、credentials 或換 session 重寫不合法",
+        "unknown_effect": "尚未嘗試的可產生輸入不叫 unknown write",
+        "replay": "重複 missing readback 不消耗修正次數"
+      },
+      "auth_boundary": "不能把正確拒絕叫恢復成功",
+      "verification_oracle": "原 owner 的條件審查、必要 control 與實際讀回；改 identity、credentials 或換 session 重寫不合法",
+      "rollback": "取得原 owner 的補償／撤回讀回",
+      "execution_status": "UNTESTED",
+      "registered_adapter": null,
+      "test_artifacts": [],
+      "input_schema": "../../contracts/v1/closed-loop-profile.schema.json#/$defs/LoopEvent",
+      "output_schema": "../../contracts/v1/closed-loop-profile.schema.json#/$defs/LoopResult"
+    },
+    {
+      "requirement_id": "REQ-retry-budget",
+      "spec_card_id": "SPEC-retry-budget",
+      "source_clauses": [
+        "CL-08",
+        "CL-10",
+        "CL-13"
+      ],
+      "actor": "當前 Session／原 budget owner",
+      "input_contract": "本卡前置條件與同一版本的 LoopEvent；缺欄位回具名 prerequisite。",
+      "output_contract": "LoopResult／OwnerConsumption／ClosureClaim 的 proposal；Host 需用自己已驗證 schema 轉接。",
+      "given": "已有可診斷的修正失敗歷史",
+      "when": "同一問題第三次修正失敗",
+      "then": "停止不變重試，記錄嘗試／錯誤／原因，質疑抽象並改採更小路徑；保留任務與预算",
+      "non_cases": [
+        "新 chat／新名稱／cron wakeup 不重設次數",
+        "重審根因不取消已知独立需求"
+      ],
+      "cases": {
+        "positive": "停止不變重試，記錄嘗試／錯誤／原因，質疑抽象並改採更小路徑；保留任務與预算",
+        "negative": "新 chat／新名稱／cron wakeup 不重設次數",
+        "unknown_effect": "缺證據與同一讀回不冒充修正失敗",
+        "replay": "再次讀回相同結果不新增失敗"
+      },
+      "auth_boundary": "重審根因不取消已知独立需求",
+      "verification_oracle": "原 owner 的條件審查、必要 control 與實際讀回；新 chat／新名稱／cron wakeup 不重設次數",
+      "rollback": "回復最近可驗證候選，保存失敗三筆",
+      "execution_status": "UNTESTED",
+      "registered_adapter": null,
+      "test_artifacts": [],
+      "input_schema": "../../contracts/v1/closed-loop-profile.schema.json#/$defs/LoopEvent",
+      "output_schema": "../../contracts/v1/closed-loop-profile.schema.json#/$defs/LoopResult"
+    },
+    {
+      "requirement_id": "REQ-thinking-router",
+      "spec_card_id": "SPEC-thinking-router",
+      "source_clauses": [
+        "CL-03",
+        "CL-14"
+      ],
+      "actor": "Session／Thinking Router",
+      "input_contract": "本卡前置條件與同一版本的 LoopEvent；缺欄位回具名 prerequisite。",
+      "output_contract": "LoopResult／OwnerConsumption／ClosureClaim 的 proposal；Host 需用自己已驗證 schema 轉接。",
+      "given": "同一任務來源與有效 continuation 已知",
+      "when": "出現實質未決意圖、前提或職責問題",
+      "then": "選最小必要方法或 none，保存 trigger、reason、prompt delta 與未決輸入；事實先查來源",
+      "non_cases": [
+        "不得把五種方法作固定 checklist，或替代 Poteto execute",
+        "方法是 P-class 提案；不創造 Issue contract 或 effect authority"
+      ],
+      "cases": {
+        "positive": "選最小必要方法或 none，保存 trigger、reason、prompt delta 與未決輸入；事實先查來源",
+        "negative": "不得把五種方法作固定 checklist，或替代 Poteto execute",
+        "unknown_effect": "工具或上游 wrapper 未可用時不稱已執行",
+        "replay": "已回答且前提未變不重新問；現有 next 有效則沿用"
+      },
+      "auth_boundary": "方法是 P-class 提案；不創造 Issue contract 或 effect authority",
+      "verification_oracle": "原 owner 的條件審查、必要 control 與實際讀回；不得把五種方法作固定 checklist，或替代 Poteto execute",
+      "rollback": "撤回不受證據支持的方法及附加約束",
+      "execution_status": "UNTESTED",
+      "registered_adapter": null,
+      "test_artifacts": [],
+      "input_schema": "../../contracts/v1/closed-loop-profile.schema.json#/$defs/LoopEvent",
+      "output_schema": "../../contracts/v1/closed-loop-profile.schema.json#/$defs/LoopResult"
+    },
+    {
+      "requirement_id": "REQ-ponytail",
+      "spec_card_id": "SPEC-ponytail",
+      "source_clauses": [
+        "CL-13",
+        "CL-14"
+      ],
+      "actor": "原 Soodles review owner",
+      "input_contract": "本卡前置條件與同一版本的 LoopEvent；缺欄位回具名 prerequisite。",
+      "output_contract": "LoopResult／OwnerConsumption／ClosureClaim 的 proposal；Host 需用自己已驗證 schema 轉接。",
+      "given": "具名候選 diff 與全部需求可讀",
+      "when": "需要檢查多餘機制或交付 readiness",
+      "then": "選用可用的 Ponytail review，檢查所有必要呼叫者、測試、設定、失敗邊界與漏項，findings 回原 owner",
+      "non_cases": [
+        "更短 diff 但漏需求、讀回或安全邊界不合格",
+        "Ponytail 不另建 inner loop，不授予 merge"
+      ],
+      "cases": {
+        "positive": "選用可用的 Ponytail review，檢查所有必要呼叫者、測試、設定、失敗邊界與漏項，findings 回原 owner",
+        "negative": "更短 diff 但漏需求、讀回或安全邊界不合格",
+        "unknown_effect": "尚無獨立 review／安裝證據時保持候選能力未知",
+        "replay": "相同候選與已涵蓋 scope 可重用 review"
+      },
+      "auth_boundary": "Ponytail 不另建 inner loop，不授予 merge",
+      "verification_oracle": "原 owner 的條件審查、必要 control 與實際讀回；更短 diff 但漏需求、讀回或安全邊界不合格",
+      "rollback": "撤回多餘改動，仍完成原要求",
+      "execution_status": "UNTESTED",
+      "registered_adapter": null,
+      "test_artifacts": [],
+      "input_schema": "../../contracts/v1/closed-loop-profile.schema.json#/$defs/LoopEvent",
+      "output_schema": "../../contracts/v1/closed-loop-profile.schema.json#/$defs/LoopResult"
+    },
+    {
+      "requirement_id": "REQ-eval-evidence",
+      "spec_card_id": "SPEC-eval-evidence",
+      "source_clauses": [
+        "CL-05",
+        "CL-12"
+      ],
+      "actor": "eval supervisor／Schema Manager",
+      "input_contract": "本卡前置條件與同一版本的 LoopEvent；缺欄位回具名 prerequisite。",
+      "output_contract": "LoopResult／OwnerConsumption／ClosureClaim 的 proposal；Host 需用自己已驗證 schema 轉接。",
+      "given": "要驗的行為與原要求已固定",
+      "when": "來源與正常 logs 不能回答 Agent 行為問題",
+      "then": "先 error analysis；客觀條件用程式或 receipts，語義 judge 須人標校準；保存真實 input／instructions／trace／report 與已消費 next",
+      "non_cases": [
+        "自己填 expected、用 style 分數或 fixture 冒充實際 consumer 不合格",
+        "來源審閱、模型觀察與原生 runtime 三者分開"
+      ],
+      "cases": {
+        "positive": "先 error analysis；客觀條件用程式或 receipts，語義 judge 須人標校準；保存真實 input／instructions／trace／report 與已消費 next",
+        "negative": "自己填 expected、用 style 分數或 fixture 冒充實際 consumer 不合格",
+        "unknown_effect": "缺 human labels、完整 capture 或原生執行時只保留該證據缺口",
+        "replay": "未變 instructions、inputs、claim 可重用綁定觀察"
+      },
+      "auth_boundary": "來源審閱、模型觀察與原生 runtime 三者分開",
+      "verification_oracle": "原 owner 的條件審查、必要 control 與實際讀回；自己填 expected、用 style 分數或 fixture 冒充實際 consumer 不合格",
+      "rollback": "保留失敗 protocol，修正有根據條件後重驗受影響決策",
+      "execution_status": "UNTESTED",
+      "registered_adapter": null,
+      "test_artifacts": [],
+      "input_schema": "../../contracts/v1/closed-loop-profile.schema.json#/$defs/LoopEvent",
+      "output_schema": "../../contracts/v1/closed-loop-profile.schema.json#/$defs/LoopResult"
+    },
+    {
+      "requirement_id": "REQ-compiler-audit",
+      "spec_card_id": "SPEC-compiler-audit",
+      "source_clauses": [
+        "CL-02",
+        "CL-12",
+        "CL-13",
+        "CL-14"
+      ],
+      "actor": "需求 compiler／eval supervisor",
+      "input_contract": "本卡前置條件與同一版本的 LoopEvent；缺欄位回具名 prerequisite。",
+      "output_contract": "LoopResult／OwnerConsumption／ClosureClaim 的 proposal；Host 需用自己已驗證 schema 轉接。",
+      "given": "v7.2 portable profile 與候選／main 架構分開可查",
+      "when": "依 eval-audit 審閱交接資料及現有驗收邊界",
+      "then": "指出六個診斷區域的有據缺口，提出相容附錄，有限 consumer 檢查不宣稱因果改善或普遍可靠",
+      "non_cases": [
+        "v7.1 未提供不能聲稱全部 inherited gates 已驗",
+        "v7.2 原文保留；本 profile 不冒稱官方 v7.3"
+      ],
+      "cases": {
+        "positive": "指出六個診斷區域的有據缺口，提出相容附錄，有限 consumer 檢查不宣稱因果改善或普遍可靠",
+        "negative": "v7.1 未提供不能聲稱全部 inherited gates 已驗",
+        "unknown_effect": "缺真實閉環 traces 時不可量化缺陷率或稱 runtime 已修",
+        "replay": "既有審計只在來源或行為改變時更新"
+      },
+      "auth_boundary": "v7.2 原文保留；本 profile 不冒稱官方 v7.3",
+      "verification_oracle": "原 owner 的條件審查、必要 control 與實際讀回；v7.1 未提供不能聲稱全部 inherited gates 已驗",
+      "rollback": "撤回附錄，不改既有 compiler 信任邊界",
+      "execution_status": "UNTESTED",
+      "registered_adapter": null,
+      "test_artifacts": [],
+      "input_schema": "../../contracts/v1/closed-loop-profile.schema.json#/$defs/LoopEvent",
+      "output_schema": "../../contracts/v1/closed-loop-profile.schema.json#/$defs/LoopResult"
+    },
+    {
+      "requirement_id": "REQ-adapters",
+      "spec_card_id": "SPEC-adapters",
+      "source_clauses": [
+        "CL-03",
+        "CL-06",
+        "CL-08",
+        "CL-13"
+      ],
+      "actor": "Host adapter／原 owner",
+      "input_contract": "本卡前置條件與同一版本的 LoopEvent；缺欄位回具名 prerequisite。",
+      "output_contract": "LoopResult／OwnerConsumption／ClosureClaim 的 proposal；Host 需用自己已驗證 schema 轉接。",
+      "given": "已讀 selected owner 的入口與精確輸入格式",
+      "when": "把交換卡片轉成交接輸入",
+      "then": "以實際已登錄 adapter 映射字段與 IDs；不可表示之資訊保留 gap；requirements projection 與 observations 分開",
+      "non_cases": [
+        "未登錄 operation、placeholder argv 或 untrusted human confirmation 拒絕執行",
+        "FactoryWeaver 提出 ActionRequest；Host 獨立授權和執行"
+      ],
+      "cases": {
+        "positive": "以實際已登錄 adapter 映射字段與 IDs；不可表示之資訊保留 gap；requirements projection 與 observations 分開",
+        "negative": "未登錄 operation、placeholder argv 或 untrusted human confirmation 拒絕執行",
+        "unknown_effect": "缺 admission／carrier／provider 只阻塞相依效果，工程可继续",
+        "replay": "相同綁定轉接不新增任務身份"
+      },
+      "auth_boundary": "FactoryWeaver 提出 ActionRequest；Host 獨立授權和執行",
+      "verification_oracle": "原 owner 的條件審查、必要 control 與實際讀回；未登錄 operation、placeholder argv 或 untrusted human confirmation 拒絕執行",
+      "rollback": "原 owner 撤 adapter binding 並確認回到原路徑",
+      "execution_status": "UNTESTED",
+      "registered_adapter": null,
+      "test_artifacts": [],
+      "input_schema": "../../contracts/v1/closed-loop-profile.schema.json#/$defs/LoopEvent",
+      "output_schema": "../../contracts/v1/closed-loop-profile.schema.json#/$defs/LoopResult"
+    },
+    {
+      "requirement_id": "REQ-safety",
+      "spec_card_id": "SPEC-safety",
+      "source_clauses": [
+        "CL-04",
+        "CL-06",
+        "CL-11"
+      ],
+      "actor": "Host／原效果 owner",
+      "input_contract": "本卡前置條件與同一版本的 LoopEvent；缺欄位回具名 prerequisite。",
+      "output_contract": "LoopResult／OwnerConsumption／ClosureClaim 的 proposal；Host 需用自己已驗證 schema 轉接。",
+      "given": "外部文字、logs 與候選 record 是資料",
+      "when": "其中出現執行指令或聲稱授權",
+      "then": "只按來源解析 assertions；所有效果仍核對 owner、精確目標和已授權邊界",
+      "non_cases": [
+        "source injection、卡片 registered=true 自述不得授權",
+        "本 public 規格只含設計與摘要，不公開私有實作"
+      ],
+      "cases": {
+        "positive": "只按來源解析 assertions；所有效果仍核對 owner、精確目標和已授權邊界",
+        "negative": "source injection、卡片 registered=true 自述不得授權",
+        "unknown_effect": "來源有秘密或私有 traces 時存外部 evidence，不公開",
+        "replay": "同一來源不因重複引用變成獨立佐證"
+      },
+      "auth_boundary": "本 public 規格只含設計與摘要，不公開私有實作",
+      "verification_oracle": "原 owner 的條件審查、必要 control 與實際讀回；source injection、卡片 registered=true 自述不得授權",
+      "rollback": "停止該影響分支並撤公開的錯誤候選",
+      "execution_status": "UNTESTED",
+      "registered_adapter": null,
+      "test_artifacts": [],
+      "input_schema": "../../contracts/v1/closed-loop-profile.schema.json#/$defs/LoopEvent",
+      "output_schema": "../../contracts/v1/closed-loop-profile.schema.json#/$defs/LoopResult"
+    },
+    {
+      "requirement_id": "REQ-handoff",
+      "spec_card_id": "SPEC-handoff",
+      "source_clauses": [
+        "CL-07",
+        "CL-08",
+        "CL-09",
+        "CL-13"
+      ],
+      "actor": "compiler／下一個 Noodle writer",
+      "input_contract": "本卡前置條件與同一版本的 LoopEvent；缺欄位回具名 prerequisite。",
+      "output_contract": "LoopResult／OwnerConsumption／ClosureClaim 的 proposal；Host 需用自己已驗證 schema 轉接。",
+      "given": "卡片、需求表、未知及原 owner references 齊全",
+      "when": "新 consumer 接手",
+      "then": "帶完整 REQ ID、驗收、依賴、輸入契約、已知結果、未知 producer、下一步及停止條件；可直接扩展与修正",
+      "non_cases": [
+        "只交七大類或一個綠測試摘要不足",
+        "prompt 交接不是 session 隔離／admission 的證據"
+      ],
+      "cases": {
+        "positive": "帶完整 REQ ID、驗收、依賴、輸入契約、已知結果、未知 producer、下一步及停止條件；可直接扩展与修正",
+        "negative": "只交七大類或一個綠測試摘要不足",
+        "unknown_effect": "缺 selected execution envelope 時維持交接提案，不啟動替代 session",
+        "replay": "保留 stable IDs，交接不消耗或重設修正 budget"
+      },
+      "auth_boundary": "prompt 交接不是 session 隔離／admission 的證據",
+      "verification_oracle": "原 owner 的條件審查、必要 control 與實際讀回；只交七大類或一個綠測試摘要不足",
+      "rollback": "退回上版 handoff，不覆寫原 execution envelope",
+      "execution_status": "UNTESTED",
+      "registered_adapter": null,
+      "test_artifacts": [],
+      "input_schema": "../../contracts/v1/closed-loop-profile.schema.json#/$defs/LoopEvent",
+      "output_schema": "../../contracts/v1/closed-loop-profile.schema.json#/$defs/LoopResult"
+    },
+    {
+      "requirement_id": "REQ-cost",
+      "spec_card_id": "SPEC-cost",
+      "source_clauses": [
+        "CL-04",
+        "CL-05",
+        "CL-06",
+        "CL-13"
+      ],
+      "actor": "Test Manager／telemetry owner",
+      "input_contract": "本卡前置條件與同一版本的 LoopEvent；缺欄位回具名 prerequisite。",
+      "output_contract": "LoopResult／OwnerConsumption／ClosureClaim 的 proposal；Host 需用自己已驗證 schema 轉接。",
+      "given": "正常事件有來源和可用量測",
+      "when": "收集一個小迴圈的结果",
+      "then": "分開 runtime、projection、模型、網路、測試、等待及人工決策；缺值 unknown，不重複加巢狀時間",
+      "non_cases": [
+        "文件長度／tool call／duration 不能推導決策減少或效益",
+        "成本 review 不替代行為／交付验收"
+      ],
+      "cases": {
+        "positive": "分開 runtime、projection、模型、網路、測試、等待及人工決策；缺值 unknown，不重複加巢狀時間",
+        "negative": "文件長度／tool call／duration 不能推導決策減少或效益",
+        "unknown_effect": "無量測本身不觸發 benchmark／修復",
+        "replay": "同一 log 重用，不為填報重跑原工作"
+      },
+      "auth_boundary": "成本 review 不替代行為／交付验收",
+      "verification_oracle": "原 owner 的條件審查、必要 control 與實際讀回；文件長度／tool call／duration 不能推導決策減少或效益",
+      "rollback": "修正錯算摘要，保留原 logs",
+      "execution_status": "UNTESTED",
+      "registered_adapter": null,
+      "test_artifacts": [],
+      "input_schema": "../../contracts/v1/closed-loop-profile.schema.json#/$defs/LoopEvent",
+      "output_schema": "../../contracts/v1/closed-loop-profile.schema.json#/$defs/LoopResult"
+    },
+    {
+      "requirement_id": "REQ-publication",
+      "spec_card_id": "SPEC-publication",
+      "source_clauses": [
+        "CL-01"
+      ],
+      "actor": "GitHub／交付 owner",
+      "input_contract": "本卡前置條件與同一版本的 LoopEvent；缺欄位回具名 prerequisite。",
+      "output_contract": "LoopResult／OwnerConsumption／ClosureClaim 的 proposal；Host 需用自己已驗證 schema 轉接。",
+      "given": "本次 artifact 已讀回、自審與有限檢查完成",
+      "when": "使用者已授權此次 PR 合併",
+      "then": "建立具體 PR、綁 exact head、確認必要 checks、merge main 並讀回 provider main；只完成規格交付",
+      "non_cases": [
+        "新規格 merge 不把 runtime requirements 標 RELEASE_CONFIRMED",
+        "此需求只交付本次筆記與評估，不實作所有 Managers"
+      ],
+      "cases": {
+        "positive": "建立具體 PR、綁 exact head、確認必要 checks、merge main 並讀回 provider main；只完成規格交付",
+        "negative": "新規格 merge 不把 runtime requirements 標 RELEASE_CONFIRMED",
+        "unknown_effect": "舊 Draft scope 未指明時保留，不替其驗收缺口簽名",
+        "replay": "merge outcome unknown 先 provider readback，不重複寫入"
+      },
+      "auth_boundary": "此需求只交付本次筆記與評估，不實作所有 Managers",
+      "verification_oracle": "原 owner 的條件審查、必要 control 與實際讀回；新規格 merge 不把 runtime requirements 標 RELEASE_CONFIRMED",
+      "rollback": "如需回滾，以新 PR revert 規格提交",
+      "execution_status": "UNTESTED",
+      "registered_adapter": null,
+      "test_artifacts": [],
+      "input_schema": "../../contracts/v1/closed-loop-profile.schema.json#/$defs/LoopEvent",
+      "output_schema": "../../contracts/v1/closed-loop-profile.schema.json#/$defs/LoopResult"
+    }
+  ]
+}
