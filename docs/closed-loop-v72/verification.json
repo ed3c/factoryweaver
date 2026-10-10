@@ -1,0 +1,48 @@
+{
+  "status": "PASS",
+  "scope": "saved artifact structure and public preview claim boundaries, not semantic exhaustiveness or runtime",
+  "requirements": 30,
+  "specifications": 30,
+  "cards": 68,
+  "clauses": 14,
+  "batches": 6,
+  "event_plans": 7,
+  "task_units": 5,
+  "negative_controls": [
+    "forged activation",
+    "forged delivery",
+    "self-declared adapter",
+    "unknown dependency",
+    "proposed profile effects",
+    "profile grants landing",
+    "missing Manager",
+    "invented task-unit execution"
+  ],
+  "effects": [],
+  "authorizes_landing": false,
+  "consumer_feedback": "five reports, twelve supported fields, VALID/SUPPORTED/PASS; original unsupported-label FAIL retained",
+  "checked_files": {
+    "README.md": "5ba77e6f698c5ff458d294e0ea8f3a771521e214065d6006277b81db5751d177",
+    "references/zettelkasten-v7.2.md": "e7ce14877290f6dae4676df0c1f450543e0b6f035b05c6f3709a2ee234f9d078",
+    "contracts/v1/closed-loop-profile.schema.json": "8fa3863d89d5f2a1f44ac31e3c35abd8a8c4ad94d0c44e218b0c9523b1e4b973",
+    "contracts/v1/knowledge-record.schema.json": "3cc1b87ef9a4f9b4ed0ceb79bc8bb07b8d5437c8ded6b4655ced56d0d9c178ad",
+    "docs/closed-loop-v72/coverage.json": "52c341ec6aab6d90c6b16d4aba96c8270a65c0e6c97a9d6ba69a496b185d7642",
+    "docs/closed-loop-v72/loop-profile.json": "6c0b0a9f7cd7197a9c7d2306c3e10748a4b4ad2355b144f18701e8b16fc233b1",
+    "docs/closed-loop-v72/project.json": "1e7c500a2fadcdf6799f6097abc344aee91cea00d3d65d37f91a42108f7a7fa9",
+    "docs/closed-loop-v72/specifications.json": "6bdfee7c7432ba0bb676f6e8a39ec49da2b7f016933816bba65bb399f8a8b829",
+    "docs/closed-loop-v72/README.md": "27b2a50d2c7c975662bd29390bb878b9609f5542cc002c745572387e67c31aaa",
+    "docs/closed-loop-v72/cards.md": "f2e52bd6bd11190a508fb3fd6ac3056f0717f7a8208963b42cb9357655502a39",
+    "docs/closed-loop-v72/eval-audit.md": "f95525aff4f7afc756d298304a5cf08131f228facd58dca9ed0465c8bf3c3cd4",
+    "docs/closed-loop-v72/handoff.md": "8055afc7758d78efd99cc96609e60d19b329045845fe06b61753ed9077fec835",
+    "docs/closed-loop-v72/profile.md": "51dc18a37351f0f264d9e3812fd5a8ecf8f367ef861e6db0a41167fb0bd9eaf8",
+    "docs/closed-loop-v72/source-clauses.md": "7c994cc3f51babc1418c652c719ab1ed81980f9bf0d56fdc6a53ac337d8ca271"
+  },
+  "method": "jsonschema Draft202012Validator plus existing public reference verifier at the pinned baseline; cross-reference, graph, card readback and claim-mutation checks",
+  "date": "2026-10-11",
+  "limits": [
+    "結構與來源 bytes 驗證不證明語義无漏項",
+    "不是 pipeline 飽和 error analysis 或經人標校準的 judge",
+    "沒有真實 Noodle execute、native Hook／Cron、四 Manager 自動觸發或 whole-task effect readback",
+    "文件 merge 與 runtime delivery 分開"
+  ]
+}

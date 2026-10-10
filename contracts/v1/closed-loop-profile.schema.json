@@ -1,0 +1,687 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "profile_version",
+    "status",
+    "project",
+    "requirements",
+    "managers",
+    "events",
+    "task_units",
+    "closure_obligations",
+    "effects",
+    "authorizes_landing"
+  ],
+  "properties": {
+    "profile_version": {
+      "const": "factoryweaver/closed-loop-v1"
+    },
+    "status": {
+      "const": "PROPOSED"
+    },
+    "project": {
+      "type": "string",
+      "minLength": 1
+    },
+    "requirements": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^REQ-[a-z0-9-]+$"
+      }
+    },
+    "managers": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "manager",
+          "owner",
+          "registered_adapter",
+          "status",
+          "required_result"
+        ],
+        "properties": {
+          "manager": {
+            "enum": [
+              "schema",
+              "test",
+              "hook",
+              "cron"
+            ]
+          },
+          "owner": {
+            "type": "string",
+            "minLength": 1
+          },
+          "registered_adapter": {
+            "type": "null"
+          },
+          "status": {
+            "const": "UNBOUND"
+          },
+          "required_result": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "events": {
+      "type": "array",
+      "minItems": 7,
+      "maxItems": 7,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "event_type",
+          "producer_role",
+          "consumers",
+          "condition",
+          "requirement_ids",
+          "input_schema",
+          "output_schema",
+          "status"
+        ],
+        "properties": {
+          "event_type": {
+            "enum": [
+              "intent.changed",
+              "requirement.changed",
+              "source.changed",
+              "manager.result",
+              "hook.definition.changed",
+              "wait.changed",
+              "owner.readback"
+            ]
+          },
+          "producer_role": {
+            "type": "string",
+            "minLength": 1
+          },
+          "consumers": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "condition": {
+            "type": "string",
+            "minLength": 1
+          },
+          "requirement_ids": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "pattern": "^REQ-[a-z0-9-]+$"
+            }
+          },
+          "input_schema": {
+            "type": "string",
+            "minLength": 1
+          },
+          "output_schema": {
+            "type": "string",
+            "minLength": 1
+          },
+          "status": {
+            "const": "PROPOSED"
+          }
+        }
+      }
+    },
+    "task_units": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "requirements",
+          "depends_on",
+          "owner",
+          "input",
+          "exit_oracle",
+          "execution_status"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "requirements": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "pattern": "^REQ-[a-z0-9-]+$"
+            }
+          },
+          "depends_on": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "owner": {
+            "type": "string",
+            "minLength": 1
+          },
+          "input": {
+            "type": "string",
+            "minLength": 1
+          },
+          "exit_oracle": {
+            "type": "string",
+            "minLength": 1
+          },
+          "execution_status": {
+            "const": "NOT_RUN"
+          }
+        }
+      }
+    },
+    "closure_obligations": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "effects": {
+      "type": "array",
+      "maxItems": 0
+    },
+    "authorizes_landing": {
+      "const": false
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:factoryweaver:contracts:v1:closed-loop-profile",
+  "title": "Proposed closed-loop exchange profile, no runtime or authority",
+  "$defs": {
+    "FileRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "Identity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "task_id",
+        "owner",
+        "producer",
+        "session_id",
+        "requirements_sha256",
+        "specification_sha256",
+        "head",
+        "plan",
+        "environment"
+      ],
+      "properties": {
+        "task_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "owner": {
+          "type": "string",
+          "minLength": 1
+        },
+        "producer": {
+          "type": "string",
+          "minLength": 1
+        },
+        "session_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "requirements_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "specification_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "head": {
+          "type": "string",
+          "minLength": 1
+        },
+        "plan": {
+          "type": "string",
+          "minLength": 1
+        },
+        "environment": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "LoopEvent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "event_id",
+        "event_type",
+        "identity",
+        "sequence",
+        "payload_sha256",
+        "affected_requirements",
+        "artifact_refs"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "factoryweaver/loop-event-v1"
+        },
+        "event_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "event_type": {
+          "enum": [
+            "intent.changed",
+            "requirement.changed",
+            "source.changed",
+            "manager.result",
+            "hook.definition.changed",
+            "wait.changed",
+            "owner.readback"
+          ]
+        },
+        "identity": {
+          "$ref": "#/$defs/Identity"
+        },
+        "sequence": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "payload_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "affected_requirements": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^REQ-[a-z0-9-]+$"
+          }
+        },
+        "artifact_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/FileRef"
+          }
+        }
+      }
+    },
+    "LoopResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "event_id",
+        "identity",
+        "manager",
+        "status",
+        "scope",
+        "evidence",
+        "next",
+        "effect_authority"
+      ],
+      "properties": {
+        "event_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "identity": {
+          "$ref": "#/$defs/Identity"
+        },
+        "manager": {
+          "enum": [
+            "schema",
+            "test",
+            "hook",
+            "cron"
+          ]
+        },
+        "status": {
+          "enum": [
+            "PROPOSED",
+            "PENDING",
+            "REFUSED",
+            "UNKNOWN",
+            "OBSERVED"
+          ]
+        },
+        "scope": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^REQ-[a-z0-9-]+$"
+          }
+        },
+        "evidence": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/FileRef"
+          }
+        },
+        "next": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "owner",
+            "operation",
+            "argv",
+            "missing"
+          ],
+          "properties": {
+            "owner": {
+              "type": "string",
+              "minLength": 1
+            },
+            "operation": {
+              "type": "string",
+              "minLength": 1
+            },
+            "argv": {
+              "type": [
+                "array",
+                "null"
+              ],
+              "items": {
+                "type": "string"
+              }
+            },
+            "missing": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "input",
+                  "producer",
+                  "reason",
+                  "obtainable"
+                ],
+                "properties": {
+                  "input": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "producer": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "reason": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "obtainable": {
+                    "type": [
+                      "boolean",
+                      "null"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "effect_authority": {
+          "const": false
+        }
+      }
+    },
+    "OwnerConsumption": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "requirement_id",
+        "identity",
+        "result_ref",
+        "returned_next_ref",
+        "actor",
+        "action_ref",
+        "owner_readback",
+        "status"
+      ],
+      "properties": {
+        "requirement_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "identity": {
+          "$ref": "#/$defs/Identity"
+        },
+        "result_ref": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "path",
+            "sha256"
+          ],
+          "properties": {
+            "path": {
+              "type": "string",
+              "minLength": 1
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          }
+        },
+        "returned_next_ref": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "path",
+            "sha256"
+          ],
+          "properties": {
+            "path": {
+              "type": "string",
+              "minLength": 1
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          }
+        },
+        "actor": {
+          "type": "string",
+          "minLength": 1
+        },
+        "action_ref": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "path",
+            "sha256"
+          ],
+          "properties": {
+            "path": {
+              "type": "string",
+              "minLength": 1
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          }
+        },
+        "owner_readback": {
+          "anyOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "path",
+                "sha256"
+              ],
+              "properties": {
+                "path": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                }
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "status": {
+          "enum": [
+            "REPORTED",
+            "READBACK_PENDING",
+            "SCOPED_OBSERVED"
+          ]
+        }
+      }
+    },
+    "ClosureClaim": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "identity",
+        "requirement_ids",
+        "acceptance_refs",
+        "consumption_refs",
+        "delivery_refs",
+        "status",
+        "authorizes_landing"
+      ],
+      "properties": {
+        "identity": {
+          "$ref": "#/$defs/Identity"
+        },
+        "requirement_ids": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^REQ-[a-z0-9-]+$"
+          }
+        },
+        "acceptance_refs": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "path",
+              "sha256"
+            ],
+            "properties": {
+              "path": {
+                "type": "string",
+                "minLength": 1
+              },
+              "sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              }
+            }
+          }
+        },
+        "consumption_refs": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "path",
+              "sha256"
+            ],
+            "properties": {
+              "path": {
+                "type": "string",
+                "minLength": 1
+              },
+              "sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              }
+            }
+          }
+        },
+        "delivery_refs": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "path",
+              "sha256"
+            ],
+            "properties": {
+              "path": {
+                "type": "string",
+                "minLength": 1
+              },
+              "sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              }
+            }
+          }
+        },
+        "status": {
+          "enum": [
+            "PROPOSED",
+            "UNKNOWN",
+            "SCOPED_SUPPORTED"
+          ]
+        },
+        "authorizes_landing": {
+          "const": false
+        }
+      }
+    }
+  }
+}

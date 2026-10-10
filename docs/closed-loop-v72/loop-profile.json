@@ -1,0 +1,282 @@
+{
+  "profile_version": "factoryweaver/closed-loop-v1",
+  "status": "PROPOSED",
+  "project": "project.json",
+  "requirements": [
+    "REQ-intent",
+    "REQ-coverage",
+    "REQ-dependencies",
+    "REQ-spec-data",
+    "REQ-stable-update",
+    "REQ-correction",
+    "REQ-identity",
+    "REQ-events",
+    "REQ-schema",
+    "REQ-test",
+    "REQ-hook",
+    "REQ-cron",
+    "REQ-inner-loop",
+    "REQ-outer-loop",
+    "REQ-manager-feedback",
+    "REQ-consumption",
+    "REQ-completion",
+    "REQ-invalidation",
+    "REQ-replay",
+    "REQ-unknown-effect",
+    "REQ-retry-budget",
+    "REQ-thinking-router",
+    "REQ-ponytail",
+    "REQ-eval-evidence",
+    "REQ-compiler-audit",
+    "REQ-adapters",
+    "REQ-safety",
+    "REQ-handoff",
+    "REQ-cost",
+    "REQ-publication"
+  ],
+  "managers": [
+    {
+      "manager": "schema",
+      "owner": "Schema Manager",
+      "registered_adapter": null,
+      "status": "UNBOUND",
+      "required_result": "身分驗證、投影、依賴、next 與具名缺口"
+    },
+    {
+      "manager": "test",
+      "owner": "Test Manager",
+      "registered_adapter": null,
+      "status": "UNBOUND",
+      "required_result": "scope selection、actual controls／observations 與原始產物"
+    },
+    {
+      "manager": "hook",
+      "owner": "原 native Hook／設定 owner",
+      "registered_adapter": null,
+      "status": "UNBOUND",
+      "required_result": "精確定義的 trust／load／match／invoke／deliver／effect readback"
+    },
+    {
+      "manager": "cron",
+      "owner": "原 Cron／scheduler owner",
+      "registered_adapter": null,
+      "status": "UNBOUND",
+      "required_result": "具名 schedule binding、wake／cancel／terminal 及 owner readback"
+    }
+  ],
+  "events": [
+    {
+      "event_type": "intent.changed",
+      "producer_role": "Session",
+      "consumers": [
+        "thinking-router",
+        "compiler",
+        "schema"
+      ],
+      "condition": "原意或必要約束實質改變",
+      "requirement_ids": [
+        "REQ-intent",
+        "REQ-coverage",
+        "REQ-thinking-router"
+      ],
+      "input_schema": "../../contracts/v1/closed-loop-profile.schema.json#/$defs/LoopEvent",
+      "output_schema": "../../contracts/v1/closed-loop-profile.schema.json#/$defs/LoopResult",
+      "status": "PROPOSED"
+    },
+    {
+      "event_type": "requirement.changed",
+      "producer_role": "compiler／原規格 owner",
+      "consumers": [
+        "schema",
+        "test"
+      ],
+      "condition": "SPEC、驗收或依賴改變",
+      "requirement_ids": [
+        "REQ-spec-data",
+        "REQ-invalidation",
+        "REQ-test"
+      ],
+      "input_schema": "../../contracts/v1/closed-loop-profile.schema.json#/$defs/LoopEvent",
+      "output_schema": "../../contracts/v1/closed-loop-profile.schema.json#/$defs/LoopResult",
+      "status": "PROPOSED"
+    },
+    {
+      "event_type": "source.changed",
+      "producer_role": "原 source／evidence producer",
+      "consumers": [
+        "schema"
+      ],
+      "condition": "Source pin、head、plan 或環境失效",
+      "requirement_ids": [
+        "REQ-identity",
+        "REQ-invalidation"
+      ],
+      "input_schema": "../../contracts/v1/closed-loop-profile.schema.json#/$defs/LoopEvent",
+      "output_schema": "../../contracts/v1/closed-loop-profile.schema.json#/$defs/LoopResult",
+      "status": "PROPOSED"
+    },
+    {
+      "event_type": "manager.result",
+      "producer_role": "原 Test／Hook／Cron producer",
+      "consumers": [
+        "schema",
+        "task-owner"
+      ],
+      "condition": "取得 actual result",
+      "requirement_ids": [
+        "REQ-manager-feedback",
+        "REQ-consumption"
+      ],
+      "input_schema": "../../contracts/v1/closed-loop-profile.schema.json#/$defs/LoopEvent",
+      "output_schema": "../../contracts/v1/closed-loop-profile.schema.json#/$defs/LoopResult",
+      "status": "PROPOSED"
+    },
+    {
+      "event_type": "hook.definition.changed",
+      "producer_role": "原設定 owner",
+      "consumers": [
+        "hook",
+        "schema"
+      ],
+      "condition": "精確定義或 carrier／event binding 改變",
+      "requirement_ids": [
+        "REQ-hook"
+      ],
+      "input_schema": "../../contracts/v1/closed-loop-profile.schema.json#/$defs/LoopEvent",
+      "output_schema": "../../contracts/v1/closed-loop-profile.schema.json#/$defs/LoopResult",
+      "status": "PROPOSED"
+    },
+    {
+      "event_type": "wait.changed",
+      "producer_role": "原 task owner",
+      "consumers": [
+        "cron",
+        "schema"
+      ],
+      "condition": "必要等待、deadline、取消、授權或終態改變",
+      "requirement_ids": [
+        "REQ-cron"
+      ],
+      "input_schema": "../../contracts/v1/closed-loop-profile.schema.json#/$defs/LoopEvent",
+      "output_schema": "../../contracts/v1/closed-loop-profile.schema.json#/$defs/LoopResult",
+      "status": "PROPOSED"
+    },
+    {
+      "event_type": "owner.readback",
+      "producer_role": "原效果／交付 owner",
+      "consumers": [
+        "schema",
+        "outer-loop"
+      ],
+      "condition": "取得原效果或交付讀回",
+      "requirement_ids": [
+        "REQ-consumption",
+        "REQ-completion"
+      ],
+      "input_schema": "../../contracts/v1/closed-loop-profile.schema.json#/$defs/LoopEvent",
+      "output_schema": "../../contracts/v1/closed-loop-profile.schema.json#/$defs/LoopResult",
+      "status": "PROPOSED"
+    }
+  ],
+  "task_units": [
+    {
+      "id": "TU-source",
+      "requirements": [
+        "REQ-intent",
+        "REQ-coverage",
+        "REQ-spec-data",
+        "REQ-stable-update",
+        "REQ-correction",
+        "REQ-thinking-router",
+        "REQ-compiler-audit"
+      ],
+      "depends_on": [],
+      "owner": "compiler／原 task owner",
+      "input": "原要求、v7.2 portable profile、selected source refs",
+      "exit_oracle": "逐 CL 語義核對與全部 SPEC 的正反未知重播案例",
+      "execution_status": "NOT_RUN"
+    },
+    {
+      "id": "TU-adapters",
+      "requirements": [
+        "REQ-dependencies",
+        "REQ-identity",
+        "REQ-events",
+        "REQ-schema",
+        "REQ-test",
+        "REQ-adapters",
+        "REQ-safety"
+      ],
+      "depends_on": [
+        "TU-source"
+      ],
+      "owner": "原 Host／lifecycle owner",
+      "input": "selected registry 與各 owner 真實 input schema",
+      "exit_oracle": "相同 task 事件能驅動 Schema／Test 並拒絕錯版／未登錄",
+      "execution_status": "NOT_RUN"
+    },
+    {
+      "id": "TU-native",
+      "requirements": [
+        "REQ-hook",
+        "REQ-cron",
+        "REQ-replay",
+        "REQ-unknown-effect",
+        "REQ-retry-budget"
+      ],
+      "depends_on": [
+        "TU-adapters"
+      ],
+      "owner": "原 Hook／scheduler／write owner",
+      "input": "已選 carrier、信任、設定與原 owner readback",
+      "exit_oracle": "原生事件、喚醒、取消和 unknown-effect controls",
+      "execution_status": "NOT_RUN"
+    },
+    {
+      "id": "TU-closure",
+      "requirements": [
+        "REQ-inner-loop",
+        "REQ-outer-loop",
+        "REQ-manager-feedback",
+        "REQ-consumption",
+        "REQ-completion",
+        "REQ-invalidation",
+        "REQ-ponytail",
+        "REQ-eval-evidence",
+        "REQ-handoff",
+        "REQ-cost"
+      ],
+      "depends_on": [
+        "TU-adapters",
+        "TU-native"
+      ],
+      "owner": "原 Soodles／Noodle owners",
+      "input": "完整 REQ、Manager actual results、事件 history",
+      "exit_oracle": "局部綠不提前停止；全部 REQ 與效果消費各自有相符證據",
+      "execution_status": "NOT_RUN"
+    },
+    {
+      "id": "TU-publication",
+      "requirements": [
+        "REQ-publication"
+      ],
+      "depends_on": [
+        "TU-source"
+      ],
+      "owner": "文件交付 owner",
+      "input": "已保存的規格與有限 eval 結果",
+      "exit_oracle": "PR exact head、必要 checks、merge／provider main readback；不宣稱 runtime 完成",
+      "execution_status": "NOT_RUN"
+    }
+  ],
+  "closure_obligations": [
+    "全部原句語義核對且無未映射項",
+    "同一驗收身分的 REQ／SPEC／必要 Manager actual results",
+    "原 owner 已消費 next 且 actual effect 有 readback",
+    "必要交付與 reconciliation 由原 owner 確認",
+    "所有未知只阻塞真正依賴，沒有尚可做卻提前停止的要求",
+    "知識、工程、交付分軸，編譯 DONE 不等於產品完成"
+  ],
+  "effects": [],
+  "authorizes_landing": false
+}
