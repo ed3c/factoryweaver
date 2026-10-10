@@ -1,0 +1,90 @@
+{
+  "schema_version": "factoryweaver/v1",
+  "sources": [
+    {
+      "source_id": "SRC-GRILLING",
+      "source_type": "official_doc",
+      "source_dependency_key": "mattpocock-grilling",
+      "locator": "SKILL.md / Work the tree in rounds",
+      "uri": "https://github.com/mattpocock/skills/blob/main/skills/productivity/grilling/SKILL.md",
+      "integrity": "UNPINNED",
+      "source_role": "SUBJECT_MATTER"
+    }
+  ],
+  "decisions": [
+    {
+      "id": "DEC-auth-owner",
+      "question": "Who authorizes tool execution?",
+      "suggested_answer": "Host owner",
+      "human_confirmed": false,
+      "decision": null,
+      "source_ids": [
+        "SRC-GRILLING"
+      ],
+      "confirmation_ref": null
+    }
+  ],
+  "requirements": [
+    {
+      "id": "REQ-human-auth",
+      "statement": "Never automatically accept a suggested answer as a human decision.",
+      "claim_kind": "NORMATIVE",
+      "source_ids": [
+        "SRC-GRILLING"
+      ],
+      "owner": "human decision owner",
+      "acceptance": [
+        "Unconfirmed human decision yields WAIT_FOR_HUMAN."
+      ],
+      "knowledge_status": "SPECIFIED",
+      "engineering_status": "UNASSESSED",
+      "delivery_status": "NOT_STARTED",
+      "falsifier": "Agent silently accepts a suggested answer.",
+      "depends_on": [
+        "DEC-auth-owner"
+      ]
+    }
+  ],
+  "cards": [
+    {
+      "stable_id": "K-human-frontier",
+      "canonical_key": "K|grilling|requires|human-answer|interview|v1",
+      "series": "K",
+      "revision": 1,
+      "status": "ACTIVE",
+      "title": "Unconfirmed interview frontier",
+      "payload": "Grilling presents questions to a human. A suggestion does not constitute an answer.",
+      "evidence_ids": [
+        "SRC-GRILLING"
+      ],
+      "typed_links": [
+        {
+          "relation": "depends_on",
+          "target": "REQ-human-auth"
+        }
+      ]
+    }
+  ],
+  "action_requests": [],
+  "progress": {
+    "knowledge": {
+      "state": "HUMAN_ANSWER_MISSING",
+      "evidence_refs": [
+        "SRC-GRILLING"
+      ]
+    },
+    "engineering": {
+      "state": "NOT_STARTED",
+      "evidence_refs": []
+    },
+    "delivery": {
+      "state": "NOT_STARTED",
+      "evidence_refs": []
+    }
+  },
+  "subject": {
+    "id": "matt-grilling-example",
+    "scope": "fixture-only, no runtime",
+    "consumer": "UNBOUND"
+  }
+}
