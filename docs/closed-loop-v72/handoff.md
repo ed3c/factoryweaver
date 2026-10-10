@@ -31,3 +31,15 @@ Task unit 僅切工作。既有事件 log 和 owner receipt 保存實際 state�
 若全部剩餘動作都缺少已查證且目前不可取得的必要輸入，保留逐項 producer、理由與 scope，報部分完成。尚未檢查 producer、仍可產生输入或仍有授權工程时，不可把 final 當下一輪入口。
 
 文件合併只完成規格交付。本次沒有真實 Noodle execute、四 Manager 自動觸發、native Hook／Cron 或全任務 runtime 驗收；这些状态保持 NOT_RUN。
+
+## Issue #17 增量 compiler 單元
+
+上面「本次沒有真實 Noodle execute」與 `NOT_RUN` 描述原規格交付的基線。以下單元的 admitted execute 與 controls 另行記錄，不把基線文字改寫成 native Manager 或全任務 runtime 已驗收。
+
+本單元在同一 admitted execute 邊界加入唯讀 [card delta CLI](../card-delta-contract.md)，直接消費 [project.json](project.json) 與修改後的完整 project。它保留相同 canonical key 的 stable ID、revision 與 Source／card／REQ history；每批最多 12 卡，cursor 綁 exact before／after bytes 及 batch size。Source／REQ／card 變更只沿明示依賴傳遞 advisory invalidation。
+
+所選範圍是 REQ-coverage、REQ-stable-update、REQ-correction、REQ-invalidation、REQ-replay 的增量編譯部分。原 30 REQ、30 SPEC、68 cards，以及每個 REQ 的 acceptance／dependencies 繼續保留。完整語義核對、native Manager effect readback 和整體 runtime acceptance 仍由原 owner 接續；編譯 DONE 或局部 controls PASS 不能完成全部 30 REQ。
+
+本 writer 的 unit manifest 在 [delta-unit.json](delta-unit.json)。原 session 依 Test Manager 所選 controls 取得 CLI observation，完成獨立 review，並經原 stage feedback 入口消費 Schema 返回的 next。這些程序的結果以實際外部 evidence 為準，不能從本段說明推定 PASS 或 effect 已完成。
+
+交付順序是：writer 保存已驗證的單元 commit，經原 stage-outcome 入口交還本單元；原 publication owner 再完成 PR、exact-head CI；原 landing owner 最後確認 provider main 與本機 main terminal readback。這不授權 compiler 執行 runtime effects，也不轉移原 order／session／control root 或重設失敗歷史與 budget。未知寫入仍先由原 owner readback。

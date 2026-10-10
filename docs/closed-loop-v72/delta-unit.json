@@ -1,0 +1,47 @@
+{
+  "schema": 1,
+  "issue": {
+    "repository": "ed3c/factoryweaver",
+    "number": 17
+  },
+  "instructions": [
+    {
+      "path": "docs/closed-loop-v72/handoff.md",
+      "baseline_sha256": "8055afc7758d78efd99cc96609e60d19b329045845fe06b61753ed9077fec835",
+      "treatment_sha256": "c82376c454fda9200f9f5d2c5063fe56e3bac3612e5c64a22ac59b8a8e3a28d8"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "README.md",
+      "role": "entry points and finite knowledge/runtime delivery boundary",
+      "sha256": "09ba895535ce84976ca8b98ed9278c37a3ee6848acc8303159573a251eb7633b"
+    },
+    {
+      "path": "docs/card-delta-contract.md",
+      "role": "bounded delta identity history cursor and advisory dependency contract",
+      "sha256": "37fc1cb600cd11d25b10250ad7bcf5824f71e7a9042de7156bc7dfae4bfa189d"
+    },
+    {
+      "path": "scripts/card_delta.py",
+      "role": "read-only incremental card compiler on existing knowledge schema",
+      "sha256": "1318089814f615dd546f6591d40cc2dab972b9700c744ed029d2900f73eee380"
+    },
+    {
+      "path": "tests/test_card_delta.py",
+      "role": "public-source delta controls and stable history tests",
+      "sha256": "448976f54976ea87391092f84402c81c30a03599cc648c96bf855ba123f2ac32"
+    },
+    {
+      "path": "tests/test_closed_loop_delta.py",
+      "role": "direct main-project CLI controls for all 30 requirements and 68 cards",
+      "sha256": "ad5149748efe781c299513c35b77e4818abfedcda7965f123e0d1fd698849090"
+    }
+  ],
+  "owner": {
+    "name": "Original Noodle execute writer",
+    "tool": "issue_admission.validate_delivery_paths",
+    "authorization": "ed3c/factoryweaver#17"
+  },
+  "authorizes_landing": false
+}
