@@ -9,8 +9,8 @@
 
 ## Writing routes
 
-Engineering Writing uses Soodles `review-writing` for source fidelity, actor, condition, causality, state, acceptance, and semantic readback. Select and read the available original skill before applying it. An external reference does not establish local installation or verified Agent behavior.
+Engineering Writing uses Soodles `review-writing` for source fidelity, actor, condition, causality, state, acceptance, and semantic readback. Use the current task's selected original source revision. Read that skill before applying it. An external reference does not establish local installation or verified Agent behavior.
 
 Human-facing Articles use medium-compiler's source-grounded English draft, sloptrim prose review, English semantic review, Traditional Chinese translation, and bilingual fidelity check. Preserve exact English technical terms. If sloptrim has not run, record `NOT_RUN`.
 
-Both routes preserve Source Fidelity. A prose detector or style score cannot establish engineering correctness, change acceptance, or grant effects. Preserve fixed logs, receipts, and source bytes. Missing writing tools block only their dependent checks.
+Both routes preserve Source Fidelity. A prose detector or style score cannot establish truth, engineering correctness, or author identity. It cannot change acceptance or grant effects. Preserve fixed logs, receipts, and source bytes. Record every missing writing tool or unperformed dependent check as `NOT_RUN`, never as `PASS`. Missing writing tools block only their dependent checks.
