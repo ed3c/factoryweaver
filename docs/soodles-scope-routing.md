@@ -2,6 +2,11 @@
 
 > Proposal for FactoryWeaver v7.2. Additive to portable v7.2; not an execution owner, scheduler, new P-class state machine or proof of native runtime. Read with `references/zettelkasten-v7.2.md`. Existing `contracts/v1/knowledge-record.schema.json` remains unchanged.
 
+## Card preflight
+
+Read [v7.2 Card Classification / Scope Assembly](../references/card-classification-and-scope-assembly.md) before selecting cards, links, or Skills. The original 15 series fall into five functional groups; the seven core types C/REQ/G/SPEC/V/X/K are optional per Scope, not a compulsory recipe. Never manufacture four types to fill the four display slots. Reuse applicable C/G and prioritize real source-backed semantic UPDATEs.
+
+The four output contracts ScopeManifest, SkillRoute, PromptDelta, Continuation are semantic sidecars, not a new card series. Every material link must specify its direction, condition and what behavior/test fails if the linked prerequisite changes; a chronological syllabus relationship alone is not a depends_on/enables causal relation. Reject generic lecture-title cards and copied worker prompts; do not misrepresent unread Slides/Readings as verified evidence.
 ## 1. Compilation unit and invariant
 
 **One Behavior Scope = one *proposed* causal Issue Atom boundary, not one Card.** A Scope can include many reused C / G / REQ / SPEC / V / K / X cards. One original outcome may require **several sequential or dependent Issue Atoms**; never split away its required callers, tests, fixtures, consumers, rollback or landing obligations. Scope membership is a selection of relevant card semantics, not a new effect owner.
