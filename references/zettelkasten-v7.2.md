@@ -16,7 +16,8 @@ COMPILE_ORDER: EVIDENCE_FIRST
 RENDER_ORDER: TASK_VALUE_FIRST
 INTELLIGENT_COMPRESSION: OFF
 GRANULARITY: MAXIMUM
-MAX_CARDS_PER_BATCH: 12
+MAX_CARDS_PER_BATCH: 12                     # portable CLI ceiling; selected Soodles profile uses 4
+SOODLES_BATCH_RENDER_SLOTS: 4                # fixed visual slots, not forced card creation
 MAX_SELF_REPAIR_PASSES: 3
 SOURCE_DEPENDENCY_CHECK: ON
 ANTI_FRAGMENTATION: ON
@@ -130,6 +131,31 @@ QG-34 API/SDK compatibility: version/protocol, schema compatibility and consumer
 
 把 `<TASK>` 中的職缺或工程描述編譯成 Host-neutral、可由任意 Auto-PR Consumer 接受的規格知識圖。優先閱讀當前工作樹與官方文件，不能從卡片產生 shell 權限。提供一組可教學的 end-to-end system-design cards，一份具體的 JSON data contract，一條可交給 CLI owner 的 ActionRequest，以及獨立的 knowledge/engineering/delivery 進度表。可用工具不存在時建立 K Card，禁止偽造測試或 command success。
 
+
+## SOODLES PROFILE — GOAL-ORIENTED SCOPE, ROUTED SKILLS AND DRILL-DOWN
+
+When `<PROJECT_SCOPE>` selects Soodles, **read [the scoped Host Profile](../docs/soodles-scope-routing.md) before rendering**. This section supplements, but does not change, portable authority boundaries or legacy v1 machine fields.
+
+**I-01 Lossless fixed-slot batching:**
+- Render exactly **four visual Card Slots** for a content batch; only actual CREATE/UPDATE cards occupy slots. Unused final slots are `UNUSED` presentation, never cards. A status-only NOOP/BLOCKED output need not create cards. Four slots do not bound Scope size, Issue count, whole-task REQs or source inventory.
+- `BOOT`: preserve complete Source→REQ inventory with the Host before the initial four content slots; prioritize core behavior, goal, measuring method, constraints and conceptual skeleton. The displayed cards do not constitute whole-task coverage.
+- `DRILL`: consume the **previous accepted state**, reuse existing cards, and improve only demonstrable missing Behavior Scope boundaries, applicable constraints, knowledge links, Prompt Delta, Oracle or continuity. Prefer UPDATE; CREATE only for genuinely separate knowledge. Record the specific prior gap closed and next pending obligation.
+- Use existing `card_delta.py` with Host-selected `batch_size=4` for a **frozen Before/After pair**. Its returned cursor is Host-managed. A semantic Drill edit opens a **new** Before/After delta cycle, never the former cursor. Do not model-generate IDs, digests, timestamps, machine cursors, command arguments, Git state or measured numbers.
+
+**Each Behavior Scope is exactly one *proposed* Issue Atom causal boundary**, assembled from *multiple* reusable REQ/SPEC/C/G/V/K/X cards. Required semantics: `outcome`, `work_kind`, `goal`, `measurement`, `persistence`, `stopping_and_escalation`, `entry_and_exit`, `causal_change`, `coverage`, `constraints`, `card_links`, `outer_route`, `inner_task`, `thinking`, `evidence_and_status`. These are **semantic profile fields**, not additions to the legacy `knowledge-record.schema.json`. Versioned optional extensions live in a separate proposed sidecar until actual schema/host adapter support exists.
+
+**Goal-Oriented Contract:** Every Scope must state (1) observable success target, (2) authoritative measurable result or explicitly unresolved evaluation rule, (3) evidence-driven persistence/effort horizon, and (4) stop/escalation rule. If the user gives a multi-week goal, preserve it at whole-task level while individual Issue Atoms remain bounded causal experiments; no infinite attempts, invented schedule or self-funded background operation. Missing data is an explicit K with a named route, not a made-up observation.
+
+**Outer Loop owns choice and lifecycle:**
+- For each Scope, the current authorized Soodles Session prepares the Issue Contract through the existing `issue-atom` owner. Select conditional Skills from the profile's Skill Trigger Matrix **only when their observed triggers are true**. `thinking-router` chooses `think` for unresolved architecture/value plans; `grilling` for genuine user-owned goal/tradeoff ambiguities; a relevant Thinking Method or optional bounded two-brain adversarial review for unresolved causal claims. A known CLI/provenance fact does not need LLM judgment.
+- Unclear evaluator semantics with traces → Host-confirmed installed Evals `error-discovery` / `eval-audit` as applicable; objective performance data → original metric producer / Test Manager. The presence of a Skill in historic fixture/docs **does not prove installation**. Missing Evals capability remains a named prerequisite, not a fictitious invocation.
+- `test-manager` determines the smallest relevant controls; `review-writing` + native P-class behavior feedback only for actual P-class edits; `outer-review` → Ponytail and/or Waza only for a real candidate/question; Hook/Cron only where supported native requirements exist. Existing Schema/Owner and provider readbacks own result consumption. Outer Loop does **not** transfer its decisions to the inner worker.
+
+**Inner Loop owns execution freedom:** The original admitted `execute` / Noodle Poteto worker receives **bulleted Prompt Delta requirements**, actual required outcomes, immutable admitted change/effect boundaries, source-grounded constraints, acceptance and falsifiers. It freely chooses implementation details, local engineering sequence and valid Poteto method **within its accepted contract**. Never pre-script algorithms or re-route outer Skills inside the worker. It cannot grant new authorization, change worktree boundaries, publish or declare the whole goal met. Later Owner duties remain with the Soodles Outer Loop.
+
+**Thinking extension:** Preserve `decision_class` (implementation / architecture / business_goal / evaluation / causal_inference / ownership / none), relevant `think_skill`, selected method or none, Brain A claim/premise, Brain B discriminating counterexample, external Oracle, evidence status, `prompt_delta` or NOOP, and explicitly optional namespaced future semantic fields. Do not require every Scope to run two models. Real independent Session decisions still count against the original machine's semantic decision boundary; don't reset cost by switching workers.
+
+**Completion contract:** `CONTINUE` for genuinely pending semantic patches or frozen delta pages; `NOOP` when nothing changed; `BLOCKED` when a required owner measurement/readback is missing; `DONE` only when compilation of the selected pass is exhausted. Goal achievement and provider delivery remain separately verified by actual owners. Never emit filler cards or upgrade compiled knowledge to runtime PASS.
 
 ## STANDALONE PORTABILITY ANNEX
 
