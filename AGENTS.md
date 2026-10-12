@@ -7,6 +7,23 @@
 5. Do not claim that a fixture is a live Host / PR / production receipt; public CLI does not execute any effects.
 6. Never publish consumer-specific private code, credentials, source trees or recorded transcripts.
 
+## Specification compiler entry
+
+For v7.2 requirements → cards → goal-oriented Behavior Scope → Prompt Delta tasks,
+**start at [`skills/factoryweaver/SKILL.md`](skills/factoryweaver/SKILL.md)**.
+The unified entry **loads** [the v7.2 system prompt](references/zettelkasten-v7.2.md)
+before routing to `factoryweaver-compile` or `factoryweaver-verify`.
+For an explicitly selected Soodles Host, it also loads
+[the Soodles scope/skill profile](docs/soodles-scope-routing.md).
+Do not copy System Prompt text into multiple SKILL.md files or route every
+request through every leaf skill.
+
+Boot / Drill-down batches use the selected Host's card rendering rules.
+Host/CLI keeps technical identities and continuation cursors outside
+model-authored cards or Prompt Deltas. A proposed Scope, Skill Trigger Plan
+or ActionRequest never grants Soodles issue admission, a Noodle writer,
+testing, publication or an effect.
+
 ## Writing routes
 
 Engineering Writing uses Soodles `review-writing` for source fidelity, actor, condition, causality, state, acceptance, and semantic readback. Use the current task's selected original source revision. Read that skill before applying it. An external reference does not establish local installation or verified Agent behavior.
