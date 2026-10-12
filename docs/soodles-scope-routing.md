@@ -4,7 +4,7 @@
 
 ## Card preflight
 
-Read [v7.2 Card Classification / Scope Assembly](../references/card-classification-and-scope-assembly.md) before selecting cards, links, or Skills. The original 15 series fall into five functional groups; the seven core types C/REQ/G/SPEC/V/X/K are optional per Scope, not a compulsory recipe. Never manufacture four types to fill the four display slots. Reuse applicable C/G and prioritize real source-backed semantic UPDATEs.
+Read [v7.2 Card Classification / Scope Assembly](../references/card-classification-and-scope-assembly.md) before selecting cards, links, or Skills. The reference now defines a per-series **Soodles Outer Loop → conditional Noodle Poteto/pstack Skill Consumer matrix**, multimodal input/coverage semantics and `review-writing` zero-context quality gates. These mappings are selectable methods, **not automatic tool calls**. The original 15 series fall into five functional groups; the seven core types C/REQ/G/SPEC/V/X/K are optional per Scope, not a compulsory recipe. Never manufacture four types to fill the four display slots. Reuse applicable C/G and prioritize real source-backed semantic UPDATEs.
 
 The four output contracts ScopeManifest, SkillRoute, PromptDelta, Continuation are semantic sidecars, not a new card series. Every material link must specify its direction, condition and what behavior/test fails if the linked prerequisite changes; a chronological syllabus relationship alone is not a depends_on/enables causal relation. Reject generic lecture-title cards and copied worker prompts; do not misrepresent unread Slides/Readings as verified evidence.
 ## 1. Compilation unit and invariant
