@@ -55,10 +55,8 @@ def export(record, selection):
     selected_cards = [cards[key] for key in selection["card_ids"]]
     if any(c["status"] != "ACTIVE" for c in selected_cards):
         raise ContractError("scope_selection_retired_or_superseded_card")
-    if any(r["knowledge_status"] in ("UNKNOWN", "CONFLICTED") for r in selected_requirements):
-        # Unknowns are valid *knowledge*, but cannot silently enter an atom as
-        # verified requirements. Preserve them in the original full inventory.
-        raise ContractError("scope_selection_unresolved_requirement")
+    # Preserve UNKNOWN and CONFLICTED requirements for source-resolution scopes.
+    # The Soodles reader reports them as unresolved, never actionable admission.
     return {
         "protocol": PROTOCOL,
         "kind": "SOURCE_BOUND_PROPOSAL",
