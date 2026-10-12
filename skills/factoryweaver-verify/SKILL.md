@@ -11,6 +11,13 @@ license: MIT
 4. `READY` is only a proposal. Never launch an adapter from this skill; host must check registry, identity, permission, source pins and effect boundaries.
 5. Negative cases: hallucinated operation, unconfirmed human answer, invalid link, duplicate key, empty delivery receipt, unknown effect and source drift.
 6. Report machine-checked proof boundary and remaining unknowns. A local fixture never proves upstream model performance or PR delivery.
+## Semantic card and link gates (all Hosts)
+
+Read [Card Classification and Scope Assembly](../../references/card-classification-and-scope-assembly.md). Validate all 15 series are preserved; the five groups and seven core types are **organizing vocabulary**, not card quotas. Independently review each material CREATE/UPDATE for actual technical mechanism, condition, decision impact, falsifier, and inspected source. Generic title paraphrases and copied boilerplate must receive REVISE/REUSE, not semantic ACCEPT.
+
+Verify each material edge's type, source/target direction and counterfactual dependency; reject 'W9 Coding Agents enables W10 Thanksgiving Recess', reverse V validated_by SPEC, and based_on attribution to an unread slide. Reuse cross-scope G and preserve named K. Ensure one causal Issue Atom assembles minimal sufficient cards and four runtime contracts are non-card sidecars. Verify task-local Prompt Delta names a **new** required behavior/constraint; no change means NOOP.
+
+The current JSON validator checks structure and registered targets only, **not semantic sufficiency**. Report SEMANTICS_NOT_VERIFIED when independent source-content review or actual evidence is absent; never convert schema/CI fixture green into Agent behavior PASS or native effect delivery.
 ## Soodles Profile: semantic batch/Scope verification
 
 When the selected Host is Soodles, read `../../docs/soodles-scope-routing.md` and check all of the following *without* claiming real Host execution:
