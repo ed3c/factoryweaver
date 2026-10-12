@@ -52,7 +52,7 @@ class FactoryWeaverEntrySkillTests(unittest.TestCase):
         self.assertIn("MAX_CARDS_PER_BATCH: 12", ref)
         self.assertIn("SOODLES_BATCH_RENDER_SLOTS: 4", ref)
         self.assertIn("four-slot", entry.lower())
-        self.assertIn("**Goal / Measurement / Persistence / Stop-Escalation**", entry)
+        self.assertIn("Goal / Measurement / Persistence / Stop-Escalation", entry)
         self.assertIn("Issue Atom", profile)
         self.assertIn("p95 CI duration below 10 minutes", profile)
         self.assertIn("**not** evidence of an installed live Evals capability", profile)
