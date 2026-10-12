@@ -1,9 +1,11 @@
 """Static semantic-policy routing tests, not an LLM content-quality evaluation."""
 import re
 import unittest
+import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "scripts"))
 REF = ROOT / "references/card-classification-and-scope-assembly.md"
 
 def read(path):
@@ -98,5 +100,37 @@ class CardClassificationContractTests(unittest.TestCase):
         ]:
             self.assertIn(condition, doc)
         self.assertIn("many Scopes", doc)
+
+    def test_original_test_and_hook_manager_contracts_are_explicit(self):
+        source = read("docs/soodles-manager-consumption.md")
+        for item in ("test-manager/SKILL.md", "hook_manager.py", "tests/test_hook_stop.py",
+                     "needs_scope", "NO_NATIVE_HOOK_REQUIRED", "stop_hook_active",
+                     "preserve", "native", "NOT_RUN"):
+            self.assertIn(item.lower(), source.lower())
+        self.assertNotIn("This FactoryWeaver Hook Manager executes", source)
+        import card_semantic
+        no_need = {"schema": "factoryweaver/manager-needs/v1",
+                   "subject": "Only classify an existing Concept",
+                   "test_need": None, "hook_need": None}
+        result = card_semantic.project_managers(no_need)
+        self.assertEqual(result["test_manager"]["status"], "NO_TEST_SELECTION_REQUESTED")
+        self.assertEqual(result["hook_manager"]["status"], "NO_NATIVE_HOOK_REQUIRED")
+        self.assertEqual(result["manager_actions_performed"], [])
+        self.assertFalse(result["effect_authority"])
+
+    def test_each_selected_card_has_a_real_prompt(self):
+        import card_semantic
+        for series in card_semantic.registry()["cards"]:
+            with self.subTest(series=series):
+                selected = card_semantic.select([series])
+                path = ROOT / selected["prompts"][0]["prompt"]
+                content = path.read_text(encoding="utf-8")
+                for required in ("**Trigger:**", "**Required semantic slots", "**Scope contribution:**",
+                                 "**Rejection/non-case:**", "**Review-writing:**", "**Output:**"):
+                    self.assertIn(required, content)
+        overall = read("references/zettelkasten-v7.2.md")
+        self.assertIn("registry.json", overall)
+        self.assertIn("SELECTED TYPES ONLY", overall)
+        self.assertNotIn("先產生 D/V/X/K", overall)
 
 if __name__ == "__main__": unittest.main()
