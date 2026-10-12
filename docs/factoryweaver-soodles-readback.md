@@ -40,7 +40,7 @@ The exact file reference and SHA are computed by the real Host/CLI. Do not put a
 
 ## Negative cases
 
-- A selected unknown/repeated REQ/Card, retired card, missing Goal/Measurement/Stop or author-authored mechanical binding refuses at producer.
+- An unknown/repeated REQ/Card identity, retired card, missing Goal/Measurement/Stop or author-authored mechanical binding refuses at producer. Selected existing UNKNOWN/CONFLICTED REQ or K/X Card is **retained**, so Soodles can return `needs_source_readback` rather than hiding the original source gap.
 - Changed bundle bytes, unknown references or invented effect claims refuse at Soodles consumer. A valid digest proves byte selection, **not source truth or human approval**.
 - Original Issue readback is `NOT_READ` after this reader. An actual Issue/PR may be created **only** by the original authorized Soodles lifecycle.
 - The full original 13-REQ HW1 inventory remains available even if one selected QA atom uses three cards; no silent loss from four-slot Boot/Drill.
