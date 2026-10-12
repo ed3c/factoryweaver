@@ -36,7 +36,7 @@
     {
       "source_id": "SRC-qa",
       "source_type": "test_artifact",
-      "source_dependency_key": "qa",
+      "source_dependency_key": "email-qa",
       "locator": "Email QA tests, returned support IDs and search budget",
       "uri": "https://github.com/cs329z/assignment1-harness/blob/main/tests/test_email_qa.py",
       "integrity": "UNPINNED",
