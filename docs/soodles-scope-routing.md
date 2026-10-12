@@ -107,7 +107,41 @@ No Digest, SHA, generated ID, Cursor, Git HEAD, timestamp, token budget estimate
 6. When measurements remain below goal, select a **new bounded causal atom** only on evidence of a new hypothesis or unresolved work; preserve the same parent REQ, history, constraints and effort policy. Do not reset budgets by generating another Issue.
 7. Treat repeated identical failed attempts, exceeded budgets, unavailable provider access and unknown effects as reasons for evidence-oriented reassessment or bounded halt, not as permission to run indefinitely.
 
-## 7. Focused acceptance controls for this profile
+## 7. Complete example: p95 CI improvement
+
+The following is **illustrative semantics**, not a measured result or an assumption that BigQuery is connected.
+
+### Parent goal (retained across atoms)
+
+- **Goal:** Keep the measured p95 CI duration below 10 minutes for the agreed relevant workflows/population.
+- **Measurement:** If a real BigQuery CI-run table is available, use its owner-validated query and agreed duration boundaries, sample population, observation period and exclusions. If not, identify the real provider and measurement gap; do **not** fabricate rows, table names, SQL, elapsed times or a pass result.
+- **Persistence:** Continue with evidence-driven, bounded interventions under the same original goal after each completed atom. A multi-week improvement campaign needs real authorized host continuation/scheduling and cost permissions; it is not a self-running model promise.
+- **Stop / Escalation:** Close the parent goal only with actual accepted owner measurements over the agreed population and delivery checks. Reassess cause after repeated failed corrections or inconclusive comparisons; return a named missing owner input or budget decision without spinning a new issue.
+
+### Proposed Behavior Scope: remove one *observed* redundant CI build
+
+- **Kind:** `implementation`.
+- **Causal claim:** An identified duplicate build/fixture step adds avoidable latency. This is a **hypothesis** until verified by real logs and controls.
+- **Atom acceptance:** Within selected CI scope, remove a demonstrably redundant rebuild while preserving the necessary equivalent outputs, inputs, and behavior controls. Compare suitable measurements before and after using the original metric producer.
+- **Required card composition:** CI-run duration definition (Concept), unnecessary rebuild evidence (Detail/Verification), no-loss build artifact requirement (REQ/SPEC), reusable rollback/safety constraints (G), negative control for changed dependency (V), and measurement unknowns (K) when applicable.
+- **Outer Route:** Always start with original Session's `issue-atom` preparation and effective admission. If evidence already demonstrates the duplicate, **no extra think**; Test Manager selects minimal controls. If true cause is unknown, trace existing logs; if competing interventions confound improvements, route `ablation` and ask Test Manager for matched observation. Only after an actual candidate readback, route `outer-review` if unnecessary complexity/diff risk needs investigation. No Cron/Hook unless the existing native owner requires them.
+- **Inner task (semantic Prompt Delta bullets):**
+  - Eliminate only the evidenced duplicate CI work within the admitted boundaries.
+  - Preserve the original build output contracts, artifact availability and failure reporting.
+  - Choose the implementation technique and local work sequence independently through the already selected Poteto mode.
+  - Exercise exactly the Test Manager-selected controls and retain genuine negative cases.
+  - Report writer completion or named blocked evidence; do not claim the parent p95 objective or provider delivery.
+- **Owner follow-up:** Soodles consumes writer result and appropriate actual provider measurement, exact-head checks and landing readback. If the parent p95 goal is not yet demonstrated, preserve it and choose the next bounded atom only from a new actual finding.
+
+### Proposed Behavior Scope: measurement meaning unresolved
+
+- **Kind:** `decision` or `evaluation`, not a code-implementation atom.
+- **Unresolved:** Is p95 calculated from queue-start to terminal run, or only running job time? Which workflow runs matter?
+- **Outer Route:** Inspect present workflow definitions/data dictionary first. If the two interpretations produce a genuine product choice, use `thinking-router` → installed `grilling` to settle the required success definition; `think` is only needed for an architecture recommendation, not the user-owned threshold. If the product goal is settled but a model-judged quality outcome lacks a failure taxonomy, use applicable installed Evals skills and actual traces; do not route numerical p95 into an LLM judge.
+- **Inner Task:** No worker implementation until the measurement boundary can produce an authorized Issue Contract. Independent source/evidence collection may continue.
+
+---
+## 8. Focused acceptance controls for this profile
 
 - Four visible slots, no fabricated filler; terminal partial batch uses `UNUSED`.
 - One Scope with six relevant cards yields one causally bounded proposed Atom; no enforced Card→Issue mapping.
