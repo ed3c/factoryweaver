@@ -1,0 +1,10 @@
+{
+  "schema": "factoryweaver/manager-needs/v1",
+  "subject": "Native Stop continuation boundary investigation",
+  "test_need": null,
+  "hook_need": {
+    "native_event": "Stop",
+    "observed_requirement": "Original task review should decide continuation without a second writer",
+    "source_state": "UNREAD"
+  }
+}
