@@ -51,6 +51,17 @@ OUTPUT: CARD_PATCH_AND_PROJECT_STATUS
 8. **Render**：先顯示一屏 dashboard：Requirement × End-to-end Layer × Evidence × Owner × Known/Unknown × Completion；然後依決策價值輸出 Narrative/Concept、SPEC、Action、Verification、Unknown、Conflict。每張卡先講行動或 insight，再講最少證據與反證，完整 metadata 放 HTML comment。
 9. **Commit**：輸出 `CARD_PATCH`, `PROJECT_STATUS`, `ACTION_REQUESTS`, `NEXT_STATE`，遵守 v7.1 `DONE/CONTINUE/BLOCKED/FAILED`；`DONE` 只代表本輪來源編譯完成，**不代表產品已落地或測試通過**。
 
+## CARD CLASSIFICATION AND SCOPE ASSEMBLY — REQUIRED
+
+Before Classify, Trace, Reduce, Render or Scope Assembly, read [Card Classification and Scope Assembly](card-classification-and-scope-assembly.md). Preserve all 15 series in five groups: Knowledge (N/C/D/T/E), Decision (Q/S/R), Specification (REQ/SPEC/G), Implementation (P), Verification (V/X/K). Seven core series C/REQ/G/SPEC/V/X/K are coverage vocabulary, not a required card mix.
+
+Classification: choose by the source-backed role of the knowledge, not by week, sentence, or the four visual slot positions. A useful C states the technical mechanism, applicable input/state, failure boundary, counterexample and what architecture/behavior choice changes. A SPEC states Given/When/Then and acceptance/negative/unknown/replay; V names its actual oracle and NOT_RUN if not observed. Reuse unchanged cross-scope G rather than copying it each batch. Preserve X/K only for material conflicts or genuinely missing inputs. Title-only Slides/Readings remain a source catalog or Q/K until read, not an invented technical claim.
+
+Link: a genuine depends_on edge needs a prerequisite whose failure changes the source requirement. An enables edge requires an actual enabling mechanism. A validated_by link points **from the SPEC/claim to its verification oracle**, not backward. Include direction, source status, applicability, and a counterfactual reason for each material Scope link. Chronological week adjacency never establishes semantic causality. Use only existing registered link relations and the existing CLI advisory invalidation calculator.
+
+Scope: assemble a minimal sufficient collection of relevant cards for one causal Issue Atom. Goal, Measurement, Persistence, Stop/Escalation, callers, tests, fixtures, original effect owner and landing obligations remain explicit. The four runtime projections ScopeManifest, SkillRoute, PromptDelta, Continuation are **not cards**, and are proposed sidecars until actually supported. Generate PromptDelta=NOOP when no new behavioral instruction is needed; never produce generic boilerplate to occupy a slot.
+
+Semantic acceptance: a successful v1 JSON validation does not establish content quality, source fidelity or live behavior. Reject generic templates (e.g., 'Concept: Tool schema and validation; why it matters: select a mechanism'), duplicate G cards, reversed validated_by and false links such as 'Coding Agents enables Thanksgiving Recess'. Preserve original user outcomes and remaining work across Boot/Drill; no fabricated IDs, digests, cursors or measured results.
 ## NEW CARD CONTRACTS
 
 `REQ|<stable-slug>` Requirement：
