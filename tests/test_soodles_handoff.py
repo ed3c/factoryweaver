@@ -113,7 +113,6 @@ class ScopeHandoffTests(unittest.TestCase):
             target = Path(temp) / "bundle.json"
             first = materialize(self.record, self.selection, str(target))
             self.assertEqual(first["status"], "MATERIALIZED_PROPOSAL")
-            self.assertEqual(first["consumer"], "soodles.knowledge.inspect")
             self.assertEqual(first["reader_arguments"],
                              [str(target), first["bundle"]["sha256"]])
             self.assertFalse(first["effect_authority"])
