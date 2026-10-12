@@ -25,6 +25,10 @@
 [Card Classification / Scope Assembly](references/card-classification-and-scope-assembly.md) is now a required v7.2 compiler reference loaded by the `factoryweaver` entry and its compile/verify leaf skills. It preserves all **15** Card Series, organized into **5** functional groups and **7** core series (C, REQ, G, SPEC, V, X, K). These are **not** fixed per-batch quotas.
 
 After reading real sources, first classify knowledge by its role, then validate the mechanism/conditions/falsifier, typed link direction and **causal value** to a selected Issue Atom. Never infer a dependency from adjacent lecture weeks or create a duplicate Governance card to fill a slot. The four runtime projections (`ScopeManifest`, `SkillRoute`, `PromptDelta`, `Continuation`) are semantic sidecars, not new Card Series. The v1 JSON contract and existing CLI remain unchanged; the CLI alone cannot prove source-fidelity or semantic correctness.
+## v7.2 selective Card prompts and Soodles manager-need handoff
+
+The [15 type-specific Card prompts](references/card-prompts/README.md) are loaded through the existing `factoryweaver` Skill, **only for the selected series**. Use the read-only `scripts/card_semantic.py` for `select`, `inspect` (type-specific field/link preflight) and `managers` (advisory needs for the original Soodles Test/Hook owners); **it never executes an actual Test Manager, installs native Hooks or overrides owner next**. Full examples: [Stanford HW1 semantic fixture](examples/card-semantic/hw1-email-qa.json) and [P0→P1 acceptance/proof limits](docs/evals/factoryweaver-v72-acceptance.md). Actual engineering prose uses `review-writing`; real instruction behavior changes need scoped native evidence.
+
 ## Stanford CS329Z full-course knowledge collection
 
 [Stanford CS329Z Course Master Card Box](docs/courses/cs329z-fall-2026/MASTER-CARD-BOX.md) combines all 11 weekly chapters. [Each chapter's Slides, Readings, Homework and Integrated Cards](docs/courses/cs329z-fall-2026/README.md) are separately navigable and source-status aware. The syllabus catalog is not proof of full-slide/article ingestion.

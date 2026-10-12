@@ -183,6 +183,27 @@ class CardSemanticTests(unittest.TestCase):
         with self.assertRaisesRegex(semantic.ProposalError, "exact_fields"):
             semantic.project_managers(self.need(hook=forged))
 
+    def test_source_grounded_example_and_original_manager_need_fixtures(self):
+        root = ROOT / "examples/card-semantic"
+        hw1 = json.loads((root / "hw1-email-qa.json").read_text(encoding="utf-8"))
+        result = semantic.inspect(hw1)
+        self.assertEqual(result["card_count"], 3)
+        self.assertEqual(result["source_completeness"], "NOT_VERIFIED")
+        self.assertEqual(result["independent_semantic_review"], "NOT_RUN")
+        self.assertEqual(result["proof_ceiling"], "FIELD_LINK_AND_DECLARED_COVERAGE_ONLY")
+        self.assertEqual([c["series"] for c in hw1["cards"]], ["SPEC", "V", "K"])
+        qa = json.loads((root / "qa-test-needs.json").read_text(encoding="utf-8"))
+        qa_result = semantic.project_managers(qa)
+        self.assertEqual(qa_result["test_manager"]["status"],
+                         "NEEDS_ORIGINAL_TEST_MANAGER_SELECTION")
+        self.assertEqual(qa_result["hook_manager"]["status"], "NO_NATIVE_HOOK_REQUIRED")
+        hook = json.loads((root / "native-stop-needs.json").read_text(encoding="utf-8"))
+        hook_result = semantic.project_managers(hook)
+        self.assertEqual(hook_result["hook_manager"]["status"],
+                         "NEEDS_NATIVE_SOURCE_OBSERVATION")
+        self.assertFalse(hook_result["effect_authority"])
+        self.assertEqual(hook_result["manager_actions_performed"], [])
+
     def test_cli_returns_non_authoritative_status_and_typed_refusal(self):
         script = ROOT / "scripts/card_semantic.py"
         okay = subprocess.run([sys.executable, str(script), "select", "REQ", "SPEC"],
