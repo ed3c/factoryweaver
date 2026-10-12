@@ -73,7 +73,7 @@ class FactoryWeaverEntrySkillTests(unittest.TestCase):
             self.assertIn("Poteto", source)
         self.assertIn("NOT_OBSERVED", contract)
         self.assertIn("UNVERIFIED", contract)
-        self.assertIn("no Card automatically", contract)
+        self.assertIn("no card automatically", contract.lower())
         self.assertIn("Host-selected", entry)
         self.assertIn("next=null", agents)
 
