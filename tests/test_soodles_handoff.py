@@ -12,7 +12,7 @@ import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
-from soodles_handoff import export
+from soodles_handoff import export, materialize
 from factoryweaver import ContractError
 
 FIXTURE = ROOT / "docs/evals/cs329z-hw1/drill.json"
@@ -106,6 +106,56 @@ class ScopeHandoffTests(unittest.TestCase):
         self.assertNotIn("REQ-guardrails", bundle["selection"]["requirement_ids"])
         self.assertEqual(set(self.selection["card_ids"]),
                          {c for c in bundle["selection"]["card_ids"]})
+
+
+    def test_host_materializes_one_exact_reader_binding_and_reuses_it(self):
+        with tempfile.TemporaryDirectory() as temp:
+            target = Path(temp) / "bundle.json"
+            first = materialize(self.record, self.selection, str(target))
+            self.assertEqual(first["status"], "MATERIALIZED_PROPOSAL")
+            self.assertEqual(first["consumer"], "soodles.knowledge.inspect")
+            self.assertEqual(first["reader_arguments"],
+                             [str(target), first["bundle"]["sha256"]])
+            self.assertFalse(first["effect_authority"])
+            self.assertFalse(first["authorizes_landing"])
+            self.assertEqual(json.loads(target.read_text()), export(self.record, self.selection))
+            self.assertEqual(materialize(self.record, self.selection, str(target)), first)
+            self.assertEqual(list(Path(temp).iterdir()), [target])
+
+    def test_host_binding_refuses_foreign_or_unknown_write(self):
+        with tempfile.TemporaryDirectory() as temp:
+            target = Path(temp) / "bundle.json"
+            target.write_text('{"different":true}', encoding="utf-8")
+            with self.assertRaisesRegex(ContractError, "conflict_requires_original_readback"):
+                materialize(self.record, self.selection, str(target))
+            self.assertEqual(target.read_text(), '{"different":true}')
+            target.unlink()
+            first = materialize(self.record, self.selection, str(target))
+            changed = {**self.selection, "causal_change": "An actually different scoped change."}
+            with self.assertRaisesRegex(ContractError, "conflict_requires_original_readback"):
+                materialize(self.record, changed, str(target))
+            self.assertEqual(materialize(self.record, self.selection, str(target)), first)
+            with self.assertRaisesRegex(ContractError, "absolute_path_required"):
+                materialize(self.record, self.selection, "relative/bundle.json")
+
+    def test_cli_host_output_is_an_exact_binding_not_model_generated_metadata(self):
+        with tempfile.TemporaryDirectory() as temp:
+            input_path = Path(temp) / "selection.json"
+            target = Path(temp) / "bundle.json"
+            input_path.write_text(json.dumps(self.selection), encoding="utf-8")
+            result = subprocess.run(
+                [sys.executable, str(SCRIPT), str(FIXTURE), str(input_path),
+                 "--output", str(target)], capture_output=True, text=True, timeout=15)
+            self.assertEqual(result.returncode, 0, result.stderr)
+            receipt = json.loads(result.stdout)
+            self.assertEqual(receipt["bundle"]["path"], str(target))
+            self.assertEqual(receipt["reader_arguments"][0], str(target))
+            self.assertEqual(json.loads(target.read_text()), export(self.record, self.selection))
+            second = subprocess.run(
+                [sys.executable, str(SCRIPT), str(FIXTURE), str(input_path),
+                 "--output", str(target)], capture_output=True, text=True, timeout=15)
+            self.assertEqual(second.returncode, 0, second.stderr)
+            self.assertEqual(json.loads(second.stdout), receipt)
 
 
 if __name__ == "__main__":

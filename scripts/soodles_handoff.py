@@ -8,7 +8,11 @@ Session/Issue owner alone reconciles provider readback and admission.
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
+import os
+from pathlib import Path
+import stat
 import sys
 
 from factoryweaver import verify, load, ContractError
@@ -65,13 +69,53 @@ def export(record, selection):
     }
 
 
+def bundle_bytes(bundle):
+    """Canonical UTF-8 content for one Host-bound file; no model-derived fields."""
+    return (json.dumps(bundle, ensure_ascii=False, sort_keys=True,
+                       separators=(",", ":"), allow_nan=False) + "\n").encode("utf-8")
+
+
+def materialize(record, selection, output):
+    """Host-selected output path; exact bytes reused, unknown/drifted writes refuse."""
+    bundle = export(record, selection)
+    path = Path(output)
+    if not path.is_absolute():
+        raise ContractError("bundle_output_absolute_path_required")
+    raw = bundle_bytes(bundle)
+    expected = hashlib.sha256(raw).hexdigest()
+    try:
+        fd = os.open(path, os.O_WRONLY | os.O_CREAT | os.O_EXCL | getattr(os, "O_NOFOLLOW", 0), 0o600)
+    except FileExistsError:
+        # A prior exact write is reusable; foreign bytes are never overwritten.
+        if not stat.S_ISREG(path.lstat().st_mode) or path.read_bytes() != raw:
+            raise ContractError("bundle_output_conflict_requires_original_readback")
+    else:
+        try:
+            with os.fdopen(fd, "wb") as stream:
+                stream.write(raw)
+                stream.flush()
+                os.fsync(stream.fileno())
+        except BaseException:
+            path.unlink(missing_ok=True)
+            raise
+    return {
+        "status": "MATERIALIZED_PROPOSAL",
+        "bundle": {"path": str(path), "sha256": expected},
+        "consumer": "soodles.knowledge.inspect",
+        "reader_arguments": [str(path), expected],
+        "effect_authority": False,
+        "authorizes_landing": False,
+    }
+
 def main(argv=None):
     parser = argparse.ArgumentParser(description="Export a read-only Soodles scope proposal.")
     parser.add_argument("record", help="FactoryWeaver knowledge-record JSON, read-only")
     parser.add_argument("selection", help="Selected semantic scope, no physical metadata")
+    parser.add_argument("--output", help="Original Host-selected absolute Bundle path; existing exact bytes are reused")
     args = parser.parse_args(argv)
     try:
-        value = export(load(args.record), load(args.selection))
+        record, selection = load(args.record), load(args.selection)
+        value = materialize(record, selection, args.output) if args.output else export(record, selection)
         print(json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(",", ":")))
         return 0
     except (OSError, ValueError, TypeError, KeyError) as error:
