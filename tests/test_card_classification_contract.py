@@ -59,7 +59,7 @@ class CardClassificationContractTests(unittest.TestCase):
             with self.subTest(bad=bad):
                 self.assertIn(bad, d)
         for good in ["three search calls","returned by search in that request",
-                     "actual inspected", "NOOP", "NOT_RUN"]:
+                     "actually inspected", "NOOP", "NOT_RUN"]:
             self.assertIn(good, d) if good != "actual inspected" else None
 
     def test_host_metadata_not_promoted_to_card_content(self):
