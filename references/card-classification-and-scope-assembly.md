@@ -26,7 +26,7 @@ Every card is one independently meaningful **decision-relevant concept, case, re
 
 **Core seven:** C, REQ, G, SPEC, V, X, K. They are a **coverage vocabulary**, not seven mandatory cards per Scope. For a straightforward bug fix, existing C/G may be reused and no new X/K is needed. The remaining eight series preserve depth, tradeoffs, contextual explanations and multi-atom planning.
 
-**Fixed four-slot rendering:** the 4-slot Soodles Boot / Drill presentation is **not a 2C+1G+1SPEC recipe**. Select the four most valuable *real changes* by source-backed improvement. A batch may legitimately hold four C updates, one SPEC and three V updates, or fewer real patches and `UNUSED` terminal slots; unchanged `G` cards are linked, not recreated.
+**Fixed four-slot rendering:** the 4-slot Soodles Boot / Drill presentation is **not a 2C+1G+1SPEC recipe**. Select the four most valuable *real changes* by source-backed improvement. A batch may legitimately hold four C updates **or** one SPEC plus three V updates, or fewer real patches and `UNUSED` terminal slots; unchanged `G` cards are linked, not recreated.
 
 ## 2. Anti-template quality gate: decision gain or NOOP
 
