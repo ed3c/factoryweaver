@@ -101,7 +101,6 @@ def materialize(record, selection, output):
     return {
         "status": "MATERIALIZED_PROPOSAL",
         "bundle": {"path": str(path), "sha256": expected},
-        "consumer": "soodles.knowledge.inspect",
         "reader_arguments": [str(path), expected],
         "effect_authority": False,
         "authorizes_landing": False,
