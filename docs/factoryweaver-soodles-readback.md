@@ -1,0 +1,51 @@
+# FactoryWeaver → Soodles dedicated read-only knowledge-card bundle
+
+## Purpose
+
+A FactoryWeaver v7.2 Compiler turns actual source data into cards, accepted requirements and a Goal-oriented Behavior Scope. Soodles must consume these **without re-parsing prose** and without inferring effect authority, current Issue identity or a new independent Scheduler.
+
+**Producer:** `scripts/soodles_handoff.py` imports existing `factoryweaver.verify`, verifies the original `factoryweaver/v1` record and checks one semantic selection referencing **existing** REQ/card identities.
+
+**Transport:** `factoryweaver/soodles-scope/v1` Bundle contains exactly `protocol`, `kind=SOURCE_BOUND_PROPOSAL`, `knowledge_record` (complete original record) and `selection`. This preserves whole-task Source→REQ history and all unrelated knowledge; only the selected IDs become the proposed Scope.
+
+**Consumer:** Soodles [`./soodles knowledge inspect`](https://github.com/ed3c/soodles/blob/feat/factoryweaver-scope-readback/contracts/factoryweaver-scope-v1.md), backed by its own read-only `factoryweaver_scope.py`. It checks **Host-computed exact bundle bytes** and selected references, projects only selected Card/REQ and their semantic properties, and lists other full-inventory requirement IDs as incomplete work.
+
+## Selection semantics (no model-generated machine metadata)
+
+The selection has exactly these fields:
+
+| Field | Meaning |
+| --- | --- |
+| `requirement_ids` | Selected existing original REQ IDs; not newly generated |
+| `card_ids` | Selected existing active Card IDs, often C/REQ/SPEC/G/V |
+| `goal` | Observable user outcome retained from original requirement |
+| `measurement` | Actual expected independent oracle/metric owner |
+| `persistence` | Evidence-driven continuation obligation and known effort policy |
+| `stop_and_escalation` | Success, bounded blocker and reassessment condition |
+| `causal_change` | One bounded Issue Atom's needed behavior change |
+| `acceptance` | Observable accepted/rejected behavior, nonempty |
+| `constraints` | Reused applicable G plus task-local exclusions |
+| `prompt_delta` | Only new semantic required changes, or empty for NOOP |
+
+The exact file reference and SHA are computed by the real Host/CLI. Do not put a fake digest, checkout path, new execution ID, guessed `next.argv` or model-generated operation ID into a Card, Scope selection or Prompt Delta.
+
+## Minimal use
+
+1. Compile and validate `factoryweaver/v1` knowledge using the existing FactoryWeaver Skill/CLI.
+2. Select one existing bounded Goal/REQ with relevant accepted cards. The included [HW1 example selection](../examples/soodles-scope/hw1-email-qa-selection.json) is a structural demonstration, not an authorized Issue.
+3. Run the read-only producer `python3 scripts/soodles_handoff.py RECORD_JSON SELECTION_JSON`. It emits only JSON to stdout. The original Host stores this exact output and **computes** its binding. The Skill does not ask the LLM to hand-calculate any hash.
+4. In the authorized Soodles Session, use the dedicated [`factoryweaver-read` Skill](https://github.com/ed3c/soodles/blob/feat/factoryweaver-scope-readback/.agents/skills/factoryweaver-read/SKILL.md) and `./soodles knowledge inspect BUNDLE_FILE HOST_COMPUTED_SHA256`.
+5. Use its source-bound selected REQ/card projection to compare the fresh original Issue Body, covered callers, acceptance, source priority and provider state; only then follow the existing Soodles `issue-atom` preparation/admission route.
+6. Outer Loop selects Test Manager controls, conditional Thinking/Evals or original Hook readback only on observed triggers; original `execute` / Poteto receives selected semantics after actual admission. Soodles must not copy the text into new permission fields.
+
+## Negative cases
+
+- A selected unknown/repeated REQ/Card, retired card, missing Goal/Measurement/Stop or author-authored mechanical binding refuses at producer.
+- Changed bundle bytes, unknown references or invented effect claims refuse at Soodles consumer. A valid digest proves byte selection, **not source truth or human approval**.
+- Original Issue readback is `NOT_READ` after this reader. An actual Issue/PR may be created **only** by the original authorized Soodles lifecycle.
+- The full original 13-REQ HW1 inventory remains available even if one selected QA atom uses three cards; no silent loss from four-slot Boot/Drill.
+- Tests and Hooks are not selected/run by either exporter or reader. No new Test/Hook/Cron manager, global hooks or separate Scheduler.
+
+## Verification boundary
+
+FactoryWeaver tests validate full v1 source record plus selection and CLI emission; Soodles tests check actual portable HW1 record consumption, exact-byte binding, schema/refusal cases and `next=null`. Cross-repository CI green establishes only this read-only transport seam. It does **not** establish native Skill behavior, Issue admission, fresh Noodle writer, real Test Manager choice, merged PR or terminal owner readback. Such states require independent original Host evidence.

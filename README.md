@@ -29,6 +29,10 @@ After reading real sources, first classify knowledge by its role, then validate 
 
 The [15 type-specific Card prompts](references/card-prompts/README.md) are loaded through the existing `factoryweaver` Skill, **only for the selected series**. Use the read-only `scripts/card_semantic.py` for `select`, `inspect` (type-specific field/link preflight) and `managers` (advisory needs for the original Soodles Test/Hook owners); **it never executes an actual Test Manager, installs native Hooks or overrides owner next**. Full examples: [Stanford HW1 semantic fixture](examples/card-semantic/hw1-email-qa.json) and [P0→P1 acceptance/proof limits](docs/evals/factoryweaver-v72-acceptance.md). Actual engineering prose uses `review-writing`; real instruction behavior changes need scoped native evidence.
 
+## FactoryWeaver → Soodles dedicated Card/Scope reader
+
+Use [the Soodles Scope Bundle export/readback contract](docs/factoryweaver-soodles-readback.md): the original `scripts/soodles_handoff.py` exports a validated complete v1 knowledge record with selected cards and one semantic Issue Atom proposal. The authorized Host retains those bytes and computes the binding; Soodles `./soodles knowledge inspect` consumes them using [`factoryweaver-read` Skill](https://github.com/ed3c/soodles/blob/feat/factoryweaver-scope-readback/.agents/skills/factoryweaver-read/SKILL.md). This is **read-only**, not automatic Issue creation, execution, tests, Hook activation or delivery.
+
 ## Stanford CS329Z full-course knowledge collection
 
 [Stanford CS329Z Course Master Card Box](docs/courses/cs329z-fall-2026/MASTER-CARD-BOX.md) combines all 11 weekly chapters. [Each chapter's Slides, Readings, Homework and Integrated Cards](docs/courses/cs329z-fall-2026/README.md) are separately navigable and source-status aware. The syllabus catalog is not proof of full-slide/article ingestion.

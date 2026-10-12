@@ -151,6 +151,12 @@ identifiers and exact input bindings.
   Report verification as `NOT_RUN` if not actually invoked. Preserve
   unsupported/contradictory requirements in K/X cards rather than guessing.
 
+## Dedicated Soodles knowledge-card handoff
+
+When the selected Host is Soodles **and a real source-bound Scope is ready for review**, use [`scripts/soodles_handoff.py`](../../scripts/soodles_handoff.py) to export the original complete v1 knowledge record and a **semantic selection of existing REQ/Card IDs**. Read [the one-way bridge contract](../../docs/factoryweaver-soodles-readback.md). The exporter uses the current FactoryWeaver `verify` producer result and writes **only JSON stdout**; no Issue, authorization, effect, provider claim, test scope, Hook or physical output file is created by this Skill.
+
+The original Host stores those bytes externally, computes/binds the real file digest and passes that file to Soodles [`factoryweaver-read`](https://github.com/ed3c/soodles/blob/feat/factoryweaver-scope-readback/.agents/skills/factoryweaver-read/SKILL.md). Soodles consumes the exact source-bound file through `./soodles knowledge inspect` to view selected cards, parent REQ inventory and semantic Prompt Delta. It must still reconcile the original Issue and current provider truth **before** selecting `issue-atom`. The Bundle and Soodles result both grant **zero effect authority**. Do not ask the model to invent digests, paths, card IDs, new Issue numbers or CLI argv.
+
 ## Stop / resume handoff
 
 The return from this entry is a **semantic continuation**, not a second
