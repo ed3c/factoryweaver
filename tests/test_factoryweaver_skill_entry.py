@@ -63,6 +63,20 @@ class FactoryWeaverEntrySkillTests(unittest.TestCase):
         self.assertIn("references/zettelkasten-v7.2.md",
                       self.read("skills/factoryweaver-compile/SKILL.md"))
 
+    def test_handoff_diagnosis_is_read_only_and_original_owner_selected(self):
+        entry = self.read("skills/factoryweaver/SKILL.md")
+        agents = self.read("AGENTS.md")
+        contract = self.read("docs/factoryweaver-soodles-readback.md")
+        for source in (entry, agents, contract):
+            self.assertIn("boundary_findings", source)
+            self.assertIn("original", source.lower())
+            self.assertIn("Poteto", source)
+        self.assertIn("NOT_OBSERVED", contract)
+        self.assertIn("UNVERIFIED", contract)
+        self.assertIn("no Card automatically", contract)
+        self.assertIn("Host-selected", entry)
+        self.assertIn("next=null", agents)
+
     def test_four_changed_cards_per_frozen_cli_page(self):
         project = json.loads(
             self.read("examples/openai-plugin-platform/project.json")
