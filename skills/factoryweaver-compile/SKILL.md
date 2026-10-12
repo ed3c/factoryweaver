@@ -15,6 +15,11 @@ license: MIT
 8. On repeated unchanged sources emit NOOP; preserve stable IDs, valid links and unresolved blockers.
 9. Render readable cards with `cards`; output content-first, with evidence and explicit missing knowledge.
 
+## Classification and graph composition (all Hosts)
+
+After the v7.2 System Prompt, **read [the authoritative taxonomy and Scope Assembly contract](../../references/card-classification-and-scope-assembly.md)**. All 15 card series remain available; the core seven C/REQ/G/SPEC/V/X/K are not mandatory per case. Choose series by source-supported knowledge function, not chapter position or a C,C,G,SPEC template. Reuse existing G/C across Scopes, update only after a distinct semantic gain, and leave unread PDFs as K/source catalogs.
+
+Before emitting a card CREATE/UPDATE, state mechanism, condition, observable consequence, discriminating falsifier, actually inspected source and change from accepted knowledge. Reject generic 'select a mechanism' payloads. Before emitting each material typed link, state relation direction, applicability and what dependent requirement or test is affected if the target changes; reject mere week-order links, false causes and reversed SPEC/verification edges. The four proposed runtime contracts (ScopeManifest, SkillRoute, PromptDelta, Continuation) are not cards. An exact valid next or already enforced CLI contract yields PromptDelta=NOOP, not a repetitive worker checklist.
 ## Soodles Host Profile: four-slot Boot → Drill-down and goal-oriented scopes
 
 When the selected Host is Soodles, read `../../docs/soodles-scope-routing.md` and the original task. Apply the profile **without replacing** the portable compiler, legacy v1 schema, Soodles original owners or installed skill instructions.
