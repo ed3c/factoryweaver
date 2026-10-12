@@ -15,4 +15,16 @@ license: MIT
 8. On repeated unchanged sources emit NOOP; preserve stable IDs, valid links and unresolved blockers.
 9. Render readable cards with `cards`; output content-first, with evidence and explicit missing knowledge.
 
+## Soodles Host Profile: four-slot Boot → Drill-down and goal-oriented scopes
+
+When the selected Host is Soodles, read `../../docs/soodles-scope-routing.md` and the original task. Apply the profile **without replacing** the portable compiler, legacy v1 schema, Soodles original owners or installed skill instructions.
+
+10. BOOT: extract the complete user-intent→REQ coverage inventory into the Host's existing record, even if far more than four obligations exist. Render exactly four visual slots with up to four truly meaningful CREATE/UPDATE cards. Empty end slots are display-only `UNUSED`, never fabricated cards.
+11. DRILL: consume the last **accepted** card state and its remaining named gaps. Prefer UPDATE that strengthens behavior/goal/measurement/constraints/typed-links/Prompt Delta/Oracle/continuity. A new card needs an independently useful new concept or case. Require an explicit account of what changed since the last batch.
+12. Each Behavior Scope assembles multiple reused cards into **one proposed Issue Atom causal change**. Include outcome, work kind, **Goal + Measurement + Persistence + Stop/Escalation**, entry/exit, callers, consumers, test fixtures, rollback and later owner delivery. Whole-task goals may require multiple bounded atoms; do not equate one passing atom with goal attainment.
+13. Produce a **Scope Skill Trigger Plan** with observed trigger, chosen installed outer-loop skill, expected evidence, non-trigger and return/stop conditions. Always use the original `issue-atom` owner for selected atom preparation. Route goal ambiguity through Thinking Router and supported `grilling`, architecture through `think`, evaluator ambiguity through **actually installed** Evals skills only, and objective results through original metric provider/Test Manager. No automatic two-brain, unnecessary `think`, Ponytail/Waza, native Hook or Cron.
+14. Produce the Noodle Poteto inner worker's **bullet-only semantic Prompt Delta requirements**. Include required outcome, constraints, forbidden behavior, measurable acceptance and writer stopping point; leave code design, implementation approach and valid playbook execution to the admitted inner worker. Do not send outer skill calls as inner work instructions.
+15. Treat metadata and machine bindings as Host-owned. Model-authored prompts/cards contain no calculated digests, timestamps, IDs, cursors, paths, argv, HEADs or made-up measurement results. Materialize actual validated records only through the Host/CLI; never relax schema because the model cannot supply mechanical fields.
+16. For a frozen Before/After record, the original `card_delta.py` can page with `batch_size=4` and its Host-returned cursor. **A new DRILL edit starts a new delta cycle** rather than reusing that cursor. Preserve meaningful `CONTINUE / DONE / BLOCKED / NOOP` conditions: compile DONE is not delivery DONE. Do not force four real cards when fewer changes exist.
+
 Compilation is not live execution. Do not add `TESTED` or `RELEASE_CONFIRMED` without external artifacts and the original owner's readback.
