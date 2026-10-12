@@ -2,6 +2,10 @@
 
 > Proposal for FactoryWeaver v7.2. Additive to portable v7.2; not an execution owner, scheduler, new P-class state machine or proof of native runtime. Read with `references/zettelkasten-v7.2.md`. Existing `contracts/v1/knowledge-record.schema.json` remains unchanged.
 
+## Original Test Manager / native Hook Manager interactions
+
+FactoryWeaver only supplies typed *needs*. The original Soodles [Test Manager Skill](https://github.com/ed3c/soodles/blob/main/.agents/skills/test-manager/SKILL.md) selects real controls, may return `needs_scope`, and retains true cost/effect observations. The native Hook implementation is [`hook_manager.py`](https://github.com/ed3c/soodles/blob/main/hook_manager.py), **not an installed Hook Manager Skill**; it can inspect source or adapt a selected Stop event, preserving the original owner next and requiring actual native receipt. See [Manager Consumption Contract](soodles-manager-consumption.md). No Hook is installed by generating a G/V/SPEC card and no new Stop gate or scheduler is implied.
+
 ## Card preflight
 
 Read [v7.2 Card Classification / Scope Assembly](../references/card-classification-and-scope-assembly.md) before selecting cards, links, or Skills. The reference now defines a per-series **Soodles Outer Loop → conditional Noodle Poteto/pstack Skill Consumer matrix**, multimodal input/coverage semantics and `review-writing` zero-context quality gates. These mappings are selectable methods, **not automatic tool calls**. The original 15 series fall into five functional groups; the seven core types C/REQ/G/SPEC/V/X/K are optional per Scope, not a compulsory recipe. Never manufacture four types to fill the four display slots. Reuse applicable C/G and prioritize real source-backed semantic UPDATEs.

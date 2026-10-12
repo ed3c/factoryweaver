@@ -40,15 +40,15 @@ OUTPUT: CARD_PATCH_AND_PROJECT_STATUS
 
 ## REQUIRED PIPELINE
 
-0. **Boot**：從來源提取 Source Manifest、source_dependency_key、最小引用錨點、版本與檢索日期。實際最新標準需查官方來源；不要以訓練記憶推定。
+0. **Boot**：讓來源 Reader / Host 保存完整原文與 Source Manifest、依賴群組、真實版本及可觀察定位。日期、來源綁定和計算值由 Host/CLI 產生；模型只提出語義主張，不能猜測未讀頁面。
 1. **Extract**：把每句與工程決策有關的敘述拆成 `actor → need → capability → outcome → boundary`，確認來源是職缺要求、現有實作還是提案；不能把官方 JD 解讀為特定框架或薪資以外的隱性硬性技術要求。
-2. **Classify**：產生 atomic assertions、D/V/X/K，再組合 N/C/Q、T/S/R/G/P；除 v7.1 外新增 **REQ Requirement Card** 與 **SPEC Executable Specification Card**，保留 One Case One Card。
+2. **Classify**：保留所有決策相關 atomic assertions 與未映射來源；依知識角色選出需要的 N/C/D/T/E/Q/S/R/REQ/SPEC/G/P/V/X/K 種類，不強制 D/V/X/K 或其他卡型出現。從 `references/card-prompts/registry.json` 選取實際類型，**只讀取這些種類的 `types/` 生成契約**。遵循 One Case One Card 和 Anti-Fragmentation，沒有語義增量就 REUSE/NOOP。
 3. **Trace**：每張 REQ 提供 `source_evidence`, `acceptance`, `non_cases`, `dependencies`, `component/owner`, `verification_oracle`, `rollback`, `status`。每張 SPEC 提供 `given/when/then`, `input/output contract`, `auth boundary`, `falsifier`, `test fixtures`, `registered adapter`。
 4. **Resolve**：針對每個必要 Claim／Fact 依有限路由尋找 Evidence。永遠先查當前 registry、已觀察來源、現有 Owner 讀回，再決定是否檢索官方文檔或測試。Source 充分時不重複搜尋；未知只阻塞真正依賴它的操作。
 5. **Route**：僅能選擇 CLI_REGISTRY 已註冊操作：`repo.read`, `docs.search_official`, `schema.validate`, `test.focused`, `owner.readback`。本清單是**建議的 Adapter Operation IDs**，不是聲稱任何 Host 已經安裝或註冊此命令。未知 operation、缺少精確目標、工具無授權、未綁定 source SHA、write/effect unknown → REFUSE 或 WAIT，不能猜 command 或讀寫權限。若可用 tools 與 CLI_REGISTRY 對接，呼叫允許的確切 adapter；若不可用，只輸出 structured `ActionRequest(status=PROPOSED)`。
 6. **Observe**：執行結果只從工具實際回傳的 exit、stdout/stderr、artifact path/hash、owner readback 更新。`attempted` 不等於 `tested`，`TESTED` 必須有原始測試產物；沒有測試只能 `NOT_RUN`。
 7. **Reduce**：Source/Fact 變更使依賴的 SPEC/REQ Verification 失效；舊版保留 SUPERSEDES；canonical key 相同不重建 ID；已通過 unchanged parts 不重印；去重、invalidation、head/owner boundary 採確定性運算，不交給 LLM 裁量。
-8. **Render**：先顯示一屏 dashboard：Requirement × End-to-end Layer × Evidence × Owner × Known/Unknown × Completion；然後依決策價值輸出 Narrative/Concept、SPEC、Action、Verification、Unknown、Conflict。每張卡先講行動或 insight，再講最少證據與反證，完整 metadata 放 HTML comment。
+8. **Render**：提供精簡 PROJECT_STATUS；按實際所選 Card Series 產生具專屬語義的卡片，不預設 Narrative/Concept/SPEC/P/V/K/X 配額。Soodles Host 保留四個顯示槽位；不足時使用 UNUSED 而非捏造卡片。工程正文遵守 `review-writing` 的 Actor/Condition/Causality/State/Acceptance/Source Fidelity；Host 擁有實際 metadata。
 9. **Commit**：輸出 `CARD_PATCH`, `PROJECT_STATUS`, `ACTION_REQUESTS`, `NEXT_STATE`，遵守 v7.1 `DONE/CONTINUE/BLOCKED/FAILED`；`DONE` 只代表本輪來源編譯完成，**不代表產品已落地或測試通過**。
 
 ## CARD CLASSIFICATION AND SCOPE ASSEMBLY — REQUIRED
@@ -80,22 +80,9 @@ Semantic acceptance: a successful v1 JSON validation does not establish content 
 - **Test Oracle / Artifact / Exit Criteria / Rollback**。
 - **Execution Status**：UNTESTED | SOURCE_REPORTED | PARTIALLY_TESTED | TESTED；缺測試不升級。
 
-## SAFE ACTION REQUEST (NOT A SHELL COMMAND)
+## SAFE ACTION REQUEST (HOST-OWNED REGISTRY; OPTIONAL)
 
-```json
-{
-  "request_id": "AR-plugin-tool-contract-docs",
-  "intent": "resolve_unknown",
-  "operation_id": "docs.search_official",
-  "registered": false,
-  "mode": "READ_ONLY",
-  "target": {"kind": "official_doc", "topic": "MCP tool result schema"},
-  "requires": ["official_origin", "version_pin", "registry_authorization"],
-  "expect": {"result_type": "source_anchor", "negative_case": "no_source_found"},
-  "status": "PROPOSED",
-  "effect_authority": false
-}
-```
+Only propose an ActionRequest when a **real unresolved source/verification need** requires a registered adapter and the original Host supports that contract. Never generate operation IDs, request IDs, argv, physical paths, digests, source pins or execution metadata from guessed text. The original Host discovers exact registered identities, materializes its validated record and authorizes effects. Unknown registration or tool absence produces a named K and PROPOSED need, **not** a plausible JSON command. A reader-facing compilation with no external action must emit no ActionRequest.
 
 Decision table:
 - `source_available && valid_anchor` → compile assertions; no retrieval.
@@ -128,20 +115,18 @@ QG-32 Minimal regression: targeted tests via Test Manager, with explicit negativ
 QG-33 Threat model: source injection, secrets, write protection, and unknown effects are specified.
 QG-34 API/SDK compatibility: version/protocol, schema compatibility and consumer proof are separated.
 
-## OUTPUT EXAMPLE ORDER
+## OUTPUT CONTRACT — SELECTED TYPES ONLY
 
-1. `PROJECT_STATUS` concise readable matrix (not a claim of tested implementation).
-2. N/C/T human entry card(s): tension → mechanism → consequence.
-3. REQ cards mapping every high-signal JD responsibility.
-4. SPEC/P/V cards with executable acceptance and explicit NOT_RUN.
-5. K/X cards and exact next authorized action.
-6. HTML `CARD_META` sidecars with stable IDs, source provenance, revision, typed links, and lifecycle.
-7. `RUN_STATE` cursor and outstanding unmapped clauses.
+1. Preserve a **whole-source coverage ledger** independently of four displayed cards.
+2. Render only the **selected, actually needed** N/C/D/T/E/Q/S/R/REQ/SPEC/G/P/V/X/K card proposals under their type-specific contracts. Reuse existing C/G and original canonical identities; no source-backed gain means NOOP.
+3. Show only the **material** Knowledge Links with relation, direction, condition and counterfactual test impact. Unread or missing source becomes a K/source gap rather than fabricated content.
+4. Assemble a **Goal / Measurement / Persistence / Stop** Behavior Scope if a real Issue Atom is needed; ScopeManifest, SkillRoute, PromptDelta and Continuation are semantic *non-card* projections.
+5. Return PROJECT_STATUS, CARD_PATCH, optional original Host-validated ACTION_REQUESTS and NEXT_STATE. The original CLI produces cursor, IDs, revisions, timestamps, digests, numeric results or bound operations.
+6. Compilation DONE means only the selected knowledge pass is exhausted; not test PASS, effect, delivery, or student homework completion.
 
-## USER TASK FOR THIS INVOCATION
+## TASK CONTEXT
 
-把 `<TASK>` 中的職缺或工程描述編譯成 Host-neutral、可由任意 Auto-PR Consumer 接受的規格知識圖。優先閱讀當前工作樹與官方文件，不能從卡片產生 shell 權限。提供一組可教學的 end-to-end system-design cards，一份具體的 JSON data contract，一條可交給 CLI owner 的 ActionRequest，以及獨立的 knowledge/engineering/delivery 進度表。可用工具不存在時建立 K Card，禁止偽造測試或 command success。
-
+Read the actual `<TASK>` and selected Host/profile. Do **not** hardcode job descriptions, forced system-design card sequences, mandatory actions, fabricated skill installation, implementation steps or provider delivery. Any host-neutral task can compile only what its real sources justify.
 
 ## SOODLES PROFILE — GOAL-ORIENTED SCOPE, ROUTED SKILLS AND DRILL-DOWN
 

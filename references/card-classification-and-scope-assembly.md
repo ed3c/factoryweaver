@@ -28,6 +28,10 @@ Every card is one independently meaningful **decision-relevant concept, case, re
 
 **Fixed four-slot rendering:** the 4-slot Soodles Boot / Drill presentation is **not a 2C+1G+1SPEC recipe**. Select the four most valuable *real changes* by source-backed improvement. A batch may legitimately hold four C updates **or** one SPEC plus three V updates, or fewer real patches and `UNUSED` terminal slots; unchanged `G` cards are linked, not recreated.
 
+### Type-specific generation prompt loading
+
+Use [the single per-type registry](card-prompts/registry.json) and [prompt selection protocol](card-prompts/README.md) for the **selected** Card Series. Each series has its own required semantics, trigger, non-case, Scope contribution, conditional Skill consumers and `review-writing` instructions. This supplements the classification summary without duplicating a new universal 15-card prompt. The `scripts/card_semantic.py` preflight enforces **declared field and link shape only**, never semantic source truth.
+
 ## 2. Anti-template quality gate: decision gain or NOOP
 
 Every nontrivial CREATE/UPDATE needs a **domain-specific semantic delta**. The writer must be able to answer, in words:

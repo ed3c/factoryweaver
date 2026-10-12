@@ -5,7 +5,7 @@ license: MIT
 ---
 # FactoryWeaver verification
 
-1. Load `../../contracts/v1/knowledge-record.schema.json` and run the read-only CLI `validate`.
+1. Load `../../contracts/v1/knowledge-record.schema.json` and run the read-only CLI `validate` **on Host-materialized v1 data**. Before reviewing drafted Card semantics, load each *selected* contract from `../../references/card-prompts/registry.json`; `scripts/card_semantic.py inspect` checks typed fields without claiming content truth.
 2. Check Source ID uniqueness, dependency and typed link reachability, and stable card IDs.
 3. Require provenance before SUPPORTED, raw test evidence before TESTED, and named original owner readback before RELEASE_CONFIRMED.
 4. `READY` is only a proposal. Never launch an adapter from this skill; host must check registry, identity, permission, source pins and effect boundaries.
@@ -13,11 +13,15 @@ license: MIT
 6. Report machine-checked proof boundary and remaining unknowns. A local fixture never proves upstream model performance or PR delivery.
 ## Semantic card and link gates (all Hosts)
 
-Read [Card Classification and Scope Assembly](../../references/card-classification-and-scope-assembly.md), including **all 15 per-series Outer/Inner Skill routes, multimodal source-coverage ledger and review-writing** semantics. Validate all 15 series are preserved; the five groups and seven core types are **organizing vocabulary**, not card quotas. Independently review each material CREATE/UPDATE for actual technical mechanism, condition, decision impact, falsifier, and inspected source. Generic title paraphrases and copied boilerplate must receive REVISE/REUSE, not semantic ACCEPT.
+Read [Card Classification and Scope Assembly](../../references/card-classification-and-scope-assembly.md), including **all 15 per-series Outer/Inner Skill routes, multimodal source-coverage ledger and review-writing** semantics. Validate all 15 series are preserved; the five groups and seven core types are **organizing vocabulary**, not card quotas. Review each material CREATE/UPDATE **against its own series**: C requires mechanism and failure, Q requires unresolved decision and owner, K names missing prerequisite, N reconstructs observed sequence, V requires oracle and evidence state, SPEC requires behavioral I/O. Do not require an unknown K to explain an unavailable mechanism. `review-writing` then checks relevant actor/condition/causality/state/acceptance and source fidelity. Only actually inspected sources support assertive conclusions. Generic title paraphrases and copied boilerplate must receive REVISE/REUSE, not semantic ACCEPT.
 
 Verify each material edge's type, source/target direction and counterfactual dependency; reject 'W9 Coding Agents enables W10 Thanksgiving Recess', reverse V validated_by SPEC, and based_on attribution to an unread slide. Reuse cross-scope G and preserve named K. Ensure one causal Issue Atom assembles minimal sufficient cards and four runtime contracts are non-card sidecars. Verify task-local Prompt Delta names a **new** required behavior/constraint; no change means NOOP.
 
 For each new/updated card confirm its **type-specific Soodles Outer Loop Consumer**, the conditional original Poteto/pstack candidate method (without fabricating installation), and a real Behavior Scope purpose. Confirm the authoritative Host extracted any image/slide/graph/audio/video/table/code/trace content claimed and preserved its content/uncertainty. An unread source URL cannot justify a technical mechanism. Use `review-writing` to assess actor, condition, causality, state, acceptance, negative and unknown claims; use real P-class behavior evals only when instructions changed. The current JSON validator checks structure and registered targets only, **not semantic sufficiency**. Report SEMANTICS_NOT_VERIFIED when independent source-content review or actual evidence is absent; never convert schema/CI fixture green into Agent behavior PASS or native effect delivery.
+## Owner Manager interaction (verification never executes)
+
+Read [Test/Hook Manager Consumption](../../docs/soodles-manager-consumption.md). The FactoryWeaver `scripts/card_semantic.py managers` projection is **advisory**; it does not select a Soodles control or native Hook, and can never override original Soodles `next`. Verify a Test Manager request has changed behavior, focused verification question and discriminating negative; no speculative full suite. Verify a Hook need comes from actual native event evidence and remains `native_execution=UNKNOWN` until its original Hook/Host receipt is observed. If no native requirement, `NO_NATIVE_HOOK_REQUIRED`. Record `NOT_RUN` and keep the Soodles manager owner responsible for real actions, consumption and landing.
+
 ## Soodles Profile: semantic batch/Scope verification
 
 When the selected Host is Soodles, read `../../docs/soodles-scope-routing.md` and check all of the following *without* claiming real Host execution:

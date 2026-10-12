@@ -8,18 +8,24 @@ license: MIT
 1. Read `../../references/zettelkasten-v7.2.md` for compiler invariants and human-readable card forms.
 2. Keep sources, provenance, evidence and decisions separate from the resulting cards.
 3. For each meaningful requirement map actor, capability, outcome, non-case, precondition, falsifier, owner, acceptance and source locator.
-4. Build typed REQ, SPEC, K, X, V cards when evidence permits. Never force every card family to appear.
+4. Classify source assertions by epistemic role across all fifteen Card Series. Select only required per-type prompts from `../../references/card-prompts/registry.json`; read their complete `types/` instructions. Do not force REQ/SPEC/K/X/V or any other type into each batch.
 5. For unresolved human questions, keep `decision=null`, `human_confirmed=false`, and `WAIT_FOR_HUMAN`.
 6. Write a `contracts/v1/knowledge-record.schema.json`-conforming data record. Verify using `python3 scripts/factoryweaver.py validate FILE` from repository root.
 7. Run `project` to read the deterministic requirements status; submit any proposed capability request to host's adapter registry for independent authorization.
 8. On repeated unchanged sources emit NOOP; preserve stable IDs, valid links and unresolved blockers.
-9. Render readable cards with `cards`; output content-first, with evidence and explicit missing knowledge.
+9. Render selected readable cards only when material source-backed gain exists; reuse accepted cards and named evidence/unknown. Read-only `scripts/card_semantic.py select` exposes type contracts, `inspect` checks structured semantic-field shape with proof ceiling, and `managers` projects Test/Hook requests without executing them. The original `cards` command only renders materialized v1 records and never proves semantic quality.
 
 ## Classification and graph composition (all Hosts)
 
 After the v7.2 System Prompt, **read [the authoritative taxonomy and Scope Assembly contract](../../references/card-classification-and-scope-assembly.md)**, including **all 15 per-series Soodles/Poteto-pstack Skill Consumers, modality-agnostic source coverage, and review-writing expectations**. All 15 card series remain available; the core seven C/REQ/G/SPEC/V/X/K are not mandatory per case. Choose series by source-supported knowledge function, not chapter position or a C,C,G,SPEC template. Reuse existing G/C across Scopes, update only after a distinct semantic gain, and leave unread PDFs as K/source catalogs.
 
 Before emitting a card CREATE/UPDATE, use its own type-specific fields and state mechanism, condition, observable consequence, discriminating falsifier, actually inspected source and change from accepted knowledge. First preserve modality-specific source assertions (slide figure, image region, transcript turn, table population, code symbol, runtime trace as applicable) through the Host. A source/title listing is not the underlying content. Use `review-writing` semantic Source Fidelity for every engineering-facing card, but **do not invoke all mapped Skills just because cards exist**. Reject generic 'select a mechanism' payloads. Before emitting each material typed link, state relation direction, applicability and what dependent requirement or test is affected if the target changes; reject mere week-order links, false causes and reversed SPEC/verification edges. The four proposed runtime contracts (ScopeManifest, SkillRoute, PromptDelta, Continuation) are not cards. An exact valid next or already enforced CLI contract yields PromptDelta=NOOP, not a repetitive worker checklist.
+## Test Manager and Hook Manager boundary
+
+For a selected behavior, compile a **verification question and distinct negative case** for the Soodles Test Manager. It owns the unique on-demand test scope and any valid `needs_scope` correction. The FactoryWeaver proposal cannot choose exact controls, require full tests or reuse stale PASS.
+
+For a real **native Hook** need, cite the original event and source-observed requirement. Soodles uses `hook_manager.py` and the native Host/Schema Manager readbacks; **there is no installed `.agents/skills/hook-manager/SKILL.md` in the inspected Soodles tree**. Do not invent one, register a handler, create a scheduler, or report execution from document text. Reuse original owner next, unknown-effect readback and native Stop recursion guard. See [Manager Consumption](../../docs/soodles-manager-consumption.md).
+
 ## Soodles Host Profile: four-slot Boot → Drill-down and goal-oriented scopes
 
 When the selected Host is Soodles, read `../../docs/soodles-scope-routing.md` and the original task. Apply the profile **without replacing** the portable compiler, legacy v1 schema, Soodles original owners or installed skill instructions.
