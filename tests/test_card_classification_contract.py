@@ -92,7 +92,7 @@ class CardClassificationContractTests(unittest.TestCase):
             with self.subTest(medium=medium):
                 self.assertIn(medium, doc)
         for condition in [
-            "source-coverage ledger", "not its media format", "P-class instruction",
+            "source-coverage ledger", "never its media format", "P-class instruction",
             "review-writing", "Actor / subject", "Condition first",
             "Acceptance, rejection and unknown", "NOOP",
         ]:
