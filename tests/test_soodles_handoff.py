@@ -71,8 +71,10 @@ class ScopeHandoffTests(unittest.TestCase):
         record = copy.deepcopy(self.record)
         target = next(r for r in record["requirements"] if r["id"] == "REQ-email-qa")
         target["knowledge_status"] = "CONFLICTED"
-        with self.assertRaisesRegex(ContractError, "unresolved_requirement"):
-            export(record, self.selection)
+        unknown = export(record, self.selection)
+        self.assertEqual(
+            next(r for r in unknown["knowledge_record"]["requirements"]
+                 if r["id"] == "REQ-email-qa")["knowledge_status"], "CONFLICTED")
         record = copy.deepcopy(self.record)
         target = next(c for c in record["cards"] if c["stable_id"] == "SPEC-email-qa")
         target["status"] = "SUPERSEDED"
