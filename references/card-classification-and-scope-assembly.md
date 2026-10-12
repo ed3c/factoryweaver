@@ -144,7 +144,7 @@ Profiles can overlap; do not force a card family or a new Skill merely because t
 - **Metadata fabrication:** request model-filled digest, Git HEAD, times, operation IDs or cursor → **HOST_OWNED_METADATA**, never place in generated cards or Prompt Delta.
 
 
-## 8. Per-series consumers: Soodles Outer Loop, Noodle Poteto Inner Loop, and pstack
+## 7. Per-series consumers: Soodles Outer Loop, Noodle Poteto Inner Loop, and pstack
 
 This table is a **conditional, source-backed routing contract**, not a command to run every skill on every card. The **Soodles supervising Session** selects a Scope and original lifecycle owner. **Noodle Poteto** reads the already selected playbook and implementation-specific semantic Prompt Delta, then chooses engineering details within its admitted boundary. The referenced pstack skills are **upstream method candidates**, not proof that the current Host installed or invoked them; many upstream skills disable automatic invocation and require their own supported host entry. All engineering prose is reviewed by Soodles `review-writing`; actual P-class instruction changes additionally require scoped Agent behavior feedback and Schema Manager consumption.
 
@@ -170,7 +170,7 @@ This table is a **conditional, source-backed routing contract**, not a command t
 
 **Owner boundary:** Selecting an upstream pstack method is a proposal until the currently admitted Host and original Poteto carrier resolve it. No card creates a separate Session, worktree, authorization, review requirement, scheduled task, PR or provider receipt.
 
-## 9. Universal source perspectives and lossless multimodal ingestion
+## 8. Universal source perspectives and lossless multimodal ingestion
 
 A **Card Series identifies the epistemic/engineering role of a claim, never its media format**. The same C mechanism may be supported by a slide, source code and runtime trace; the same video may yield N incident narrative, C mechanism, SPEC behavior requirement, V evidence and K missing information. Do not create a new card type per modality.
 
@@ -190,7 +190,7 @@ A **Card Series identifies the epistemic/engineering role of a claim, never its 
 
 **Lossless batching:** this ledger spans the whole source and all batches. Four content slots are merely a rendering policy. The first Boot preserves all source requirements; later Drill patches enrich only actual new claims/links/constraints and provide continuity with the last accepted version. A single slide may affect multiple card roles; a shared G remains one card reused by many Scopes. No made-up content to fill slots.
 
-## 10. review-writing as the single engineering prose quality gate
+## 9. review-writing as the single engineering prose quality gate
 
 Apply the **installed Soodles `review-writing`** procedure to every authored or modified technical Card, Scope, SkillRoute, Prompt Delta, engineering requirement or architecture report when that carrier is available. For portable hosts without the skill, use this same source-fidelity checklist as a **proposed** review, not a false invocation.
 
@@ -206,7 +206,7 @@ Each card's reader-facing content must expose the information needed by its type
 
 Avoid a universal large mandatory form for every Card. Use a short base schema and the discriminating fields of its *own* series; a short Q is not a SPEC, and a V record is not a narrative. The **review-writing** pass protects semantic truth, not a sentence-count quota. An N-class prose review needs no model behavioral Evals; persisted P-class instruction changes need the original affected consumer observations and Schema Manager feedback before a behavior claim.
 
-## 11. Direct Scope-to-Skill execution boundary
+## 10. Direct Scope-to-Skill execution boundary
 
 ```text
 Real source/reader output → source-coverage ledger
@@ -223,7 +223,7 @@ Real source/reader output → source-coverage ledger
 
 A card type is never a command to invoke its corresponding Skill. **Current observed need + available installation + accepted owner continuation** determine whether and when a method runs. This prevents 15 card types from creating 15 independent Agent decisions or a second software factory.
 
-## 7. Quality gate and evidence boundary
+## 11. Quality gate and evidence boundary
 
 The compiler and `factoryweaver-verify` must produce a **scoped semantic audit** separate from the original JSON validator:
 - Per proposed card: `ACCEPT | REVISE | REUSE | K_SOURCE_MISSING`, with explicit failure reason.
