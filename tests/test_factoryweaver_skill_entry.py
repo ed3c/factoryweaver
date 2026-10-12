@@ -74,7 +74,7 @@ class FactoryWeaverEntrySkillTests(unittest.TestCase):
         self.assertIn("NOT_OBSERVED", contract)
         self.assertIn("UNVERIFIED", contract)
         self.assertIn("no card automatically", contract.lower())
-        self.assertIn("Host-selected", entry)
+        self.assertIn("original Host chooses the absolute destination", entry)
         self.assertIn("next=null", agents)
 
     def test_four_changed_cards_per_frozen_cli_page(self):
