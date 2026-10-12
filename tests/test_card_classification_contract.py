@@ -65,4 +65,38 @@ class CardClassificationContractTests(unittest.TestCase):
         d = REF.read_text(encoding="utf-8")
         self.assertIn("HOST_OWNED_METADATA", d)
 
+    def test_every_card_kind_has_explicit_scope_outer_and_inner_skill_consumers(self):
+        document = REF.read_text(encoding="utf-8")
+        section = document.split("## 7. Per-series consumers", 1)[1].split("## 8. Universal", 1)[0]
+        card_rows = [line for line in section.splitlines() if line.startswith("| **") and line.count("|") >= 6]
+        expected = {"N", "C", "D", "T", "E", "Q", "S", "R", "REQ", "SPEC", "G", "P", "V", "X", "K"}
+        observed = {}
+        for row in card_rows:
+            columns = [column.strip() for column in row.strip().strip("|").split("|")]
+            label = columns[0].removeprefix("**").split()[0]
+            self.assertEqual(len(columns), 5, f"Expected 5 semantic columns for {label}")
+            for item in columns[1:]:
+                self.assertGreater(len(item), 35, f"Missing meaningful mapping for {label}")
+            self.assertNotIn(label, observed)
+            observed[label] = columns
+        self.assertEqual(set(observed), expected)
+        self.assertIn("issue-atom", section)
+        self.assertIn("poteto-mode", section)
+
+    def test_modality_agnostic_coverage_and_review_writing(self):
+        doc = REF.read_text(encoding="utf-8")
+        for medium in [
+            "Plain text", "PDF, slide deck", "Image, chart", "Video/audio",
+            "Tables, CSV", "Code, Git diffs", "Logs, agent traces",
+        ]:
+            with self.subTest(medium=medium):
+                self.assertIn(medium, doc)
+        for condition in [
+            "source-coverage ledger", "not its media format", "P-class instruction",
+            "review-writing", "Actor / subject", "Condition first",
+            "Acceptance, rejection and unknown", "NOOP",
+        ]:
+            self.assertIn(condition, doc)
+        self.assertIn("many Scopes", doc)
+
 if __name__ == "__main__": unittest.main()
