@@ -22,7 +22,6 @@ class CardClassificationContractTests(unittest.TestCase):
         actual = {group:set() for group in expected}
         for line in doc.splitlines():
             m = re.match(r"^\| (Knowledge|Decision|Specification|Implementation|Verification) \|.*?`([A-Z]+)`", line)
-                         flags=re.I)
             if m:
                 actual[m.group(1)].add(m.group(2))
         self.assertEqual(actual, expected)
@@ -53,14 +52,14 @@ class CardClassificationContractTests(unittest.TestCase):
         for bad in [
             "Thanksgiving Recess",
             "Concept: Tool schema and validation",
-            "C,C,G,SPEC",
+            "C, C, G, SPEC",
             "SPEC-email-qa validated_by V-email-qa",
         ]:
             with self.subTest(bad=bad):
                 self.assertIn(bad, d)
         for good in ["three search calls","returned by search in that request",
                      "actually inspected", "NOOP", "NOT_RUN"]:
-            self.assertIn(good, d) if good != "actual inspected" else None
+            self.assertIn(good, d)
 
     def test_host_metadata_not_promoted_to_card_content(self):
         d = REF.read_text(encoding="utf-8")
