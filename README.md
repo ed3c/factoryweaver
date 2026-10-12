@@ -20,6 +20,10 @@
 
 **入口分工：** `factoryweaver` 是唯一建議對話入口；`factoryweaver-compile`、`factoryweaver-verify` 是被它選用的 leaf skills。實際修改 Repository、Issue Contract admission、PR delivery、Runtime Measurement 依然由原 Host/Owner 執行。Prompt 與卡片只含語義，不手工產生 Hash、Digest、Cursor、Execution ID、Git HEAD 或命令參數。
 
+## Stanford CS329Z full-course knowledge collection
+
+[Stanford CS329Z Course Master Card Box](docs/courses/cs329z-fall-2026/MASTER-CARD-BOX.md) combines all 11 weekly chapters. [Each chapter's Slides, Readings, Homework and Integrated Cards](docs/courses/cs329z-fall-2026/README.md) are separately navigable and source-status aware. The syllabus catalog is not proof of full-slide/article ingestion.
+
 ## 可執行的規格驗證
 
 純讀取 CLI 可驗證、投影、路由提案及渲染卡片。它不執行 Host actions。原 owner 仍負責 admission、執行與效果回讀。
