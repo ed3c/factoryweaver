@@ -15,8 +15,8 @@ import tempfile
 
 ROOT = Path(__file__).resolve().parents[4]
 HERE = Path(__file__).resolve().parents[1]
-FEATURES = ("knowledge-contract", "semantic-cards", "scope-handoff", "manager-needs", "typed-links", "soodles-reader", "source-fidelity", "goal-scope", "prompt-delta", "pclass-consumer", "outer-admission", "inner-poteto", "test-manager", "schema-feedback", "native-hook", "native-cron", "delivery-closure", "prompt-carriers", "requirement-coverage")
-LOCAL_FEATURES = {"knowledge-contract", "semantic-cards", "scope-handoff", "manager-needs", "typed-links", "prompt-carriers", "requirement-coverage"}
+FEATURES = ("knowledge-contract", "semantic-cards", "scope-handoff", "manager-needs", "typed-links", "soodles-reader", "source-fidelity", "goal-scope", "prompt-delta", "pclass-consumer", "outer-admission", "inner-poteto", "test-manager", "schema-feedback", "native-hook", "native-cron", "delivery-closure", "prompt-carriers", "portable-bundle", "requirement-coverage")
+LOCAL_FEATURES = {"knowledge-contract", "semantic-cards", "scope-handoff", "manager-needs", "typed-links", "prompt-carriers", "portable-bundle", "requirement-coverage"}
 EXTERNAL_PROOF = {
     "source-fidelity": "Independent review of actual inspected source units and source coverage, not a field-only fixture",
     "goal-scope": "Fresh original Issue and Source/REQ Goal-Measurement-Acceptance readback",
@@ -128,6 +128,19 @@ def drive(feature, evidence, scratch):
         refused = obj(call("requirement_coverage.py", root / "project.json", bad),
                       evidence, name + "_source", expected=2)
         ensure("coverage_unknown_source" in refused["error"], "unbound_coverage_source")
+    elif feature == "portable-bundle":
+        folder = scratch / "distribution"
+        first = obj(call("build_skill_bundle.py", folder), evidence, name + "_build")
+        repeated = obj(call("build_skill_bundle.py", folder), evidence, name + "_repeat")
+        ensure(first["status"] == "CREATED" and repeated["status"] == "NOOP",
+               "bundle_replay_drift")
+        observed = obj(call("verify_installed_skill.py", folder), evidence, name + "_installed")
+        ensure(observed["status"] == "INSTALLED_SKILL_REFERENCE_CLI_PASS" and
+               not observed["actual_agent_invocation"], "bundle_claims_native_agent")
+        entry = folder / "skills/factoryweaver/SKILL.md"
+        entry.write_text("tampered", encoding="utf-8")
+        refused = obj(call("check_bundle.py", folder), evidence, name + "_tampered", expected=2)
+        ensure("content_digest_mismatch" in refused["error"], "tampered_bundle_accepted")
     elif feature == "knowledge-contract":
         record = ROOT / "docs/evals/cs329z-hw1/drill.json"
         result = obj(call("factoryweaver.py", "validate", record), evidence, name + "_valid")

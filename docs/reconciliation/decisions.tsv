@@ -1,0 +1,2 @@
+ts	phase	decision	why	evidence	result
+2026-10-13T07:21:10.810864+00:00	portable	Preserve canonical v7.2 paths and package transitive dependencies	Old distribution layout cannot satisfy current entry references	https://github.com/ed3c/factoryweaver/pull/22	12 focused controls PASS; native Agent NOT_RUN
