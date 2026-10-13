@@ -419,6 +419,18 @@ def drive(feature, evidence, scratch):
                noop_packet["selection"]["card_ids"] == scope["card_ids"] and
                noop_packet["knowledge_record"] == record and
                not noop["authorizes_landing"], "noop_delta_removed_task")
+        # Removing an applicable constraint can remain schema-valid: it must
+        # not be misrepresented as a source-semantic ACCEPT.
+        omitted = dict(scope)
+        omitted["constraints"] = []
+        omitted_file = scratch / "omitted-constraint.json"
+        omitted_file.write_text(json.dumps(omitted), encoding="utf-8")
+        omitted_result = obj(call("soodles_handoff.py", source, omitted_file),
+                             evidence, name + "_omitted_constraint_unverified")
+        ensure(omitted_result["kind"] == "SOURCE_BOUND_PROPOSAL" and
+               omitted_result["selection"]["constraints"] == [] and
+               omitted_result["selection"]["goal"] == scope["goal"],
+               "constraint_omission_wrongly_upgraded_to_semantic_acceptance")
         # A semantically false parent exit remains a low-trust *proposal*.
         # CLI acceptance is not a semantic oracle for this overreach.
         overreach = dict(scope)
@@ -456,6 +468,7 @@ def drive(feature, evidence, scratch):
                 "source_to_card_semantics": "UNVERIFIED",
                 "selection_goal_equality_to_original_issue": "NOT_OBSERVED",
                 "overreach_semantic_review": "REQUIRED_NOT_RUN",
+                "omitted_constraint_semantic_review": "REQUIRED_NOT_RUN",
                 "noop_delta_retains_original_task": True,
                 "delta_consumed_by_writer": "NOT_RUN",
                 "next": None, "original_manager_effects": []}

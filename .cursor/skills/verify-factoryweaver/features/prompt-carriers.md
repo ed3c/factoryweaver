@@ -17,6 +17,8 @@ This journey verifies that the *same existing source-backed content* moves throu
 - Prompt Delta remains plain semantic requirements, without invented permission or next.
 - NOOP `prompt_delta=[]` keeps full Goal, Acceptance, selected Card IDs and full
   Knowledge Record. NOOP is not task deletion.
+- A selected Scope with omitted necessary constraints remains a low-trust
+  proposal; the CLI cannot infer a missing G from semantic meaning.
 - A syntactically valid but parent-overreaching acceptance remains a low-trust
   proposal; only independent Source Review can reject the semantic error.
 - A deliberately contradictory copied Goal can still pass **transport syntax** but remains UNVERIFIED until the original Issue/Session reconciles it.

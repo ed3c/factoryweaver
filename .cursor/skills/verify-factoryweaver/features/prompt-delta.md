@@ -23,6 +23,10 @@ Preconditions: Doctor ready and original Source/Owner capability available when 
 
 ## Gotchas
 
+- Card-generation feedback during compile corrects the original card;
+  it is separate from this task-local Worker PromptDelta.
+- Material Delta NOOP must preserve original Goal, Acceptance, Card refs and
+  Context, not erase the work or cause another Thinking selection.
 - Delta text in the Bundle is not evidence of Writer consumption.
 - The source wave checks entrypoint presence, not semantic truth or model execution.
 - A product bug belongs to the original product Owner; maintain-verification-skill cannot silently fix it.

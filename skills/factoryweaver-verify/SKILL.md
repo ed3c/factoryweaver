@@ -36,6 +36,16 @@ only binds existing references; it does not validate semantic completeness.
 Verify changed P-class instructions with original fresh Agent consumer and
 `schema pclass-feedback` separately from CLI and independent source review.
 
+When an R links a source-backed S/SPEC Entry, verify that it indexes only
+candidate knowledge and does not automatically inherit all V/C/G payloads.
+Compare the applicable prerequisite and local-exit clauses independently.
+Test both a missing necessary G and an irrelevant deferred G inserted into
+the local exit; report REVISE only from the actual source/Consumer review.
+The existing `prompt-carriers` CLI drive intentionally accepts these as
+low-trust proposals, proving no false semantic certainty. A NOOP Worker
+`PromptDelta` preserves the current Task context. Native Agent adherence
+remains NOT_RUN until original Soodles Consumer evidence exists.
+
 ## E2E proof of content and effects
 
 Apply the taxonomy contract's
