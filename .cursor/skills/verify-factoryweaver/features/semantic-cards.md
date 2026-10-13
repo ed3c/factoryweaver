@@ -31,3 +31,5 @@ Preconditions: Doctor returned ready and Python 3.12 plus jsonschema are install
 - Independent source/semantic review is still required.
 
 All 15 N/Q/C/D/S/P/T/R/G/E/V/X/K/REQ/SPEC prompts are selected in a real CLI call during this journey. The grounded C/SPEC/V fixture and its negative unread-source control remain distinct. Every one of the fifteen types has existing per-type field tests; none is assumed semantically complete without reading the original source.
+
+See [Prompt Carriers](prompt-carriers.md) for the actual data transformation after type selection; a Scope Selection with conflicting Goal text stays a proposal, not a semantic PASS.

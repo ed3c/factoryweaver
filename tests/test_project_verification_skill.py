@@ -78,6 +78,26 @@ class ProjectLocalVerificationTests(unittest.TestCase):
                 self.assertTrue((folder / "scope_handoff_conflict.invocation.json").is_file())
             self.assertEqual((ROOT / "scripts/factoryweaver.py").read_bytes(), product)
 
+    def test_prompt_carrier_handoff_preserves_source_and_unverified_goal(self):
+        with tempfile.TemporaryDirectory() as temp:
+            evidence = Path(temp) / "prompt-carriers"
+            process = subprocess.run(
+                [sys.executable, str(SCRIPT), "drive", "prompt-carriers",
+                 "--evidence-dir", str(evidence)],
+                cwd=ROOT, capture_output=True, text=True, timeout=45,
+            )
+            self.assertEqual(process.returncode, 0, process.stderr + process.stdout)
+            output = json.loads(process.stdout)
+            self.assertEqual(output["status"], "cli-verified")
+            self.assertEqual(output["selection_goal_equality_to_original_issue"], "NOT_OBSERVED")
+            self.assertEqual(output["source_to_card_semantics"], "UNVERIFIED")
+            self.assertEqual(output["delta_consumed_by_writer"], "NOT_RUN")
+            self.assertIsNone(output["next"])
+            for label in ("prompt_carriers_bundle", "prompt_carriers_unverified_goal",
+                          "prompt_carriers_wrong_card"):
+                self.assertTrue((evidence / (label + ".invocation.json")).is_file())
+            self.assertEqual(json.loads((evidence / "prompt_carriers_wrong_card.invocation.json").read_text())["exit"], 2)
+
     def test_full_maintenance_reports_unreachable_native_not_a_clean_pass(self):
         # Real full maintenance executes all four local CLI paths, then reports
         # the unavailable original native Reader as a named blocked feature.
