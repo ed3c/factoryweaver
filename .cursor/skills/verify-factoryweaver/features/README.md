@@ -12,7 +12,7 @@ This is the feature map maintained by create-verification-skill and maintain-ver
 
 ## Map and proof
 
-The source wave checks all declared Source paths from these feature files concurrently; it is a path-based preflight, not a semantic source review. The coordinator drives all local features serially, records stdout/stderr/exit codes and cleans scratch. Every feature must be examined even if another fails. Full maintain remains blocked without actual native admission and fresh consumer evidence.
+The source wave checks all declared Source paths from these feature files concurrently; it is a path-based preflight, not a semantic source review. The coordinator drives all local features serially, records stdout/stderr/exit codes and cleans scratch. Every feature must be examined even if another fails. Full maintain remains blocked without the original admitted Stage/Owner effects and fresh consumer evidence. A separately authorized standalone fresh consumer can verify its own scoped behavior without granting admitted-Stage or full E2E success.
 
 ## Complete end-to-end Feature Map and current verification states
 
@@ -57,9 +57,11 @@ The existing prompt-carriers CLI drive includes an unchanged/no-new-delta
 Bundle, a deliberately omitted constraint, and a parent-acceptance overreach.
 These remain only `SOURCE_BOUND_PROPOSAL` data: a passing CLI does not
 certify semantic correctness. Original independent review must distinguish
-missing applicable G from adding irrelevant G. P-class fresh Consumer remains
-unobserved without original Soodles admission; do not mark full maintenance
-clean from local CLI evidence. No additional runtime identity, state machine
+missing applicable G from adding irrelevant G. P-class fresh Consumer remains unobserved without a real native capture; a
+standalone scoped evaluation does not require original Soodles admission.
+Admitted Noodle Stage behavior and full E2E remain unobserved without their
+original admission and Owner readback. Do not mark full maintenance clean from
+local CLI evidence. No additional runtime identity, state machine
 or Feature Map entry is added.
 
 ## Fifteen Card Series semantic-verification status
