@@ -79,13 +79,31 @@ class ProjectLocalVerificationTests(unittest.TestCase):
             self.assertEqual((ROOT / "scripts/factoryweaver.py").read_bytes(), product)
 
     def test_full_maintenance_reports_unreachable_native_not_a_clean_pass(self):
+        # Real full maintenance executes all four local CLI paths, then reports
+        # the unavailable original native Reader as a named blocked feature.
         with tempfile.TemporaryDirectory() as temp:
-            # A deliberately unbound checkout cannot become an unearned native PASS.
-            absent = MODULE.drive("soodles-reader", Path(temp), Path(temp))
-            if "SOODLES_CHECKOUT" not in __import__("os").environ:
-                self.assertEqual(absent["status"], "verified-unreachable")
-                self.assertIn("original Host", absent["prerequisite"])
-            self.assertNotEqual(absent["status"], "native-e2e-passed")
+            import os
+            evidence = Path(temp) / "full"
+            env = {**os.environ, "PYTHONDONTWRITEBYTECODE": "1"}
+            env.pop("SOODLES_CHECKOUT", None)
+            out = subprocess.run(
+                [sys.executable, str(SCRIPT), "maintain", "--scope", "full",
+                 "--evidence-dir", str(evidence)],
+                cwd=ROOT, env=env, capture_output=True, text=True, timeout=90,
+            )
+            self.assertEqual(out.returncode, 2, out.stdout + out.stderr)
+            report = json.loads(out.stdout)
+            self.assertEqual(report["outcome"], "blocked")
+            self.assertEqual(report["scope"], "full")
+            statuses = {item["feature"]: item["status"] for item in report["features"]}
+            for item in set(MODULE.FEATURES) - {"soodles-reader"}:
+                self.assertEqual(statuses[item], "cli-verified")
+            self.assertEqual(statuses["soodles-reader"], "verified-unreachable")
+            self.assertTrue((evidence / "source-wave.json").is_file())
+            self.assertTrue((evidence / "run.json").is_file())
+            self.assertTrue((evidence / "result.json").is_file())
+            self.assertIn("original Host", report["gaps"][0]["prerequisite"])
+            self.assertEqual(report["cleanup"], "scratch removed; evidence retained")
 
 
 if __name__ == "__main__":
