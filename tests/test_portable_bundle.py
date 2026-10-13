@@ -181,6 +181,20 @@ class PortableBundleTests(unittest.TestCase):
             self.assertEqual(result.returncode, 2)
             self.assertIn("partial_install", result.stderr)
 
+    def test_tampered_installed_checker_is_not_executed(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            bundle = Path(tmp) / "bundle"
+            builder.build(bundle)
+            marker = Path(tmp) / "executed"
+            (bundle / "scripts/check_bundle.py").write_text(
+                "from pathlib import Path\nPath(" + repr(str(marker)) + ").touch()\n"
+                "print('{\"status\":\"SELF_CONSISTENT\"}')\n")
+            result = subprocess.run([sys.executable, str(ROOT / "scripts/verify_installed_skill.py"),
+                                     str(bundle)], capture_output=True, text=True)
+            self.assertEqual(result.returncode, 2)
+            self.assertIn("content_digest_mismatch", result.stderr)
+            self.assertFalse(marker.exists())
+
     def test_symlink_roots_and_nested_paths_refused(self):
         with tempfile.TemporaryDirectory() as tmp:
             bundle = Path(tmp) / "bundle"

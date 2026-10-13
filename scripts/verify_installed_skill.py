@@ -7,6 +7,10 @@ import sys
 from pathlib import Path
 
 
+sys.dont_write_bytecode = True
+from check_bundle import inspect as check_integrity
+
+
 def inspect(root: Path):
     if root.is_symlink():
         raise ValueError("symlink_install_root")
@@ -27,6 +31,7 @@ def inspect(root: Path):
     checker = directory / "scripts/check_bundle.py"
     if not all(p.is_file() for p in (script, example, manifest, checker)):
         raise ValueError("partial_install_missing_cli_or_contract")
+    check_integrity(directory)
     for command in ([sys.executable, str(checker), str(directory)],
                     [sys.executable, str(script), "project", str(example)]):
         result = subprocess.run(command, cwd=root, capture_output=True, text=True)
