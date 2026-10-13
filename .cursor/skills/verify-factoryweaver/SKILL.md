@@ -60,7 +60,7 @@ This attempts the whole feature map. Without the original native Soodles Host an
 
     python .cursor/skills/verify-factoryweaver/scripts/verify.py maintain --scope local
 
-That can return clean only for the selected four local CLI features. It cannot certify source semantics, native P-class adherence, Hook/Cron nontriggers, or parent Goal completion. Do not disguise a full blocked run as local clean.
+That can return clean only for the selected six local CLI features. It cannot certify source semantics, native P-class adherence, Hook/Cron nontriggers, or parent Goal completion. Do not disguise a full blocked run as local clean.
 
 Maintenance must reconcile the feature index, perform a concurrent read-only source-path wave, then serially drive each feature and capture positive/negative cases. Independent Agent source reasoning is separate from path existence. After a surprising failure, Doctor and retry only a proven harness drift once. Maintain may edit ONLY this verification skill directory, not product code. Doc drift or harness gap can be corrected and driven again before shipping at most one PR; a product regression must be reported to its original owner. For clean/blocked, no new PR.
 
