@@ -19,6 +19,8 @@ class BundleInvalid(ValueError):
 
 
 def inspect(root: Path) -> dict:
+    if root.is_symlink():
+        raise BundleInvalid("symlink_bundle_root")
     root = root.resolve()
     manifest_path = root / "bundle-manifest.json"
     if not manifest_path.is_file() or manifest_path.is_symlink():
@@ -48,6 +50,8 @@ def inspect(root: Path) -> dict:
             raise BundleInvalid("missing_or_symlink_file:" + rel)
         if hashlib.sha256(target.read_bytes()).hexdigest() != digest:
             raise BundleInvalid("content_digest_mismatch:" + rel)
+    if any(p.is_symlink() for p in root.rglob("*")):
+        raise BundleInvalid("symlink_bundle_path")
     observed = {
         p.relative_to(root).as_posix()
         for p in root.rglob("*") if p.is_file() or p.is_symlink()

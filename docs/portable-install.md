@@ -13,20 +13,32 @@ python3 scripts/build_skill_bundle.py .dist/factoryweaver
 
 After generating the folder, run `python3 scripts/check_bundle.py .dist/factoryweaver` to verify every bundled file against its generated manifest. The result is **self-consistency only**; the manifest can be forged along with the files and does not authenticate the publishing host or Git commit.
 
-The output folder has `SKILL.md`, `references/compiler.md`, `references/verifier.md`, local Zettelkasten/compatibility documentation, `contracts/v1/`, `scripts/factoryweaver.py`, examples, `LICENSE` and a content-bound `bundle-manifest.json`. All generated files come from canonical source: no parallel manually maintained reference implementations.
+The output is a portable virtual repository root. Its installer entry is `SKILL.md`, a short loader for
+`skills/factoryweaver/SKILL.md`. The three canonical Skills keep their exact bytes
+and relative paths. The bundle contains the public CLI, schemas, examples and
+transitive local Markdown references, including the v7.2 per-type prompts.
 
-**Install** by copying the **whole generated `factoryweaver/` folder** into the Agent's supported Skill location, for example a repository's `.agents/skills/factoryweaver/` or another supported Skill directory. The host decides how to load Skills and whether to allow this code; formatting the bundle is not a runtime permission grant.
+Copy the whole generated directory to a Host-selected location. Configure the
+Host to load `skills/factoryweaver/SKILL.md` inside that directory. A loader that
+copies only the leaf Skill directory loses root-owned dependencies. The top-level loader also lets a directory-copy installer preserve the whole root.
 
 ```bash
-python3 .agents/skills/factoryweaver/scripts/factoryweaver.py validate \
-  .agents/skills/factoryweaver/examples/matt-grilling/project.json
-python3 .agents/skills/factoryweaver/scripts/factoryweaver.py project \
-  .agents/skills/factoryweaver/examples/matt-grilling/project.json
+python3 scripts/verify_installed_skill.py /absolute/installed/factoryweaver
+python3 /absolute/installed/factoryweaver/scripts/factoryweaver.py project \
+  /absolute/installed/factoryweaver/examples/matt-grilling/project.json
 ```
 
-**Verified bounded installer route:** GitHub Actions installs the generated directory using pinned `skills@1.7.1` (Vercel Skills CLI), with `npx --yes skills@1.7.1 add ../factoryweaver --skill factoryweaver -a codex -y --copy` from a separate temporary consumer. It then runs the **installed** Skill's bundled verifier and CLI, including the `WAIT_FOR_HUMAN` case. This proves installer copy behavior in the CI Codex target layout, **not** a live Codex Agent loading, prompting, or taking actions. See [Actions run 37830628483](https://github.com/ed3c/factoryweaver/actions/runs/37830628483) at candidate head `6b7da05f830338ddfa179b5ebfa44ed908bcecea` (historical run; always use current exact-head run for final claims).
+The installed verifier observes the copied layout and runs its checker and
+reference CLI. It does not observe installation by an external installer or
+native Agent loading. The old flattened-bundle installer receipt does not verify this layout.
+Current CI runs the pinned `skills@1.7.1` installer against the generated local
+directory in a foreign consumer and verifies the installed files. Direct
+`npx skills add ed3c/factoryweaver` and native Agent behavior remain `NOT_RUN`.
 
-**Do not advertise** `npx skills add ed3c/factoryweaver` as a verified direct GitHub-main install route. The generated bundle is produced in the pinned GitHub Actions PR workflow and uploaded as `factoryweaver-portable-reference`, or can be built locally.
+Accepted v7.2 main vendors pinned pstack references. Their transitive instructions
+and original MIT license are included because the canonical entry requires them.
+This supersedes the older Issue #8 no-third-party-bundle premise with the
+accepted v7.2 source; it does not establish invocation of those methods.
 
 ## Local and CI proof
 
@@ -38,7 +50,7 @@ The isolated installation tests:
 - ensure no symlink or private runtime implementation was copied;
 - confirm `WAIT_FOR_HUMAN` cannot become an inferred human decision.
 
-CI runs these tests and then generates a complete bundle as an unprivileged artifact. **The artifact proves only packaging and the public reference CLI**, not Agent tool discovery, external Skill execution, Soodles/Noodle admission or a real Auto-PR PR/merge.
+CI runs these tests and generates a complete bundle as an unprivileged artifact. **The artifact proves only packaging and the public reference CLI**, not Agent tool discovery, external Skill execution, Soodles/Noodle admission or a real Auto-PR PR/merge.
 
 ## Security / owner boundary
 

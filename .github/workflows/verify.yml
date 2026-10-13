@@ -25,6 +25,24 @@ jobs:
         run: python scripts/factoryweaver.py project examples/openai-plugin-platform/project.json
       - name: Validate closed-loop requirements
         run: python scripts/factoryweaver.py validate docs/closed-loop-v72/project.json
+      - name: Build and verify portable v7.2 distribution
+        run: |
+          python scripts/build_skill_bundle.py .dist/factoryweaver
+          python scripts/check_bundle.py .dist/factoryweaver
+          python scripts/verify_installed_skill.py .dist/factoryweaver
+      - name: Install complete bundle in a foreign Codex-target directory
+        env:
+          DISABLE_TELEMETRY: "1"
+        run: |
+          mkdir -p .dist/foreign-consumer
+          (cd .dist/foreign-consumer && npx --yes skills@1.7.1 add ../factoryweaver --skill factoryweaver -a codex -y --copy)
+          python scripts/verify_installed_skill.py .dist/foreign-consumer
+      - uses: actions/upload-artifact@v4
+        with:
+          name: factoryweaver-portable-reference
+          path: .dist/factoryweaver/
+          include-hidden-files: true
+          if-no-files-found: error
       - name: Maintain the project-local CLI verification map
         run: python .cursor/skills/verify-factoryweaver/scripts/verify.py maintain --scope local --evidence-dir .verification-evidence
       - name: Retain real CLI verification evidence

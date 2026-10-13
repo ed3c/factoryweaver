@@ -10,6 +10,8 @@ from pathlib import Path
 
 from jsonschema import ValidationError
 
+sys.dont_write_bytecode = True
+
 from factoryweaver import ContractError, _unique_json_fields, verify
 
 PROTOCOL = "factoryweaver/card-delta-v1"

@@ -30,7 +30,7 @@ class PortableBundleTests(unittest.TestCase):
             builder.build(installed)
             self.assertIn("../../docs/compatibility.md",
                           (installed / "skills/factoryweaver/SKILL.md").read_text(encoding="utf-8"))
-            self.assertTrue((installed / "references/compatibility.md").is_file())
+            self.assertTrue((installed / "docs/compatibility.md").is_file())
             self.assertTrue((installed / "scripts/factoryweaver.py").is_file())
 
     def test_can_execute_in_foreign_project_root(self):
@@ -82,7 +82,7 @@ class PortableBundleTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             bundle = Path(tmp) / "factoryweaver"
             builder.build(bundle)
-            (bundle / "SKILL.md").write_text("tampered skill", encoding="utf-8")
+            (bundle / "skills/factoryweaver/SKILL.md").write_text("tampered skill", encoding="utf-8")
             with self.assertRaisesRegex(builder.BundleError, "existing_bundle_content_drift"):
                 builder.build(bundle)
         with tempfile.TemporaryDirectory() as tmp:
@@ -106,7 +106,7 @@ class PortableBundleTests(unittest.TestCase):
             self.assertEqual(status["status"], "SELF_CONSISTENT")
             self.assertFalse(status["external_publisher_authenticated"])
             self.assertFalse(status["effect_authority"])
-            (bundle / "SKILL.md").write_text("tampered entry", encoding="utf-8")
+            (bundle / "skills/factoryweaver/SKILL.md").write_text("tampered entry", encoding="utf-8")
             result = run()
             self.assertEqual(result.returncode, 2)
             self.assertIn("content_digest_mismatch", result.stderr)
@@ -123,13 +123,82 @@ class PortableBundleTests(unittest.TestCase):
             self.assertIn("untracked_or_missing_bundle_file", p.stderr)
 
     def test_missing_canonical_source_is_a_hard_refusal(self):
-        old = builder.FILES["references/compatibility.md"]
+        old = builder.FILES["docs/compatibility.md"]
         try:
-            builder.FILES["references/compatibility.md"] = "docs/nonexistent-missing-source.md"
+            builder.FILES["docs/compatibility.md"] = "docs/nonexistent-missing-source.md"
             with self.assertRaisesRegex(builder.BundleError, "missing_or_symlink_source"):
                 builder.generate()
         finally:
-            builder.FILES["references/compatibility.md"] = old
+            builder.FILES["docs/compatibility.md"] = old
+
+    def test_importing_clis_leave_distribution_replayable(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            bundle = Path(tmp) / "distribution"
+            builder.build(bundle)
+            fixture = bundle / "examples/matt-grilling/project.json"
+            env = dict(os.environ)
+            env.pop("PYTHONDONTWRITEBYTECODE", None)
+            result = subprocess.run([sys.executable, str(bundle / "scripts/card_delta.py"),
+                                     str(fixture), str(fixture)], env=env,
+                                    capture_output=True, text=True)
+            self.assertEqual(result.returncode, 0, result.stderr)
+            self.assertEqual(json.loads(result.stdout)["status"], "NOOP")
+            self.assertEqual(builder.build(bundle)["status"], "NOOP")
+            harness = bundle / ".cursor/skills/verify-factoryweaver/scripts/verify.py"
+            result = subprocess.run([sys.executable, str(harness), "maintain", "--scope", "local"],
+                                    capture_output=True, text=True, timeout=60)
+            self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+
+    def test_all_local_markdown_dependencies_preserve_canonical_paths(self):
+        files = builder.generate()
+        for name, raw in files.items():
+            for target in builder.local_links(name, raw):
+                self.assertTrue(target in files or any(p.startswith(target + "/") for p in files),
+                                (name, target))
+        self.assertIn("docs/soodles-manager-consumption.md", files)
+        self.assertIn("references/card-prompts/README.md", files)
+        self.assertEqual(files["skills/factoryweaver/SKILL.md"],
+                         (ROOT / "skills/factoryweaver/SKILL.md").read_bytes())
+
+    def test_installed_verifier_uses_virtual_root_and_refuses_partial_copy(self):
+        verifier = ROOT / "scripts/verify_installed_skill.py"
+        with tempfile.TemporaryDirectory() as tmp:
+            bundle = Path(tmp) / "installed"
+            builder.build(bundle)
+            result = subprocess.run([sys.executable, str(verifier), str(bundle)],
+                                    capture_output=True, text=True)
+            self.assertEqual(result.returncode, 0, result.stderr)
+            relative = subprocess.run([sys.executable, str(verifier), "installed"],
+                                      cwd=Path(tmp), capture_output=True, text=True)
+            self.assertEqual(relative.returncode, 0, relative.stderr)
+            observed = json.loads(result.stdout)
+            self.assertEqual(observed["status"], "INSTALLED_SKILL_REFERENCE_CLI_PASS")
+            self.assertFalse(observed["actual_agent_invocation"])
+            self.assertFalse(observed["installer_behavior_observed"])
+            (bundle / "bundle-manifest.json").unlink()
+            result = subprocess.run([sys.executable, str(verifier), str(bundle)],
+                                    capture_output=True, text=True)
+            self.assertEqual(result.returncode, 2)
+            self.assertIn("partial_install", result.stderr)
+
+    def test_symlink_roots_and_nested_paths_refused(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            bundle = Path(tmp) / "bundle"
+            builder.build(bundle)
+            alias = Path(tmp) / "alias"
+            alias.symlink_to(bundle, target_is_directory=True)
+            with self.assertRaisesRegex(builder.BundleError, "symlink_destination"):
+                builder.build(alias)
+            checker = ROOT / "scripts/check_bundle.py"
+            result = subprocess.run([sys.executable, str(checker), str(alias)],
+                                    capture_output=True, text=True)
+            self.assertEqual(result.returncode, 2)
+            self.assertIn("symlink_bundle_root", result.stderr)
+            (bundle / "linked-directory").symlink_to(bundle / "docs", target_is_directory=True)
+            result = subprocess.run([sys.executable, str(checker), str(bundle)],
+                                    capture_output=True, text=True)
+            self.assertEqual(result.returncode, 2)
+            self.assertIn("symlink_bundle_path", result.stderr)
 
     def test_deterministic_rebuild_from_frozen_sources(self):
         with tempfile.TemporaryDirectory() as tmp:

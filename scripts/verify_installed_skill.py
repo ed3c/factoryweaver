@@ -8,12 +8,19 @@ from pathlib import Path
 
 
 def inspect(root: Path):
+    if root.is_symlink():
+        raise ValueError("symlink_install_root")
+    root = root.resolve()
     candidates = sorted(p.parent for p in root.rglob("SKILL.md")
-                        if p.is_file() and p.read_text(encoding="utf-8").startswith(
+                        if p.parent.name == "factoryweaver" and p.parent.parent.name == "skills"
+                        and p.is_file() and p.read_text(encoding="utf-8").startswith(
                             "---\nname: factoryweaver\n"))
+    candidates = [p for p in candidates if not any(p in other.parents for other in candidates if p != other)]
     if len(candidates) != 1:
         raise ValueError("factoryweaver_install_not_uniquely_found:" + str(len(candidates)))
-    directory = candidates[0]
+    directory = candidates[0].parents[1]
+    if candidates[0].relative_to(directory).as_posix() != "skills/factoryweaver":
+        raise ValueError("partial_install_missing_virtual_root")
     script = directory / "scripts/factoryweaver.py"
     example = directory / "examples/matt-grilling/project.json"
     manifest = directory / "bundle-manifest.json"
@@ -32,13 +39,13 @@ def inspect(root: Path):
         elif data.get("status") != "SELF_CONSISTENT":
             raise ValueError("installed_bundle_inconsistent")
     return {"status": "INSTALLED_SKILL_REFERENCE_CLI_PASS",
-            "installer_behavior_observed": True, "actual_agent_invocation": False,
+            "installed_layout_observed": True, "installer_behavior_observed": False, "actual_agent_invocation": False,
             "external_owner_authenticated": False, "effect_authority": False}
 
 
 if __name__ == "__main__":
     try:
-        print(json.dumps(inspect(Path(sys.argv[1]).resolve()), sort_keys=True))
+        print(json.dumps(inspect(Path(sys.argv[1])), sort_keys=True))
     except (IndexError, ValueError, OSError) as error:
         print(json.dumps({"valid": False, "error": str(error)}), file=sys.stderr)
         raise SystemExit(2)
