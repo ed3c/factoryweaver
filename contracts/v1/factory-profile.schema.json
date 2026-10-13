@@ -1,0 +1,112 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:factoryweaver:contracts:v1:factory-profile",
+  "title": "FactoryWeaver read-only Factory Profile Lock (proposal, no authority)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "protocol",
+    "profile_id",
+    "workflow_entry",
+    "skills",
+    "carrier_capabilities",
+    "isolation"
+  ],
+  "properties": {
+    "protocol": {
+      "const": "factoryweaver/factory-profile-v1"
+    },
+    "profile_id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]{3,63}$"
+    },
+    "workflow_entry": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]{2,63}$"
+    },
+    "skills": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/skill"
+      }
+    },
+    "carrier_capabilities": {
+      "type": "array",
+      "minItems": 3,
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "isolated_git_worktree",
+          "skill_discovery",
+          "session_readback",
+          "source_pinning",
+          "bounded_process_lifecycle"
+        ]
+      }
+    },
+    "isolation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "global_skill_inheritance",
+        "allow_unlisted_skills",
+        "worktree_per_work_order"
+      ],
+      "properties": {
+        "global_skill_inheritance": {
+          "const": false
+        },
+        "allow_unlisted_skills": {
+          "const": false
+        },
+        "worktree_per_work_order": {
+          "const": true
+        }
+      }
+    }
+  },
+  "$defs": {
+    "skill": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "role",
+        "repository",
+        "source_commit",
+        "subpath",
+        "tree_sha256"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]{2,63}$"
+        },
+        "role": {
+          "enum": [
+            "workflow_entry",
+            "leaf",
+            "contract"
+          ]
+        },
+        "repository": {
+          "type": "string",
+          "minLength": 3
+        },
+        "source_commit": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{40}$"
+        },
+        "subpath": {
+          "type": "string",
+          "minLength": 3
+        },
+        "tree_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    }
+  }
+}
