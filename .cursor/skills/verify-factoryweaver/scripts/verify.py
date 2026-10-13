@@ -15,8 +15,8 @@ import tempfile
 
 ROOT = Path(__file__).resolve().parents[4]
 HERE = Path(__file__).resolve().parents[1]
-FEATURES = ("knowledge-contract", "semantic-cards", "scope-handoff", "manager-needs", "typed-links", "soodles-reader", "source-fidelity", "goal-scope", "prompt-delta", "pclass-consumer", "outer-admission", "inner-poteto", "test-manager", "schema-feedback", "native-hook", "native-cron", "delivery-closure")
-LOCAL_FEATURES = {"knowledge-contract", "semantic-cards", "scope-handoff", "manager-needs", "typed-links"}
+FEATURES = ("knowledge-contract", "semantic-cards", "scope-handoff", "manager-needs", "typed-links", "soodles-reader", "source-fidelity", "goal-scope", "prompt-delta", "pclass-consumer", "outer-admission", "inner-poteto", "test-manager", "schema-feedback", "native-hook", "native-cron", "delivery-closure", "prompt-carriers")
+LOCAL_FEATURES = {"knowledge-contract", "semantic-cards", "scope-handoff", "manager-needs", "typed-links", "prompt-carriers"}
 EXTERNAL_PROOF = {
     "source-fidelity": "Independent review of actual inspected source units and source coverage, not a field-only fixture",
     "goal-scope": "Fresh original Issue and Source/REQ Goal-Measurement-Acceptance readback",
@@ -179,6 +179,52 @@ def drive(feature, evidence, scratch):
         ensure(noop["test_manager"]["status"] == "NO_TEST_SELECTION_REQUESTED" and
                noop["hook_manager"]["status"] == "NO_NATIVE_HOOK_REQUIRED",
                "no_change_triggered_manager")
+    elif feature == "prompt-carriers":
+        # CLI proof of data-carrier preservation, NOT independent Agent reasoning.
+        source = ROOT / "docs/evals/cs329z-hw1/drill.json"
+        selection_path = ROOT / "examples/soodles-scope/hw1-email-qa-selection.json"
+        scope = json.loads(selection_path.read_text(encoding="utf-8"))
+        selected = obj(call("card_semantic.py", "select", "C", "REQ", "SPEC", "V"),
+                       evidence, name + "_prompt_contracts")
+        ensure([item["series"] for item in selected["prompts"]] == ["C", "REQ", "SPEC", "V"],
+               "selected_role_contracts_changed")
+        target = scratch / "prompt-chain-bundle.json"
+        materialized = obj(call("soodles_handoff.py", source, selection_path,
+                                "--output", target), evidence, name + "_bundle")
+        packet = json.loads(target.read_text(encoding="utf-8"))
+        record = json.loads(source.read_text(encoding="utf-8"))
+        ensure(packet["kind"] == "SOURCE_BOUND_PROPOSAL" and
+               packet["knowledge_record"] == record and
+               packet["selection"] == scope and
+               not materialized["authorizes_landing"], "prompt_scope_or_parent_goal_truncated")
+        ensure(isinstance(scope["prompt_delta"], list) and
+               all(isinstance(v, str) for v in scope["prompt_delta"]),
+               "semantic_delta_missing")
+        altered = dict(scope)
+        altered["goal"] = "A conflicting task target not confirmed by current original Issue."
+        conflicting = scratch / "conflicting-goal.json"
+        conflicting.write_text(json.dumps(altered), encoding="utf-8")
+        second = scratch / "different-goal-bundle.json"
+        proposed = obj(call("soodles_handoff.py", source, conflicting,
+                            "--output", second), evidence, name + "_unverified_goal")
+        actual = json.loads(second.read_text(encoding="utf-8"))
+        ensure(actual["selection"]["goal"] == altered["goal"] and
+               actual["kind"] == "SOURCE_BOUND_PROPOSAL" and
+               not proposed["authorizes_landing"],
+               "syntactic_goal_duplicate_promoted_to_authorization")
+        wrong = dict(scope)
+        wrong["card_ids"] = ["SPEC-FORGED-IDENTITY"]
+        malformed = scratch / "wrong-card.json"
+        malformed.write_text(json.dumps(wrong), encoding="utf-8")
+        refused = obj(call("soodles_handoff.py", source, malformed),
+                      evidence, name + "_wrong_card", expected=2)
+        ensure(refused["valid"] is False, "unknown_card_identity_did_not_refuse")
+        return {"feature": feature, "status": "cli-verified",
+                "proof_ceiling": "PROMPT_DATA_CARRIERS_ONLY",
+                "source_to_card_semantics": "UNVERIFIED",
+                "selection_goal_equality_to_original_issue": "NOT_OBSERVED",
+                "delta_consumed_by_writer": "NOT_RUN",
+                "next": None, "original_manager_effects": []}
     elif feature == "typed-links":
         target = ROOT / "examples/card-semantic/hw1-email-qa.json"
         fixture = json.loads(target.read_text(encoding="utf-8"))
