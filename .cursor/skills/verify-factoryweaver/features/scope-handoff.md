@@ -27,5 +27,9 @@ Preconditions: Doctor returned ready and Python 3.12 plus jsonschema are install
 
 ## Gotchas
 
+Compare the full knowledge record and selection, not only requirement counts.
+A conflict must name the original-readback refusal and preserve original bytes;
+nonzero exit alone does not prove that boundary.
+
 - Materialization does not create a Soodles Issue or enable the Reader.
 - The digest is calculated by CLI, not filled by the Agent.

@@ -62,6 +62,8 @@ Link: a genuine depends_on edge needs a prerequisite whose failure changes the s
 Scope: assemble a minimal sufficient collection of relevant cards for one causal Issue Atom. Goal, Measurement, Persistence, Stop/Escalation, callers, tests, fixtures, original effect owner and landing obligations remain explicit. The four runtime projections ScopeManifest, SkillRoute, PromptDelta, Continuation are **not cards**, and are proposed sidecars until actually supported. Generate PromptDelta=NOOP when no new behavioral instruction is needed; never produce generic boilerplate to occupy a slot.
 
 Semantic acceptance: a successful v1 JSON validation does not establish content quality, source fidelity or live behavior. Reject generic templates (e.g., 'Concept: Tool schema and validation; why it matters: select a mechanism'), duplicate G cards, reversed validated_by and false links such as 'Coding Agents enables Thanksgiving Recess'. Preserve original user outcomes and remaining work across Boot/Drill; no fabricated IDs, digests, cursors or measured results.
+
+Apply the linked taxonomy contract's **Consumer boundary and partial parent acceptance** check: SPEC output/then/oracle must cover the same Consumer; V needs discriminating input/result controls; the selected atom must distinguish its local clause acceptance from preserved parent obligations. Shape validation cannot perform this semantic check.
 ## NEW CARD CONTRACTS
 
 `REQ|<stable-slug>` Requirement：

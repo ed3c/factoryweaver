@@ -45,6 +45,12 @@ The helper records each actual command, stdout, stderr and exit code in a Host-c
 
 Card meaning requires original inspected sources and independent semantic review. Upstream source review should use independent read-only feature analysis where a carrier supports subagents. Native P-class proof requires original Soodles review-writing, fresh consumer captures and schema pclass-feedback. Actual outer/inner/Manager/provider effects need the original owners.
 
+The existing semantic-cards and typed-links drives retain parser-boundary
+review subjects and declared dependency/scoped-gap controls. Shape-valid
+contradictory content remains semantics UNVERIFIED. Use the taxonomy
+contract's Consumer boundary and partial parent acceptance check for the
+separate source review; no harness result scores Agent compliance.
+
 ## Cleanup
 
 Every drive uses an isolated TemporaryDirectory, cleaned even after failures. No process is killed by name and no user's running instance is affected. Evidence logs remain at the printed path; check run.json and result.json after cleanup. The helper does not mutate product files, register hooks, schedule Cron, create Issues or PRs, publish or run a new model.

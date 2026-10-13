@@ -27,5 +27,9 @@ Preconditions: Doctor returned ready and Python 3.12 plus jsonschema are install
 
 ## Gotchas
 
+Reuse the returned Reader arguments after changing only the disposable Bundle
+bytes. The negative drive requires exit 2, selected_bytes_changed and unchanged
+null next/empty effects/no landing authority. Exact-byte transport is not admission.
+
 - A compatible read-only Reader does not prove legal admission, selected Poteto playbook or fresh native Agent behavior.
 - The repository's original Issue #300 is still a separate admission gate.

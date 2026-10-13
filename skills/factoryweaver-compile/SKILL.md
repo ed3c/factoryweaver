@@ -22,7 +22,13 @@ After the v7.2 System Prompt, **read [the authoritative taxonomy and Scope Assem
 Before emitting a card CREATE/UPDATE, use its own type-specific fields and state mechanism, condition, observable consequence, discriminating falsifier, actually inspected source and change from accepted knowledge. First preserve modality-specific source assertions (slide figure, image region, transcript turn, table population, code symbol, runtime trace as applicable) through the Host. A source/title listing is not the underlying content. Use `review-writing` semantic Source Fidelity for every engineering-facing card, but **do not invoke all mapped Skills just because cards exist**. Reject generic 'select a mechanism' payloads. Before emitting each material typed link, state relation direction, applicability and what dependent requirement or test is affected if the target changes; reject mere week-order links, false causes and reversed SPEC/verification edges. The four proposed runtime contracts (ScopeManifest, SkillRoute, PromptDelta, Continuation) are not cards. An exact valid next or already enforced CLI contract yields PromptDelta=NOOP, not a repetitive worker checklist.
 ## Test Manager and Hook Manager boundary
 
-For a selected behavior, compile a **verification question and distinct negative case** for the Soodles Test Manager. It owns the unique on-demand test scope and any valid `needs_scope` correction. The FactoryWeaver proposal cannot choose exact controls, require full tests or reuse stale PASS.
+Before materializing, apply the taxonomy contract's
+[Consumer boundary and partial parent acceptance](../../references/card-classification-and-scope-assembly.md#consumer-boundary-and-partial-parent-acceptance)
+check. Do not mechanically expand each source row to REQ/SPEC/V by copying
+one acceptance string. Review the selected per-type meaning and the atom's
+covered/remaining clauses before exporting.
+
+For a selected behavior, propose source-bound control inputs and expected outcomes with a **verification question and distinct negative case**. The Soodles Test Manager owns the unique actual control selection/execution and any valid `needs_scope` correction. A FactoryWeaver proposal cannot replace that selection, require full tests or reuse stale PASS.
 
 For a real **native Hook** need, cite the original event and source-observed requirement. Soodles uses `hook_manager.py` and the native Host/Schema Manager readbacks; **there is no installed `.agents/skills/hook-manager/SKILL.md` in the inspected Soodles tree**. Do not invent one, register a handler, create a scheduler, or report execution from document text. Reuse original owner next, unknown-effect readback and native Stop recursion guard. See [Manager Consumption](../../docs/soodles-manager-consumption.md).
 

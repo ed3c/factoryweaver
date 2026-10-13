@@ -9,10 +9,10 @@
 **Required semantic slots (use type-specific meaning, not boilerplate):**
 - **actor** — source-backed and concrete; describe what changes in the engineering decision where applicable.
 - **goal** — source-backed and concrete; describe what changes in the engineering decision where applicable.
-- **measurement** — source-backed and concrete; describe what changes in the engineering decision where applicable.
+- **measurement** — name the original observation Producer and comparison method, with population or fixed inputs where relevant; preserve missing inputs rather than repeat the desired outcome.
 - **persistence** — source-backed and concrete; describe what changes in the engineering decision where applicable.
 - **stop_escalation** — source-backed and concrete; describe what changes in the engineering decision where applicable.
-- **acceptance** — source-backed and concrete; describe what changes in the engineering decision where applicable.
+- **acceptance** — preserve the whole required outcome and its observable conditions; a selected child atom covers only its explicitly mapped clauses.
 - **non_case** — source-backed and concrete; describe what changes in the engineering decision where applicable.
 
 **Scope contribution:** Whole-task goal/acceptance anchor for one or more atoms.
