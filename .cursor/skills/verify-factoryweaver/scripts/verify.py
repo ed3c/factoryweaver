@@ -314,6 +314,33 @@ def drive(feature, evidence, scratch):
         ensure(noop["test_manager"]["status"] == "NO_TEST_SELECTION_REQUESTED" and
                noop["hook_manager"]["status"] == "NO_NATIVE_HOOK_REQUIRED",
                "no_change_triggered_manager")
+        purpose_cases = json.loads((ROOT / ".cursor/skills/verify-factoryweaver/fixtures/hook-purpose-boundaries.json").read_text())
+        expected_ids = {"pr_source_check_without_runtime_metadata", "mr_source_review_without_native_event",
+                        "native_stop_declaration_is_not_invocation", "provider_event_declaration_is_not_native_proof",
+                        "injected_stage_metadata_refuses", "injected_effect_authority_refuses"}
+        case_ids = [case["id"] for case in purpose_cases["cases"]]
+        ensure(len(case_ids) == len(expected_ids) and set(case_ids) == expected_ids,
+               "purpose_control_inventory_changed")
+        for case in purpose_cases["cases"]:
+            request = scratch / (case["id"] + ".json")
+            request.write_text(json.dumps(case["request"]), encoding="utf-8")
+            result = obj(call("card_semantic.py", "managers", request), evidence,
+                         name + "_" + case["id"], expected=case["exit"])
+            if case["exit"] == 2:
+                ensure(result["valid"] is False and
+                       result["error"] == "manager_needs:exact_fields_required:schema,subject,test_need,hook_need",
+                       "purpose_extra_fields_not_refused")
+                continue
+            ensure(result["hook_manager"]["status"] == case["hook_status"] and
+                   not result["manager_actions_performed"] and
+                   result["effect_authority"] is False and result["authorizes_landing"] is False,
+                   "purpose_advisory_promoted_to_execution")
+            if "test_status" in case:
+                ensure(result["test_manager"]["status"] == case["test_status"],
+                       "source_check_required_native_runtime_metadata")
+            if "native_execution" in case:
+                ensure(result["hook_manager"]["native_execution"] == case["native_execution"],
+                       "declared_event_became_native_proof")
     elif feature == "prompt-carriers":
         # CLI proof of data-carrier preservation, NOT independent Agent reasoning.
         source = ROOT / "docs/evals/cs329z-hw1/drill.json"
@@ -418,6 +445,14 @@ def drive(feature, evidence, scratch):
             return {"feature": feature, "status": "verified-unreachable",
                     "prerequisite": "original Host must provide a compatible SOODLES_CHECKOUT",
                     "attempted": "real Soodles knowledge inspect CLI"}
+        help_text = invoke([sys.executable, str(Path(checkout).resolve() / "soodles.py"), "--help"],
+                           evidence, name + "_capability", cwd=Path(checkout).resolve())
+        groups = re.search(r"\{([a-z0-9_, -]+)\}", help_text)
+        ensure(groups is not None, "soodles_reader_capability_unrecognized")
+        if "knowledge" not in groups.group(1).split(","):
+            return {"feature": feature, "status": "verified-unreachable",
+                    "prerequisite": "selected Soodles checkout must expose knowledge inspect; Hook Manager availability does not establish Reader capability",
+                    "attempted": "original selected Soodles CLI --help capability readback"}
         record = ROOT / "docs/evals/cs329z-hw1/drill.json"
         selection = ROOT / "examples/soodles-scope/hw1-email-qa-selection.json"
         target = scratch / "reader-bundle.json"

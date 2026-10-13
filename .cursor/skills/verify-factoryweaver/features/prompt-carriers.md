@@ -6,6 +6,8 @@ This journey verifies that the *same existing source-backed content* moves throu
 
 - Source: references/zettelkasten-v7.2.md
 - Source: references/prompt-carrier-and-ownership.md
+- Source: docs/hook-purpose-and-review-boundaries.md
+- Source check consumes exact task/candidate/diff and actual review evidence without unrelated Stage, native Session, token or transfer metadata. Native-effect proof stays separately applicable.
 - Source: scripts/card_semantic.py
 - Source: scripts/soodles_handoff.py
 - Source: docs/evals/cs329z-hw1/drill.json
