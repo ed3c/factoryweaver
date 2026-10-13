@@ -15,6 +15,25 @@ license: MIT
 8. On repeated unchanged sources emit NOOP; preserve stable IDs, valid links and unresolved blockers.
 9. Render selected readable cards only when material source-backed gain exists; reuse accepted cards and named evidence/unknown. Read-only `scripts/card_semantic.py select` exposes type contracts, `inspect` checks structured semantic-field shape with proof ceiling, and `managers` projects Test/Hook requests without executing them. The original `cards` command only renders materialized v1 records and never proves semantic quality.
 
+## Two different feedback boundaries
+
+While generating/revising a Card, the Session supplies source-bound
+**card-generation feedback** about missing premises, false causal edges,
+consumer-specific outputs and discriminating cases. Resolve the earliest
+incorrect Card producer before accepting the record. This is not the
+Soodles `PromptDelta` sidecar and does not mutate an accepted history without
+its ordinary revision/source review. REUSE/NOOP when evidence brings no change.
+
+When several causal atoms are actually needed, an R card indexes their semantic
+prerequisites and already registered Card references. The read-only
+`python scripts/card_semantic.py roadmap RECORD` supplies the existing
+references; it neither infers membership nor selects execution order. The
+current Session uses actual owner next and current evidence to choose a
+minimal sufficient Scope, then composes a consumer-specific One-Shot Prompt.
+Only the changed required behavior enters the existing `prompt_delta` selection;
+reused constraints are referenced, not repeated as new requirements. Do not
+make a new Prompt schema, author runtime metadata or reduce Worker autonomy.
+
 ## Classification and graph composition (all Hosts)
 
 After the v7.2 System Prompt, **read [the authoritative taxonomy and Scope Assembly contract](../../references/card-classification-and-scope-assembly.md)**, including **all 15 per-series Soodles/Poteto-pstack Skill Consumers, modality-agnostic source coverage, and review-writing expectations**. All 15 card series remain available; the core seven C/REQ/G/SPEC/V/X/K are not mandatory per case. Choose series by source-supported knowledge function, not chapter position or a C,C,G,SPEC template. Reuse existing G/C across Scopes, update only after a distinct semantic gain, and leave unread PDFs as K/source catalogs.

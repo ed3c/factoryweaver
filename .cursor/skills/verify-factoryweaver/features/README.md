@@ -44,6 +44,13 @@ Local maintain drives the registered local CLI features and marks twelve `exclud
 
 | [prompt-carriers](./prompt-carriers.md) | Real CLI positive/negative controls; semantic Goal conflict flagged unverified | Native P-class / Original Issue equality not observed |
 
+The `semantic-cards` existing feature also exercises the read-only
+`card_semantic.py roadmap` entry. It indexes original active IDs and
+registered R links without selecting scopes, adding runtime metadata or
+composing an Agent prompt. Its CLI PASS is not a Session semantic review.
+Independent One-Shot composition criteria stay within the existing
+source-fidelity, goal-scope, prompt-delta and pclass-consumer boundaries.
+
 ## Fifteen Card Series semantic-verification status
 
 Each Card type is retained in the same `semantic-cards` Feature; the CLI selects all 15 type-specific contracts and the existing test suite exercises their schema/field requirements. **No type can claim independent source-semantic PASS solely from these controls.**

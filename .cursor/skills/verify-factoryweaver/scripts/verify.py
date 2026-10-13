@@ -273,6 +273,24 @@ def drive(feature, evidence, scratch):
               "independent_semantic_review": "NOT_RUN",
               "native_pclass_feedback": "NOT_RUN",
               "note": "Shape controls passed; original source reviewer must separately evaluate the fixture questions."})
+        # Roadmap index is a distinct read-only CLI entry of this Card feature.
+        roadmap_record = ROOT / "docs/closed-loop-v72/project.json"
+        index = obj(call("card_semantic.py", "roadmap", roadmap_record),
+                    evidence, name + "_roadmap_index")
+        ensure(index["status"] == "READ_ONLY_ROADMAP_INDEX" and
+               index["scope_selection"] == "SESSION_REQUIRED" and
+               index["prompt_composition"] == "NOT_PERFORMED" and
+               index["next"] is None and index["effects"] == [] and
+               not index["authorizes_landing"] and index["roadmaps"],
+               "roadmap_index_claimed_session_or_effect")
+        forged_record = json.loads(roadmap_record.read_text(encoding="utf-8"))
+        next(c for c in forged_record["cards"] if c["series"] == "R")["typed_links"].append(
+            {"relation": "based_on", "target": "SPEC-FORGED-NONEXISTENT"})
+        forged_path = scratch / "forged-roadmap.json"
+        forged_path.write_text(json.dumps(forged_record), encoding="utf-8")
+        denial = obj(call("card_semantic.py", "roadmap", forged_path),
+                     evidence, name + "_forged_roadmap", expected=2)
+        ensure(denial["valid"] is False, "forged_roadmap_reference_accepted")
     elif feature == "scope-handoff":
         record = ROOT / "docs/evals/cs329z-hw1/drill.json"
         selection = ROOT / "examples/soodles-scope/hw1-email-qa-selection.json"

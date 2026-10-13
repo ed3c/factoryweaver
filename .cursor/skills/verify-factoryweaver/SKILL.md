@@ -51,6 +51,17 @@ contradictory content remains semantics UNVERIFIED. Use the taxonomy
 contract's Consumer boundary and partial parent acceptance check for the
 separate source review; no harness result scores Agent compliance.
 
+## Roadmap / One-Shot discriminating cases
+
+In the existing `semantic-cards` feature, test `card_semantic.py roadmap`
+on a real v1 fixture: known R/Card references are indexed; forged links refuse;
+returned `next`, effects and prompt composition stay absent. Independent
+source review—not this CLI—checks chosen minimal Card applicability, missing
+G constraints, local-versus-parent acceptance and the difference between
+Card generation feedback and the worker `PromptDelta`. A valid owner next
+implies no duplicate route. Changed saved P-class instructions still need
+fresh native Consumer and original schema feedback, not fixture PASS.
+
 ## Cleanup
 
 Every drive uses an isolated TemporaryDirectory, cleaned even after failures. No process is killed by name and no user's running instance is affected. Evidence logs remain at the printed path; check run.json and result.json after cleanup. The helper does not mutate product files, register hooks, schedule Cron, create Issues or PRs, publish or run a new model.

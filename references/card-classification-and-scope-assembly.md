@@ -227,6 +227,41 @@ Real source/reader output → source-coverage ledger
 
 A card type is never a command to invoke its corresponding Skill. **Current observed need + available installation + accepted owner continuation** determine whether and when a method runs. This prevents 15 card types from creating 15 independent Agent decisions or a second software factory.
 
+## Roadmap-assisted Session composition (no new state machine)
+
+The R Card represents distinct causal units and their observed prerequisites,
+local exits and **existing** applicable Card identities when grounded. It is an
+advisory index, not the chosen Scope, stage plan or native Owner next. An R
+may be absent for a single independent atom. The read-only
+`card_semantic.py roadmap RECORD` projects existing active Card references and
+R typed edges after original v1 validation; it does not infer a missing link,
+condition, actual next or behavior. Source-grounded R references require
+independent semantic checks for sufficiency and link direction.
+
+The Session compiles the One-Shot instruction **after** selecting the actual
+consumer-specific minimal scope. Select REQ goal and covered clauses; only
+applicable SPEC, C, G, S, V, K/X and non-cases; actual producer inputs and
+independent oracle; stop/readback; and explicit implementation freedom.
+Do **not** concatenate cards, transfer a deferred parent exit into local
+acceptance, or present selected Card count as total requirements. The
+full knowledge record is retained independently of the instruction size.
+
+Distinguish generation feedback from execution delta. Before/during Card
+CREATE/UPDATE, a source-backed finding corrects the first unsupported Card
+premise, edge or field and demands source review; this is compiler feedback.
+After scope selection, the existing `PromptDelta` describes **only material
+new required worker behavior** and may be NOOP. Current context and accepted
+constraints can be incorporated by Session composition without being falsely
+reported as new deltas. Direct copies of G/REQ text that add no necessary
+worker behavior are not a delta. Neither feedback path creates effect authority.
+
+A valid owner continuation is reused without another session choice. A fresh
+failure may justify choosing another scope than an R suggestion. The original
+Host/CLI owns mechanical refs, and actual Source/Session decisions cannot be
+certified by structural validity. Test prompt composition with one missing
+constraint, one parent-clause overreach, one unchanged NOOP and one fabricated
+Roadmap link negative. P-class adherence requires a fresh consumer capture.
+
 ## 11. Quality gate and evidence boundary
 
 ### Consumer boundary and partial parent acceptance

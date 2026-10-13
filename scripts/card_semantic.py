@@ -147,6 +147,29 @@ def inspect(data):
     }
 
 
+def roadmap_index(record):
+    """Project *existing* v1 R links and Card references; Session decides Scope."""
+    from factoryweaver import verify
+    verify(record)  # Original v1 validator owns identity and typed-target validity.
+    active = [c for c in record["cards"] if c["status"] == "ACTIVE"]
+    return {
+        "status": "READ_ONLY_ROADMAP_INDEX",
+        "roadmaps": [
+            {"card_id": c["stable_id"], "title": c["title"],
+             "declared_links": list(c["typed_links"])}
+            for c in active if c["series"] == "R"
+        ],
+        "available_cards": [
+            {"card_id": c["stable_id"], "series": c["series"], "title": c["title"]}
+            for c in active
+        ],
+        "scope_selection": "SESSION_REQUIRED",
+        "prompt_composition": "NOT_PERFORMED",
+        "next": None, "effects": [], "authorizes_landing": False,
+        "proof_ceiling": "EXISTING_CARD_REFERENCES_AND_DECLARED_LINKS_ONLY",
+    }
+
+
 def project_managers(data):
     """Project declared needs only. Soodles owners decide and execute anything real."""
     _object(data, ("schema", "subject", "test_need", "hook_need"), "manager_needs")
@@ -204,6 +227,8 @@ def main(argv=None):
     s.add_argument("series", nargs="+")
     x = sub.add_parser("inspect")
     x.add_argument("json_file")
+    r = sub.add_parser("roadmap")
+    r.add_argument("json_file", help="Existing validated v1 knowledge record")
     m = sub.add_parser("managers")
     m.add_argument("json_file")
     args = parser.parse_args(argv)
@@ -212,7 +237,9 @@ def main(argv=None):
             result = select(args.series)
         else:
             data = _load(Path(args.json_file).read_text(encoding="utf-8"))
-            result = inspect(data) if args.mode == "inspect" else project_managers(data)
+            result = (inspect(data) if args.mode == "inspect" else
+                      roadmap_index(data) if args.mode == "roadmap" else
+                      project_managers(data))
         print(json.dumps(result, sort_keys=True, ensure_ascii=False))
         return 0
     except (OSError, ValueError, KeyError, TypeError) as err:

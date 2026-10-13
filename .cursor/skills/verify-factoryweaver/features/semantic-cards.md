@@ -27,6 +27,17 @@ Preconditions: Doctor returned ready and Python 3.12 plus jsonschema are install
 - Drive parser-claims-replay, v-copies-result-without-input and parser-refusal-local-exit. All remain structurally valid with semantics UNVERIFIED; the CLI must not award semantic ACCEPT to any of them.
 - Proof: capture actual subprocess commands, stdout/stderr, exit codes, and result.json in external evidence after scratch cleanup.
 
+## One-Shot / Roadmap deterministic controls
+
+The same existing Card Semantic CLI also supports `roadmap RECORD` as a
+read-only index. Run it against `docs/closed-loop-v72/project.json` and
+observe existing registered cards and Roadmap typed links, with no Scope,
+Prompt, next or effects. A forged Roadmap target must receive the original
+v1 verification refusal. This verifies index/reference behavior, **not** that
+Session chose an optimal Scope. The independent reviewer must test omission
+of an applicable G, copied parent acceptance as local exit, and unchanged
+prompt-delta NOOP; source review and native P-class remain separate.
+
 ## Gotchas
 
 - Reading a title or PDF link alone is not inspecting the actual source.

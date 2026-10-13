@@ -20,6 +20,43 @@
 | 11. Test/Schema/Hook/Cron and optional Outer Review | Real Stage/Owner feedback → matching Manager/Provider | Session only evaluates truly unresolved correction or candidate risk; NOOP when resolved | Test Manager selects focused controls, Schema Manager returns/has next consumed; native Hook only for event; Cron only for previously authorized heartbeat | A V or G Card does not automatically fire any Manager; native event/readback needed for trigger/nontrigger |
 | 12. P-class behavior evidence and provider delivery | Fresh Agent/Observer → original `schema pclass-feedback`; exact-head/provider Owner | Review actual criteria from original source; compare baseline/treatment only for causal improvement claims | Original feedback CLI validates file references, response fields and selected next; original provider separately validates runtime/delivery | Consumer-report PASS ≠ accepted native execution ≠ provider merge ≠ whole Goal closure |
 
+## Card-generation feedback → Session-composed instruction
+
+There are **two distinct semantic delta boundaries** in the existing carriers;
+do not share a mutable state field or create another scheduler/schema.
+
+1. **Before/during Card compilation**, current Session's source-grounded
+   generation feedback names an unsupported premise, mistaken Consumer I/O,
+   irrelevant edge or missing discriminating control. Update only the original
+   affected Card/typed-link producer and its ordinary revision after independent
+   source review. A Card acceptance cannot be "fixed" by changing only a later
+   worker instruction. No material change means REUSE/NOOP.
+2. **After Card acceptance**, an R Roadmap may suggest causal units and existing
+   Card links. Original CLI may enumerate these references read-only. Current
+   Session compares fresh Goal, Original Owner next, actual failure and affected
+   Consumers; chooses an evidence-supported minimal sufficient Scope, even if
+   the R is missing or outdated; then composes a consumer-specific One-Shot
+   Prompt. It does not concatenate cards: preserve required behavior, covered
+   parent clauses, inputs, invariants, negative cases, independent oracle,
+   stop/readback and Worker implementation freedom. `PromptDelta` in the
+   existing Scope Bundle means only *new material worker behavior*, or NOOP.
+
+Model-authored prompt composition is probabilistic; a CLI cannot certify it
+as semantically optimal. Existing `factoryweaver/v1` cards and
+`factoryweaver/soodles-scope/v1` selection retain their unchanged protocols.
+Original `card_semantic.py roadmap` validates and projects existing card IDs/
+R links, not missing semantic dependencies. Original Soodles Issue Contract
+reconciles proposed Goal with the actual task. The Stage only consumes the
+instruction after original admission. Prompt construction neither grants
+runtime permission nor proves actual Agent compliance.
+
+**Discriminators:** (a) an R index with no selected Scope cannot trigger an
+Issue or Stage, (b) omitting an applicable G must fail independent semantic
+review even if its schema is valid, (c) current local Parser PASS cannot close
+replay/training Parent REQ, (d) unchanged owner next leads to NOOP, (e) a new
+runtime digest/argv in model text is not accepted producer truth. Preserve
+historical and current evidence separately.
+
 ## Always classify reasoning mistakes at the **first changed carrier**
 
 For a material handoff, the supervising Session checks (a) original goal/condition/source, (b) current carrier content and actual Consumer, (c) one source-backed counterexample, (d) which **original Producer** can resolve the first uncertain value, and (e) whether returned `next` already fixes the path. Correct the **single earliest incorrect premise/duplicate decision**, not every later prompt independently. If the scope has no observed barrier, NOOP; avoid a reflexive Thinking Router.
