@@ -70,3 +70,7 @@ Each Card type is retained in the same `semantic-cards` Feature; the CLI selects
 
 | [requirement-coverage](./requirement-coverage.md) | Declared REQ/SPEC traces and refusals | Source semantic completeness UNVERIFIED |
 | [portable-bundle](./portable-bundle.md) | Copied-layout CLI and tamper refusal | Native installer/Agent loading NOT_RUN |
+
+| [source-lock](./source-lock.md) | Real offline CLI/refusal | Original source/semantic review NOT_RUN |
+| [semantic-golden](./semantic-golden.md) | Real offline CLI/refusal | Original source/semantic review NOT_RUN |
+| [blind-packet](./blind-packet.md) | Real offline CLI/refusal | Original source/semantic review NOT_RUN |
