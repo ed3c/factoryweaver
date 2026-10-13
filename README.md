@@ -60,3 +60,12 @@ python3 scripts/card_delta.py docs/closed-loop-v72/project.json docs/closed-loop
 ```
 
 相同資料產生 `NOOP`。修改後輸入產生唯讀 patch 與依賴失效建議；`DONE` 僅表示本輪編譯完成。owner acceptance、runtime effect 和 publication／landing 仍由原 owner 驗收。[本單元 manifest](docs/closed-loop-v72/delta-unit.json)保存有限交付範圍；原 30 REQ 與尚缺的 native Manager readback 繼續保留。
+
+## Repeatable project verification (pstack create / maintain)
+
+The latest pinned upstream pstack [create-verification-skill](.cursor/skills/create-verification-skill/SKILL.md) and [maintain-verification-skill](.cursor/skills/maintain-verification-skill/SKILL.md) are mirrored intact with their MIT license. The actual FactoryWeaver verification entry is [verify-factoryweaver](.cursor/skills/verify-factoryweaver/SKILL.md). It includes a five-feature map and an isolated, **real CLI** Doctor/Drive/Evidence/Cleanup harness.
+
+- Local CLI-only repeated maintenance: `python .cursor/skills/verify-factoryweaver/scripts/verify.py maintain --scope local`
+- Full source + external Reader/native assessment: `python .cursor/skills/verify-factoryweaver/scripts/verify.py maintain`
+
+The local mode can report `clean` for observed FactoryWeaver CLI features, with evidence files retained. Full mode reports `blocked` without original Soodles admission and fresh P-class/Owner readback. Neither mode fabricates source semantic completeness, native Hook/Cron effects or provider delivery. Upstream maintain-verification-skill governs repairing drift **only within the verification skill folder**.

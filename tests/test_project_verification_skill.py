@@ -31,6 +31,18 @@ class ProjectLocalVerificationTests(unittest.TestCase):
                         "## Cleanup", "## Helpers", "## Maintain repeatedly"):
             self.assertIn(section, skill)
 
+    def test_factoryweaver_guidance_routes_to_pstack_maintenance_not_auto_manager(self):
+        for rel in ("AGENTS.md", "skills/factoryweaver/SKILL.md",
+                    "skills/factoryweaver-verify/SKILL.md",
+                    "docs/evals/factoryweaver-e2e-card-verification.md", "README.md"):
+            with self.subTest(path=rel):
+                text = (ROOT / rel).read_text(encoding="utf-8")
+                self.assertIn("maintain-verification-skill", text)
+                self.assertIn("verify-factoryweaver", text)
+        guide = (ROOT / ".cursor/skills/verify-factoryweaver/SKILL.md").read_text()
+        self.assertIn("blocked", guide)
+        self.assertIn("source", guide.lower())
+
     def test_map_index_and_source_wave_cover_each_declared_feature(self):
         self.assertEqual(MODULE.doctor()["status"], "ready")
         source = [MODULE.source_wave(x) for x in MODULE.FEATURES]

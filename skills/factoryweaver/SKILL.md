@@ -167,6 +167,14 @@ Without `--output`, the exporter returns JSON on stdout as a low-trust proposal.
 
 For a claim that generated Cards can drive a real Soodles workflow, use [the original-owner E2E verification protocol](../../docs/evals/factoryweaver-e2e-card-verification.md). Verify actual inspected-source content, card type, Scope, causal Knowledge Links, complete original REQ inventory and the material behavioral `Prompt Delta` before exporting. Structural preflight is not content PASS. After the selected Reader runs, consume its `verification_targets` in the same response as `boundary_findings`, but **do not** treat these as invocations, extra gates or native results. For changed P-class behavior, use the original Soodles `review-writing` and `schema pclass-feedback` fresh-consumer route. Actual Outer admission, Poteto writer, Test/Schema Manager, conditional Hook/Cron and provider effects require distinct original-owner readbacks. Missing native capability means `NOT_RUN`, not permission to make another runner or model-filled metadata.
 
+## Repeatable source-to-feature verification (pstack)
+
+Read [the pinned upstream pstack skills](../../.cursor/UPSTREAM-PSTACK.md). The project-local [verify-factoryweaver](../../.cursor/skills/verify-factoryweaver/SKILL.md) is the installed CLI verification entry for this repository: it owns Launch, Doctor, Drive, Evidence, Cleanup, and the [feature map](../../.cursor/skills/verify-factoryweaver/features/README.md).
+
+Use upstream `create-verification-skill` only if a real verification skill is absent. Once this map exists, use upstream `maintain-verification-skill` on **actual feature/source drift or changed verification instructions**: review every mapped feature from source, drive all reachable paths, re-drive proven documentation/harness fixes, and retain captured output across cleanup. Use the actual CLI maintenance helper `python .cursor/skills/verify-factoryweaver/scripts/verify.py maintain` for a repeatable proof/blocked report. The local-only `--scope local` mode is valid for FactoryWeaver CI but does not verify native Soodles Admission, fresh P-class consumers, Noodle/Manager/Provider effects or semantic truth.
+
+Maintenance is not a substitute for `factoryweaver-verify`: a particular created Card still needs source-specific semantic review and a meaningful Prompt Delta, and actual downstream P-class effects still need the original Soodles `schema pclass-feedback` and admission/owner readback. No Card automatically triggers a pstack manual skill, no second Test Manager, no guessed CLI IDs or auto-Cron.
+
 ## Stop / resume handoff
 
 The return from this entry is a **semantic continuation**, not a second
