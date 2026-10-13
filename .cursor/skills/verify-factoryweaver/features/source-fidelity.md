@@ -23,6 +23,12 @@ Preconditions: Doctor ready, actually inspected source units and an independent 
 
 ## Gotchas
 
+- For a corrected Card, compare the original wrong consumer inference, the
+  actual source counterexample and saved revised SPEC/V; adjusting only the
+  final One-Shot text cannot repair a wrong original Card.
+- For a R Card, inspect actual Entry references and whether the source backs
+  their relation. Do not demand complete Scope closure in R or infer that
+  based_on automatically means a runtime prerequisite.
 - Source path existence does not prove semantic completeness.
 - The source wave checks entrypoint presence, not semantic truth or model execution.
 - A product bug belongs to the original product Owner; maintain-verification-skill cannot silently fix it.

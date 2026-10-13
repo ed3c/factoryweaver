@@ -45,6 +45,28 @@ The four runtime projections **ScopeManifest / SkillRoute / PromptDelta / Contin
 5. The Scope may produce an optional **manager-need proposal** through `scripts/card_semantic.py managers`. This cannot select tests, set native Hook configuration, execute a Stop handler, call Schema Manager, or replace Soodles' existing owner next. Read [the owner contract](../../docs/soodles-manager-consumption.md) before proposing a test/hook need.
 6. When real evidence already resolves selection or a valid owner next exists, use `SkillRoute=NOOP` and `PromptDelta=NOOP`. Do not route all mapped pstack skills for every card.
 
+## Session-composed One-Shot behavior prompt
+
+Use selected per-type Card prompts **during** compilation and route source-backed
+card-generation feedback to the earliest mistaken Card/Link producer. Fix the
+original REQ/SPEC/V consumer boundary and rerun affected source review; do not
+hide semantic errors by rewriting the final Worker prompt. A Roadmap R card
+proposes candidate causal units and existing Card references; its order never
+makes a new native continuation. When helpful use the original read-only
+`card_semantic.py roadmap RECORD` index, not a model-invented card lookup.
+
+After source-accepted Cards exist, the **current Session** composes one
+consumer-specific instruction from the minimal sufficient applicable Cards:
+Goal/covered clauses, provided inputs, observable change, forbidden/negative
+cases, original independent oracle and evidence, stop/readback boundary, and
+implementation freedom. Reuse C/G constraints by applicability; keep full
+parent/unselected/deferred inventory in the knowledge record. The existing
+Scope selection and `prompt_delta` sidecar carry only material new behavior,
+not a verbatim concatenation of Card payloads. Already valid owner next or
+unchanged instruction means NOOP. Host/CLI binds IDs/refs; original admission
+supplies authority; Noodle chooses code and sequence within the admitted Scope.
+Independent source review and real fresh-consumer behavior remain separate.
+
 ## One dispatch per real need
 
 Consume an unchanged, valid original Owner continuation first. If an owner

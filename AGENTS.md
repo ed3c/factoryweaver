@@ -24,6 +24,35 @@ model-authored cards or Prompt Deltas. A proposed Scope, Skill Trigger Plan
 or ActionRequest never grants Soodles issue admission, a Noodle writer,
 testing, publication or an effect.
 
+## Roadmap-assisted Session-composed One-Shot Prompt
+
+The source-grounded Card Graph is a knowledge intermediate representation, not a
+Worker prompt. A Roadmap (R) may name candidate Behavior Scope units and refer
+to existing Card identities with justified dependencies. The current Session
+selects the smallest sufficient scope against the original Goal, observed
+consumer failure and owner continuation; a Roadmap is not a scheduler.
+
+During Card generation the Session may give **card-generation feedback** to
+correct an unsupported premise, missing counterexample or wrong Consumer I/O.
+It changes the appropriate original Card producer only after source review;
+no semantic gain means REUSE/NOOP. After choosing a scope the Session separately
+**composes** a consumer-specific One-Shot Prompt from accepted REQ/SPEC/V/C/G
+semantics, current source/owner evidence, non-cases and worker freedom. The
+existing `PromptDelta` remains only the material behavior change for that task;
+it is not the card-generation feedback, an executable next or a replacement
+system-role prompt. Do not paste every selected Card or the full R prose to the
+Writer. Never turn a context-only or deferred obligation into a local exit.
+
+The existing `card_semantic.py roadmap RECORD` lists only validated, already
+registered R links and active Card references. It cannot select a Scope, create
+a card identity, infer a missing dependency or compose prose. The original
+`soodles_handoff.py` binds the Session-selected Scope; the original Soodles
+Issue/Stage/Manager and Provider determine legal operations and actual results.
+No model-authored HEAD, digest, cursor, command, timing or other synthetic
+runtime metadata. Source review, CLI binding, fresh P-class behavior and
+provider delivery require different evidence. See
+[Prompt Carrier Contract](references/prompt-carrier-and-ownership.md).
+
 ## Writing routes
 
 Engineering Writing uses Soodles `review-writing` for source fidelity, actor, condition, causality, state, acceptance, and semantic readback. Use the current task's selected original source revision. Read that skill before applying it. An external reference does not establish local installation or verified Agent behavior.

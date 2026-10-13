@@ -23,6 +23,13 @@ Preconditions: Doctor ready and original Source/Owner capability available when 
 
 ## Gotchas
 
+- Select one admitted fresh Session case only when native P-class behavior
+  evidence is actually needed: a sparse R index plus SPEC/V/C/G applicability
+  should produce a bounded Worker Prompt without full Card concatenation.
+- Negative cases: missing effect-ownership G, overextended Training G as a
+  Parser exit, NOOP erasing an existing task, R generating a Stage/next, and
+  Native PASS inferred from CLI shape. All require a real fresh Consumer/Owner
+  capture before concluding Agent adherence.
 - Scripted Unit PASS cannot substitute for native Agent behavior.
 - The source wave checks entrypoint presence, not semantic truth or model execution.
 - A product bug belongs to the original product Owner; maintain-verification-skill cannot silently fix it.

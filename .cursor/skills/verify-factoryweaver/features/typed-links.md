@@ -29,6 +29,7 @@ Preconditions: Doctor ready and an isolated scratch path.
 
 ## Gotchas
 
+- After a card revision, read its typed-link explanations again against the *new* Consumer API, input/output, and local-versus-parent clauses. An unchanged `implements → REQ` target can remain structurally valid while its prose still claims TaskSnapshot is loaded by a parser that only consumes raw bytes and opaque fixed references. This is an independent **source-semantic REVISE**, not a new CLI semantic validator or a runtime prerequisite. See the stale/corrected link pair in the existing `semantic-cards` feature.
 - JSON Link validity is not proof of real source/target causality.
 - Chronological syllabus order cannot justify enables or depends_on.
 - Missing material links are a compiler/review correction, not permission for the CLI to infer causal truth. Context-only cards require no invented edges.
