@@ -18,6 +18,13 @@
 - **oracle** — name the original method/Producer that discriminates this output and refusal boundary; it cannot be the desired result copied as a test method.
 - **original_owner** — source-backed and concrete; describe what changes in the engineering decision where applicable.
 
+**Observed API versus opaque references:** When actual source code exists,
+name the *real* public API input variants and types, including which fields
+are opaque Producer references rather than loaded objects. Do not infer file
+dereference, Runner execution, authorization or a full parent outcome merely
+from a reference name. Example: a parser consuming raw bytes plus Owner-fixed
+mapping may return parsed data/refusal without reading TaskSnapshot content.
+Keep local `then`, I/O and oracle bounded to that same Consumer.
 **Scope contribution:** One causal implementation atom with required controls and owner.
 
 **Rejection/non-case:** Generic 'implement as required' or no oracle; do not assert tested.

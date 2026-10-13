@@ -14,6 +14,12 @@
 - **negative_control** — change a material premise and state the expected refusal/unknown/non-case result; name what it distinguishes from the positive.
 - **observation_status** — report only actually observed covered results; proposed controls and missing native captures remain NOT_RUN.
 
+**Evidence chronology:** Preserve the original prior `NOT_RUN` and the
+current separately observed scoped control status as different Source/Owner
+facts. A later Parser test can establish Parser PASS_SCOPED but not retroactively
+rewrite earlier compiled evidence or prove Replay, Native Consumer, Trainer,
+Provider effects or Parent Goal. Link current local evidence to an actually
+inspected original test report; do not fill missing receipts from prose.
 **Scope contribution:** Independent acceptance/effect measurement; NOT_RUN until real observation.
 
 **Rejection/non-case:** Invented PASS, a generic rubric with no error analysis, or tests named without inputs.

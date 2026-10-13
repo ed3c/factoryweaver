@@ -25,7 +25,8 @@ Soodles `PromptDelta` sidecar and does not mutate an accepted history without
 its ordinary revision/source review. REUSE/NOOP when evidence brings no change.
 
 When several causal atoms are actually needed, an R card indexes their semantic
-prerequisites and already registered Card references. The read-only
+prerequisites and a minimal number of justified, already registered Entry
+Card references—not a complete transitive Scope closure. The read-only
 `python scripts/card_semantic.py roadmap RECORD` supplies the existing
 references; it neither infers membership nor selects execution order. The
 current Session uses actual owner next and current evidence to choose a
