@@ -65,3 +65,5 @@ Each Card type is retained in the same `semantic-cards` Feature; the CLI selects
 | K | Registered prompt, typed field/refusal via existing CLI tests | Actual independent source-to-card semantic completeness |
 | REQ | Registered prompt, typed field/refusal via existing CLI tests | Actual independent source-to-card semantic completeness |
 | SPEC | Registered prompt, typed field/refusal via existing CLI tests | Actual independent source-to-card semantic completeness |
+
+| [requirement-coverage](./requirement-coverage.md) | Declared REQ/SPEC traces and refusals | Source semantic completeness UNVERIFIED |

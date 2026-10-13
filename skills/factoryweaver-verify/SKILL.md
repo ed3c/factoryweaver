@@ -49,3 +49,10 @@ When the selected Host is Soodles, read `../../docs/soodles-scope-routing.md` an
 The current repository has a **project-local** [verify-factoryweaver](../../.cursor/skills/verify-factoryweaver/SKILL.md) built against the actual public CLI. Its [feature map](../../.cursor/skills/verify-factoryweaver/features/README.md) and isolated harness test both valid and refused journeys; source drift is checked before each live pass. The complete upstream create/maintain methods are pinned in [UPSTREAM-PSTACK](../../.cursor/UPSTREAM-PSTACK.md), preserving the original manual invocation policy.
 
 A real feature change requires source review and pstack `maintain-verification-skill` to run the full affected map; never silently rewrite product code inside a maintenance pass. CLI maintenance of the local subset is **not** independent semantic Card review and cannot prove outer/inner activation. Without original native Soodles Issue admission and P-class consumers, full maintenance must explicitly report `blocked`, naming those original prerequisites. Do not coerce an unavailable feature into a passing mock. The original Soodles Test Manager selects necessary live controls, and its existing P-class feedback/behavior-datasets owners verify scoped native observations, not this verification helper.
+
+## Declared source-clause coverage
+
+For an enumerated source, preserve its complete inspected clause inventory and run
+`python3 scripts/requirement_coverage.py RECORD.json CLAUSES.json` from the repository root.
+Read [the coverage contract](../../docs/requirement-coverage.md). Unmapped clauses stay
+visible. Declared links do not establish source exhaustiveness or semantic fidelity.

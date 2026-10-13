@@ -11,6 +11,10 @@ import re
 import sys
 from pathlib import Path
 
+from jsonschema import ValidationError
+
+sys.dont_write_bytecode = True
+
 from factoryweaver import ContractError, load, verify
 
 CLAUSE_KEYS = {"clause_id", "locator", "summary", "claim_kind", "requirement_ids"}
@@ -103,7 +107,7 @@ def main(argv=None):
         result = trace(load(args.record), load(args.inventory))
         print(json.dumps(result, sort_keys=True, ensure_ascii=False))
         return 0
-    except (OSError, ValueError, TypeError) as error:
+    except (OSError, ValueError, TypeError, ValidationError) as error:
         print(json.dumps({"valid": False, "error": str(error)}), file=sys.stderr)
         return 2
 

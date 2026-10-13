@@ -6,6 +6,7 @@ from pathlib import Path
 import subprocess
 import sys
 import unittest
+import tempfile
 
 ROOT = Path(__file__).resolve().parents[1]
 FILE = ROOT / "scripts/requirement_coverage.py"
@@ -142,6 +143,19 @@ class RequirementCoverageTests(unittest.TestCase):
         inventory["complete"] = True
         with self.assertRaisesRegex(ContractError, "coverage_inventory_shape"):
             coverage.trace(record, inventory)
+
+    def test_cli_schema_invalid_record_returns_json_refusal(self):
+        record, _ = inputs()
+        del record["subject"]
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "invalid.json"
+            path.write_text(json.dumps(record))
+            result = subprocess.run([sys.executable, str(FILE), str(path), str(INVENTORY)],
+                                    capture_output=True, text=True)
+            self.assertEqual(result.returncode, 2)
+            self.assertFalse(json.loads(result.stderr)["valid"])
+            self.assertIn("subject", json.loads(result.stderr)["error"])
+            self.assertNotIn("Traceback", result.stderr)
 
     def test_cli_exit_and_counts(self):
         result = subprocess.run(

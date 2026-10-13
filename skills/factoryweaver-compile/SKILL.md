@@ -46,3 +46,10 @@ When a real Soodles consumer requests an Issue Atom from accepted cards, produce
 
 Compilation is not live execution. Do not add `TESTED` or `RELEASE_CONFIRMED` without external artifacts and the original owner's readback.
 **Do not re-select technical handoff identity:** When the Host requests a read-only Scope transfer, choose only existing REQ/Card references from the accepted v1 Registry and bounded behavioral changes. The original `soodles_handoff.py` with Host-selected `--output` owns exact Bundle bytes, FileRef, conflict refusal and reader arguments. No card or Skill manufactures these. Soodles still reconciles original Issue/Goal and may reject the proposal before Admission.
+
+## Declared source-clause coverage
+
+For an enumerated source, preserve its complete inspected clause inventory and run
+`python3 scripts/requirement_coverage.py RECORD.json CLAUSES.json` from the repository root.
+Read [the coverage contract](../../docs/requirement-coverage.md). Unmapped clauses stay
+visible. Declared links do not establish source exhaustiveness or semantic fidelity.

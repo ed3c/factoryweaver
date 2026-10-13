@@ -15,8 +15,8 @@ import tempfile
 
 ROOT = Path(__file__).resolve().parents[4]
 HERE = Path(__file__).resolve().parents[1]
-FEATURES = ("knowledge-contract", "semantic-cards", "scope-handoff", "manager-needs", "typed-links", "soodles-reader", "source-fidelity", "goal-scope", "prompt-delta", "pclass-consumer", "outer-admission", "inner-poteto", "test-manager", "schema-feedback", "native-hook", "native-cron", "delivery-closure", "prompt-carriers")
-LOCAL_FEATURES = {"knowledge-contract", "semantic-cards", "scope-handoff", "manager-needs", "typed-links", "prompt-carriers"}
+FEATURES = ("knowledge-contract", "semantic-cards", "scope-handoff", "manager-needs", "typed-links", "soodles-reader", "source-fidelity", "goal-scope", "prompt-delta", "pclass-consumer", "outer-admission", "inner-poteto", "test-manager", "schema-feedback", "native-hook", "native-cron", "delivery-closure", "prompt-carriers", "requirement-coverage")
+LOCAL_FEATURES = {"knowledge-contract", "semantic-cards", "scope-handoff", "manager-needs", "typed-links", "prompt-carriers", "requirement-coverage"}
 EXTERNAL_PROOF = {
     "source-fidelity": "Independent review of actual inspected source units and source coverage, not a field-only fixture",
     "goal-scope": "Fresh original Issue and Source/REQ Goal-Measurement-Acceptance readback",
@@ -108,7 +108,27 @@ def source_wave(feature):
 
 def drive(feature, evidence, scratch):
     name = feature.replace("-", "_")
-    if feature == "knowledge-contract":
+    if feature == "requirement-coverage":
+        root = ROOT / "examples/openai-plugin-platform"
+        base = obj(call("requirement_coverage.py", root / "project.json",
+                        root / "job-clause-inventory.json"), evidence, name + "_baseline")
+        proposal = obj(call("requirement_coverage.py", root / "proposed-six-requirements.json",
+                            root / "proposed-six-clause-inventory.json"), evidence, name + "_proposal")
+        ensure(base["declared_link_count"] == 1 and proposal["declared_link_count"] == 6
+               and not proposal["semantic_mapping_verified"], "coverage_claim_drift")
+        invalid = scratch / "bad-record.json"
+        invalid.write_text("{}", encoding="utf-8")
+        refused = obj(call("requirement_coverage.py", invalid, root / "job-clause-inventory.json"),
+                      evidence, name + "_invalid", expected=2)
+        ensure(not refused["valid"], "schema_invalid_coverage_accepted")
+        inventory = json.loads((root / "job-clause-inventory.json").read_text())
+        inventory["source_id"] = "SRC-unknown"
+        bad = scratch / "bad-inventory.json"
+        bad.write_text(json.dumps(inventory), encoding="utf-8")
+        refused = obj(call("requirement_coverage.py", root / "project.json", bad),
+                      evidence, name + "_source", expected=2)
+        ensure("coverage_unknown_source" in refused["error"], "unbound_coverage_source")
+    elif feature == "knowledge-contract":
         record = ROOT / "docs/evals/cs329z-hw1/drill.json"
         result = obj(call("factoryweaver.py", "validate", record), evidence, name + "_valid")
         ensure(result["valid"] and result["proof_ceiling"] == "SCHEMA_FIXTURE_ONLY",
