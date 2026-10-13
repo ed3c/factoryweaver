@@ -274,7 +274,21 @@ def drive(feature, evidence, scratch):
               "native_pclass_feedback": "NOT_RUN",
               "note": "Shape controls passed; original source reviewer must separately evaluate the fixture questions."})
         # Roadmap index is a distinct read-only CLI entry of this Card feature.
-        roadmap_record = ROOT / "docs/closed-loop-v72/project.json"
+        # Portable bundles ship the HW1 knowledge record; create a separate
+        # synthetic R node using only that record's original identities.
+        roadmap_record = scratch / "roadmap-v1.json"
+        record = json.loads((ROOT / "docs/evals/cs329z-hw1/drill.json")
+                            .read_text(encoding="utf-8"))
+        record["cards"].append({
+            "stable_id": "R-synthetic-existing-source",
+            "canonical_key": "R|cs329z|scope-index|based_on|pilot|v1",
+            "series": "R", "revision": 1, "status": "ACTIVE",
+            "title": "Synthetic scoped roadmap index",
+            "payload": "One bounded synthetic atom refers to the existing email QA requirement, without authorizing a Noodle stage.",
+            "evidence_ids": [record["sources"][0]["source_id"]],
+            "typed_links": [{"relation": "based_on", "target": "REQ-email-qa"}]
+        })
+        roadmap_record.write_text(json.dumps(record), encoding="utf-8")
         index = obj(call("card_semantic.py", "roadmap", roadmap_record),
                     evidence, name + "_roadmap_index")
         ensure(index["status"] == "READ_ONLY_ROADMAP_INDEX" and
