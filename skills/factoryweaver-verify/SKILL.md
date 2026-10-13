@@ -64,3 +64,22 @@ For two frozen outputs, an original evaluator may prepare
 `python3 scripts/blind_review.py packet CASE.json --seed-file HOST_SEED.bin`.
 Keep its separate `key` and seed with the original evaluator, outside the reviewer input.
 Read [blind packet](../../docs/blind-pairwise.md). The CLI never scores models or names a winner.
+
+## Factory Profile and Carrier boundaries
+
+For a selected multi-factory Work Order, read [the Profile contract](../../docs/factory-profile-lock.md).
+Use `python3 scripts/factory_profile.py validate PROFILE.json` and `bind-check PROFILE.json BINDING.json`.
+For an original Host-selected linked checkout, `observe-local-skills PROFILE.json BINDING.json`
+checks only local files; read [the Skill-view contract](../../docs/worktree-skill-view.md).
+Use `python3 scripts/factory_profile.py audit-catalog PROFILE.json BINDING.json CATALOG.json`
+for claimed effective Skills. Prefer `audit-catalog-pinned` with the original Owner's supplied raw pin.
+`EFFECTIVE_CATALOG_CLAIM_MATCHES` means declared input consistency, never authenticated Worker discovery.
+`compare-carriers PROFILE.json BASELINE_BINDING.json ALTERNATIVE_BINDING.json` compares one Work Order's claims.
+It does not prove a Carrier replacement ran. Unknown owner observations remain NOT_RUN.
+
+## Declared source-clause coverage
+
+For an enumerated source, preserve its complete inspected clause inventory and run
+`python3 scripts/requirement_coverage.py RECORD.json CLAUSES.json` from the repository root.
+Read [the coverage contract](../../docs/requirement-coverage.md). Unmapped clauses stay
+visible. Declared links do not establish source exhaustiveness or semantic fidelity.

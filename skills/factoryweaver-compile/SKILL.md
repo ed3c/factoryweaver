@@ -61,3 +61,10 @@ For two frozen outputs, an original evaluator may prepare
 `python3 scripts/blind_review.py packet CASE.json --seed-file HOST_SEED.bin`.
 Keep its separate `key` and seed with the original evaluator, outside the reviewer input.
 Read [blind packet](../../docs/blind-pairwise.md). The CLI never scores models or names a winner.
+
+## Declared source-clause coverage
+
+For an enumerated source, preserve its complete inspected clause inventory and run
+`python3 scripts/requirement_coverage.py RECORD.json CLAUSES.json` from the repository root.
+Read [the coverage contract](../../docs/requirement-coverage.md). Unmapped clauses stay
+visible. Declared links do not establish source exhaustiveness or semantic fidelity.

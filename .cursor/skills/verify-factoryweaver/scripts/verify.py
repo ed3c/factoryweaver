@@ -15,8 +15,8 @@ import tempfile
 
 ROOT = Path(__file__).resolve().parents[4]
 HERE = Path(__file__).resolve().parents[1]
-FEATURES = ("knowledge-contract", "semantic-cards", "scope-handoff", "manager-needs", "typed-links", "soodles-reader", "source-fidelity", "goal-scope", "prompt-delta", "pclass-consumer", "outer-admission", "inner-poteto", "test-manager", "schema-feedback", "native-hook", "native-cron", "delivery-closure", "prompt-carriers", "portable-bundle", "source-lock", "semantic-golden", "blind-packet")
-LOCAL_FEATURES = {"knowledge-contract", "semantic-cards", "scope-handoff", "manager-needs", "typed-links", "prompt-carriers", "portable-bundle", "source-lock", "semantic-golden", "blind-packet"}
+FEATURES = ('knowledge-contract', 'semantic-cards', 'scope-handoff', 'manager-needs', 'typed-links', 'soodles-reader', 'source-fidelity', 'goal-scope', 'prompt-delta', 'pclass-consumer', 'outer-admission', 'inner-poteto', 'test-manager', 'schema-feedback', 'native-hook', 'native-cron', 'delivery-closure', 'prompt-carriers', 'portable-bundle', 'requirement-coverage', 'factory-profile', 'source-lock', 'semantic-golden', 'blind-packet')
+LOCAL_FEATURES = {'typed-links', 'factory-profile', 'requirement-coverage', 'manager-needs', 'knowledge-contract', 'scope-handoff', 'semantic-golden', 'prompt-carriers', 'source-lock', 'blind-packet', 'semantic-cards', 'portable-bundle'}
 EXTERNAL_PROOF = {
     "source-fidelity": "Independent review of actual inspected source units and source coverage, not a field-only fixture",
     "goal-scope": "Fresh original Issue and Source/REQ Goal-Measurement-Acceptance readback",
@@ -164,6 +164,53 @@ def drive(feature, evidence, scratch):
         refused = obj(call("blind_review.py", "packet", path, "--seed-file", seed),
                       evidence, name + "_unblinded", expected=2)
         ensure("unredacted_version_label" in refused["error"], "unblinded_output_accepted")
+    elif feature == "factory-profile":
+        root = ROOT / "examples/factory-profiles"
+        profile = root / "pstack-synthetic.json"
+        binding = root / "pstack-binding-synthetic.json"
+        catalog = root / "pstack-catalog-synthetic.json"
+        valid = obj(call("factory_profile.py", "validate", profile), evidence, name + "_profile")
+        ensure(valid["status"] == "PROFILE_SHAPE_VALID", "profile_contract_drift")
+        matching = obj(call("factory_profile.py", "audit-catalog", profile, binding, catalog),
+                       evidence, name + "_catalog")
+        ensure(matching["status"] == "EFFECTIVE_CATALOG_CLAIM_MATCHES" and
+               not matching["actual_worker_skill_discovery_verified"], "catalog_claim_promoted")
+        raw = catalog.read_bytes()
+        pinned = hashlib.sha256(raw).hexdigest()
+        obj(call("factory_profile.py", "audit-catalog-pinned", profile, binding, catalog,
+                 "--catalog-sha256", pinned), evidence, name + "_pinned")
+        duplicate = scratch / "duplicate-catalog.json"
+        duplicate.write_bytes(b'{"producer_claim":"OWNER_VERIFIED",' + raw[1:])
+        refused = obj(call("factory_profile.py", "audit-catalog-pinned", profile, binding, duplicate,
+                           "--catalog-sha256", hashlib.sha256(duplicate.read_bytes()).hexdigest()),
+                      evidence, name + "_duplicate", expected=2)
+        ensure("duplicate_json_key" in refused["error"], "ambiguous_catalog_accepted")
+        bad = json.loads(raw)
+        bad["skills"][0]["scope"] = "global"
+        duplicate.write_text(json.dumps(bad), encoding="utf-8")
+        refused = obj(call("factory_profile.py", "audit-catalog", profile, binding, duplicate),
+                      evidence, name + "_global", expected=2)
+        ensure("catalog_nonworktree_inheritance" in refused["error"], "global_skill_claim_accepted")
+    elif feature == "requirement-coverage":
+        root = ROOT / "examples/openai-plugin-platform"
+        base = obj(call("requirement_coverage.py", root / "project.json",
+                        root / "job-clause-inventory.json"), evidence, name + "_baseline")
+        proposal = obj(call("requirement_coverage.py", root / "proposed-six-requirements.json",
+                            root / "proposed-six-clause-inventory.json"), evidence, name + "_proposal")
+        ensure(base["declared_link_count"] == 1 and proposal["declared_link_count"] == 6
+               and not proposal["semantic_mapping_verified"], "coverage_claim_drift")
+        invalid = scratch / "bad-record.json"
+        invalid.write_text("{}", encoding="utf-8")
+        refused = obj(call("requirement_coverage.py", invalid, root / "job-clause-inventory.json"),
+                      evidence, name + "_invalid", expected=2)
+        ensure(not refused["valid"], "schema_invalid_coverage_accepted")
+        inventory = json.loads((root / "job-clause-inventory.json").read_text())
+        inventory["source_id"] = "SRC-unknown"
+        bad = scratch / "bad-inventory.json"
+        bad.write_text(json.dumps(inventory), encoding="utf-8")
+        refused = obj(call("requirement_coverage.py", root / "project.json", bad),
+                      evidence, name + "_source", expected=2)
+        ensure("coverage_unknown_source" in refused["error"], "unbound_coverage_source")
     elif feature == "portable-bundle":
         folder = scratch / "distribution"
         first = obj(call("build_skill_bundle.py", folder), evidence, name + "_build")

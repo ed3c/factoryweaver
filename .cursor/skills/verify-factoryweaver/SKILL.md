@@ -30,6 +30,8 @@ Use the feature map at features/README.md. Available commands:
     python .cursor/skills/verify-factoryweaver/scripts/verify.py drive scope-handoff
     python .cursor/skills/verify-factoryweaver/scripts/verify.py drive manager-needs
     python .cursor/skills/verify-factoryweaver/scripts/verify.py drive portable-bundle
+    python .cursor/skills/verify-factoryweaver/scripts/verify.py drive requirement-coverage
+    python .cursor/skills/verify-factoryweaver/scripts/verify.py drive factory-profile
 
 The native Soodles read-only feature can be attempted only when the original Host provides SOODLES_CHECKOUT with the actual compatible Soodles checkout:
 
@@ -69,7 +71,7 @@ The authoritative E2E evidence boundary is docs/evals/factoryweaver-e2e-card-ver
 
 ## Complete E2E feature maintenance
 
-The [Feature Map](features/README.md) now covers registered source-to-Reader-to-original-owner boundaries, including content fidelity, Goal Scope, Typed Links, Prompt Delta, fresh P-class consumer, Outer admission, Noodle Poteto, Test/Schema Manager, native Hook/Cron and Provider closure. A full pass attempts every mapped feature and returns named `verified-unreachable` prerequisites rather than dropping untested paths. Local mode covers the registered CLI features. Actual original Host / Soodles / Provider evidence is required to upgrade native status. No new Runtime Metadata or duplicate runner is authorized.
+The [Feature Map](features/README.md) now covers the registered source-to-Reader-to-original-owner boundaries, including content fidelity, Goal Scope, Typed Links, Prompt Delta, fresh P-class consumer, Outer admission, Noodle Poteto, Test/Schema Manager, native Hook/Cron and Provider closure. A full pass attempts every mapped feature and returns named `verified-unreachable` prerequisites rather than dropping untested paths. Local mode covers the registered CLI features. Actual original Host / Soodles / Provider evidence is required to upgrade native status. No new Runtime Metadata or duplicate runner is authorized.
 
 Offline evidence drives use source-lock, semantic-golden and blind-packet.
 The source-lock drive requires Git for its disposable fixture snapshot.
