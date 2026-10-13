@@ -258,6 +258,21 @@ def drive(feature, evidence, scratch):
         result = obj(call("card_semantic.py", "inspect", target),
                      evidence, name + "_unread", expected=2)
         ensure("source_not_inspected" in result["error"], "unread_source_not_refused")
+        review = json.loads((HERE / "fixtures/parser-consumer-boundary.json").read_text(encoding="utf-8"))
+        # These are review subjects, not a semantic classifier or native observations.
+        for case in review["cases"]:
+            path = scratch / (case["name"] + ".json")
+            path.write_text(json.dumps(case["proposal"]), encoding="utf-8")
+            observed = obj(call("card_semantic.py", "inspect", path), evidence,
+                           name + "_" + case["name"].replace("-", "_"))
+            ensure(observed["status"] == "SHAPE_VALID_SEMANTICS_UNVERIFIED" and
+                   observed["independent_semantic_review"] == "NOT_RUN" and
+                   not observed["effect_authority"], "review_fixture_wrongly_scored_as_semantics")
+        save(evidence, name + "_review_required.json",
+             {"subjects": [case["name"] for case in review["cases"]],
+              "independent_semantic_review": "NOT_RUN",
+              "native_pclass_feedback": "NOT_RUN",
+              "note": "Shape controls passed; original source reviewer must separately evaluate the fixture questions."})
     elif feature == "scope-handoff":
         record = ROOT / "docs/evals/cs329z-hw1/drill.json"
         selection = ROOT / "examples/soodles-scope/hw1-email-qa-selection.json"
@@ -269,15 +284,19 @@ def drive(feature, evidence, scratch):
         ensure(hashlib.sha256(target.read_bytes()).hexdigest() == first["bundle"]["sha256"],
                "bundle_not_host_bound")
         payload = json.loads(target.read_text(encoding="utf-8"))
-        ensure(len(payload["knowledge_record"]["requirements"]) == 13 and
+        ensure(payload["knowledge_record"] == json.loads(record.read_text(encoding="utf-8")) and
+               payload["selection"] == json.loads(selection.read_text(encoding="utf-8")) and
                not first["authorizes_landing"], "full_requirements_or_authority_drift")
+        original_bytes = target.read_bytes()
         different = json.loads(selection.read_text(encoding="utf-8"))
         different["causal_change"] = "Conflicting scope at same output path"
         next_path = scratch / "different.json"
         next_path.write_text(json.dumps(different), encoding="utf-8")
         failure = obj(call("soodles_handoff.py", record, next_path, "--output", target),
                       evidence, name + "_conflict", expected=2)
-        ensure(failure["valid"] is False, "conflicting_bundle_overwritten")
+        ensure(failure["valid"] is False and
+               failure["error"] == "bundle_output_conflict_requires_original_readback" and
+               target.read_bytes() == original_bytes, "conflicting_bundle_overwritten")
     elif feature == "manager-needs":
         root = ROOT / "examples/card-semantic"
         a = obj(call("card_semantic.py", "managers", root / "qa-test-needs.json"),
@@ -334,7 +353,8 @@ def drive(feature, evidence, scratch):
         malformed.write_text(json.dumps(wrong), encoding="utf-8")
         refused = obj(call("soodles_handoff.py", source, malformed),
                       evidence, name + "_wrong_card", expected=2)
-        ensure(refused["valid"] is False, "unknown_card_identity_did_not_refuse")
+        ensure(refused["valid"] is False and refused["error"] == "scope_selection_unknown_card",
+               "unknown_card_identity_did_not_refuse")
         return {"feature": feature, "status": "cli-verified",
                 "proof_ceiling": "PROMPT_DATA_CARRIERS_ONLY",
                 "source_to_card_semantics": "UNVERIFIED",
@@ -356,6 +376,42 @@ def drive(feature, evidence, scratch):
         denied = obj(call("card_semantic.py", "inspect", altered),
                      evidence, name + "_refused", expected=2)
         ensure("invalid_link_kind" in denied["error"], "unsupported_link_not_refused")
+        source = ROOT / "docs/evals/cs329z-hw1/drill.json"
+        original = json.loads(source.read_text(encoding="utf-8"))
+        changed = json.loads(source.read_text(encoding="utf-8"))
+        concept = next(card for card in changed["cards"] if card["stable_id"] == "C-retrieval-grounding")
+        concept["payload"] += " Synthetic material concept change for dependency control."
+        concept["revision"] += 1
+        after = scratch / "changed-concept.json"
+        after.write_text(json.dumps(changed), encoding="utf-8")
+        linked = obj(call("card_delta.py", source, after), evidence, name + "_linked_change")
+        ensure({"kind": "card", "id": "SPEC-email-qa"} in linked["affected_records"],
+               "declared_concept_dependency_not_propagated")
+        for record in (original, changed):
+            spec = next(card for card in record["cards"] if card["stable_id"] == "SPEC-email-qa")
+            spec["typed_links"] = [edge for edge in spec["typed_links"]
+                                   if not (edge["relation"] == "based_on" and edge["target"] == "C-retrieval-grounding")]
+        unlinked_before = scratch / "unlinked-before.json"
+        unlinked_before.write_text(json.dumps(original), encoding="utf-8")
+        after.write_text(json.dumps(changed), encoding="utf-8")
+        unlinked = obj(call("card_delta.py", unlinked_before, after), evidence, name + "_unlinked_change")
+        ensure({"kind": "card", "id": "SPEC-email-qa"} not in unlinked["affected_records"],
+               "undeclared_semantic_dependency_invented")
+        native_gap = dict(original["cards"][0])
+        native_gap.update(stable_id="K-synthetic-native-gap", canonical_key="Synthetic|K|native-gap|proposed|source-bound|v1", series="K",
+                          title="Synthetic original native prerequisite", payload="Original native evidence is absent; local fixture is unaffected.", typed_links=[])
+        original["cards"].append(native_gap)
+        native_req = next(req for req in original["requirements"] if req["id"] == "REQ-framework")
+        native_req["depends_on"] = [native_gap["stable_id"]]
+        projection_input = scratch / "scoped-native-gap.json"
+        projection_input.write_text(json.dumps(original), encoding="utf-8")
+        projected = obj(call("factoryweaver.py", "project", projection_input), evidence, name + "_scoped_gap")
+        states = {row["requirement"]: row for row in projected["projection"]}
+        ensure(states["REQ-framework"]["state"] == "WAIT_FOR_PREREQUISITE" and
+               states["REQ-framework"]["missing"] == ["K-synthetic-native-gap"] and
+               states["REQ-email-qa"]["state"] == "WAIT_FOR_SOURCE_PIN" and
+               states["REQ-email-qa"]["missing"] == ["SRC-qa"] and
+               not states["REQ-email-qa"]["authorizes_effects"], "gap_did_not_stay_scoped")
     elif feature == "soodles-reader":
         checkout = os.environ.get("SOODLES_CHECKOUT")
         if not checkout or not (Path(checkout).resolve() / "soodles.py").is_file():
@@ -367,18 +423,26 @@ def drive(feature, evidence, scratch):
         target = scratch / "reader-bundle.json"
         materialized = obj(call("soodles_handoff.py", record, selection, "--output", target),
                            evidence, name + "_bundle")
-        result = obj([sys.executable, str(Path(checkout).resolve() / "soodles.py"),
-                      "knowledge", "inspect", *materialized["reader_arguments"]],
+        reader = [sys.executable, str(Path(checkout).resolve() / "soodles.py"),
+                  "knowledge", "inspect", *materialized["reader_arguments"]]
+        result = obj(reader,
                      evidence, name + "_inspect", cwd=Path(checkout).resolve())
         ensure(result["status"] == "source_bound_proposal" and result["next"] is None
                and result["effects"] == [] and not result["authorizes_landing"] and
                "boundary_findings" in result and "verification_targets" in result,
                "reader_claimed_unobserved_effects")
+        target.write_bytes(target.read_bytes() + b" ")
+        invoke(reader, evidence, name + "_changed", expected=2, cwd=Path(checkout).resolve())
+        refused = json.loads((evidence / (name + "_changed.stdout.txt")).read_text(encoding="utf-8"))
+        ensure(refused["status"] == "refused" and
+               refused["problem"] == {"field": "bundle.sha256", "reason": "selected_bytes_changed"} and
+               refused["next"] is None and refused["effects"] == [] and
+               not refused["authorizes_landing"], "reader_byte_drift_not_refused")
         return {"feature": feature, "status": "cli-verified-native-not-run",
                 "proof_ceiling": "READER_TRANSPORT_ONLY"}
     elif feature in EXTERNAL_PROOF:
         return {"feature": feature, "status": "verified-unreachable",
-                "attempted": "Source-map inspection only; no matching original runtime evidence",
+                "attempted": "Source-map inspection only; no matching original source/Owner evidence supplied to this helper",
                 "prerequisite": EXTERNAL_PROOF[feature],
                 "proof_ceiling": "UNVERIFIED_ORIGINAL_OWNER",
                 "original_effects_performed": []}

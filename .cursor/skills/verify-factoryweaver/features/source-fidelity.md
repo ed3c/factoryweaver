@@ -14,11 +14,11 @@ Start from the FactoryWeaver feature map; invoke the project-local verification 
 
 ## Driving it with the CLI harness
 
-Preconditions: Doctor ready and original Source/Owner capability available when native behavior is required.
+Preconditions: Doctor ready, actually inspected source units and an independent semantic reviewer. Source/Card content review does not require Issue admission; actual native behavior remains a separate proof boundary.
 
 - Run `python .cursor/skills/verify-factoryweaver/scripts/verify.py drive source-fidelity` from repository root.
 - The helper returns the concrete unmet original Owner prerequisite without making effectful calls.
-- Real verification follows the existing E2E contract and saves actual original receipts. Do not replace the Host with synthetic metadata.
+- Independently compare actual source units, per-type Card content, coverage and counterexamples under the existing E2E contract. Preserve this scoped source-review result separately from the helper's unverified output; it has no interface for scoring that review. Do not replace missing native evidence with this source ACCEPT or synthetic metadata.
 - Proof: recorded CLI response, command, exit code and the retained result.json.
 
 ## Gotchas

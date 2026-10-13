@@ -1,0 +1,92 @@
+{
+  "scope": "Synthetic specification review controls adapted from the observed NeoWeaver card projection defect; not a live parser or native consumer",
+  "original_parent_requirement": "Bounded mutable surface and patch parser, reproducible task and replay",
+  "cases": [
+    {
+      "name": "parser-claims-replay",
+      "review_question": "Can this parser Consumer produce the result asserted in then?",
+      "counterexample": "Parser returns ParsedProposal and emits no Runner event; the parent replay obligation remains unmet.",
+      "expected_review": "REVISE",
+      "proposal": {
+        "schema": "factoryweaver/card-semantic-proposal/v1",
+        "cards": [{
+          "series": "SPEC", "title": "Synthetic parser boundary", "source_status": "INSPECTED",
+          "evidence_topics": ["Synthetic fixed source row: bounded parser plus later task replay"],
+          "semantics": {
+            "given": "Raw single-surface proposal and fixed boundary references are provided.",
+            "when": "The parser checks JSON and the fixed mutation boundary.",
+            "then": "The patch parses and replays on the fixed TaskSnapshot.",
+            "inputs_outputs": "Raw proposal plus fixed inputs → ParsedProposal or DiagnosticRefusal; no replay/effects.",
+            "forbidden": "No protected acceptance edits or provider effects.",
+            "negative_case": "A stale expected source must refuse.",
+            "unknown_effect": "Missing fixed input refuses; unknown earlier write needs original readback.",
+            "replay": "Identical parser inputs produce the same parse/refusal, not task execution.",
+            "oracle": "Original fixed parser input/result control, not a Runner observation.",
+            "original_owner": "Synthetic parser control Producer, no native authority"
+          }, "links": []
+        }],
+        "coverage": [{"source_unit": "synthetic-parser-slice", "status": "MAPPED", "disposition": "Synthetic parser boundary"}]
+      }
+    },
+    {
+      "name": "v-copies-result-without-input",
+      "review_question": "Does this V provide an input that distinguishes a valid candidate from a stale one?",
+      "counterexample": "Both current and stale candidates can be described as passing; no fixed input/result comparison has been specified.",
+      "expected_review": "REVISE",
+      "proposal": {
+        "schema": "factoryweaver/card-semantic-proposal/v1",
+        "cards": [{
+          "series": "V", "title": "Synthetic parser controls", "source_status": "INSPECTED",
+          "evidence_topics": ["Synthetic fixed source row: parser must reject stale source"],
+          "semantics": {
+            "subject": "Pure parser/refusal only; Runner replay remains a parent obligation.",
+            "oracle": "A legal patch parses successfully and rejects stale source.",
+            "producer": "Original synthetic parser control Producer",
+            "positive_control": "A legal patch parses successfully and rejects stale source.",
+            "negative_control": "A stale patch is rejected.",
+            "observation_status": "NOT_RUN; expected text is not observed behavior."
+          }, "links": []
+        }],
+        "coverage": [{"source_unit": "synthetic-parser-control", "status": "MAPPED", "disposition": "Synthetic parser controls"}]
+      }
+    },
+    {
+      "name": "parser-refusal-local-exit",
+      "review_question": "Do output, then and controls remain at the parser boundary while retaining later replay?",
+      "counterexample": "A parsed proposal cannot be used as a Runner or Provider receipt; copied parent acceptance is not local exit.",
+      "expected_review": "ACCEPT_SCOPED_SPECIFICATION_ONLY",
+      "proposal": {
+        "schema": "factoryweaver/card-semantic-proposal/v1",
+        "cards": [{
+          "series": "SPEC", "title": "Synthetic corrected parser boundary", "source_status": "INSPECTED",
+          "evidence_topics": ["Synthetic fixed source row: bounded parser plus later task replay"],
+          "semantics": {
+            "given": "Current raw single-surface proposal and Owner-fixed allowlist/acceptance/source references are supplied.",
+            "when": "The parser checks JSON and compares fixed target/source references.",
+            "then": "Return ParsedProposal or DiagnosticRefusal without replay/training/provider effects.",
+            "inputs_outputs": "Raw proposal plus fixed inputs → ParsedProposal or DiagnosticRefusal; later Runner remains outside this atom.",
+            "forbidden": "No protected acceptance edits or provider effects.",
+            "negative_case": "Keep the allowed proposal fixed and change only expected source: DiagnosticRefusal, no replay/write.",
+            "unknown_effect": "Missing fixed input refuses; unknown earlier write needs original readback.",
+            "replay": "Identical parser inputs reproduce parse/refusal only; TaskSnapshot replay remains a parent requirement.",
+            "oracle": "Original control compares output variant, refused condition and unchanged fixed references.",
+            "original_owner": "Original synthetic parser control Producer"
+          }, "links": []
+        }, {
+          "series": "V", "title": "Synthetic corrected parser controls", "source_status": "INSPECTED",
+          "evidence_topics": ["Synthetic fixed source row: parser must reject stale source"],
+          "semantics": {
+            "subject": "Pure parser/refusal only; Runner replay remains a parent obligation.",
+            "oracle": "Original fixed input/result comparison checks output variant, named refusal and preserved references.",
+            "producer": "Original synthetic parser control Producer",
+            "positive_control": "Current allowed single-surface raw proposal plus fixed inputs returns ParsedProposal with no replay/write.",
+            "negative_control": "Change only expected source to stale: DiagnosticRefusal naming staleness, no replay/write; missing input also refuses.",
+            "observation_status": "NOT_RUN; expected text is not observed behavior."
+          }, "links": []
+        }],
+        "coverage": [{"source_unit": "synthetic-parser-slice", "status": "MAPPED", "disposition": "Synthetic corrected parser boundary"}]
+      }
+    }
+  ],
+  "proof_boundary": "Expected review values are source-review criteria, not CLI or native observation results. All three proposals are structurally valid; the original CLI must not claim semantic PASS."
+}
