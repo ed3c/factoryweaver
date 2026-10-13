@@ -61,3 +61,10 @@ for claimed effective Skills. Prefer `audit-catalog-pinned` with the original Ow
 `EFFECTIVE_CATALOG_CLAIM_MATCHES` means declared input consistency, never authenticated Worker discovery.
 `compare-carriers PROFILE.json BASELINE_BINDING.json ALTERNATIVE_BINDING.json` compares one Work Order's claims.
 It does not prove a Carrier replacement ran. Unknown owner observations remain NOT_RUN.
+
+## Declared source-clause coverage
+
+For an enumerated source, preserve its complete inspected clause inventory and run
+`python3 scripts/requirement_coverage.py RECORD.json CLAUSES.json` from the repository root.
+Read [the coverage contract](../../docs/requirement-coverage.md). Unmapped clauses stay
+visible. Declared links do not establish source exhaustiveness or semantic fidelity.

@@ -40,7 +40,7 @@ The status reported by each real maintain run is authoritative. Local CLI PASS d
 
 Three levels: (1) Card schema/type verification is not source semantics; (2) Reader/CLI transport is not Issue admission; (3) P-class, Outer, Inner, Test/Schema/Hook/Cron and Provider effects each need original native capture.
 
-Local maintain drives seven CLI features and marks twelve `excluded`. Full maintain source-indexes and attempts all 19, reports individual `verified-unreachable` prerequisites, and remains `blocked` without original native evidence. `clean` in local mode never means full E2E.
+Local maintain drives the registered local CLI features and marks twelve `excluded`. Full maintain source-indexes and attempts every registered feature, reports individual `verified-unreachable` prerequisites, and remains `blocked` without original native evidence. `clean` in local mode never means full E2E.
 
 | [prompt-carriers](./prompt-carriers.md) | Real CLI positive/negative controls; semantic Goal conflict flagged unverified | Native P-class / Original Issue equality not observed |
 
@@ -67,4 +67,6 @@ Each Card type is retained in the same `semantic-cards` Feature; the CLI selects
 | SPEC | Registered prompt, typed field/refusal via existing CLI tests | Actual independent source-to-card semantic completeness |
 
 | [factory-profile](./factory-profile.md) | Synthetic claims and ambiguity refusals | Original Worker/Carrier behavior NOT_RUN |
+
+| [requirement-coverage](./requirement-coverage.md) | Declared REQ/SPEC traces and refusals | Source semantic completeness UNVERIFIED |
 | [portable-bundle](./portable-bundle.md) | Copied-layout CLI and tamper refusal | Native installer/Agent loading NOT_RUN |
