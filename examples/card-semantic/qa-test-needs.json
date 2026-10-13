@@ -1,0 +1,10 @@
+{
+  "schema": "factoryweaver/manager-needs/v1",
+  "subject": "Grounded Email QA adapter behavior",
+  "test_need": {
+    "changed_behavior": "Answer/support must preserve this-request-only IDs and finite search calls",
+    "verification_question": "Do selected scripted test cases reject unsupported evidence and repeated-search output?",
+    "negative_case": "Model proposes unknown support IDs when search returned a disjoint set"
+  },
+  "hook_need": null
+}

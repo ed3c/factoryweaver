@@ -1,0 +1,132 @@
+"""Project-local pstack verification skill: actual public CLI and repeatable maintenance."""
+from __future__ import annotations
+
+import importlib.util
+import json
+from pathlib import Path
+import subprocess
+import sys
+import tempfile
+import unittest
+
+ROOT = Path(__file__).resolve().parents[1]
+SCRIPT = ROOT / ".cursor/skills/verify-factoryweaver/scripts/verify.py"
+FEATURE_DIR = ROOT / ".cursor/skills/verify-factoryweaver/features"
+SPEC = importlib.util.spec_from_file_location("fw_project_verify", SCRIPT)
+MODULE = importlib.util.module_from_spec(SPEC)
+SPEC.loader.exec_module(MODULE)
+
+
+class ProjectLocalVerificationTests(unittest.TestCase):
+    def test_upstream_skills_are_complete_and_manually_selected(self):
+        pstack = ROOT / ".cursor/skills"
+        for name in ("create-verification-skill", "maintain-verification-skill"):
+            text = (pstack / name / "SKILL.md").read_text(encoding="utf-8")
+            self.assertIn("disable-model-invocation: true", text)
+        self.assertTrue((pstack / "create-verification-skill/references/feature-map-example/create-note.md").exists())
+        self.assertTrue((pstack / "create-verification-skill/references/feature-map-example/search.md").exists())
+        self.assertIn("MIT License", (ROOT / ".cursor/pstack-LICENSE").read_text())
+        skill = (pstack / "verify-factoryweaver/SKILL.md").read_text()
+        for section in ("## Launch", "## Doctor", "## Drive", "## Evidence",
+                        "## Cleanup", "## Helpers", "## Maintain repeatedly"):
+            self.assertIn(section, skill)
+
+    def test_factoryweaver_guidance_routes_to_pstack_maintenance_not_auto_manager(self):
+        for rel in ("AGENTS.md", "skills/factoryweaver/SKILL.md",
+                    "skills/factoryweaver-verify/SKILL.md",
+                    "docs/evals/factoryweaver-e2e-card-verification.md", "README.md"):
+            with self.subTest(path=rel):
+                text = (ROOT / rel).read_text(encoding="utf-8")
+                self.assertIn("maintain-verification-skill", text)
+                self.assertIn("verify-factoryweaver", text)
+        guide = (ROOT / ".cursor/skills/verify-factoryweaver/SKILL.md").read_text()
+        self.assertIn("blocked", guide)
+        self.assertIn("source", guide.lower())
+
+    def test_map_index_and_source_wave_cover_each_declared_feature(self):
+        self.assertEqual(MODULE.doctor()["status"], "ready")
+        source = [MODULE.source_wave(x) for x in MODULE.FEATURES]
+        self.assertEqual(len(source), len(MODULE.FEATURES))
+        self.assertTrue(all(item["status"] == "indexed" for item in source), source)
+        for item in source:
+            self.assertGreaterEqual(len(item["sources"]), 1)
+            self.assertEqual(item["proof_ceiling"], "SOURCE_PATH_EXISTENCE_NOT_SOURCE_MEANING")
+
+    def test_two_repeated_local_maintain_passes_keep_real_cli_evidence(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            product = (ROOT / "scripts/factoryweaver.py").read_bytes()
+            for i in range(2):
+                folder = root / f"pass-{i}"
+                out = subprocess.run(
+                    [sys.executable, str(SCRIPT), "maintain", "--scope", "local",
+                     "--evidence-dir", str(folder)],
+                    cwd=ROOT, capture_output=True, text=True, timeout=90)
+                self.assertEqual(out.returncode, 0, out.stdout + out.stderr)
+                result = json.loads(out.stdout)
+                self.assertEqual(result["outcome"], "clean")
+                self.assertEqual(result["scope"], "local")
+                statuses = {x["feature"]: x["status"] for x in result["features"]}
+                self.assertEqual({key for key, value in statuses.items() if value == "cli-verified"},
+                                 set(MODULE.LOCAL_FEATURES))
+                self.assertTrue(all(statuses[name] == "excluded" for name in set(MODULE.FEATURES) - MODULE.LOCAL_FEATURES))
+                self.assertIn("NOT_RUN", result["limits"])
+                self.assertEqual(result["cleanup"], "scratch removed; evidence retained")
+                self.assertTrue((folder / "source-wave.json").is_file())
+                self.assertTrue((folder / "run.json").is_file())
+                self.assertTrue((folder / "result.json").is_file())
+                self.assertTrue((folder / "scope_handoff_conflict.invocation.json").is_file())
+            self.assertEqual((ROOT / "scripts/factoryweaver.py").read_bytes(), product)
+
+    def test_prompt_carrier_handoff_preserves_source_and_unverified_goal(self):
+        with tempfile.TemporaryDirectory() as temp:
+            evidence = Path(temp) / "prompt-carriers"
+            process = subprocess.run(
+                [sys.executable, str(SCRIPT), "drive", "prompt-carriers",
+                 "--evidence-dir", str(evidence)],
+                cwd=ROOT, capture_output=True, text=True, timeout=45,
+            )
+            self.assertEqual(process.returncode, 0, process.stderr + process.stdout)
+            output = json.loads(process.stdout)
+            self.assertEqual(output["status"], "cli-verified")
+            self.assertEqual(output["selection_goal_equality_to_original_issue"], "NOT_OBSERVED")
+            self.assertEqual(output["source_to_card_semantics"], "UNVERIFIED")
+            self.assertEqual(output["delta_consumed_by_writer"], "NOT_RUN")
+            self.assertIsNone(output["next"])
+            for label in ("prompt_carriers_bundle", "prompt_carriers_unverified_goal",
+                          "prompt_carriers_wrong_card"):
+                self.assertTrue((evidence / (label + ".invocation.json")).is_file())
+            self.assertEqual(json.loads((evidence / "prompt_carriers_wrong_card.invocation.json").read_text())["exit"], 2)
+
+    def test_full_maintenance_reports_unreachable_native_not_a_clean_pass(self):
+        # Real full maintenance executes all four local CLI paths, then reports
+        # the unavailable original native Reader as a named blocked feature.
+        with tempfile.TemporaryDirectory() as temp:
+            import os
+            evidence = Path(temp) / "full"
+            env = {**os.environ, "PYTHONDONTWRITEBYTECODE": "1"}
+            env.pop("SOODLES_CHECKOUT", None)
+            out = subprocess.run(
+                [sys.executable, str(SCRIPT), "maintain", "--scope", "full",
+                 "--evidence-dir", str(evidence)],
+                cwd=ROOT, env=env, capture_output=True, text=True, timeout=90,
+            )
+            self.assertEqual(out.returncode, 2, out.stdout + out.stderr)
+            report = json.loads(out.stdout)
+            self.assertEqual(report["outcome"], "blocked")
+            self.assertEqual(report["scope"], "full")
+            statuses = {item["feature"]: item["status"] for item in report["features"]}
+            for item in set(MODULE.LOCAL_FEATURES):
+                self.assertEqual(statuses[item], "cli-verified")
+            self.assertEqual(statuses["soodles-reader"], "verified-unreachable")
+            self.assertTrue(all(statuses[name] == "verified-unreachable" for name in set(MODULE.FEATURES) - MODULE.LOCAL_FEATURES))
+            self.assertTrue((evidence / "source-wave.json").is_file())
+            self.assertTrue((evidence / "run.json").is_file())
+            self.assertTrue((evidence / "result.json").is_file())
+            self.assertIn("original Host", report["gaps"][0]["prerequisite"])
+            self.assertEqual(len(report["gaps"]), len(MODULE.FEATURES) - len(MODULE.LOCAL_FEATURES))
+            self.assertEqual(report["cleanup"], "scratch removed; evidence retained")
+
+
+if __name__ == "__main__":
+    unittest.main()

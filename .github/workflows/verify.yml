@@ -25,3 +25,13 @@ jobs:
         run: python scripts/factoryweaver.py project examples/openai-plugin-platform/project.json
       - name: Validate closed-loop requirements
         run: python scripts/factoryweaver.py validate docs/closed-loop-v72/project.json
+      - name: Maintain the project-local CLI verification map
+        run: python .cursor/skills/verify-factoryweaver/scripts/verify.py maintain --scope local --evidence-dir .verification-evidence
+      - name: Retain real CLI verification evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: factoryweaver-local-cli-evidence
+          path: .verification-evidence/
+          if-no-files-found: error
+          include-hidden-files: true

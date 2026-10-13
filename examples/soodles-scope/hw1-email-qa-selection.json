@@ -1,0 +1,25 @@
+{
+  "requirement_ids": [
+    "REQ-email-qa"
+  ],
+  "card_ids": [
+    "C-retrieval-grounding",
+    "SPEC-email-qa",
+    "V-email-qa"
+  ],
+  "goal": "Email QA references only IDs actually returned for this question.",
+  "measurement": "Official deterministic test_email_qa checks support and search budget.",
+  "persistence": "Continue only on observed failure with original requirement preserved.",
+  "stop_and_escalation": "Selected test oracle and original owner readback decide acceptance.",
+  "causal_change": "Ground answer/support behavior in the search result for one request.",
+  "acceptance": [
+    "No unseen support IDs; finite search hops and valid response shape."
+  ],
+  "constraints": [
+    "Preserve original adapter signatures and original effect boundary."
+  ],
+  "prompt_delta": [
+    "Use only search-returned email IDs in the support list.",
+    "Handle malformed replies and empty searches without invented evidence."
+  ]
+}

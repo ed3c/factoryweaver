@@ -1,0 +1,207 @@
+{
+  "version": "v7.2/card-prompts/1",
+  "proof_ceiling": "INSTRUCTION_AND_SHAPE_ONLY",
+  "default_mode": "SELECTED_CARD_TYPES_ONLY",
+  "groups": {
+    "Knowledge": "Mechanisms, events, details, alternatives and derived bounded rules.",
+    "Decision": "Questions, causal strategy and multi-atom dependency order.",
+    "Specification": "User goal, behavior contract and original authority boundary.",
+    "Implementation": "Reusable method within an authorized worker.",
+    "Verification": "Independent oracle, contradiction and unknown prerequisite."
+  },
+  "cards": {
+    "N": {
+      "group": "Knowledge",
+      "core": false,
+      "file": "types/N.md",
+      "required_semantics": [
+        "actors",
+        "initial_state",
+        "event_sequence",
+        "turning_point",
+        "outcome",
+        "causal_uncertainty"
+      ]
+    },
+    "C": {
+      "group": "Knowledge",
+      "core": true,
+      "file": "types/C.md",
+      "required_semantics": [
+        "mechanism",
+        "conditions",
+        "inputs_outputs",
+        "failure_mode",
+        "decision_consequence"
+      ]
+    },
+    "D": {
+      "group": "Knowledge",
+      "core": false,
+      "file": "types/D.md",
+      "required_semantics": [
+        "case",
+        "condition",
+        "observed_detail",
+        "countercase",
+        "implication"
+      ]
+    },
+    "T": {
+      "group": "Knowledge",
+      "core": false,
+      "file": "types/T.md",
+      "required_semantics": [
+        "common_goal",
+        "alternatives",
+        "dimensions",
+        "tradeoffs",
+        "selection_rule"
+      ]
+    },
+    "E": {
+      "group": "Knowledge",
+      "core": false,
+      "file": "types/E.md",
+      "required_semantics": [
+        "premises",
+        "derivation",
+        "applicability",
+        "counterexample",
+        "implication"
+      ]
+    },
+    "Q": {
+      "group": "Decision",
+      "core": false,
+      "file": "types/Q.md",
+      "required_semantics": [
+        "unresolved_decision",
+        "competing_answers",
+        "decision_owner",
+        "impact",
+        "next_evidence"
+      ]
+    },
+    "S": {
+      "group": "Decision",
+      "core": false,
+      "file": "types/S.md",
+      "required_semantics": [
+        "goal",
+        "causal_hypothesis",
+        "intervention",
+        "alternative",
+        "measurement",
+        "stop_rule"
+      ]
+    },
+    "R": {
+      "group": "Decision",
+      "core": false,
+      "file": "types/R.md",
+      "required_semantics": [
+        "parent_goal",
+        "units",
+        "prerequisites",
+        "exit_gates",
+        "owner_continuation"
+      ]
+    },
+    "REQ": {
+      "group": "Specification",
+      "core": true,
+      "file": "types/REQ.md",
+      "required_semantics": [
+        "actor",
+        "goal",
+        "measurement",
+        "persistence",
+        "stop_escalation",
+        "acceptance",
+        "non_case"
+      ]
+    },
+    "SPEC": {
+      "group": "Specification",
+      "core": true,
+      "file": "types/SPEC.md",
+      "required_semantics": [
+        "given",
+        "when",
+        "then",
+        "inputs_outputs",
+        "forbidden",
+        "negative_case",
+        "unknown_effect",
+        "replay",
+        "oracle",
+        "original_owner"
+      ]
+    },
+    "G": {
+      "group": "Specification",
+      "core": true,
+      "file": "types/G.md",
+      "required_semantics": [
+        "invariant",
+        "applicability",
+        "authority_owner",
+        "refusal",
+        "consequences",
+        "exception"
+      ]
+    },
+    "P": {
+      "group": "Implementation",
+      "core": false,
+      "file": "types/P.md",
+      "required_semantics": [
+        "preconditions",
+        "procedure",
+        "validation",
+        "failure_recovery",
+        "rollback",
+        "scope"
+      ]
+    },
+    "V": {
+      "group": "Verification",
+      "core": true,
+      "file": "types/V.md",
+      "required_semantics": [
+        "subject",
+        "oracle",
+        "producer",
+        "positive_control",
+        "negative_control",
+        "observation_status"
+      ]
+    },
+    "X": {
+      "group": "Verification",
+      "core": true,
+      "file": "types/X.md",
+      "required_semantics": [
+        "claim_a",
+        "claim_b",
+        "overlapping_applicability",
+        "discriminating_control",
+        "status"
+      ]
+    },
+    "K": {
+      "group": "Verification",
+      "core": true,
+      "file": "types/K.md",
+      "required_semantics": [
+        "missing_input",
+        "why_required",
+        "producer",
+        "affected_scope",
+        "next_source",
+        "unaffected_work"
+      ]
+    }
+  }
+}

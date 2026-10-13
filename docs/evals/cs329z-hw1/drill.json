@@ -1,0 +1,445 @@
+{
+  "schema_version": "factoryweaver/v1",
+  "subject": {
+    "id": "stanford-cs329z-hw1-pilot",
+    "scope": "Architecture and knowledge compilation only, no homework implementation",
+    "consumer": "UNBOUND"
+  },
+  "sources": [
+    {
+      "source_id": "SRC-course",
+      "source_type": "official_doc",
+      "source_dependency_key": "course",
+      "locator": "HW1 current overview, no agent frameworks",
+      "uri": "https://github.com/cs329z/cs329z.github.io/blob/main/pages/coursework.md",
+      "integrity": "UNPINNED",
+      "source_role": "SUBJECT_MATTER"
+    },
+    {
+      "source_id": "SRC-starter",
+      "source_type": "official_doc",
+      "source_dependency_key": "starter",
+      "locator": "HW1 adapter contract, tests and package layout",
+      "uri": "https://github.com/cs329z/assignment1-harness/blob/main/README.md",
+      "integrity": "UNPINNED",
+      "source_role": "SUBJECT_MATTER"
+    },
+    {
+      "source_id": "SRC-bm25",
+      "source_type": "test_artifact",
+      "source_dependency_key": "bm25",
+      "locator": "BM25 tests, exact score and retrieval constraints",
+      "uri": "https://github.com/cs329z/assignment1-harness/blob/main/tests/test_bm25.py",
+      "integrity": "UNPINNED",
+      "source_role": "TEST_ARTIFACT"
+    },
+    {
+      "source_id": "SRC-qa",
+      "source_type": "test_artifact",
+      "source_dependency_key": "email-qa",
+      "locator": "Email QA tests, returned support IDs and search budget",
+      "uri": "https://github.com/cs329z/assignment1-harness/blob/main/tests/test_email_qa.py",
+      "integrity": "UNPINNED",
+      "source_role": "TEST_ARTIFACT"
+    },
+    {
+      "source_id": "SRC-thresholds",
+      "source_type": "test_artifact",
+      "source_dependency_key": "thresholds",
+      "locator": "HW1 provided thresholds, not observed scores",
+      "uri": "https://github.com/cs329z/assignment1-harness/blob/main/tests/thresholds.py",
+      "integrity": "UNPINNED",
+      "source_role": "TEST_ARTIFACT"
+    },
+    {
+      "source_id": "SRC-paper",
+      "source_type": "official_doc",
+      "source_dependency_key": "paper",
+      "locator": "Lewis et al RAG paper, external design knowledge",
+      "uri": "https://ar5iv.labs.arxiv.org/html/2005.11401",
+      "integrity": "UNPINNED",
+      "source_role": "SUBJECT_MATTER"
+    },
+    {
+      "source_id": "SRC-lecture",
+      "source_type": "official_doc",
+      "source_dependency_key": "lecture",
+      "locator": "Lecture 03 schedule only: slide contents not inspected",
+      "uri": "https://github.com/cs329z/cs329z.github.io/blob/main/data/schedule.json",
+      "integrity": "UNPINNED",
+      "source_role": "SUBJECT_MATTER"
+    },
+    {
+      "source_id": "SRC-mcp",
+      "source_type": "official_doc",
+      "source_dependency_key": "mcp",
+      "locator": "MCP 2025 specification, background not HW1 requirement",
+      "uri": "https://modelcontextprotocol.io/specification/2025-06-18",
+      "integrity": "UNPINNED",
+      "source_role": "SUBJECT_MATTER"
+    }
+  ],
+  "decisions": [],
+  "requirements": [
+    {
+      "id": "REQ-framework",
+      "statement": "Build own harness using raw chat completion and student code without an agent framework.",
+      "claim_kind": "SOURCE_STATEMENT",
+      "source_ids": [
+        "SRC-course"
+      ],
+      "owner": "HW1 course grading contract",
+      "acceptance": [
+        "Test the named contract through course-provided controls; do not infer a passing result from a specification."
+      ],
+      "knowledge_status": "ANCHORED",
+      "engineering_status": "UNASSESSED",
+      "delivery_status": "NOT_STARTED",
+      "falsifier": "Course-provided tests or the unread full handout contradict this interpretation."
+    },
+    {
+      "id": "REQ-adapter",
+      "statement": "Keep the starter adapters, signatures and given types; custom code within the accepted package.",
+      "claim_kind": "SOURCE_STATEMENT",
+      "source_ids": [
+        "SRC-starter"
+      ],
+      "owner": "HW1 course grading contract",
+      "acceptance": [
+        "Test the named contract through course-provided controls; do not infer a passing result from a specification."
+      ],
+      "knowledge_status": "ANCHORED",
+      "engineering_status": "UNASSESSED",
+      "delivery_status": "NOT_STARTED",
+      "falsifier": "Course-provided tests or the unread full handout contradict this interpretation."
+    },
+    {
+      "id": "REQ-priority",
+      "statement": "Classify email by urgency and recipient-relevant obligation.",
+      "claim_kind": "SOURCE_STATEMENT",
+      "source_ids": [
+        "SRC-starter"
+      ],
+      "owner": "HW1 course grading contract",
+      "acceptance": [
+        "Test the named contract through course-provided controls; do not infer a passing result from a specification."
+      ],
+      "knowledge_status": "ANCHORED",
+      "engineering_status": "UNASSESSED",
+      "delivery_status": "NOT_STARTED",
+      "falsifier": "Course-provided tests or the unread full handout contradict this interpretation."
+    },
+    {
+      "id": "REQ-digest",
+      "statement": "Create a bounded daily digest that preserves urgent business requests.",
+      "claim_kind": "SOURCE_STATEMENT",
+      "source_ids": [
+        "SRC-starter"
+      ],
+      "owner": "HW1 course grading contract",
+      "acceptance": [
+        "Test the named contract through course-provided controls; do not infer a passing result from a specification."
+      ],
+      "knowledge_status": "ANCHORED",
+      "engineering_status": "UNASSESSED",
+      "delivery_status": "NOT_STARTED",
+      "falsifier": "Course-provided tests or the unread full handout contradict this interpretation."
+    },
+    {
+      "id": "REQ-bm25",
+      "statement": "Create deterministic BM25 retrieval for the email archive.",
+      "claim_kind": "SOURCE_STATEMENT",
+      "source_ids": [
+        "SRC-bm25"
+      ],
+      "owner": "HW1 course grading contract",
+      "acceptance": [
+        "Test the named contract through course-provided controls; do not infer a passing result from a specification."
+      ],
+      "knowledge_status": "ANCHORED",
+      "engineering_status": "UNASSESSED",
+      "delivery_status": "NOT_STARTED",
+      "falsifier": "Course-provided tests or the unread full handout contradict this interpretation."
+    },
+    {
+      "id": "REQ-email-qa",
+      "statement": "Answer email archive questions using returned support IDs and bounded retrieval.",
+      "claim_kind": "SOURCE_STATEMENT",
+      "source_ids": [
+        "SRC-qa"
+      ],
+      "owner": "HW1 course grading contract",
+      "acceptance": [
+        "Test the named contract through course-provided controls; do not infer a passing result from a specification."
+      ],
+      "knowledge_status": "ANCHORED",
+      "engineering_status": "UNASSESSED",
+      "delivery_status": "NOT_STARTED",
+      "falsifier": "Course-provided tests or the unread full handout contradict this interpretation."
+    },
+    {
+      "id": "REQ-tools",
+      "statement": "Provide tool schemas and a safe typed validation/execution boundary.",
+      "claim_kind": "SOURCE_STATEMENT",
+      "source_ids": [
+        "SRC-starter"
+      ],
+      "owner": "HW1 course grading contract",
+      "acceptance": [
+        "Test the named contract through course-provided controls; do not infer a passing result from a specification."
+      ],
+      "knowledge_status": "ANCHORED",
+      "engineering_status": "UNASSESSED",
+      "delivery_status": "NOT_STARTED",
+      "falsifier": "Course-provided tests or the unread full handout contradict this interpretation."
+    },
+    {
+      "id": "REQ-loop",
+      "statement": "Build a tool-using conversation loop with observable transcript, errors and limits.",
+      "claim_kind": "SOURCE_STATEMENT",
+      "source_ids": [
+        "SRC-starter"
+      ],
+      "owner": "HW1 course grading contract",
+      "acceptance": [
+        "Test the named contract through course-provided controls; do not infer a passing result from a specification."
+      ],
+      "knowledge_status": "ANCHORED",
+      "engineering_status": "UNASSESSED",
+      "delivery_status": "NOT_STARTED",
+      "falsifier": "Course-provided tests or the unread full handout contradict this interpretation."
+    },
+    {
+      "id": "REQ-docs",
+      "statement": "Expose document search and bounded windows with given adapters.",
+      "claim_kind": "SOURCE_STATEMENT",
+      "source_ids": [
+        "SRC-starter"
+      ],
+      "owner": "HW1 course grading contract",
+      "acceptance": [
+        "Test the named contract through course-provided controls; do not infer a passing result from a specification."
+      ],
+      "knowledge_status": "ANCHORED",
+      "engineering_status": "UNASSESSED",
+      "delivery_status": "NOT_STARTED",
+      "falsifier": "Course-provided tests or the unread full handout contradict this interpretation."
+    },
+    {
+      "id": "REQ-memory",
+      "statement": "Maintain the specified agent memory behavior between conversations.",
+      "claim_kind": "SOURCE_STATEMENT",
+      "source_ids": [
+        "SRC-starter"
+      ],
+      "owner": "HW1 course grading contract",
+      "acceptance": [
+        "Test the named contract through course-provided controls; do not infer a passing result from a specification."
+      ],
+      "knowledge_status": "ANCHORED",
+      "engineering_status": "UNASSESSED",
+      "delivery_status": "NOT_STARTED",
+      "falsifier": "Course-provided tests or the unread full handout contradict this interpretation."
+    },
+    {
+      "id": "REQ-approval",
+      "statement": "Keep human approval for specified effects.",
+      "claim_kind": "SOURCE_STATEMENT",
+      "source_ids": [
+        "SRC-starter"
+      ],
+      "owner": "HW1 course grading contract",
+      "acceptance": [
+        "Test the named contract through course-provided controls; do not infer a passing result from a specification."
+      ],
+      "knowledge_status": "ANCHORED",
+      "engineering_status": "UNASSESSED",
+      "delivery_status": "NOT_STARTED",
+      "falsifier": "Course-provided tests or the unread full handout contradict this interpretation."
+    },
+    {
+      "id": "REQ-guardrails",
+      "statement": "Do not follow untrusted prompt injection; enforce deny rules.",
+      "claim_kind": "SOURCE_STATEMENT",
+      "source_ids": [
+        "SRC-starter"
+      ],
+      "owner": "HW1 course grading contract",
+      "acceptance": [
+        "Test the named contract through course-provided controls; do not infer a passing result from a specification."
+      ],
+      "knowledge_status": "ANCHORED",
+      "engineering_status": "UNASSESSED",
+      "delivery_status": "NOT_STARTED",
+      "falsifier": "Course-provided tests or the unread full handout contradict this interpretation."
+    },
+    {
+      "id": "REQ-eval",
+      "statement": "Use deterministic controls and distinguish optional paid live tests.",
+      "claim_kind": "SOURCE_STATEMENT",
+      "source_ids": [
+        "SRC-starter"
+      ],
+      "owner": "HW1 course grading contract",
+      "acceptance": [
+        "Test the named contract through course-provided controls; do not infer a passing result from a specification."
+      ],
+      "knowledge_status": "ANCHORED",
+      "engineering_status": "UNASSESSED",
+      "delivery_status": "NOT_STARTED",
+      "falsifier": "Course-provided tests or the unread full handout contradict this interpretation."
+    }
+  ],
+  "cards": [
+    {
+      "stable_id": "C-retrieval-grounding",
+      "canonical_key": "C|cs329z|C_retrieval_grounding|defines|pilot|v1",
+      "series": "C",
+      "revision": 2,
+      "status": "ACTIVE",
+      "title": "Grounding through retrieval",
+      "payload": "RAG conditions generation on retrieved external material, but a research paper's specific dense index is not an HW1 implementation mandate. Homework's BM25 test is lexical and deterministic, while Lewis et al. use dense retrieval over Wikipedia; do not conflate these two architectures.",
+      "evidence_ids": [
+        "SRC-paper",
+        "SRC-bm25",
+        "SRC-lecture"
+      ],
+      "typed_links": [
+        {
+          "relation": "enables",
+          "target": "REQ-email-qa"
+        }
+      ]
+    },
+    {
+      "stable_id": "G-source-priority",
+      "canonical_key": "G|cs329z|G_source_priority|defines|pilot|v1",
+      "series": "G",
+      "revision": 1,
+      "status": "ACTIVE",
+      "title": "Assignment truth outranks illustrative reading",
+      "payload": "Starter contracts and tests constrain this homework. MCP and dense RAG are transferable knowledge, not required implementation choices. Never silently substitute them for stated homework interfaces.",
+      "evidence_ids": [
+        "SRC-course",
+        "SRC-starter",
+        "SRC-paper",
+        "SRC-mcp"
+      ],
+      "typed_links": [
+        {
+          "relation": "mitigates",
+          "target": "REQ-framework"
+        }
+      ]
+    },
+    {
+      "stable_id": "REQ-card-harness",
+      "canonical_key": "REQ|cs329z|REQ_card_harness|defines|pilot|v1",
+      "series": "REQ",
+      "revision": 1,
+      "status": "ACTIVE",
+      "title": "Framework-free harness",
+      "payload": "Use the supplied plain chat-completion call and own code to implement required student-facing adapter behaviors while preserving provided types.",
+      "evidence_ids": [
+        "SRC-course",
+        "SRC-starter"
+      ],
+      "typed_links": [
+        {
+          "relation": "implements",
+          "target": "REQ-framework"
+        },
+        {
+          "relation": "depends_on",
+          "target": "G-source-priority"
+        }
+      ]
+    },
+    {
+      "stable_id": "SPEC-email-qa",
+      "canonical_key": "SPEC|cs329z|SPEC_email_qa|defines|pilot|v1",
+      "series": "SPEC",
+      "revision": 2,
+      "status": "ACTIVE",
+      "title": "Answer/support contract",
+      "payload": "Given a question and returned email search results, emit answer and support list referencing only IDs actually returned during the request. No fabricated grounding. Any model text including empty, malformed, repeated search requests or unsupported IDs must still result in valid shape; at most three search calls; if search returns nothing, do not invent evidence.",
+      "evidence_ids": [
+        "SRC-qa"
+      ],
+      "typed_links": [
+        {
+          "relation": "implements",
+          "target": "REQ-email-qa"
+        },
+        {
+          "relation": "based_on",
+          "target": "C-retrieval-grounding"
+        },
+        {
+          "relation": "validated_by",
+          "target": "V-email-qa"
+        }
+      ]
+    },
+    {
+      "stable_id": "SPEC-bm25",
+      "canonical_key": "SPEC|cs329z|SPEC_bm25|defines|pilot|v1",
+      "series": "SPEC",
+      "revision": 1,
+      "status": "ACTIVE",
+      "title": "BM25 retrieval boundary",
+      "payload": "Build a BM25 index and search ranked email documents using provided tokenizer; cover exact toy scores, empty and unknown queries, correct top-k ranking, recall and performance. Do not replace with a vector database merely because RAG literature describes one.",
+      "evidence_ids": [
+        "SRC-bm25",
+        "SRC-starter"
+      ],
+      "typed_links": [
+        {
+          "relation": "implements",
+          "target": "REQ-bm25"
+        },
+        {
+          "relation": "depends_on",
+          "target": "G-source-priority"
+        }
+      ]
+    },
+    {
+      "stable_id": "V-email-qa",
+      "canonical_key": "V|cs329z|V_email_qa|defines|pilot|v1",
+      "series": "V",
+      "revision": 1,
+      "status": "ACTIVE",
+      "title": "Search-hop and support verifier",
+      "payload": "Use existing deterministic email-QA tests: positive grounded support shape; negative unknown support IDs, malformed outputs, search-loop overrun, and empty-result evidence. Live score remains NOT_RUN until genuinely measured.",
+      "evidence_ids": [
+        "SRC-qa",
+        "SRC-thresholds"
+      ],
+      "typed_links": [
+        {
+          "relation": "implements",
+          "target": "REQ-email-qa"
+        }
+      ]
+    }
+  ],
+  "action_requests": [],
+  "progress": {
+    "knowledge": {
+      "state": "ANCHORED",
+      "evidence_refs": [
+        "SRC-course",
+        "SRC-starter"
+      ]
+    },
+    "engineering": {
+      "state": "UNASSESSED",
+      "evidence_refs": []
+    },
+    "delivery": {
+      "state": "NOT_STARTED",
+      "evidence_refs": []
+    }
+  }
+}

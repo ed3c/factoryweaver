@@ -1,0 +1,83 @@
+{
+  "schema": "factoryweaver/card-semantic-proposal/v1",
+  "cards": [
+    {
+      "series": "SPEC",
+      "title": "Grounded Email QA",
+      "source_status": "INSPECTED",
+      "evidence_topics": [
+        "Stanford CS329Z HW1 test_email_qa.py, scripted model replies and support-ID shape check"
+      ],
+      "semantics": {
+        "given": "An incoming email question and the provided callable that returns email records for a query.",
+        "when": "The QA component uses the provided plain LMCallable and at most the search-hop budget to collect evidence.",
+        "then": "Return an answer plus support list containing only IDs obtained from search calls in the same request.",
+        "inputs_outputs": "Input is question, search(query,k) and LMCallable; output is a dict with answer string or null and support list of strings.",
+        "forbidden": "Do not cite email IDs that were never returned by search or expand beyond the permitted search-call budget.",
+        "negative_case": "Scripted model emits an unsupported ID, malformed reply or requests repeated searches without grounded evidence.",
+        "unknown_effect": "No external mutation is demanded by this adapter; if an actual tool effect is unknown, its owner must read back before retry.",
+        "replay": "Repeating a deterministic fixture should preserve the bounded-call and evidence-reference contracts, without claiming a live score.",
+        "oracle": "Stanford HW1 tests/test_email_qa.py verifies the answer/support shape, returned IDs and search-hop budget.",
+        "original_owner": "Homework adapter consumer/test runner remains the test owner; FactoryWeaver cannot declare a test PASS."
+      },
+      "links": [
+        {
+          "relation": "validated_by",
+          "target_series": "V",
+          "target_topic": "Email QA deterministic controls",
+          "applicability": "A question is answered with returned email support IDs.",
+          "counterfactual": "If support validation changes, the selected QA acceptance and its negative controls must be reviewed."
+        }
+      ]
+    },
+    {
+      "series": "V",
+      "title": "Email QA deterministic controls",
+      "source_status": "INSPECTED",
+      "evidence_topics": [
+        "Stanford CS329Z HW1 test_email_qa.py scripted test_hop_budget_and_shape_for_any_reply"
+      ],
+      "semantics": {
+        "subject": "Validate the Grounded Email QA output and allowed retrieval loop.",
+        "oracle": "Course-provided deterministic scripted tests checking dict shape, returned support IDs and a finite search budget.",
+        "producer": "The actual course test runner selects and executes this oracle; it has not run inside FactoryWeaver.",
+        "positive_control": "A reply grounded in a returned search email must cite only that email and retain correct output types.",
+        "negative_control": "Malformed reply or unknown support ID must not create fabricated evidence or unbounded retrieval.",
+        "observation_status": "NOT_RUN: reading a test definition or preflighting this Card cannot establish course test PASS."
+      },
+      "links": []
+    },
+    {
+      "series": "K",
+      "title": "RAG lecture slide page coverage",
+      "source_status": "UNREAD",
+      "evidence_topics": [],
+      "semantics": {
+        "missing_input": "Actual pages, diagrams and captions in the linked CS329Z Lecture 03 slide PDF.",
+        "why_required": "Without slide content it is impossible to claim full source-to-Concept coverage of the lecture.",
+        "producer": "The actual source reader or Host that can retrieve and inspect the published PDF pages.",
+        "affected_scope": "Slide-grounded RAG concept notes only; the separately read HW1 test contract remains usable.",
+        "next_source": "Obtain PDF page images/text and record page/figure-level factual claims before creating or updating C cards.",
+        "unaffected_work": "Existing verified homework interfaces and deterministic acceptance definitions remain separate."
+      },
+      "links": []
+    }
+  ],
+  "coverage": [
+    {
+      "source_unit": "HW1 test_email_qa::support IDs and hop bound",
+      "status": "MAPPED",
+      "disposition": "Grounded Email QA"
+    },
+    {
+      "source_unit": "HW1 scripted malformed response controls",
+      "status": "MAPPED",
+      "disposition": "Email QA deterministic controls"
+    },
+    {
+      "source_unit": "Lecture 03 PDF page-level diagrams",
+      "status": "K",
+      "disposition": "Source inspection required; do not invent slide content"
+    }
+  ]
+}
