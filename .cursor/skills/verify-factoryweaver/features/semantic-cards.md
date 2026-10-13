@@ -30,8 +30,9 @@ Preconditions: Doctor returned ready and Python 3.12 plus jsonschema are install
 ### One-Shot / Roadmap deterministic controls
 
 The same existing Card Semantic CLI also supports `roadmap RECORD` as a
-read-only index. Run it against `docs/closed-loop-v72/project.json` and
-observe existing registered cards and Roadmap typed links, with no Scope,
+read-only index. Use the portable synthetic R fixture and observe
+only R links and directly referenced active Cards, without an all-Card dump
+or inferred Scope,
 Prompt, next or effects. A forged Roadmap target must receive the original
 v1 verification refusal. This verifies index/reference behavior, **not** that
 Session chose an optimal Scope. The independent reviewer must test omission

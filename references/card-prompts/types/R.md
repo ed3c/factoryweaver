@@ -13,11 +13,12 @@
 - **exit_gates** — source-backed and concrete; describe what changes in the engineering decision where applicable.
 - **owner_continuation** — source-backed and concrete; describe what changes in the engineering decision where applicable.
 
-**Roadmap Index / Session boundary:** For every necessary unit, name its parent
-Goal, measurable local exit, prerequisite and already accepted related Card
-references when available. Use existing Typed Links with justified direction;
-do not put guessed Card IDs in prose or create an index as runtime state. Missing
-links remain unknown, not manufactured. Index coverage is advisory: it may be
+**Roadmap Index / Session boundary:** List the causal units, their local
+exits and necessary prerequisites. Name only a few source-justified **Entry
+Card** references (usually S or SPEC) when available, not the entire C/G/V
+Scope closure. An ordinary `based_on` edge is not automatically an Entry: its
+direction and applicability need independent source review. Do not put guessed
+Card IDs in prose or add runtime state. Missing links remain unknown. Index coverage is advisory: it may be
 incomplete, stale or omit a newly observed earlier failure. The current Session
 selects the minimum sufficient scope using current evidence and original Owner
 next, then composes the One-Shot Prompt; it may legitimately choose outside the

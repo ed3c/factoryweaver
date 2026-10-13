@@ -73,8 +73,10 @@ Consumer and required correction. Review the saved REQ/SPEC/V/links against
 original source. This feedback is not executable `PromptDelta` and not an
 instruction to alter unrelated accepted Cards. No gain means REUSE/NOOP.
 
-An R Roadmap is a *knowledge index* of multiple causal units with prerequisites
-and available existing Card references, not an execution scheduler. The Session
+An R Roadmap is a knowledge index of multiple causal units with prerequisites
+and only source-backed **Entry Card references**, not a complete Scope closure
+or scheduler. A `based_on` relation is not automatically a Scope entry or a
+demand to paste full Card payloads. The Session
 can choose a different scope when fresh evidence or original owner next requires
 it. The CLI can enumerate existing active card IDs and declared R edges, but
 cannot infer the correct behavior scope, semantic dependency or best wording.

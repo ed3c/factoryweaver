@@ -214,11 +214,14 @@ class CardSemanticTests(unittest.TestCase):
         self.assertIsNone(result["next"])
         self.assertEqual(result["effects"], [])
         self.assertFalse(result["authorizes_landing"])
-        registered = {c["stable_id"] for c in record["cards"] if c["status"] == "ACTIVE"}
-        self.assertEqual({c["card_id"] for c in result["available_cards"]}, registered)
+        self.assertNotIn("available_cards", result)
         self.assertTrue(result["roadmaps"])
-        self.assertEqual(result["roadmaps"][0]["declared_links"],
-                         next(c for c in record["cards"] if c["series"] == "R")["typed_links"])
+        source_r = next(c for c in record["cards"] if c["series"] == "R")
+        self.assertEqual(result["roadmaps"][0]["declared_links"], source_r["typed_links"])
+        actual_active = {c["stable_id"] for c in record["cards"] if c["status"] == "ACTIVE"}
+        self.assertEqual({x["card_id"] for x in result["roadmaps"][0]["referenced_cards"]},
+                         {x["target"] for x in source_r["typed_links"]
+                          if x["target"] in actual_active})
         bad = copy.deepcopy(record)
         next(c for c in bad["cards"] if c["series"] == "R")["typed_links"].append(
             {"relation": "based_on", "target": "SPEC-FORGED-NONEXISTENT"})
@@ -235,6 +238,15 @@ class CardSemanticTests(unittest.TestCase):
         self.assertEqual(result["status"], "READ_ONLY_ROADMAP_INDEX")
         self.assertEqual(result["prompt_composition"], "NOT_PERFORMED")
         self.assertIsNone(result["next"])
+
+    def test_roadmap_absent_is_valid_noop_with_no_effects(self):
+        record = json.loads((ROOT / "docs/evals/cs329z-hw1/drill.json")
+                            .read_text(encoding="utf-8"))
+        index = semantic.roadmap_index(record)
+        self.assertEqual(index["roadmaps"], [])
+        self.assertNotIn("available_cards", index)
+        self.assertIsNone(index["next"])
+        self.assertEqual(index["effects"], [])
 
     def test_cli_returns_non_authoritative_status_and_typed_refusal(self):
         script = ROOT / "scripts/card_semantic.py"

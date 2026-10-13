@@ -44,8 +44,9 @@ do not share a mutable state field or create another scheduler/schema.
 Model-authored prompt composition is probabilistic; a CLI cannot certify it
 as semantically optimal. Existing `factoryweaver/v1` cards and
 `factoryweaver/soodles-scope/v1` selection retain their unchanged protocols.
-Original `card_semantic.py roadmap` validates and projects existing card IDs/
-R links, not missing semantic dependencies. Original Soodles Issue Contract
+Original `card_semantic.py roadmap` projects only existing R entries, their
+declared links and directly referenced active cards, not the full Card catalog,
+transitive closure, semantic applicability or actual Session selection. Original Soodles Issue Contract
 reconciles proposed Goal with the actual task. The Stage only consumes the
 instruction after original admission. Prompt construction neither grants
 runtime permission nor proves actual Agent compliance.

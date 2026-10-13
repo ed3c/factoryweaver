@@ -151,17 +151,19 @@ def roadmap_index(record):
     """Project *existing* v1 R links and Card references; Session decides Scope."""
     from factoryweaver import verify
     verify(record)  # Original v1 validator owns identity and typed-target validity.
-    active = [c for c in record["cards"] if c["status"] == "ACTIVE"]
+    active = {c["stable_id"]: c for c in record["cards"] if c["status"] == "ACTIVE"}
     return {
         "status": "READ_ONLY_ROADMAP_INDEX",
         "roadmaps": [
             {"card_id": c["stable_id"], "title": c["title"],
-             "declared_links": list(c["typed_links"])}
-            for c in active if c["series"] == "R"
-        ],
-        "available_cards": [
-            {"card_id": c["stable_id"], "series": c["series"], "title": c["title"]}
-            for c in active
+             "declared_links": list(c["typed_links"]),
+             # Direct refs are not a Session-selected Scope or transitive closure.
+             "referenced_cards": [
+                 {"card_id": link["target"], "series": active[link["target"]]["series"],
+                  "title": active[link["target"]]["title"]}
+                 for link in c["typed_links"] if link["target"] in active
+             ]}
+            for c in active.values() if c["series"] == "R"
         ],
         "scope_selection": "SESSION_REQUIRED",
         "prompt_composition": "NOT_PERFORMED",

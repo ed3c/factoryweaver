@@ -86,7 +86,7 @@ The existing `card_delta.py` propagates *advisory invalidation* only through `de
 
 These contracts are **Sidecar proposals** until a consumer/schema exists; do not insert unknown keys into the closed `knowledge-record.schema.json`.
 
-### Deterministic-first assembly algorithm
+### Evidence-first Session assembly; deterministic binding only
 
 1. **Preserve original REQ inventory** independently of visible cards, assigned weeks or token budget.
 2. Anchor by ONE meaningful user-visible Goal, actual measurement producer and selected REQ/SPEC acceptance. If goal/measurement ambiguous, classify the unresolved decision; do not forge metric truth.
@@ -229,13 +229,17 @@ A card type is never a command to invoke its corresponding Skill. **Current obse
 
 ## Roadmap-assisted Session composition (no new state machine)
 
-The R Card represents distinct causal units and their observed prerequisites,
-local exits and **existing** applicable Card identities when grounded. It is an
-advisory index, not the chosen Scope, stage plan or native Owner next. An R
+The R Card names distinct causal units, local exits, prerequisites and a
+small number of justified **Entry Card references**. It is an advisory index,
+not complete Scope closure, Stage plan or original Owner next. Distinguish
+`validated_by` (oracle), `based_on` (premise) and `depends_on` (required
+prerequisite); no edge automatically means the entire target payload must be
+copied into a Worker Prompt. An R
 may be absent for a single independent atom. The read-only
-`card_semantic.py roadmap RECORD` projects existing active Card references and
-R typed edges after original v1 validation; it does not infer a missing link,
-condition, actual next or behavior. Source-grounded R references require
+`card_semantic.py roadmap RECORD` exposes only R cards, their declared
+edges and directly referenced active cards after original v1 validation.
+It does not list all active cards or infer missing closure, actual Entry
+semantics, current Scope, next or required behavior. Source-grounded R references require
 independent semantic checks for sufficiency and link direction.
 
 The Session compiles the One-Shot instruction **after** selecting the actual
