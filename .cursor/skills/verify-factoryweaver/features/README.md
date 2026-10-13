@@ -41,23 +41,3 @@ The status reported by each real maintain run is authoritative. Local CLI PASS d
 Three levels: (1) Card schema/type verification is not source semantics; (2) Reader/CLI transport is not Issue admission; (3) P-class, Outer, Inner, Test/Schema/Hook/Cron and Provider effects each need original native capture.
 
 Local maintain drives five CLI features and marks twelve `excluded`. Full maintain source-indexes and attempts all 17, reports individual `verified-unreachable` prerequisites, and remains `blocked` without original native evidence. `clean` in local mode never means full E2E.
-## Features
-
-- [Knowledge Contract](./knowledge-contract.md): validate and render original HW1 specification records.
-- [Semantic Cards](./semantic-cards.md): selected card prompts and unread-source refusal.
-- [Scope Handoff](./scope-handoff.md): original Host-bound Bundle and replay/conflict cases.
-- [Manager Needs](./manager-needs.md): focused verification needs without unauthorized manager invocation.
-- [Soodles Reader](./soodles-reader.md): consume actual external Reader where Host supports it; native admission remains separately unverified.
-
-- [Typed links](./typed-links.md) — actual CLI registered relation and refused invalid relation.
-- [source-fidelity](./source-fidelity.md) — original-owner E2E proof target, not a local PASS.
-- [goal-scope](./goal-scope.md) — original-owner E2E proof target, not a local PASS.
-- [prompt-delta](./prompt-delta.md) — original-owner E2E proof target, not a local PASS.
-- [pclass-consumer](./pclass-consumer.md) — original-owner E2E proof target, not a local PASS.
-- [outer-admission](./outer-admission.md) — original-owner E2E proof target, not a local PASS.
-- [inner-poteto](./inner-poteto.md) — original-owner E2E proof target, not a local PASS.
-- [test-manager](./test-manager.md) — original-owner E2E proof target, not a local PASS.
-- [schema-feedback](./schema-feedback.md) — original-owner E2E proof target, not a local PASS.
-- [native-hook](./native-hook.md) — original-owner E2E proof target, not a local PASS.
-- [native-cron](./native-cron.md) — original-owner E2E proof target, not a local PASS.
-- [delivery-closure](./delivery-closure.md) — original-owner E2E proof target, not a local PASS.
