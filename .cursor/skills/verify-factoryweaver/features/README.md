@@ -67,3 +67,7 @@ Each Card type is retained in the same `semantic-cards` Feature; the CLI selects
 | SPEC | Registered prompt, typed field/refusal via existing CLI tests | Actual independent source-to-card semantic completeness |
 
 | [portable-bundle](./portable-bundle.md) | Copied-layout CLI and tamper refusal | Native installer/Agent loading NOT_RUN |
+
+| [source-lock](./source-lock.md) | Real offline CLI/refusal | Original source/semantic review NOT_RUN |
+| [semantic-golden](./semantic-golden.md) | Real offline CLI/refusal | Original source/semantic review NOT_RUN |
+| [blind-packet](./blind-packet.md) | Real offline CLI/refusal | Original source/semantic review NOT_RUN |

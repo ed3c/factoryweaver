@@ -46,3 +46,18 @@ When a real Soodles consumer requests an Issue Atom from accepted cards, produce
 
 Compilation is not live execution. Do not add `TESTED` or `RELEASE_CONFIRMED` without external artifacts and the original owner's readback.
 **Do not re-select technical handoff identity:** When the Host requests a read-only Scope transfer, choose only existing REQ/Card references from the accepted v1 Registry and bounded behavioral changes. The original `soodles_handoff.py` with Host-selected `--output` owns exact Bundle bytes, FileRef, conflict refusal and reader arguments. No card or Skill manufactures these. Soodles still reconciles original Issue/Goal and may reject the proposal before Admission.
+
+## Incremental source and structural regression controls
+
+For independently supplied raw source bytes and a pinned manifest, run
+`python3 scripts/source_lock.py MANIFEST.json SOURCE.txt`; read [source lock](../../docs/source-lock.md).
+This proves only supplied byte consistency. For an accepted Before/After pair,
+run `python3 scripts/card_delta.py BEFORE.json AFTER.json`; read [delta](../../docs/card-delta-contract.md).
+Keep the current raw-byte cursor domain, history and non-card changes.
+Run `python3 scripts/semantic_golden.py tests/fixtures/semantic-golden.json` for
+curated structural regressions; read [golden](../../docs/semantic-golden.md).
+`STRUCTURAL_GOLDEN_PASS` does not establish human semantic approval.
+For two frozen outputs, an original evaluator may prepare
+`python3 scripts/blind_review.py packet CASE.json --seed-file HOST_SEED.bin`.
+Keep its separate `key` and seed with the original evaluator, outside the reviewer input.
+Read [blind packet](../../docs/blind-pairwise.md). The CLI never scores models or names a winner.

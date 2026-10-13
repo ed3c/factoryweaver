@@ -49,3 +49,18 @@ When the selected Host is Soodles, read `../../docs/soodles-scope-routing.md` an
 The current repository has a **project-local** [verify-factoryweaver](../../.cursor/skills/verify-factoryweaver/SKILL.md) built against the actual public CLI. Its [feature map](../../.cursor/skills/verify-factoryweaver/features/README.md) and isolated harness test both valid and refused journeys; source drift is checked before each live pass. The complete upstream create/maintain methods are pinned in [UPSTREAM-PSTACK](../../.cursor/UPSTREAM-PSTACK.md), preserving the original manual invocation policy.
 
 A real feature change requires source review and pstack `maintain-verification-skill` to run the full affected map; never silently rewrite product code inside a maintenance pass. CLI maintenance of the local subset is **not** independent semantic Card review and cannot prove outer/inner activation. Without original native Soodles Issue admission and P-class consumers, full maintenance must explicitly report `blocked`, naming those original prerequisites. Do not coerce an unavailable feature into a passing mock. The original Soodles Test Manager selects necessary live controls, and its existing P-class feedback/behavior-datasets owners verify scoped native observations, not this verification helper.
+
+## Incremental source and structural regression controls
+
+For independently supplied raw source bytes and a pinned manifest, run
+`python3 scripts/source_lock.py MANIFEST.json SOURCE.txt`; read [source lock](../../docs/source-lock.md).
+This proves only supplied byte consistency. For an accepted Before/After pair,
+run `python3 scripts/card_delta.py BEFORE.json AFTER.json`; read [delta](../../docs/card-delta-contract.md).
+Keep the current raw-byte cursor domain, history and non-card changes.
+Run `python3 scripts/semantic_golden.py tests/fixtures/semantic-golden.json` for
+curated structural regressions; read [golden](../../docs/semantic-golden.md).
+`STRUCTURAL_GOLDEN_PASS` does not establish human semantic approval.
+For two frozen outputs, an original evaluator may prepare
+`python3 scripts/blind_review.py packet CASE.json --seed-file HOST_SEED.bin`.
+Keep its separate `key` and seed with the original evaluator, outside the reviewer input.
+Read [blind packet](../../docs/blind-pairwise.md). The CLI never scores models or names a winner.

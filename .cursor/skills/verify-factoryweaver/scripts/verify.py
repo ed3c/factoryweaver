@@ -15,8 +15,8 @@ import tempfile
 
 ROOT = Path(__file__).resolve().parents[4]
 HERE = Path(__file__).resolve().parents[1]
-FEATURES = ("knowledge-contract", "semantic-cards", "scope-handoff", "manager-needs", "typed-links", "soodles-reader", "source-fidelity", "goal-scope", "prompt-delta", "pclass-consumer", "outer-admission", "inner-poteto", "test-manager", "schema-feedback", "native-hook", "native-cron", "delivery-closure", "prompt-carriers", "portable-bundle")
-LOCAL_FEATURES = {"knowledge-contract", "semantic-cards", "scope-handoff", "manager-needs", "typed-links", "prompt-carriers", "portable-bundle"}
+FEATURES = ("knowledge-contract", "semantic-cards", "scope-handoff", "manager-needs", "typed-links", "soodles-reader", "source-fidelity", "goal-scope", "prompt-delta", "pclass-consumer", "outer-admission", "inner-poteto", "test-manager", "schema-feedback", "native-hook", "native-cron", "delivery-closure", "prompt-carriers", "portable-bundle", "source-lock", "semantic-golden", "blind-packet")
+LOCAL_FEATURES = {"knowledge-contract", "semantic-cards", "scope-handoff", "manager-needs", "typed-links", "prompt-carriers", "portable-bundle", "source-lock", "semantic-golden", "blind-packet"}
 EXTERNAL_PROOF = {
     "source-fidelity": "Independent review of actual inspected source units and source coverage, not a field-only fixture",
     "goal-scope": "Fresh original Issue and Source/REQ Goal-Measurement-Acceptance readback",
@@ -108,7 +108,63 @@ def source_wave(feature):
 
 def drive(feature, evidence, scratch):
     name = feature.replace("-", "_")
-    if feature == "portable-bundle":
+    if feature == "source-lock":
+        repository = scratch / "source-fixture"
+        repository.mkdir()
+        source = repository / "SOURCE.md"
+        raw = (ROOT / "docs/bootstrap-boundary.md").read_bytes()
+        source.write_bytes(raw)
+        invoke(["git", "init", "-q", "-b", "main", str(repository)], evidence, name + "_init")
+        invoke(["git", "-C", str(repository), "add", "SOURCE.md"], evidence, name + "_add")
+        invoke(["git", "-C", str(repository), "-c", "user.name=Fixture",
+                "-c", "user.email=fixture@example.invalid", "commit", "-qm", "Synthetic source snapshot"],
+               evidence, name + "_snapshot")
+        revision = invoke(["git", "-C", str(repository), "rev-parse", "HEAD"], evidence, name + "_head").strip()
+        manifest = {"protocol": "factoryweaver/source-lock-v1", "repository": "example/synthetic-source",
+                    "revision": revision, "path": "SOURCE.md",
+                    "git_blob_sha1": hashlib.sha1(b"blob " + str(len(raw)).encode() + b"\x00" + raw).hexdigest(),
+                    "sha256": hashlib.sha256(raw).hexdigest(), "source_dependency_key": "synthetic-source-fixture",
+                    "anchors": [{"id": "title", "text_match": raw.decode("utf-8").splitlines()[0]}]}
+        pinned = scratch / "manifest.json"
+        pinned.write_text(json.dumps(manifest), encoding="utf-8")
+        matched = obj(call("source_lock.py", pinned, source), evidence, name + "_match")
+        ensure(matched["status"] == "SUPPLIED_BYTES_MATCH_FROZEN_MANIFEST" and
+               not matched["external_origin_authenticated"], "source_lock_overclaim")
+        altered = scratch / "altered.txt"
+        altered.write_bytes(raw + b"altered")
+        refused = obj(call("source_lock.py", pinned, altered), evidence, name + "_altered", expected=2)
+        ensure("mismatch" in refused["error"], "changed_source_accepted")
+    elif feature == "semantic-golden":
+        fixture = ROOT / "tests/fixtures/semantic-golden.json"
+        valid = obj(call("semantic_golden.py", fixture), evidence, name + "_fixture")
+        ensure(valid["status"] == "STRUCTURAL_GOLDEN_PASS" and not valid["semantic_quality_proven"],
+               "structural_golden_overclaim")
+        data = json.loads(fixture.read_text())
+        data["human_review"] = "APPROVED"
+        bad = scratch / "forged-review.json"
+        bad.write_text(json.dumps(data))
+        refused = obj(call("semantic_golden.py", bad), evidence, name + "_forged", expected=2)
+        ensure("forged_human_review" in refused["error"], "false_semantic_approval")
+    elif feature == "blind-packet":
+        case = {"protocol": "factoryweaver/blind-comparison-v1", "case_id": "synthetic-paired-outputs",
+                "source_manifest_sha256": hashlib.sha256(b"synthetic source").hexdigest(),
+                "task": "Compare two synthetic outputs under identical declared conditions.",
+                "frozen_conditions": {"source": "synthetic fixture only"},
+                "baseline_output": "The first illustrative output states a mechanism without its failure boundary.",
+                "candidate_output": "The second illustrative output preserves a mechanism and its explicit failure boundary."}
+        path = scratch / "case.json"
+        path.write_text(json.dumps(case))
+        seed = scratch / "seed.bin"
+        seed.write_bytes(os.urandom(32))
+        packet = obj(call("blind_review.py", "packet", path, "--seed-file", seed), evidence, name + "_packet")
+        ensure(packet["review_status"] == "NOT_RUN" and "baseline_output" not in packet,
+               "blind_packet_overclaim")
+        case["candidate_output"] += " v7.2"
+        path.write_text(json.dumps(case))
+        refused = obj(call("blind_review.py", "packet", path, "--seed-file", seed),
+                      evidence, name + "_unblinded", expected=2)
+        ensure("unredacted_version_label" in refused["error"], "unblinded_output_accepted")
+    elif feature == "portable-bundle":
         folder = scratch / "distribution"
         first = obj(call("build_skill_bundle.py", folder), evidence, name + "_build")
         repeated = obj(call("build_skill_bundle.py", folder), evidence, name + "_repeat")
