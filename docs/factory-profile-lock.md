@@ -90,4 +90,9 @@ Public tests use two synthetic profiles: pstack-like and Builder-like. They asse
 
 ## Current integration boundary
 
-The public Worktree Profile contract is a separate, Draft PR based on unmerged Bootstrap PR #3. Draft Portable Skills PR #9 packages the earlier Bootstrap CLI and does not yet include this new Profile verifier. Rebuild the public distribution only after a verified accepted source tree exists; do not conflate successful portable installation with **Worktree-scoped factory activation**. The original Soodles #300 concerns a separate adapter and must retain its own supervision and Owner gate.
+This contract is reconciled against current v7.2 main through PR #24.
+The accepted portable distribution must include this CLI, schemas and selected
+Skill routes and repeat the installed CLI controls after integration.
+A copied distribution or disposable linked Worktree is not factory activation.
+Original Soodles/Noodle admission and Worker discovery remain separate native
+proofs; none is established by the synthetic Profile or catalog.

@@ -22,7 +22,7 @@ def git(*parts):
 class LocalSkillViewTests(unittest.TestCase):
     def setUp(self):
         self.tmp = tempfile.TemporaryDirectory()
-        top = Path(self.tmp.name)
+        top = Path(self.tmp.name).resolve()
         self.root, self.a, self.b = top / "repo", top / "lane-a", top / "lane-b"
         git("init", "-q", "-b", "main", str(self.root))
         git("-C", str(self.root), "config", "user.name", "Fixture")
@@ -86,7 +86,7 @@ class LocalSkillViewTests(unittest.TestCase):
     def test_registered_worktree_with_special_path_is_observed(self):
         for name in ("技能工作樹", 'quoted"worktree', "tab\tworktree", "line\nworktree"):
             with self.subTest(name=name):
-                moved = Path(self.tmp.name) / name
+                moved = Path(self.tmp.name).resolve() / name
                 git("-C", str(self.root), "worktree", "move", str(self.a), str(moved))
                 self.a = moved
                 self.bindings[0]["session"]["worktree_path"] = str(moved)
@@ -109,7 +109,7 @@ class LocalSkillViewTests(unittest.TestCase):
     def test_registered_worktree_with_trailing_whitespace_is_observed(self):
         for name in ("trailing-space ", "trailing-tab\t", "trailing-newline\n"):
             with self.subTest(name=name):
-                moved = Path(self.tmp.name) / name
+                moved = Path(self.tmp.name).resolve() / name
                 git("-C", str(self.root), "worktree", "move", str(self.a), str(moved))
                 self.a = moved
                 self.bindings[0]["session"]["worktree_path"] = str(moved)
@@ -123,7 +123,7 @@ class LocalSkillViewTests(unittest.TestCase):
     def test_wrong_head_on_trailing_whitespace_worktree_is_refused(self):
         for name in ("trailing-space ", "trailing-tab\t", "trailing-newline\n"):
             with self.subTest(name=name):
-                moved = Path(self.tmp.name) / name
+                moved = Path(self.tmp.name).resolve() / name
                 git("-C", str(self.root), "worktree", "move", str(self.a), str(moved))
                 self.a = moved
                 self.bindings[0]["session"]["worktree_path"] = str(moved)
@@ -161,7 +161,7 @@ class LocalSkillViewTests(unittest.TestCase):
         # Replacing .agents by a link must not let a worker inspect outside the
         # selected worktree even if the ultimate skills/ subtree exists.
         agents = self.a / ".agents"
-        outside = Path(self.tmp.name) / "outside-agents"
+        outside = Path(self.tmp.name).resolve() / "outside-agents"
         agents.rename(outside)
         agents.symlink_to(outside, target_is_directory=True)
         with self.assertRaisesRegex(ProfileError, "worktree_skill_parent_symlink"):

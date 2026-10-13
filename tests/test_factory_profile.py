@@ -242,7 +242,7 @@ class FactoryProfileTests(unittest.TestCase):
         # A real disposable Git worktree test; this is not a Noodle launched
         # session and does not assert HOME/network/credential isolation.
         with tempfile.TemporaryDirectory() as tmp:
-            root = Path(tmp)
+            root = Path(tmp).resolve()
             repo, a, b = root / "repo", root / "a", root / "b"
             def git(*args):
                 result = subprocess.run(["git", *args], capture_output=True, text=True)

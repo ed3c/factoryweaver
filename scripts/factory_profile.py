@@ -19,6 +19,9 @@ from pathlib import Path
 
 from jsonschema import Draft202012Validator, ValidationError
 
+sys.dont_write_bytecode = True
+from factoryweaver import _unique_json_fields
+
 ROOT = Path(__file__).resolve().parents[1]
 PROFILE_SCHEMA = ROOT / "contracts/v1/factory-profile.schema.json"
 BINDING_SCHEMA = ROOT / "contracts/v1/factory-binding.schema.json"
@@ -32,7 +35,7 @@ class ProfileError(ValueError):
     pass
 
 def load(file):
-    return json.loads(Path(file).read_text(encoding="utf-8"))
+    return json.loads(Path(file).read_text(encoding="utf-8"), object_pairs_hook=_unique_json_fields)
 
 def canonical(value):
     return json.dumps(value, sort_keys=True, ensure_ascii=False,
@@ -365,7 +368,7 @@ def audit_catalog_bytes(profile, binding, catalog_bytes, expected_sha256):
     if hashlib.sha256(catalog_bytes).hexdigest() != expected_sha256:
         raise ProfileError("catalog_raw_bytes_changed")
     try:
-        catalog = json.loads(catalog_bytes.decode("utf-8", "strict"))
+        catalog = json.loads(catalog_bytes.decode("utf-8", "strict"), object_pairs_hook=_unique_json_fields)
     except (UnicodeDecodeError, json.JSONDecodeError) as exc:
         raise ProfileError("catalog_raw_data_invalid") from exc
     result = audit_effective_catalog(profile, binding, catalog)

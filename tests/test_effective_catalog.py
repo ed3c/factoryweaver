@@ -61,6 +61,31 @@ class EffectiveCatalogTests(unittest.TestCase):
         self.assertIn("EFFECTIVE_CATALOG_CLAIM_MATCHES", instructions)
         self.assertTrue((ROOT / "scripts/factory_profile.py").is_file())
 
+    def test_cli_duplicate_keys_refused_in_all_consumed_records(self):
+        profile, binding, catalog = inputs()
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            paths = [root / name for name in ("profile.json", "binding.json", "catalog.json")]
+            values = (profile, binding, catalog)
+            for index, key, value in ((0, "workflow_entry", "builder-bug-factory"),
+                                      (1, "effect_authority", True),
+                                      (2, "producer_claim", "OWNER_VERIFIED")):
+                for path, data in zip(paths, values):
+                    path.write_text(json.dumps(data))
+                raw = "{" + json.dumps(key) + ":" + json.dumps(value) + "," + paths[index].read_text()[1:]
+                paths[index].write_text(raw)
+                command = [sys.executable, str(ROOT / "scripts/factory_profile.py"), "audit-catalog",
+                           *map(str, paths)]
+                result = subprocess.run(command, capture_output=True, text=True)
+                self.assertEqual(result.returncode, 2)
+                self.assertIn("duplicate_json_key:" + key, json.loads(result.stderr)["error"])
+                if index == 2:
+                    command[2] = "audit-catalog-pinned"
+                    command += ["--catalog-sha256", hashlib.sha256(raw.encode()).hexdigest()]
+                    result = subprocess.run(command, capture_output=True, text=True)
+                    self.assertEqual(result.returncode, 2)
+                    self.assertIn("duplicate_json_key", json.loads(result.stderr)["error"])
+
     def test_good_declared_catalog_is_never_owner_receipt(self):
         profile, binding, catalog = inputs()
         result = audit_effective_catalog(profile, binding, catalog)

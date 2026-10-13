@@ -65,3 +65,5 @@ Each Card type is retained in the same `semantic-cards` Feature; the CLI selects
 | K | Registered prompt, typed field/refusal via existing CLI tests | Actual independent source-to-card semantic completeness |
 | REQ | Registered prompt, typed field/refusal via existing CLI tests | Actual independent source-to-card semantic completeness |
 | SPEC | Registered prompt, typed field/refusal via existing CLI tests | Actual independent source-to-card semantic completeness |
+
+| [factory-profile](./factory-profile.md) | Synthetic claims and ambiguity refusals | Original Worker/Carrier behavior NOT_RUN |

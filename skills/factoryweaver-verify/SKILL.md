@@ -49,3 +49,15 @@ When the selected Host is Soodles, read `../../docs/soodles-scope-routing.md` an
 The current repository has a **project-local** [verify-factoryweaver](../../.cursor/skills/verify-factoryweaver/SKILL.md) built against the actual public CLI. Its [feature map](../../.cursor/skills/verify-factoryweaver/features/README.md) and isolated harness test both valid and refused journeys; source drift is checked before each live pass. The complete upstream create/maintain methods are pinned in [UPSTREAM-PSTACK](../../.cursor/UPSTREAM-PSTACK.md), preserving the original manual invocation policy.
 
 A real feature change requires source review and pstack `maintain-verification-skill` to run the full affected map; never silently rewrite product code inside a maintenance pass. CLI maintenance of the local subset is **not** independent semantic Card review and cannot prove outer/inner activation. Without original native Soodles Issue admission and P-class consumers, full maintenance must explicitly report `blocked`, naming those original prerequisites. Do not coerce an unavailable feature into a passing mock. The original Soodles Test Manager selects necessary live controls, and its existing P-class feedback/behavior-datasets owners verify scoped native observations, not this verification helper.
+
+## Factory Profile and Carrier boundaries
+
+For a selected multi-factory Work Order, read [the Profile contract](../../docs/factory-profile-lock.md).
+Use `python3 scripts/factory_profile.py validate PROFILE.json` and `bind-check PROFILE.json BINDING.json`.
+For an original Host-selected linked checkout, `observe-local-skills PROFILE.json BINDING.json`
+checks only local files; read [the Skill-view contract](../../docs/worktree-skill-view.md).
+Use `python3 scripts/factory_profile.py audit-catalog PROFILE.json BINDING.json CATALOG.json`
+for claimed effective Skills. Prefer `audit-catalog-pinned` with the original Owner's supplied raw pin.
+`EFFECTIVE_CATALOG_CLAIM_MATCHES` means declared input consistency, never authenticated Worker discovery.
+`compare-carriers PROFILE.json BASELINE_BINDING.json ALTERNATIVE_BINDING.json` compares one Work Order's claims.
+It does not prove a Carrier replacement ran. Unknown owner observations remain NOT_RUN.

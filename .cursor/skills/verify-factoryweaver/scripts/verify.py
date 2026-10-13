@@ -15,8 +15,8 @@ import tempfile
 
 ROOT = Path(__file__).resolve().parents[4]
 HERE = Path(__file__).resolve().parents[1]
-FEATURES = ("knowledge-contract", "semantic-cards", "scope-handoff", "manager-needs", "typed-links", "soodles-reader", "source-fidelity", "goal-scope", "prompt-delta", "pclass-consumer", "outer-admission", "inner-poteto", "test-manager", "schema-feedback", "native-hook", "native-cron", "delivery-closure", "prompt-carriers")
-LOCAL_FEATURES = {"knowledge-contract", "semantic-cards", "scope-handoff", "manager-needs", "typed-links", "prompt-carriers"}
+FEATURES = ("knowledge-contract", "semantic-cards", "scope-handoff", "manager-needs", "typed-links", "soodles-reader", "source-fidelity", "goal-scope", "prompt-delta", "pclass-consumer", "outer-admission", "inner-poteto", "test-manager", "schema-feedback", "native-hook", "native-cron", "delivery-closure", "prompt-carriers", "factory-profile")
+LOCAL_FEATURES = {"knowledge-contract", "semantic-cards", "scope-handoff", "manager-needs", "typed-links", "prompt-carriers", "factory-profile"}
 EXTERNAL_PROOF = {
     "source-fidelity": "Independent review of actual inspected source units and source coverage, not a field-only fixture",
     "goal-scope": "Fresh original Issue and Source/REQ Goal-Measurement-Acceptance readback",
@@ -108,7 +108,34 @@ def source_wave(feature):
 
 def drive(feature, evidence, scratch):
     name = feature.replace("-", "_")
-    if feature == "knowledge-contract":
+    if feature == "factory-profile":
+        root = ROOT / "examples/factory-profiles"
+        profile = root / "pstack-synthetic.json"
+        binding = root / "pstack-binding-synthetic.json"
+        catalog = root / "pstack-catalog-synthetic.json"
+        valid = obj(call("factory_profile.py", "validate", profile), evidence, name + "_profile")
+        ensure(valid["status"] == "PROFILE_SHAPE_VALID", "profile_contract_drift")
+        matching = obj(call("factory_profile.py", "audit-catalog", profile, binding, catalog),
+                       evidence, name + "_catalog")
+        ensure(matching["status"] == "EFFECTIVE_CATALOG_CLAIM_MATCHES" and
+               not matching["actual_worker_skill_discovery_verified"], "catalog_claim_promoted")
+        raw = catalog.read_bytes()
+        pinned = hashlib.sha256(raw).hexdigest()
+        obj(call("factory_profile.py", "audit-catalog-pinned", profile, binding, catalog,
+                 "--catalog-sha256", pinned), evidence, name + "_pinned")
+        duplicate = scratch / "duplicate-catalog.json"
+        duplicate.write_bytes(b'{"producer_claim":"OWNER_VERIFIED",' + raw[1:])
+        refused = obj(call("factory_profile.py", "audit-catalog-pinned", profile, binding, duplicate,
+                           "--catalog-sha256", hashlib.sha256(duplicate.read_bytes()).hexdigest()),
+                      evidence, name + "_duplicate", expected=2)
+        ensure("duplicate_json_key" in refused["error"], "ambiguous_catalog_accepted")
+        bad = json.loads(raw)
+        bad["skills"][0]["scope"] = "global"
+        duplicate.write_text(json.dumps(bad), encoding="utf-8")
+        refused = obj(call("factory_profile.py", "audit-catalog", profile, binding, duplicate),
+                      evidence, name + "_global", expected=2)
+        ensure("catalog_nonworktree_inheritance" in refused["error"], "global_skill_claim_accepted")
+    elif feature == "knowledge-contract":
         record = ROOT / "docs/evals/cs329z-hw1/drill.json"
         result = obj(call("factoryweaver.py", "validate", record), evidence, name + "_valid")
         ensure(result["valid"] and result["proof_ceiling"] == "SCHEMA_FIXTURE_ONLY",

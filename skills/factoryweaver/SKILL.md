@@ -193,3 +193,9 @@ original owner's valid next when present. Continue through already-authorized
 operations; preserve any unavailable dependency without requesting the user
 to repeat an answered question. Host-provided continuation and integrity
 references remain outside generated prompts and cards.
+
+## Conditional Factory Profile verification
+
+Only when the task selects a Factory Profile, Skill allowlist or Carrier comparison,
+route to the Profile section in [factoryweaver-verify](../factoryweaver-verify/SKILL.md).
+A profile does not select a second workflow or grant Soodles admission or effects.
