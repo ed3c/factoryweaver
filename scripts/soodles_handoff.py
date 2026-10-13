@@ -15,6 +15,8 @@ from pathlib import Path
 import stat
 import sys
 
+sys.dont_write_bytecode = True
+
 from factoryweaver import verify, load, ContractError
 
 PROTOCOL = "factoryweaver/soodles-scope/v1"
