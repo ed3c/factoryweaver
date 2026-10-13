@@ -28,8 +28,8 @@ class PortableBundleTests(unittest.TestCase):
             self.assertFalse((foreign / "scripts/factoryweaver.py").is_file())
             installed = Path(tmp) / "complete-skill"
             builder.build(installed)
-            self.assertIn("references/compatibility.md",
-                          (installed / "SKILL.md").read_text(encoding="utf-8"))
+            self.assertIn("../../docs/compatibility.md",
+                          (installed / "skills/factoryweaver/SKILL.md").read_text(encoding="utf-8"))
             self.assertTrue((installed / "references/compatibility.md").is_file())
             self.assertTrue((installed / "scripts/factoryweaver.py").is_file())
 
@@ -40,12 +40,12 @@ class PortableBundleTests(unittest.TestCase):
             self.assertEqual(first["status"], "CREATED")
             self.assertGreater(first["files"], 9)
             self.assertEqual(builder.build(bundle)["status"], "NOOP")
-            entry = (bundle / "SKILL.md").read_text(encoding="utf-8")
+            entry = (bundle / "skills/factoryweaver/SKILL.md").read_text(encoding="utf-8")
             self.assertTrue(entry.startswith("---\nname: factoryweaver\n"))
-            self.assertIn("references/compiler.md", entry)
-            self.assertIn("references/verifier.md", entry)
-            self.assertNotIn("../../", entry)
-            self.assertTrue((bundle / "references/compiler.md").is_file())
+            self.assertIn("../factoryweaver-compile/SKILL.md", entry)
+            self.assertIn("../factoryweaver-verify/SKILL.md", entry)
+            self.assertIn("../../references/zettelkasten-v7.2.md", entry)
+            self.assertTrue((bundle / "skills/factoryweaver-compile/SKILL.md").is_file())
             self.assertTrue((bundle / "contracts/v1/knowledge-record.schema.json").is_file())
             self.assertTrue((bundle / "scripts/factoryweaver.py").is_file())
 
