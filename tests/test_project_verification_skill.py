@@ -46,7 +46,7 @@ class ProjectLocalVerificationTests(unittest.TestCase):
     def test_map_index_and_source_wave_cover_each_declared_feature(self):
         self.assertEqual(MODULE.doctor()["status"], "ready")
         source = [MODULE.source_wave(x) for x in MODULE.FEATURES]
-        self.assertEqual(len(source), 5)
+        self.assertEqual(len(source), len(MODULE.FEATURES))
         self.assertTrue(all(item["status"] == "indexed" for item in source), source)
         for item in source:
             self.assertGreaterEqual(len(item["sources"]), 1)
@@ -68,8 +68,8 @@ class ProjectLocalVerificationTests(unittest.TestCase):
                 self.assertEqual(result["scope"], "local")
                 statuses = {x["feature"]: x["status"] for x in result["features"]}
                 self.assertEqual({key for key, value in statuses.items() if value == "cli-verified"},
-                                 set(MODULE.FEATURES) - {"soodles-reader"})
-                self.assertEqual(statuses["soodles-reader"], "excluded")
+                                 set(MODULE.LOCAL_FEATURES))
+                self.assertTrue(all(statuses[name] == "excluded" for name in set(MODULE.FEATURES) - MODULE.LOCAL_FEATURES))
                 self.assertIn("NOT_RUN", result["limits"])
                 self.assertEqual(result["cleanup"], "scratch removed; evidence retained")
                 self.assertTrue((folder / "source-wave.json").is_file())
@@ -96,13 +96,15 @@ class ProjectLocalVerificationTests(unittest.TestCase):
             self.assertEqual(report["outcome"], "blocked")
             self.assertEqual(report["scope"], "full")
             statuses = {item["feature"]: item["status"] for item in report["features"]}
-            for item in set(MODULE.FEATURES) - {"soodles-reader"}:
+            for item in set(MODULE.LOCAL_FEATURES):
                 self.assertEqual(statuses[item], "cli-verified")
             self.assertEqual(statuses["soodles-reader"], "verified-unreachable")
+            self.assertTrue(all(statuses[name] == "verified-unreachable" for name in set(MODULE.FEATURES) - MODULE.LOCAL_FEATURES))
             self.assertTrue((evidence / "source-wave.json").is_file())
             self.assertTrue((evidence / "run.json").is_file())
             self.assertTrue((evidence / "result.json").is_file())
             self.assertIn("original Host", report["gaps"][0]["prerequisite"])
+            self.assertEqual(len(report["gaps"]), len(MODULE.FEATURES) - len(MODULE.LOCAL_FEATURES))
             self.assertEqual(report["cleanup"], "scratch removed; evidence retained")
 
 
