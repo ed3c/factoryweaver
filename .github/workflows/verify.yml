@@ -33,4 +33,5 @@ jobs:
         with:
           name: factoryweaver-local-cli-evidence
           path: .verification-evidence/
-          if-no-files-found: warn
+          if-no-files-found: error
+          include-hidden-files: true
