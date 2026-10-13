@@ -1,0 +1,34 @@
+{
+  "protocol": "factoryweaver/factory-profile-v1",
+  "profile_id": "pstack-example",
+  "workflow_entry": "poteto-mode",
+  "skills": [
+    {
+      "name": "poteto-mode",
+      "role": "workflow_entry",
+      "repository": "example.invalid/synthetic-skill-sources",
+      "source_commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "subpath": "pstack/poteto-mode/SKILL.md",
+      "tree_sha256": "1111111111111111111111111111111111111111111111111111111111111111"
+    },
+    {
+      "name": "factoryweaver",
+      "role": "contract",
+      "repository": "example.invalid/synthetic-skill-sources",
+      "source_commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "subpath": "factoryweaver/SKILL.md",
+      "tree_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+    }
+  ],
+  "carrier_capabilities": [
+    "isolated_git_worktree",
+    "skill_discovery",
+    "session_readback",
+    "source_pinning"
+  ],
+  "isolation": {
+    "global_skill_inheritance": false,
+    "allow_unlisted_skills": false,
+    "worktree_per_work_order": true
+  }
+}

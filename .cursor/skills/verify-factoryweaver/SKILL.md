@@ -31,6 +31,7 @@ Use the feature map at features/README.md. Available commands:
     python .cursor/skills/verify-factoryweaver/scripts/verify.py drive manager-needs
     python .cursor/skills/verify-factoryweaver/scripts/verify.py drive portable-bundle
     python .cursor/skills/verify-factoryweaver/scripts/verify.py drive requirement-coverage
+    python .cursor/skills/verify-factoryweaver/scripts/verify.py drive factory-profile
 
 The native Soodles read-only feature can be attempted only when the original Host provides SOODLES_CHECKOUT with the actual compatible Soodles checkout:
 
