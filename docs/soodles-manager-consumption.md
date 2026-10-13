@@ -2,6 +2,8 @@
 
 This document describes **real original owners**, not new FactoryWeaver managers.
 
+Classify task-review, PR/MR source check, native Hook behavior verification and delivery before preparing needs. Their triggers and necessary inputs differ; see [Hook purposes and review boundaries](hook-purpose-and-review-boundaries.md). A source check does not require historical Stage, Stop/session or training metadata. Native Stop still needs its actual Host binding.
+
 ## Grounded upstream authorities
 
 - [Soodles Test Manager Skill](https://github.com/ed3c/soodles/blob/main/.agents/skills/test-manager/SKILL.md) and `test_manager.py`: **single P-class test scope owner**. Its selected `ready`, `needs_scope` and `not_required` are not test PASS. A selected exact-head success covers only chosen controls. Only a matching owner/provider readback establishes a real result. Missing scope may not be replaced with Full Suite.

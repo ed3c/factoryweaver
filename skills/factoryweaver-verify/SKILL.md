@@ -5,6 +5,8 @@ license: MIT
 ---
 # FactoryWeaver verification
 
+Apply [Hook purpose and review boundaries](../../docs/hook-purpose-and-review-boundaries.md) before evaluating a Manager need. PR/MR source check must not depend on unrelated Stage, native Session, generation-token or transfer metadata. Keep exact source/head evidence and any runtime proof required by the actual changed behavior. Review each handoff's inference separately; a projected check request, supplied report, scoped verdict and provider effect are different states.
+
 1. Load `../../contracts/v1/knowledge-record.schema.json` and run the read-only CLI `validate` **on Host-materialized v1 data**. Before reviewing drafted Card semantics, load each *selected* contract from `../../references/card-prompts/registry.json`; `scripts/card_semantic.py inspect` checks typed fields without claiming content truth.
 2. Check Source ID uniqueness, dependency and typed link reachability, and stable card IDs.
 3. Require provenance before SUPPORTED, raw test evidence before TESTED, and named original owner readback before RELEASE_CONFIRMED.

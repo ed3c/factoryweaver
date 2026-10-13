@@ -7,6 +7,9 @@ This feature is a source/Owner proof boundary. The FactoryWeaver CLI can name mi
 - Required evidence: Original native event, Hook handler, prompt and owner effect readback, if required
 - Keep missing original evidence as `verified-unreachable`, never a false PASS.
 - Source: docs/soodles-manager-consumption.md
+- Source: docs/hook-purpose-and-review-boundaries.md
+- Separate ordinary task-review data, native Stop activation, PR/MR source check and changed Hook behavior proof. Only the native operation needs its applicable actual event/binding.
+- Full native prerequisites do not become universal PR source-review prerequisites.
 
 ## How to get to it (user POV)
 

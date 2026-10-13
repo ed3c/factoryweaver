@@ -1,0 +1,83 @@
+{
+  "scope": "Hook purpose classification and metadata-free PR/MR source check; existing advisory/Reader verification only",
+  "base": "176d60ec3e2487d4a7385ee0066f20b0277a4422",
+  "new_state_machine": false,
+  "effects": [],
+  "first_breakpoint": "Producer classified PR source check as native Hook need; freeform advisory shape acceptance did not validate purpose or invocation",
+  "second_breakpoint": "Hook Manager CLI availability did not establish knowledge inspect Reader capability at the selected checkout",
+  "purpose_contract": "docs/hook-purpose-and-review-boundaries.md",
+  "software_controls": {
+    "public_suite_tests": 232,
+    "suite_result": "PASS_SCOPED",
+    "manager_needs_scenarios": 6,
+    "scope": "actual existing public CLI advisory/refusal only; not native behavior"
+  },
+  "metadata_free_outer_review": {
+    "factoryweaver": "actual source control returns pending_capture/check; false source quote refuses",
+    "neoweaver_head": "17224a3fb9adacd477e742503795193cd4ba8f15",
+    "neoweaver": "actual source control returns pending_capture/check without Stage/session/tokens",
+    "native_check_invocation": "NOT_RUN"
+  },
+  "pclass_feedback": {
+    "carrier": "fresh Codex CLI instruction-reader; designed scenario classification",
+    "cases": 4,
+    "output_fields": 12,
+    "evidence_validity": "VALID",
+    "behavior": "PASS",
+    "observation_scope": "consumer_report",
+    "instructions": [
+      {
+        "path": "skills/factoryweaver-compile/SKILL.md",
+        "sha256": "77050e228849c72ac97afd27da55705c58d0782fa68b8219e6427604e294839b"
+      },
+      {
+        "path": "skills/factoryweaver-verify/SKILL.md",
+        "sha256": "546fd6b0223f0650e4aaf6da847bb02857f21d7cbf74ec2a79dd3b6f83a3c3ac"
+      },
+      {
+        "path": "references/zettelkasten-v7.2.md",
+        "sha256": "6fab858481b32d8a221f58615d014f7fba7368ed98f14970e9c5644be1f7be95"
+      },
+      {
+        "path": "docs/hook-purpose-and-review-boundaries.md",
+        "sha256": "aac699622ba2a8ee3ecd931d7b6f6105287cb456fc746024029fb94d314327f4"
+      }
+    ],
+    "native_trace_sha256": "b9c0bef631f8917f7f83b124df327bb0949ae94f74c4fe8c73332956ff6b1f45",
+    "response_sha256": "8a069c780e30709b353c073c1b133b33ddbce324fd308c327f3c89e371c83093",
+    "returned_next": "consume_verified_behavior",
+    "consumption_sha256": "385a851425e32e96eca739fee976c8706b302ebebd57c0bc9e5c735d24e6b821",
+    "limits": "No general compliance, runtime effect, comparative improvement or automatic provider-triggered check claim",
+    "schema_condition_review": "NOT_REVIEWED: schema-1 consumer_report; not a schema-2 admitted-stage condition claim",
+    "workflow_decisions": null
+  },
+  "source_review": {
+    "report_sha256": "5296993a1b2623bbcf4171fcec15f1fc7e34c4672ef4fdff527056f0b2ce504a",
+    "status": "ACCEPT_SCOPED_SOURCE_SEMANTICS",
+    "final_readback_report_sha256": "b11dacd595a6de6bc60f9f75dcedf790c9c35645796aba2ea656a12ba25fd56d"
+  },
+  "maintenance": {
+    "local": "12 CLI features verified; does not replace source/native proof",
+    "full": "BLOCKED; actual selected checkout lacks knowledge inspect and remaining original native evidence is separately required",
+    "old_reader_failure": "Retained outside repository; originally classified as product_or_harness_gap before capability diagnosis",
+    "readiness_fix": "Actual --help command catalog distinguishes missing Reader capability; missing is not PASS",
+    "full_after_capability_fix": {
+      "outcome": "blocked",
+      "mapped": 24,
+      "cli_verified": 12,
+      "unverified": 12,
+      "reader": "verified-unreachable"
+    }
+  },
+  "remaining": {
+    "provider_event_to_check_bridge": "NOT_OBSERVED",
+    "full_native_pclass": "NOT_RUN",
+    "native_noodle_stage": "NOT_RUN",
+    "training": "NOT_RUN",
+    "learned_native_transfer": "NOT_RUN",
+    "whole_goal": "OPEN"
+  },
+  "private_evidence": "Original consumer captures and machine paths retained outside repository; not published",
+  "product_cli_changed": false,
+  "verification_harness_changed": true
+}

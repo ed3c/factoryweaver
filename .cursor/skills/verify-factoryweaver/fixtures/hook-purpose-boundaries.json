@@ -1,0 +1,90 @@
+{
+  "proof_ceiling": "DECLARED_ADVISORY_ONLY; purpose semantics require original source review",
+  "cases": [
+    {
+      "id": "pr_source_check_without_runtime_metadata",
+      "request": {
+        "schema": "factoryweaver/manager-needs/v1",
+        "subject": "PR source check",
+        "test_need": {
+          "changed_behavior": "Exact candidate parser refusal boundary",
+          "verification_question": "Does the current source preserve parser-only acceptance?",
+          "negative_case": "A source check requests unrelated Stage/session/token metadata"
+        },
+        "hook_need": null
+      },
+      "exit": 0,
+      "test_status": "NEEDS_ORIGINAL_TEST_MANAGER_SELECTION",
+      "hook_status": "NO_NATIVE_HOOK_REQUIRED"
+    },
+    {
+      "id": "mr_source_review_without_native_event",
+      "request": {
+        "schema": "factoryweaver/manager-needs/v1",
+        "subject": "MR source risk review",
+        "test_need": null,
+        "hook_need": null
+      },
+      "exit": 0,
+      "test_status": "NO_TEST_SELECTION_REQUESTED",
+      "hook_status": "NO_NATIVE_HOOK_REQUIRED"
+    },
+    {
+      "id": "native_stop_declaration_is_not_invocation",
+      "request": {
+        "schema": "factoryweaver/manager-needs/v1",
+        "subject": "Native Stop task-review",
+        "test_need": null,
+        "hook_need": {
+          "native_event": "Stop",
+          "observed_requirement": "Dedicated task continuation",
+          "source_state": "INSPECTED"
+        }
+      },
+      "exit": 0,
+      "hook_status": "NEEDS_ORIGINAL_HOOK_OWNER_READBACK",
+      "native_execution": "UNKNOWN"
+    },
+    {
+      "id": "provider_event_declaration_is_not_native_proof",
+      "request": {
+        "schema": "factoryweaver/manager-needs/v1",
+        "subject": "Incorrectly declared PR event for semantic review",
+        "test_need": null,
+        "hook_need": {
+          "native_event": "pull_request",
+          "observed_requirement": "PR source check",
+          "source_state": "INSPECTED"
+        }
+      },
+      "exit": 0,
+      "hook_status": "NEEDS_ORIGINAL_HOOK_OWNER_READBACK",
+      "native_execution": "UNKNOWN",
+      "semantic_disposition": "WRONG_PURPOSE_DECLARATION_REQUIRES_SOURCE_REVIEW"
+    },
+    {
+      "id": "injected_stage_metadata_refuses",
+      "request": {
+        "schema": "factoryweaver/manager-needs/v1",
+        "subject": "PR source check",
+        "test_need": null,
+        "hook_need": null,
+        "runtime_metadata": {
+          "stage_id": "fixture-not-live"
+        }
+      },
+      "exit": 2
+    },
+    {
+      "id": "injected_effect_authority_refuses",
+      "request": {
+        "schema": "factoryweaver/manager-needs/v1",
+        "subject": "MR source check",
+        "test_need": null,
+        "hook_need": null,
+        "authorizes_landing": true
+      },
+      "exit": 2
+    }
+  ]
+}

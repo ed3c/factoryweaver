@@ -10,6 +10,10 @@ Project source-backed Test and Hook needs without triggering a Manager, selectin
 - Source: scripts/card_semantic.py
 - Source: examples/card-semantic/qa-test-needs.json
 - Source: examples/card-semantic/native-stop-needs.json
+- Source: docs/hook-purpose-and-review-boundaries.md
+- Source: .cursor/skills/verify-factoryweaver/fixtures/hook-purpose-boundaries.json
+- PR/MR source needs require no Stage/session/token metadata and no native Hook request.
+- Extra runtime/effect fields refuse. A freeform event declaration still cannot certify its purpose or invocation.
 
 ## How to get to it (user POV)
 

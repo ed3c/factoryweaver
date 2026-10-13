@@ -27,6 +27,8 @@ Preconditions: Doctor returned ready and Python 3.12 plus jsonschema are install
 
 ## Gotchas
 
+- A checkout with Hook Manager is not necessarily a Reader checkout. The harness reads the selected CLI's actual command catalog before calling `knowledge inspect`; absent capability remains `verified-unreachable`, not a passing Hook/Reader claim or an unrelated PR source-review gate.
+
 Reuse the returned Reader arguments after changing only the disposable Bundle
 bytes. The negative drive requires exit 2, selected_bytes_changed and unchanged
 null next/empty effects/no landing authority. Exact-byte transport is not admission.
