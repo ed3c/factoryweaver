@@ -125,6 +125,12 @@ def drive(feature, evidence, scratch):
                        evidence, name + "_select")
         ensure([x["series"] for x in selected["prompts"]] == ["C", "SPEC", "V"],
                "wrong_selected_types")
+        all_series = ("N", "Q", "C", "D", "S", "P", "T", "R", "G",
+                      "E", "V", "X", "K", "REQ", "SPEC")
+        exhaustive = obj(call("card_semantic.py", "select", *all_series),
+                         evidence, name + "_all_15_series")
+        ensure([item["series"] for item in exhaustive["prompts"]] == list(all_series),
+               "original_card_series_registry_incomplete")
         fixture = ROOT / "examples/card-semantic/hw1-email-qa.json"
         result = obj(call("card_semantic.py", "inspect", fixture), evidence, name + "_inspect")
         ensure(result["status"] == "SHAPE_VALID_SEMANTICS_UNVERIFIED",
