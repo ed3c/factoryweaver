@@ -54,6 +54,6 @@ CI runs these tests and generates a complete bundle as an unprivileged artifact.
 
 ## Security / owner boundary
 
-This bundle cannot obtain or inherit credentials, external provider readbacks, filesystem actions beyond its explicitly requested output directory, Noodle writers, GitHub PR permissions or merge authority. The adapter registry only proposes read-only candidates. Missing original-owner authority remains `BLOCKED`.
+The manifest and Skill text grant no credentials or effect authority. Executing installed scripts remains subject to the caller and Host permissions; this distribution does not enforce a sandbox. The adapter registry only proposes read-only candidates. Missing original-owner authority remains `BLOCKED`.
 
 The build writes to a destination chosen by the caller. Refuse ambiguous reuse: an already existing folder must match the exact generated file list and bytes to produce `NOOP`; drift requires an explicit new build destination. Neither `SKILL.md` text nor a bundle manifest grants trust.
