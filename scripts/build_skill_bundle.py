@@ -11,16 +11,26 @@ ROOT = Path(__file__).resolve().parents[1]
 FILES = {
     "LICENSE": "LICENSE",
     "scripts/factoryweaver.py": "scripts/factoryweaver.py",
+    "scripts/card_semantic.py": "scripts/card_semantic.py",
+    "scripts/card_delta.py": "scripts/card_delta.py",
+    "scripts/soodles_handoff.py": "scripts/soodles_handoff.py",
     "scripts/check_bundle.py": "scripts/check_bundle.py",
     "contracts/v1/knowledge-record.schema.json": "contracts/v1/knowledge-record.schema.json",
     "contracts/v1/adapter-registry.schema.json": "contracts/v1/adapter-registry.schema.json",
     "references/zettelkasten-v7.2.md": "references/zettelkasten-v7.2.md",
+    "references/card-classification-and-scope-assembly.md": "references/card-classification-and-scope-assembly.md",
+    "references/prompt-carrier-and-ownership.md": "references/prompt-carrier-and-ownership.md",
+    "references/card-prompts/registry.json": "references/card-prompts/registry.json",
     "references/compatibility.md": "docs/compatibility.md",
     "references/bootstrap-boundary.md": "docs/bootstrap-boundary.md",
+    "references/soodles-scope-routing.md": "docs/soodles-scope-routing.md",
+    "references/soodles-manager-consumption.md": "docs/soodles-manager-consumption.md",
     "examples/matt-grilling/project.json": "examples/matt-grilling/project.json",
     "examples/openai-plugin-platform/project.json": "examples/openai-plugin-platform/project.json",
     "examples/host-registry.example.json": "examples/host-registry.example.json",
 }
+FILES.update({f"references/card-prompts/types/{kind}.md": f"references/card-prompts/types/{kind}.md"
+              for kind in ("N", "Q", "C", "D", "S", "P", "T", "R", "G", "E", "V", "X", "K", "REQ", "SPEC")})
 
 class BundleError(ValueError):
     pass
@@ -40,40 +50,20 @@ def body_of_skill(path):
 
 def generate():
     files = {target: read_source(source) for target, source in FILES.items()}
-    source_entry = read_source("skills/factoryweaver/SKILL.md").decode("utf-8")
-    marker = chr(96)
-    replacements = {
-        "../../docs/compatibility.md": "references/compatibility.md",
-        "use " + marker + "factoryweaver-compile" + marker: "read " + marker + "references/compiler.md" + marker,
-        "use " + marker + "factoryweaver-verify" + marker: "read " + marker + "references/verifier.md" + marker,
-    }
-    for before, after in replacements.items():
-        if before not in source_entry:
-            raise BundleError("entry_seam_changed:" + before)
-        source_entry = source_entry.replace(before, after)
-    files["SKILL.md"] = source_entry.encode()
-    mappings = {
-        "../../references/zettelkasten-v7.2.md": "references/zettelkasten-v7.2.md",
-        "../../contracts/v1/knowledge-record.schema.json": "contracts/v1/knowledge-record.schema.json",
-    }
-    for name, path in (("compiler", "skills/factoryweaver-compile/SKILL.md"),
-                       ("verifier", "skills/factoryweaver-verify/SKILL.md")):
-        text = body_of_skill(path)
-        for before, after in mappings.items():
-            text = text.replace(before, after)
-        files["references/" + name + ".md"] = text.encode()
-    for path, raw in files.items():
-        if Path(path).is_absolute() or ".." in Path(path).parts:
-            raise BundleError("unsafe_generated_path:" + path)
-        if path.endswith(".md") and b"../../" in raw:
-            raise BundleError("unbundled_parent_reference:" + path)
+    files["SKILL.md"] = read_source("skills/factoryweaver/SKILL.md")
+    files["skills/factoryweaver-compile/SKILL.md"] = read_source("skills/factoryweaver-compile/SKILL.md")
+    files["skills/factoryweaver-verify/SKILL.md"] = read_source("skills/factoryweaver-verify/SKILL.md")
+    # Preserve canonical relative references under a portable virtual repository root.
+    # Installers must use this directory as the repository root, not copy SKILL.md alone.
+    for name, raw in files.items():
+        if Path(name).is_absolute() or ".." in Path(name).parts:
+            raise BundleError("unsafe_generated_path:" + name)
     rows = [{"path": p, "sha256": hashlib.sha256(content).hexdigest()}
             for p, content in sorted(files.items())]
     files["bundle-manifest.json"] = (
         json.dumps({"protocol": "factoryweaver/portable-bundle-v1",
-                    "scope": "read-only-reference",
-                    "effect_authority": False, "files": rows},
-                   sort_keys=True, separators=(",", ":")) + "\n").encode()
+                    "scope": "read-only-reference", "effect_authority": False,
+                    "files": rows}, sort_keys=True, separators=(",", ":")) + "\n").encode()
     return files
 
 def build(destination):
