@@ -15,8 +15,21 @@ import tempfile
 
 ROOT = Path(__file__).resolve().parents[4]
 HERE = Path(__file__).resolve().parents[1]
-FEATURES = ("knowledge-contract", "semantic-cards", "scope-handoff",
-            "manager-needs", "soodles-reader")
+FEATURES = ("knowledge-contract", "semantic-cards", "scope-handoff", "manager-needs", "typed-links", "soodles-reader", "source-fidelity", "goal-scope", "prompt-delta", "pclass-consumer", "outer-admission", "inner-poteto", "test-manager", "schema-feedback", "native-hook", "native-cron", "delivery-closure")
+LOCAL_FEATURES = {"knowledge-contract", "semantic-cards", "scope-handoff", "manager-needs", "typed-links"}
+EXTERNAL_PROOF = {
+    "source-fidelity": "Independent review of actual inspected source units and source coverage, not a field-only fixture",
+    "goal-scope": "Fresh original Issue and Source/REQ Goal-Measurement-Acceptance readback",
+    "prompt-delta": "Actual admitted Noodle writer capture that consumed the changed Prompt Delta",
+    "pclass-consumer": "Fresh native Agent consumer report/raw trace reviewed by original schema pclass-feedback",
+    "outer-admission": "Original Soodles Issue Contract/Admission provider readback",
+    "inner-poteto": "Admitted Noodle execute stage, selected Poteto playbook and real writer readback",
+    "test-manager": "Original Test Manager selected controls, run and result readback",
+    "schema-feedback": "Original Schema feedback and observable consumption of returned next",
+    "native-hook": "Original native Hook event/effect readback or complete relevant nontrigger capture",
+    "native-cron": "Previously authorized native heartbeat, current original owner continuation",
+    "delivery-closure": "Original provider exact-head/merge/closure and complete parent Goal evidence",
+}
 HEADINGS = ("Sub-features", "How to get to it (user POV)",
             "Driving it with the CLI harness", "Gotchas")
 
@@ -160,6 +173,21 @@ def drive(feature, evidence, scratch):
         ensure(noop["test_manager"]["status"] == "NO_TEST_SELECTION_REQUESTED" and
                noop["hook_manager"]["status"] == "NO_NATIVE_HOOK_REQUIRED",
                "no_change_triggered_manager")
+    elif feature == "typed-links":
+        target = ROOT / "examples/card-semantic/hw1-email-qa.json"
+        fixture = json.loads(target.read_text(encoding="utf-8"))
+        positive = obj(call("card_semantic.py", "inspect", target),
+                       evidence, name + "_valid")
+        ensure(positive["status"] == "SHAPE_VALID_SEMANTICS_UNVERIFIED",
+               "link_shape_is_not_semantic_truth")
+        links = next(card for card in fixture["cards"] if card["series"] == "SPEC")["links"]
+        ensure(bool(links), "missing_selected_link_control")
+        links[0]["relation"] = "unsupported_relation"
+        altered = scratch / "unsupported-link.json"
+        altered.write_text(json.dumps(fixture), encoding="utf-8")
+        denied = obj(call("card_semantic.py", "inspect", altered),
+                     evidence, name + "_refused", expected=2)
+        ensure("invalid_link_kind" in denied["error"], "unsupported_link_not_refused")
     elif feature == "soodles-reader":
         checkout = os.environ.get("SOODLES_CHECKOUT")
         if not checkout or not (Path(checkout).resolve() / "soodles.py").is_file():
@@ -180,6 +208,12 @@ def drive(feature, evidence, scratch):
                "reader_claimed_unobserved_effects")
         return {"feature": feature, "status": "cli-verified-native-not-run",
                 "proof_ceiling": "READER_TRANSPORT_ONLY"}
+    elif feature in EXTERNAL_PROOF:
+        return {"feature": feature, "status": "verified-unreachable",
+                "attempted": "Source-map inspection only; no matching original runtime evidence",
+                "prerequisite": EXTERNAL_PROOF[feature],
+                "proof_ceiling": "UNVERIFIED_ORIGINAL_OWNER",
+                "original_effects_performed": []}
     else:
         raise Gap("unknown_feature")
     return {"feature": feature, "status": "cli-verified",
@@ -201,17 +235,17 @@ def maintain(scope, evidence):
     else:
         with tempfile.TemporaryDirectory(prefix="fw-drive-") as tmp:
             for name in FEATURES:
-                if name == "soodles-reader" and scope == "local":
+                if name not in LOCAL_FEATURES and scope == "local":
                     report["features"].append({"feature": name, "status": "excluded",
-                                               "reason": "local CLI scope does not test external reader"})
+                                               "reason": "outside local CLI proof; original native/source semantic evidence NOT_RUN"})
                     continue
                 try:
                     report["features"].append(drive(name, evidence, Path(tmp)))
                 except (Gap, OSError, ValueError, KeyError, subprocess.TimeoutExpired) as err:
                     report["features"].append({"feature": name, "status": "product_or_harness_gap",
                                                "reason": str(err)})
-        bad = [x for x in report["features"] if x["status"] in
-               ("product_or_harness_gap", "verified-unreachable")]
+        bad = [x for x in report["features"] if x["status"] not in
+               ("cli-verified", "cli-verified-native-not-run", "excluded")]
         if bad:
             report["gaps"] = bad
         elif scope == "local":
@@ -219,6 +253,10 @@ def maintain(scope, evidence):
             report["limits"] = "LOCAL_CLI_ONLY; P-class native and original Owner E2E are NOT_RUN"
         else:
             report["reason"] = "native_issue_admission_and_fresh_consumer_not_observed"
+    report["feature_status"] = {item["feature"]: item["status"] for item in report["features"]}
+    report["coverage"] = {"mapped": len(FEATURES), "cli_verified": sum(
+        item["status"] == "cli-verified" for item in report["features"]),
+        "unverified": sum(item["status"] == "verified-unreachable" for item in report["features"])}
     report["cleanup"] = "scratch removed; evidence retained"
     save(evidence, "run.json", report)
     return report
