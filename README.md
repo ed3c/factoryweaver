@@ -63,7 +63,7 @@ python3 scripts/card_delta.py docs/closed-loop-v72/project.json docs/closed-loop
 
 ## Repeatable project verification (pstack create / maintain)
 
-The latest pinned upstream pstack [create-verification-skill](.cursor/skills/create-verification-skill/SKILL.md) and [maintain-verification-skill](.cursor/skills/maintain-verification-skill/SKILL.md) are mirrored intact with their MIT license. The actual FactoryWeaver verification entry is [verify-factoryweaver](.cursor/skills/verify-factoryweaver/SKILL.md). It includes a five-feature map and an isolated, **real CLI** Doctor/Drive/Evidence/Cleanup harness.
+The latest pinned upstream pstack [create-verification-skill](.cursor/skills/create-verification-skill/SKILL.md) and [maintain-verification-skill](.cursor/skills/maintain-verification-skill/SKILL.md) are mirrored intact with their MIT license. The actual FactoryWeaver verification entry is [verify-factoryweaver](.cursor/skills/verify-factoryweaver/SKILL.md). Its current map has 24 features, including 12 local CLI paths, and an isolated, **real CLI** Doctor/Drive/Evidence/Cleanup harness.
 
 - Local CLI-only repeated maintenance: `python .cursor/skills/verify-factoryweaver/scripts/verify.py maintain --scope local`
 - Full source + external Reader/native assessment: `python .cursor/skills/verify-factoryweaver/scripts/verify.py maintain`

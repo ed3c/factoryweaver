@@ -9,13 +9,13 @@
 **Required semantic slots (use type-specific meaning, not boilerplate):**
 - **given** — source-backed and concrete; describe what changes in the engineering decision where applicable.
 - **when** — source-backed and concrete; describe what changes in the engineering decision where applicable.
-- **then** — source-backed and concrete; describe what changes in the engineering decision where applicable.
-- **inputs_outputs** — source-backed and concrete; describe what changes in the engineering decision where applicable.
+- **then** — state the observable result of this Consumer; do not claim a later Runner, native Consumer or Provider result from a proposal output.
+- **inputs_outputs** — name the Producer, Consumer, required input types/references and output variants at this same boundary; define aliases instead of making the Consumer guess them.
 - **forbidden** — source-backed and concrete; describe what changes in the engineering decision where applicable.
 - **negative_case** — source-backed and concrete; describe what changes in the engineering decision where applicable.
 - **unknown_effect** — source-backed and concrete; describe what changes in the engineering decision where applicable.
 - **replay** — source-backed and concrete; describe what changes in the engineering decision where applicable.
-- **oracle** — source-backed and concrete; describe what changes in the engineering decision where applicable.
+- **oracle** — name the original method/Producer that discriminates this output and refusal boundary; it cannot be the desired result copied as a test method.
 - **original_owner** — source-backed and concrete; describe what changes in the engineering decision where applicable.
 
 **Scope contribution:** One causal implementation atom with required controls and owner.

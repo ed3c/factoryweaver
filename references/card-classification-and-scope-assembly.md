@@ -229,6 +229,35 @@ A card type is never a command to invoke its corresponding Skill. **Current obse
 
 ## 11. Quality gate and evidence boundary
 
+### Consumer boundary and partial parent acceptance
+
+Review each generated field for its own role. REQ acceptance preserves the
+whole required outcome. SPEC `then`, I/O and oracle cover the same Producer →
+Consumer boundary. V names a fixed input, the discriminating expected result,
+and the original observation Producer. Reusing one acceptance sentence across
+these roles does not complete their semantic work. For example, a parser that
+returns `ParsedProposal` cannot claim TaskSnapshot replay in `then`; a V that
+only repeats "the patch replays successfully" has no runnable control input.
+
+For the selected atom, record which applicable clauses establish its local
+exit or controls, which are inherited constraints, and which remain parent
+obligations or context. Preserve the complete parent REQ; do not require its
+later Runner, native Stage or Provider result to complete a pure parser atom.
+These distinctions stay in the proposed Scope sidecar, not the closed v1
+record or a new effect state machine. A missing native next blocks only the
+operation that actually requires that admission; independent authorized local
+work can continue.
+
+Declare a necessary K dependency only for its affected REQ, and justify each
+material C/G prerequisite with its counterfactual. No edge is required for
+context-only material. The existing projection and delta can only follow the
+declared graph; a prose mention of a gap or invariant is not a graph binding.
+
+Scope consistency, Card shape, independent source-semantic review and fresh
+native P-class feedback remain separate evidence. A structurally accepted but
+semantically contradictory fixture stays `SHAPE_VALID_SEMANTICS_UNVERIFIED`;
+the reviewer must return REVISE. Do not retrofit a CLI semantic PASS.
+
 The compiler and `factoryweaver-verify` must produce a **scoped semantic audit** separate from the original JSON validator:
 - Per proposed card: `ACCEPT | REVISE | REUSE | K_SOURCE_MISSING`, with explicit failure reason.
 - Per material edge: `SUPPORTED | REJECT | UNKNOWN`, with direction and counterfactual.

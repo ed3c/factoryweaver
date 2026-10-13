@@ -7,12 +7,12 @@
 **Generate only this epistemic role:** Separate expected from observed and actual owner receipts; honor Test Manager's smallest-sufficient scope.
 
 **Required semantic slots (use type-specific meaning, not boilerplate):**
-- **subject** — source-backed and concrete; describe what changes in the engineering decision where applicable.
-- **oracle** — source-backed and concrete; describe what changes in the engineering decision where applicable.
-- **producer** — source-backed and concrete; describe what changes in the engineering decision where applicable.
-- **positive_control** — source-backed and concrete; describe what changes in the engineering decision where applicable.
-- **negative_control** — source-backed and concrete; describe what changes in the engineering decision where applicable.
-- **observation_status** — source-backed and concrete; describe what changes in the engineering decision where applicable.
+- **subject** — name the covered behavior/Consumer and distinguish any parent obligation outside this control.
+- **oracle** — give the original observation method and decision rule, separate from the expected outcome and observed result.
+- **producer** — name the actual responsible observation source; a candidate cannot issue its own acceptance receipt.
+- **positive_control** — describe fixed input/preconditions and their expected discriminating output; repeating acceptance without an input is insufficient.
+- **negative_control** — change a material premise and state the expected refusal/unknown/non-case result; name what it distinguishes from the positive.
+- **observation_status** — report only actually observed covered results; proposed controls and missing native captures remain NOT_RUN.
 
 **Scope contribution:** Independent acceptance/effect measurement; NOT_RUN until real observation.
 
