@@ -175,6 +175,14 @@ Use upstream `create-verification-skill` only if a real verification skill is ab
 
 Maintenance is not a substitute for `factoryweaver-verify`: a particular created Card still needs source-specific semantic review and a meaningful Prompt Delta, and actual downstream P-class effects still need the original Soodles `schema pclass-feedback` and admission/owner readback. No Card automatically triggers a pstack manual skill, no second Test Manager, no guessed CLI IDs or auto-Cron.
 
+## Prompt transformation checks before source-to-Consumer handoff
+
+Use [the complete Prompt Carrier Contract](../../references/prompt-carrier-and-ownership.md) to inspect each material transformation from user/source → portable v7.2 prompt → per-type Card → accepted REQ/SPEC/G/V → semantic Scope/Prompt Delta → bound Bundle → Soodles Reader → original Session/Issue/Stage/Manager next. This prevents an instruction merely **mentioned** in a Card from becoming an executed Skill or a new permission.
+
+At each handoff state the original Goal, carrier trust, what interpretation the Session must decide, which existing CLI/Owner already computes the rest, and a single counterexample that would invalidate success. `Prompt Delta` is an implementation-facing correction bounded to the accepted original Goal. A real Soodles Stage must consume the selected delta before claiming use; generic instructions and duplicated Goal text cannot establish that. Do not turn `boundary_findings` or `verification_targets` into executable routes.
+
+Use the existing `verify-factoryweaver` Feature Map's `prompt-carriers` journey to check **actual CLI transformations** (including a deliberately inconsistent Goal that remains UNVERIFIED), and maintain it with pinned pstack when its source/behavior changes. Do not label that local Journey as a fresh native P-class or Manager execution.
+
 ## Stop / resume handoff
 
 The return from this entry is a **semantic continuation**, not a second
