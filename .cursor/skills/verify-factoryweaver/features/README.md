@@ -41,3 +41,25 @@ The status reported by each real maintain run is authoritative. Local CLI PASS d
 Three levels: (1) Card schema/type verification is not source semantics; (2) Reader/CLI transport is not Issue admission; (3) P-class, Outer, Inner, Test/Schema/Hook/Cron and Provider effects each need original native capture.
 
 Local maintain drives five CLI features and marks twelve `excluded`. Full maintain source-indexes and attempts all 17, reports individual `verified-unreachable` prerequisites, and remains `blocked` without original native evidence. `clean` in local mode never means full E2E.
+
+## Fifteen Card Series semantic-verification status
+
+Each Card type is retained in the same `semantic-cards` Feature; the CLI selects all 15 type-specific contracts and the existing test suite exercises their schema/field requirements. **No type can claim independent source-semantic PASS solely from these controls.**
+
+| Series | Verified mechanically | Still unverified |
+| --- | --- | --- |
+| N | Registered prompt, typed field/refusal via existing CLI tests | Actual independent source-to-card semantic completeness |
+| Q | Registered prompt, typed field/refusal via existing CLI tests | Actual independent source-to-card semantic completeness |
+| C | Registered prompt, typed field/refusal via existing CLI tests | Actual independent source-to-card semantic completeness |
+| D | Registered prompt, typed field/refusal via existing CLI tests | Actual independent source-to-card semantic completeness |
+| S | Registered prompt, typed field/refusal via existing CLI tests | Actual independent source-to-card semantic completeness |
+| P | Registered prompt, typed field/refusal via existing CLI tests | Actual independent source-to-card semantic completeness |
+| T | Registered prompt, typed field/refusal via existing CLI tests | Actual independent source-to-card semantic completeness |
+| R | Registered prompt, typed field/refusal via existing CLI tests | Actual independent source-to-card semantic completeness |
+| G | Registered prompt, typed field/refusal via existing CLI tests | Actual independent source-to-card semantic completeness |
+| E | Registered prompt, typed field/refusal via existing CLI tests | Actual independent source-to-card semantic completeness |
+| V | Registered prompt, typed field/refusal via existing CLI tests | Actual independent source-to-card semantic completeness |
+| X | Registered prompt, typed field/refusal via existing CLI tests | Actual independent source-to-card semantic completeness |
+| K | Registered prompt, typed field/refusal via existing CLI tests | Actual independent source-to-card semantic completeness |
+| REQ | Registered prompt, typed field/refusal via existing CLI tests | Actual independent source-to-card semantic completeness |
+| SPEC | Registered prompt, typed field/refusal via existing CLI tests | Actual independent source-to-card semantic completeness |
