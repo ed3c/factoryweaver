@@ -50,7 +50,7 @@ def body_of_skill(path):
 
 def generate():
     files = {target: read_source(source) for target, source in FILES.items()}
-    files["SKILL.md"] = read_source("skills/factoryweaver/SKILL.md")
+    files["skills/factoryweaver/SKILL.md"] = read_source("skills/factoryweaver/SKILL.md")
     files["skills/factoryweaver-compile/SKILL.md"] = read_source("skills/factoryweaver-compile/SKILL.md")
     files["skills/factoryweaver-verify/SKILL.md"] = read_source("skills/factoryweaver-verify/SKILL.md")
     # Preserve canonical relative references under a portable virtual repository root.
