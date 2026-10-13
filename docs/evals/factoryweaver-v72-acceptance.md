@@ -47,3 +47,7 @@ For each case retain real source, baseline/treatment instruction identity via **
 - [Grounded HW1 Card proposal](../../examples/card-semantic/hw1-email-qa.json) — SPEC + V + K (real HW1 tester source, unread lecture gap); field/link preflight does not prove classroom completion.
 - [QA Test Manager need](../../examples/card-semantic/qa-test-needs.json) — original Test Manager must select controls.
 - [Uninspected Stop Hook need](../../examples/card-semantic/native-stop-needs.json) — requires source readback rather than new Hook execution.
+
+## E2E P-class evidence update — 2026-10-13
+
+Added the [source-to-native E2E verification protocol](factoryweaver-e2e-card-verification.md). It separates Card content, changed Prompt Delta, Reader, real fresh P-class consumer, actual Outer/Inner activation, original Test/Schema owners, conditional Hook/Cron and provider closure. Soodles Reader now exposes these as `verification_targets` in the same read; none is a fabricated runtime PASS. Original Issue #300 admission is still the native prerequisite. Changed P-class behavior is `NOT_RUN` until a fresh consumer report/raw trace and actual Schema Owner continuation exist.

@@ -133,4 +133,18 @@ class CardClassificationContractTests(unittest.TestCase):
         self.assertIn("SELECTED TYPES ONLY", overall)
         self.assertNotIn("先產生 D/V/X/K", overall)
 
+    def test_selected_card_semantics_and_pclass_e2e_proof_contract(self):
+        doc = read("docs/evals/factoryweaver-e2e-card-verification.md")
+        for path in ("skills/factoryweaver/SKILL.md", "skills/factoryweaver-verify/SKILL.md",
+                     "AGENTS.md", "docs/factoryweaver-soodles-readback.md"):
+            with self.subTest(path=path):
+                self.assertIn("factoryweaver-e2e-card-verification.md", read(path))
+        for name in ("card_content", "prompt_delta", "outer_loop", "inner_loop",
+                     "pclass_feedback", "test_manager", "schema_manager",
+                     "hook_manager", "cron_job_manager", "delivery"):
+            self.assertIn(name, doc)
+        self.assertIn("schema pclass-feedback", doc)
+        self.assertIn("NOT_RUN", doc)
+        self.assertIn("No new", doc)
+
 if __name__ == "__main__": unittest.main()

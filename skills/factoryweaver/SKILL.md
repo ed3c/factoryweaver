@@ -163,6 +163,10 @@ Use this route only when the selected Host is Soodles and a new source-bound Sco
 
 Without `--output`, the exporter returns JSON on stdout as a low-trust proposal. Neither form grants authorization, chooses an independent Scheduler, tests, hooks, provider effects, publication or landing. `source_bound_proposal` is a readable input, not a successful Agent execution. Preserve `next=null` and the original Owner's continuation boundary.
 
+## Verify Card semantics AND real Soodles consumption
+
+For a claim that generated Cards can drive a real Soodles workflow, use [the original-owner E2E verification protocol](../../docs/evals/factoryweaver-e2e-card-verification.md). Verify actual inspected-source content, card type, Scope, causal Knowledge Links, complete original REQ inventory and the material behavioral `Prompt Delta` before exporting. Structural preflight is not content PASS. After the selected Reader runs, consume its `verification_targets` in the same response as `boundary_findings`, but **do not** treat these as invocations, extra gates or native results. For changed P-class behavior, use the original Soodles `review-writing` and `schema pclass-feedback` fresh-consumer route. Actual Outer admission, Poteto writer, Test/Schema Manager, conditional Hook/Cron and provider effects require distinct original-owner readbacks. Missing native capability means `NOT_RUN`, not permission to make another runner or model-filled metadata.
+
 ## Stop / resume handoff
 
 The return from this entry is a **semantic continuation**, not a second
