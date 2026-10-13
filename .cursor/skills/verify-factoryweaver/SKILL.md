@@ -65,3 +65,7 @@ That can return clean only for the selected four local CLI features. It cannot c
 Maintenance must reconcile the feature index, perform a concurrent read-only source-path wave, then serially drive each feature and capture positive/negative cases. Independent Agent source reasoning is separate from path existence. After a surprising failure, Doctor and retry only a proven harness drift once. Maintain may edit ONLY this verification skill directory, not product code. Doc drift or harness gap can be corrected and driven again before shipping at most one PR; a product regression must be reported to its original owner. For clean/blocked, no new PR.
 
 The authoritative E2E evidence boundary is docs/evals/factoryweaver-e2e-card-verification.md. Original Soodles Test Manager, P-class feedback and owner next remain the single decision producers.
+
+## Complete E2E feature maintenance
+
+The [Feature Map](features/README.md) now covers 17 source-to-Reader-to-original-owner boundaries, including content fidelity, Goal Scope, Typed Links, Prompt Delta, fresh P-class consumer, Outer admission, Noodle Poteto, Test/Schema Manager, native Hook/Cron and Provider closure. A full pass attempts every mapped feature and returns named `verified-unreachable` prerequisites rather than dropping untested paths. Local mode is five CLI features only. Actual original Host / Soodles / Provider evidence is required to upgrade native status. No new Runtime Metadata or duplicate runner is authorized.
