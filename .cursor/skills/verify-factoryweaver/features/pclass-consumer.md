@@ -32,8 +32,15 @@ Preconditions: Doctor ready and actual fresh native carrier/capture capability f
   not admitted Stage consumption, `stage-outcome feedback`, or provider effects.
 - Keep the independent semantic reviewer and its held-out expectations separate
   from both consumers. Standalone `schema pclass-feedback` schema 1 compares
-  reported fields; its PASS does not independently validate semantic criteria.
-  Schema 2 criteria review and Stage feedback retain their admitted contract.
+  reported fields without a criteria-review claim. The **existing public**
+  `schema pclass-feedback` also accepts schema 2 with source-bound
+  `requirements` and `criteria_review` for standalone evaluations: an
+  admitted Noodle Stage is **not** required for that read-only check.
+  Save the actual independent reviewer request/response and raw capture;
+  schema-2 field/quote checks cannot prove reviewer independence or semantic
+  completeness. Only the separate `stage-outcome feedback` adapter requires
+  original Stage/session binding. Never synthesize that Stage, or promote either
+  feedback schema's field PASS into native Composer/Worker compliance.
 - Negative cases: missing effect-ownership G, overextended Training G as a
   Parser exit, NOOP erasing an existing task, R generating a Stage/next, and
   Native PASS inferred from CLI shape. All require a real fresh Consumer/Owner
