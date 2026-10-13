@@ -27,7 +27,7 @@ Preconditions: Doctor returned ready and Python 3.12 plus jsonschema are install
 - Drive parser-claims-replay, v-copies-result-without-input and parser-refusal-local-exit. All remain structurally valid with semantics UNVERIFIED; the CLI must not award semantic ACCEPT to any of them.
 - Proof: capture actual subprocess commands, stdout/stderr, exit codes, and result.json in external evidence after scratch cleanup.
 
-## One-Shot / Roadmap deterministic controls
+### One-Shot / Roadmap deterministic controls
 
 The same existing Card Semantic CLI also supports `roadmap RECORD` as a
 read-only index. Run it against `docs/closed-loop-v72/project.json` and
