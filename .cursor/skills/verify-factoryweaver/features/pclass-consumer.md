@@ -5,7 +5,8 @@ This feature is a source/Owner proof boundary. The FactoryWeaver CLI can name mi
 ## Sub-features
 
 - Required evidence: Saved selected Skill bytes, fresh consumer trace, reviewed criteria, original schema pclass-feedback readback
-- Keep missing original evidence as `verified-unreachable`, never a false PASS.
+- Separate Fresh Session Card selection/composition from Fresh Worker adherence. A precomposed prompt provided to a Worker cannot verify Composer selection.
+- The helper's `verified-unreachable` means original evidence was not supplied to **that CLI drive**; it is not proof that all Hosts lack the capability and never a native PASS.
 - Source: docs/evals/factoryweaver-e2e-card-verification.md
 
 ## How to get to it (user POV)
@@ -14,7 +15,7 @@ Start from the FactoryWeaver feature map; invoke the project-local verification 
 
 ## Driving it with the CLI harness
 
-Preconditions: Doctor ready and original Source/Owner capability available when native behavior is required.
+Preconditions: Doctor ready and actual fresh native carrier/capture capability for native behavior claims. An admitted Noodle Stage additionally requires its original Source/Owner admission and continuation; a standalone read-only fresh Agent evaluation does not require them.
 
 - Run `python .cursor/skills/verify-factoryweaver/scripts/verify.py drive pclass-consumer` from repository root.
 - The helper returns the concrete unmet original Owner prerequisite without making effectful calls.
@@ -23,9 +24,16 @@ Preconditions: Doctor ready and original Source/Owner capability available when 
 
 ## Gotchas
 
-- Select one admitted fresh Session case only when native P-class behavior
-  evidence is actually needed: a sparse R index plus SPEC/V/C/G applicability
-  should produce a bounded Worker Prompt without full Card concatenation.
+- Select one fresh native Session case only when this behavior needs evidence:
+  either an original admitted Noodle Stage or a separately authorized standalone
+  Agent evaluation. A sparse R index plus SPEC/V/C/G applicability should
+  produce a bounded Worker Prompt without full Card concatenation. The
+  standalone route proves only its named Composer/Worker behavior scope,
+  not admitted Stage consumption, `stage-outcome feedback`, or provider effects.
+- Keep the independent semantic reviewer and its held-out expectations separate
+  from both consumers. Standalone `schema pclass-feedback` schema 1 compares
+  reported fields; its PASS does not independently validate semantic criteria.
+  Schema 2 criteria review and Stage feedback retain their admitted contract.
 - Negative cases: missing effect-ownership G, overextended Training G as a
   Parser exit, NOOP erasing an existing task, R generating a Stage/next, and
   Native PASS inferred from CLI shape. All require a real fresh Consumer/Owner
