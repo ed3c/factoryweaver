@@ -1,0 +1,286 @@
+{
+  "schema_version": "factoryweaver/v1",
+  "sources": [
+    {
+      "source_id": "SRC-OPENAI-JD",
+      "source_type": "job_description",
+      "source_dependency_key": "openai-careers-plugin-platform",
+      "locator": "Job overview",
+      "uri": "https://openai.com/careers/software-engineer-plugin-developer-platform-san-francisco/",
+      "integrity": "UNPINNED",
+      "source_role": "SUBJECT_MATTER"
+    }
+  ],
+  "decisions": [
+    {
+      "id": "DEC-auth-owner",
+      "question": "Who grants tool effects?",
+      "suggested_answer": "Independent host",
+      "human_confirmed": false,
+      "decision": null,
+      "source_ids": [
+        "SRC-OPENAI-JD"
+      ],
+      "confirmation_ref": null
+    }
+  ],
+  "requirements": [
+    {
+      "id": "REQ-api-sdk",
+      "statement": "Developers should be able to integrate plugin tools through verified API/SDK contracts.",
+      "claim_kind": "NORMATIVE",
+      "source_ids": [
+        "SRC-OPENAI-JD"
+      ],
+      "owner": "public reference",
+      "acceptance": [
+        "Invalid SDK input returns a typed refusal."
+      ],
+      "knowledge_status": "ANCHORED",
+      "engineering_status": "UNASSESSED",
+      "delivery_status": "NOT_STARTED",
+      "falsifier": "Tool accepts invalid input without refusal.",
+      "depends_on": [
+        "DEC-auth-owner"
+      ]
+    },
+    {
+      "id": "REQ-plugin-lifecycle",
+      "statement": "Support host-owned plugin create, test, publish, update and share phases without granting public CLI effects.",
+      "claim_kind": "NORMATIVE",
+      "source_ids": [
+        "SRC-OPENAI-JD"
+      ],
+      "owner": "FactoryWeaver reference proposal",
+      "acceptance": [
+        "A publish proposal without provider readback remains NOT_STARTED."
+      ],
+      "knowledge_status": "ANCHORED",
+      "engineering_status": "UNASSESSED",
+      "delivery_status": "NOT_STARTED",
+      "falsifier": "A local fixture is reported as a published plugin.",
+      "depends_on": []
+    },
+    {
+      "id": "REQ-cross-product",
+      "statement": "Represent declared ChatGPT, Codex and interactive app compatibility without assuming runtime parity.",
+      "claim_kind": "NORMATIVE",
+      "source_ids": [
+        "SRC-OPENAI-JD"
+      ],
+      "owner": "FactoryWeaver reference proposal",
+      "acceptance": [
+        "Unknown host compatibility is not marked verified."
+      ],
+      "knowledge_status": "ANCHORED",
+      "engineering_status": "UNASSESSED",
+      "delivery_status": "NOT_STARTED",
+      "falsifier": "A spec shape pass is reported as verified cross-product runtime parity.",
+      "depends_on": []
+    },
+    {
+      "id": "REQ-open-standards",
+      "statement": "Make MCP and other open-standard contract versions explicit at integration boundaries.",
+      "claim_kind": "NORMATIVE",
+      "source_ids": [
+        "SRC-OPENAI-JD"
+      ],
+      "owner": "FactoryWeaver reference proposal",
+      "acceptance": [
+        "Missing protocol version cannot become an executable integration claim."
+      ],
+      "knowledge_status": "ANCHORED",
+      "engineering_status": "UNASSESSED",
+      "delivery_status": "NOT_STARTED",
+      "falsifier": "An LLM guesses SDK or MCP compatibility from a repository name.",
+      "depends_on": []
+    },
+    {
+      "id": "REQ-developer-feedback",
+      "statement": "Bind developer and partner feedback to a decision source and its human review owner.",
+      "claim_kind": "NORMATIVE",
+      "source_ids": [
+        "SRC-OPENAI-JD"
+      ],
+      "owner": "FactoryWeaver reference proposal",
+      "acceptance": [
+        "Suggested interview answers remain WAIT_FOR_HUMAN without real reviewer input."
+      ],
+      "knowledge_status": "ANCHORED",
+      "engineering_status": "UNASSESSED",
+      "delivery_status": "NOT_STARTED",
+      "falsifier": "The agent accepts its own recommendation as a partner decision.",
+      "depends_on": []
+    },
+    {
+      "id": "REQ-safety-permissions",
+      "statement": "Keep permissions, safety checks and reliable execution evidence under original host and provider owners.",
+      "claim_kind": "NORMATIVE",
+      "source_ids": [
+        "SRC-OPENAI-JD"
+      ],
+      "owner": "FactoryWeaver reference proposal",
+      "acceptance": [
+        "An unregistered or unauthorized ActionRequest never has can_execute true."
+      ],
+      "knowledge_status": "ANCHORED",
+      "engineering_status": "UNASSESSED",
+      "delivery_status": "NOT_STARTED",
+      "falsifier": "A schema readiness decision grants PR merge or provider write authority.",
+      "depends_on": []
+    }
+  ],
+  "cards": [
+    {
+      "stable_id": "SPEC-api-contract",
+      "canonical_key": "SPEC|platform|defines|tool-contract|example|v1",
+      "series": "SPEC",
+      "revision": 1,
+      "status": "ACTIVE",
+      "title": "Draft tool contract",
+      "payload": "A structured tool request should validate required fields and deny unauthenticated invocation. This is a draft, not a tested API.",
+      "evidence_ids": [
+        "SRC-OPENAI-JD"
+      ],
+      "typed_links": [
+        {
+          "relation": "implements",
+          "target": "REQ-api-sdk"
+        }
+      ]
+    },
+    {
+      "stable_id": "SPEC-plugin-lifecycle",
+      "canonical_key": "SPEC|platform|proposes|plugin-lifecycle|illustrative|v1",
+      "series": "SPEC",
+      "revision": 1,
+      "status": "ACTIVE",
+      "title": "Plugin lifecycle contract",
+      "payload": "Plugin lifecycle operations are named proposals; only an authorized host may publish or update a plugin.",
+      "evidence_ids": [
+        "SRC-OPENAI-JD"
+      ],
+      "typed_links": [
+        {
+          "relation": "implements",
+          "target": "REQ-plugin-lifecycle"
+        }
+      ]
+    },
+    {
+      "stable_id": "SPEC-cross-product",
+      "canonical_key": "SPEC|platform|proposes|cross-product|illustrative|v1",
+      "series": "SPEC",
+      "revision": 1,
+      "status": "ACTIVE",
+      "title": "Consumer compatibility contract",
+      "payload": "Each host declares supported capabilities and its independent verification receipt; absent evidence is an explicit gap.",
+      "evidence_ids": [
+        "SRC-OPENAI-JD"
+      ],
+      "typed_links": [
+        {
+          "relation": "implements",
+          "target": "REQ-cross-product"
+        }
+      ]
+    },
+    {
+      "stable_id": "SPEC-open-standards",
+      "canonical_key": "SPEC|platform|proposes|open-standards|illustrative|v1",
+      "series": "SPEC",
+      "revision": 1,
+      "status": "ACTIVE",
+      "title": "Open standard version contract",
+      "payload": "A host adapter must pin protocol and schema revisions before any standard-conformance claim.",
+      "evidence_ids": [
+        "SRC-OPENAI-JD"
+      ],
+      "typed_links": [
+        {
+          "relation": "implements",
+          "target": "REQ-open-standards"
+        }
+      ]
+    },
+    {
+      "stable_id": "SPEC-developer-feedback",
+      "canonical_key": "SPEC|platform|proposes|developer-feedback|illustrative|v1",
+      "series": "SPEC",
+      "revision": 1,
+      "status": "ACTIVE",
+      "title": "Developer feedback contract",
+      "payload": "Feedback is traceable input and cannot become a confirmed decision without a trusted human source.",
+      "evidence_ids": [
+        "SRC-OPENAI-JD"
+      ],
+      "typed_links": [
+        {
+          "relation": "implements",
+          "target": "REQ-developer-feedback"
+        }
+      ]
+    },
+    {
+      "stable_id": "SPEC-safety-permissions",
+      "canonical_key": "SPEC|platform|proposes|safety-permissions|illustrative|v1",
+      "series": "SPEC",
+      "revision": 1,
+      "status": "ACTIVE",
+      "title": "Permission and owner contract",
+      "payload": "FactoryWeaver proposes typed actions; host owners separately validate effects and delivery.",
+      "evidence_ids": [
+        "SRC-OPENAI-JD"
+      ],
+      "typed_links": [
+        {
+          "relation": "implements",
+          "target": "REQ-safety-permissions"
+        }
+      ]
+    }
+  ],
+  "action_requests": [
+    {
+      "request_id": "AR-docs",
+      "operation_id": "docs.search_official",
+      "target": {
+        "kind": "official_doc",
+        "topic": "MCP protocol"
+      },
+      "intent": "resolve_unknown",
+      "mode": "READ_ONLY",
+      "registered": false,
+      "effect_authority": false,
+      "status": "PROPOSED",
+      "requires": [
+        "source_version"
+      ],
+      "expect": {
+        "result": "official_source_evidence"
+      },
+      "observed": null
+    }
+  ],
+  "progress": {
+    "knowledge": {
+      "state": "ANCHORED",
+      "evidence_refs": [
+        "SRC-OPENAI-JD"
+      ]
+    },
+    "engineering": {
+      "state": "NOT_STARTED",
+      "evidence_refs": []
+    },
+    "delivery": {
+      "state": "NOT_STARTED",
+      "evidence_refs": []
+    }
+  },
+  "subject": {
+    "id": "openai-platform-example",
+    "scope": "illustrative six-clause proposal, unpinned source, human/runtime proof absent",
+    "consumer": "UNBOUND"
+  }
+}

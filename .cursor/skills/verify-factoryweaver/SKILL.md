@@ -30,6 +30,7 @@ Use the feature map at features/README.md. Available commands:
     python .cursor/skills/verify-factoryweaver/scripts/verify.py drive scope-handoff
     python .cursor/skills/verify-factoryweaver/scripts/verify.py drive manager-needs
     python .cursor/skills/verify-factoryweaver/scripts/verify.py drive portable-bundle
+    python .cursor/skills/verify-factoryweaver/scripts/verify.py drive requirement-coverage
 
 The native Soodles read-only feature can be attempted only when the original Host provides SOODLES_CHECKOUT with the actual compatible Soodles checkout:
 
@@ -61,7 +62,7 @@ This attempts the whole feature map. Without the original native Soodles Host an
 
     python .cursor/skills/verify-factoryweaver/scripts/verify.py maintain --scope local
 
-That can return clean only for the selected seven local CLI features. It cannot certify source semantics, native P-class adherence, Hook/Cron nontriggers, or parent Goal completion. Do not disguise a full blocked run as local clean.
+That can return clean only for the selected registered local CLI features. It cannot certify source semantics, native P-class adherence, Hook/Cron nontriggers, or parent Goal completion. Do not disguise a full blocked run as local clean.
 
 Maintenance must reconcile the feature index, perform a concurrent read-only source-path wave, then serially drive each feature and capture positive/negative cases. Independent Agent source reasoning is separate from path existence. After a surprising failure, Doctor and retry only a proven harness drift once. Maintain may edit ONLY this verification skill directory, not product code. Doc drift or harness gap can be corrected and driven again before shipping at most one PR; a product regression must be reported to its original owner. For clean/blocked, no new PR.
 
@@ -69,4 +70,4 @@ The authoritative E2E evidence boundary is docs/evals/factoryweaver-e2e-card-ver
 
 ## Complete E2E feature maintenance
 
-The [Feature Map](features/README.md) now covers 19 source-to-Reader-to-original-owner boundaries, including content fidelity, Goal Scope, Typed Links, Prompt Delta, fresh P-class consumer, Outer admission, Noodle Poteto, Test/Schema Manager, native Hook/Cron and Provider closure. A full pass attempts every mapped feature and returns named `verified-unreachable` prerequisites rather than dropping untested paths. Local mode covers the seven registered CLI features. Actual original Host / Soodles / Provider evidence is required to upgrade native status. No new Runtime Metadata or duplicate runner is authorized.
+The [Feature Map](features/README.md) now covers the registered source-to-Reader-to-original-owner boundaries, including content fidelity, Goal Scope, Typed Links, Prompt Delta, fresh P-class consumer, Outer admission, Noodle Poteto, Test/Schema Manager, native Hook/Cron and Provider closure. A full pass attempts every mapped feature and returns named `verified-unreachable` prerequisites rather than dropping untested paths. Local mode covers the registered CLI features. Actual original Host / Soodles / Provider evidence is required to upgrade native status. No new Runtime Metadata or duplicate runner is authorized.
