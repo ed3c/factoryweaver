@@ -33,7 +33,6 @@ PRACTICE = (
 
 
 def _text(value, name):
-    # Minimum is structural, not an independent semantic-quality measure.
     if not isinstance(value, str) or len(value.strip()) < 12:
         raise ContractError("missing_or_fragmentary_field:" + name)
 

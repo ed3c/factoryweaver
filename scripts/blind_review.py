@@ -47,8 +47,6 @@ def validate_case(case):
         value = case[field]
         if not isinstance(value, str) or len(value.strip()) < 30:
             raise ContractError("blind_output_missing:" + field)
-        # A human reviewer cannot be blinded if candidate text explicitly
-        # carries version labels. Never auto-edit source outputs to hide them.
         if re.search(r"\bv7[.]1\b|\bv7[.]2\b", value, re.IGNORECASE):
             raise ContractError("unredacted_version_label:" + field)
     if case["baseline_output"] == case["candidate_output"]:

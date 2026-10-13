@@ -19,3 +19,11 @@ read; its exact Markdown quote corrects the older unformatted anchor.
 Positive/negative drives prove local consistency, structural partitions and
 packet separation. Genuine upstream execution, human review, v7.2 model-quality
 improvement, native Soodles/Noodle/Manager effects remain NOT_RUN.
+
+## Review limits
+
+Independent native reviewers verified scoped CLI behavior and provider heads.
+The Comment Sicko role was loaded by a native reviewer through the installed
+skill symlink; no named subagent type was available. Cross-model-family trail
+review and a complete active-workspace transcript audit were NOT_RUN because
+those carriers/inputs were not provided. They are not local or native PASS.
