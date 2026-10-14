@@ -79,6 +79,14 @@ articles, use medium-compiler's repository-installed sloptrim followed by
 English/Traditional Chinese source-fidelity review. No style score changes
 runtime acceptance or grants a side effect.
 
+## P-class → original CLI as Codex MCP Tool Call
+
+此 Repo 已有唯讀 `factoryweaver.py validate / project / route`。不要在 System Prompt、SkillRoute 或新的 Adapter 再寫一套 Source Pin、Route 或 Card Identity 選擇器。當 Host 實際安裝並驗證 [NeoWeaver MCP 候選](https://github.com/ed3c/NeoWeaver/pull/18)，呼叫 `factoryweaver_project({record_path,operation})`，其中 `operation` 只允許 `validate|project|route`；回傳原 CLI Result 或具名 Refusal，不授權執行。
+
+FactoryWeaver Card/REQ/SPEC/V 的來源語意仍由 Session 按原 Goal 判斷。CLI/Registry 負責已知 source、schema、identity、declared dependency 與 advisory route。被選中的 Bundle 進入 Soodles 時，改用原 `soodles_knowledge_inspect({bundle_ref})` 直接交給 Soodles Reader；模型不猜 Bundle SHA、argv、測試、Playbook、Owner Next 或 Admission。沒有 Tool Installed Capability 就沿原 CLI 讀取，不宣稱 Plugin 已被 Consumer 使用。
+
+此 Tool Call 路徑**沒有** Native Edit/Verify Hook、Context Compaction、模型 Training 或外部 Side Effects。Action Fusion ≠ 原子性／冪等外部效果，純唯讀查詢 ≠ P-class Native Compliance；Soodles 原 Owner、Noodle Stage、Test/Schema/Provider 均不轉移。詳細正反情境與 Proof Ceiling 見 [Harness Tool Call Contract](docs/harness-tool-call-contract.md)；Source、CLI、Native Fresh Consumer 三層驗證仍各自必要。
+
 ## End-to-end Prompt Data Flow and original Owner boundaries
 
 **Goal:** compile inspected source into source-faithful Cards and one bounded proposed Behavior Scope while preserving the user's whole Goal. The detailed [Prompt Carrier Contract](references/prompt-carrier-and-ownership.md) is authoritative for per-hop Consumer responsibilities. The [factoryweaver Skill](skills/factoryweaver/SKILL.md) is the one Compiler entry; do not launch every downstream skill.
