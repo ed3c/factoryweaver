@@ -14,6 +14,13 @@ alternative default launchers. One entry invocation may contain multiple
 lossless Boot / Drill-down content batches. Each content batch is a bounded
 rendering step, not a new Issue, worker, scheduler, or authorization.
 
+## 修改本指引或 CLI 時
+
+只有修改 AGENTS、P-class 或 CLI 狀態機的任務才讀
+[狀態機修改契約套用](../../docs/state-machine-change.md)。
+保留本 skill 的原工作及驗證流程。引用契約不要求啟動 Soodles／Noodle；
+需要委派執行才沿專案的可選 Loop 入口，不因本段改變 Card 或文章驗收。
+
 ## Mandatory reference resolution (read, do not duplicate prompts)
 
 1. **Always read [the v7.2 System Prompt](../../references/zettelkasten-v7.2.md)
