@@ -13,6 +13,18 @@
 - **exit_gates** — source-backed and concrete; describe what changes in the engineering decision where applicable.
 - **owner_continuation** — source-backed and concrete; describe what changes in the engineering decision where applicable.
 
+**Roadmap Index / Session boundary:** List the causal units, their local
+exits and necessary prerequisites. Name only a few source-justified **Entry
+Card** references (usually S or SPEC) when available, not the entire C/G/V
+Scope closure. An ordinary `based_on` edge is not automatically an Entry: its
+direction and applicability need independent source review. Do not put guessed
+Card IDs in prose or add runtime state. Missing links remain unknown. Index coverage is advisory: it may be
+incomplete, stale or omit a newly observed earlier failure. The current Session
+selects the minimum sufficient scope using current evidence and original Owner
+next, then composes the One-Shot Prompt; it may legitimately choose outside the
+Roadmap. Do not copy the Roadmap as a Worker checklist or ask CLI to decide
+semantic membership. Any R update follows the same source/revision review.
+
 **Scope contribution:** Preserve parent goal and dependency closure between atoms.
 
 **Rejection/non-case:** A list of weeks or files without behavioral dependency.

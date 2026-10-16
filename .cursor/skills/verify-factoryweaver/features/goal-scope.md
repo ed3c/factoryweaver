@@ -26,6 +26,10 @@ Preconditions: Doctor ready and original Source/Owner capability available when 
 
 ## Gotchas
 
+- Sparse R Entry Card links cannot prove a full selected Scope or grant Stage Next.
+- A missing necessary G (effect authority) and an inapplicable G (Training
+  restrictions copied into Parser local exit) are distinct independent semantic
+  review failures; ordinary selected-ID validation is not a semantic judge.
 - Matching REQ ID does not establish semantic equivalence.
 - The source wave checks entrypoint presence, not semantic truth or model execution.
 - A product bug belongs to the original product Owner; maintain-verification-skill cannot silently fix it.

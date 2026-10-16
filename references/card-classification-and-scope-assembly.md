@@ -86,7 +86,7 @@ The existing `card_delta.py` propagates *advisory invalidation* only through `de
 
 These contracts are **Sidecar proposals** until a consumer/schema exists; do not insert unknown keys into the closed `knowledge-record.schema.json`.
 
-### Deterministic-first assembly algorithm
+### Evidence-first Session assembly; deterministic binding only
 
 1. **Preserve original REQ inventory** independently of visible cards, assigned weeks or token budget.
 2. Anchor by ONE meaningful user-visible Goal, actual measurement producer and selected REQ/SPEC acceptance. If goal/measurement ambiguous, classify the unresolved decision; do not forge metric truth.
@@ -226,6 +226,45 @@ Real source/reader output → source-coverage ledger
 ```
 
 A card type is never a command to invoke its corresponding Skill. **Current observed need + available installation + accepted owner continuation** determine whether and when a method runs. This prevents 15 card types from creating 15 independent Agent decisions or a second software factory.
+
+## Roadmap-assisted Session composition (no new state machine)
+
+The R Card names distinct causal units, local exits, prerequisites and a
+small number of justified **Entry Card references**. It is an advisory index,
+not complete Scope closure, Stage plan or original Owner next. Distinguish
+`validated_by` (oracle), `based_on` (premise) and `depends_on` (required
+prerequisite); no edge automatically means the entire target payload must be
+copied into a Worker Prompt. An R
+may be absent for a single independent atom. The read-only
+`card_semantic.py roadmap RECORD` exposes only R cards, their declared
+edges and directly referenced active cards after original v1 validation.
+It does not list all active cards or infer missing closure, actual Entry
+semantics, current Scope, next or required behavior. Source-grounded R references require
+independent semantic checks for sufficiency and link direction.
+
+The Session compiles the One-Shot instruction **after** selecting the actual
+consumer-specific minimal scope. Select REQ goal and covered clauses; only
+applicable SPEC, C, G, S, V, K/X and non-cases; actual producer inputs and
+independent oracle; stop/readback; and explicit implementation freedom.
+Do **not** concatenate cards, transfer a deferred parent exit into local
+acceptance, or present selected Card count as total requirements. The
+full knowledge record is retained independently of the instruction size.
+
+Distinguish generation feedback from execution delta. Before/during Card
+CREATE/UPDATE, a source-backed finding corrects the first unsupported Card
+premise, edge or field and demands source review; this is compiler feedback.
+After scope selection, the existing `PromptDelta` describes **only material
+new required worker behavior** and may be NOOP. Current context and accepted
+constraints can be incorporated by Session composition without being falsely
+reported as new deltas. Direct copies of G/REQ text that add no necessary
+worker behavior are not a delta. Neither feedback path creates effect authority.
+
+A valid owner continuation is reused without another session choice. A fresh
+failure may justify choosing another scope than an R suggestion. The original
+Host/CLI owns mechanical refs, and actual Source/Session decisions cannot be
+certified by structural validity. Test prompt composition with one missing
+constraint, one parent-clause overreach, one unchanged NOOP and one fabricated
+Roadmap link negative. P-class adherence requires a fresh consumer capture.
 
 ## 11. Quality gate and evidence boundary
 

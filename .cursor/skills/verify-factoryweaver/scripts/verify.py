@@ -273,6 +273,48 @@ def drive(feature, evidence, scratch):
               "independent_semantic_review": "NOT_RUN",
               "native_pclass_feedback": "NOT_RUN",
               "note": "Shape controls passed; original source reviewer must separately evaluate the fixture questions."})
+        # Roadmap index is a distinct read-only CLI entry of this Card feature.
+        # Portable bundles ship the HW1 knowledge record; create a separate
+        # synthetic R node using only that record's original identities.
+        roadmap_record = scratch / "roadmap-v1.json"
+        record = json.loads((ROOT / "docs/evals/cs329z-hw1/drill.json")
+                            .read_text(encoding="utf-8"))
+        record["cards"].append({
+            "stable_id": "R-synthetic-existing-source",
+            "canonical_key": "R|cs329z|scope-index|based_on|pilot|v1",
+            "series": "R", "revision": 1, "status": "ACTIVE",
+            "title": "Synthetic scoped roadmap index",
+            "payload": "One bounded synthetic atom refers to the existing email QA requirement, without authorizing a Noodle stage.",
+            "evidence_ids": [record["sources"][0]["source_id"]],
+            "typed_links": [{"relation": "based_on", "target": "REQ-email-qa"}]
+        })
+        roadmap_record.write_text(json.dumps(record), encoding="utf-8")
+        index = obj(call("card_semantic.py", "roadmap", roadmap_record),
+                    evidence, name + "_roadmap_index")
+        ensure(index["status"] == "READ_ONLY_ROADMAP_INDEX" and
+               index["scope_selection"] == "SESSION_REQUIRED" and
+               index["prompt_composition"] == "NOT_PERFORMED" and
+               index["next"] is None and index["effects"] == [] and
+               not index["authorizes_landing"] and index["roadmaps"] and
+               not index["roadmaps"][0]["referenced_cards"] and
+               "available_cards" not in index,
+               "roadmap_index_claimed_scope_closure_or_effect")
+        record["cards"][-1]["typed_links"].append(
+            {"relation": "based_on", "target": "SPEC-email-qa"})
+        roadmap_record.write_text(json.dumps(record), encoding="utf-8")
+        index = obj(call("card_semantic.py", "roadmap", roadmap_record), evidence,
+                    name + "_linked_card_index")
+        ensure([x["card_id"] for x in index["roadmaps"][0]["referenced_cards"]] ==
+               ["SPEC-email-qa"] and index["next"] is None,
+               "roadmap_direct_refs_not_preserved")
+        forged_record = json.loads(roadmap_record.read_text(encoding="utf-8"))
+        next(c for c in forged_record["cards"] if c["series"] == "R")["typed_links"].append(
+            {"relation": "based_on", "target": "SPEC-FORGED-NONEXISTENT"})
+        forged_path = scratch / "forged-roadmap.json"
+        forged_path.write_text(json.dumps(forged_record), encoding="utf-8")
+        denial = obj(call("card_semantic.py", "roadmap", forged_path),
+                     evidence, name + "_forged_roadmap", expected=2)
+        ensure(denial["valid"] is False, "forged_roadmap_reference_accepted")
     elif feature == "scope-handoff":
         record = ROOT / "docs/evals/cs329z-hw1/drill.json"
         selection = ROOT / "examples/soodles-scope/hw1-email-qa-selection.json"
@@ -362,6 +404,45 @@ def drive(feature, evidence, scratch):
         ensure(isinstance(scope["prompt_delta"], list) and
                all(isinstance(v, str) for v in scope["prompt_delta"]),
                "semantic_delta_missing")
+        # No new instruction does not remove the existing Goal/Acceptance/Scope.
+        noop_selection = dict(scope)
+        noop_selection["prompt_delta"] = []
+        noop_file = scratch / "noop-delta.json"
+        noop_file.write_text(json.dumps(noop_selection), encoding="utf-8")
+        noop_target = scratch / "noop-bundle.json"
+        noop = obj(call("soodles_handoff.py", source, noop_file,
+                        "--output", noop_target), evidence, name + "_noop_delta")
+        noop_packet = json.loads(noop_target.read_text(encoding="utf-8"))
+        ensure(noop_packet["selection"]["prompt_delta"] == [] and
+               noop_packet["selection"]["goal"] == scope["goal"] and
+               noop_packet["selection"]["acceptance"] == scope["acceptance"] and
+               noop_packet["selection"]["card_ids"] == scope["card_ids"] and
+               noop_packet["knowledge_record"] == record and
+               not noop["authorizes_landing"], "noop_delta_removed_task")
+        # Removing an applicable constraint can remain schema-valid: it must
+        # not be misrepresented as a source-semantic ACCEPT.
+        omitted = dict(scope)
+        omitted["constraints"] = []
+        omitted_file = scratch / "omitted-constraint.json"
+        omitted_file.write_text(json.dumps(omitted), encoding="utf-8")
+        omitted_result = obj(call("soodles_handoff.py", source, omitted_file),
+                             evidence, name + "_omitted_constraint_unverified")
+        ensure(omitted_result["kind"] == "SOURCE_BOUND_PROPOSAL" and
+               omitted_result["selection"]["constraints"] == [] and
+               omitted_result["selection"]["goal"] == scope["goal"],
+               "constraint_omission_wrongly_upgraded_to_semantic_acceptance")
+        # A semantically false parent exit remains a low-trust *proposal*.
+        # CLI acceptance is not a semantic oracle for this overreach.
+        overreach = dict(scope)
+        overreach["acceptance"] = list(scope["acceptance"]) + [
+            "Parser must complete later Trainer eligibility before local exit."
+        ]
+        overreach_file = scratch / "overreach.json"
+        overreach_file.write_text(json.dumps(overreach), encoding="utf-8")
+        overreach_result = obj(call("soodles_handoff.py", source, overreach_file),
+                               evidence, name + "_overreach_unverified")
+        ensure(overreach_result["kind"] == "SOURCE_BOUND_PROPOSAL",
+               "semantic_overreach_wrongly_machine_judged")
         altered = dict(scope)
         altered["goal"] = "A conflicting task target not confirmed by current original Issue."
         conflicting = scratch / "conflicting-goal.json"
@@ -386,6 +467,9 @@ def drive(feature, evidence, scratch):
                 "proof_ceiling": "PROMPT_DATA_CARRIERS_ONLY",
                 "source_to_card_semantics": "UNVERIFIED",
                 "selection_goal_equality_to_original_issue": "NOT_OBSERVED",
+                "overreach_semantic_review": "REQUIRED_NOT_RUN",
+                "omitted_constraint_semantic_review": "REQUIRED_NOT_RUN",
+                "noop_delta_retains_original_task": True,
                 "delta_consumed_by_writer": "NOT_RUN",
                 "next": None, "original_manager_effects": []}
     elif feature == "typed-links":

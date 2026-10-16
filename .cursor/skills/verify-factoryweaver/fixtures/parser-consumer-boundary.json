@@ -9,23 +9,36 @@
       "expected_review": "REVISE",
       "proposal": {
         "schema": "factoryweaver/card-semantic-proposal/v1",
-        "cards": [{
-          "series": "SPEC", "title": "Synthetic parser boundary", "source_status": "INSPECTED",
-          "evidence_topics": ["Synthetic fixed source row: bounded parser plus later task replay"],
-          "semantics": {
-            "given": "Raw single-surface proposal and fixed boundary references are provided.",
-            "when": "The parser checks JSON and the fixed mutation boundary.",
-            "then": "The patch parses and replays on the fixed TaskSnapshot.",
-            "inputs_outputs": "Raw proposal plus fixed inputs → ParsedProposal or DiagnosticRefusal; no replay/effects.",
-            "forbidden": "No protected acceptance edits or provider effects.",
-            "negative_case": "A stale expected source must refuse.",
-            "unknown_effect": "Missing fixed input refuses; unknown earlier write needs original readback.",
-            "replay": "Identical parser inputs produce the same parse/refusal, not task execution.",
-            "oracle": "Original fixed parser input/result control, not a Runner observation.",
-            "original_owner": "Synthetic parser control Producer, no native authority"
-          }, "links": []
-        }],
-        "coverage": [{"source_unit": "synthetic-parser-slice", "status": "MAPPED", "disposition": "Synthetic parser boundary"}]
+        "cards": [
+          {
+            "series": "SPEC",
+            "title": "Synthetic parser boundary",
+            "source_status": "INSPECTED",
+            "evidence_topics": [
+              "Synthetic fixed source row: bounded parser plus later task replay"
+            ],
+            "semantics": {
+              "given": "Raw single-surface proposal and fixed boundary references are provided.",
+              "when": "The parser checks JSON and the fixed mutation boundary.",
+              "then": "The patch parses and replays on the fixed TaskSnapshot.",
+              "inputs_outputs": "Raw proposal plus fixed inputs → ParsedProposal or DiagnosticRefusal; no replay/effects.",
+              "forbidden": "No protected acceptance edits or provider effects.",
+              "negative_case": "A stale expected source must refuse.",
+              "unknown_effect": "Missing fixed input refuses; unknown earlier write needs original readback.",
+              "replay": "Identical parser inputs produce the same parse/refusal, not task execution.",
+              "oracle": "Original fixed parser input/result control, not a Runner observation.",
+              "original_owner": "Synthetic parser control Producer, no native authority"
+            },
+            "links": []
+          }
+        ],
+        "coverage": [
+          {
+            "source_unit": "synthetic-parser-slice",
+            "status": "MAPPED",
+            "disposition": "Synthetic parser boundary"
+          }
+        ]
       }
     },
     {
@@ -35,19 +48,32 @@
       "expected_review": "REVISE",
       "proposal": {
         "schema": "factoryweaver/card-semantic-proposal/v1",
-        "cards": [{
-          "series": "V", "title": "Synthetic parser controls", "source_status": "INSPECTED",
-          "evidence_topics": ["Synthetic fixed source row: parser must reject stale source"],
-          "semantics": {
-            "subject": "Pure parser/refusal only; Runner replay remains a parent obligation.",
-            "oracle": "A legal patch parses successfully and rejects stale source.",
-            "producer": "Original synthetic parser control Producer",
-            "positive_control": "A legal patch parses successfully and rejects stale source.",
-            "negative_control": "A stale patch is rejected.",
-            "observation_status": "NOT_RUN; expected text is not observed behavior."
-          }, "links": []
-        }],
-        "coverage": [{"source_unit": "synthetic-parser-control", "status": "MAPPED", "disposition": "Synthetic parser controls"}]
+        "cards": [
+          {
+            "series": "V",
+            "title": "Synthetic parser controls",
+            "source_status": "INSPECTED",
+            "evidence_topics": [
+              "Synthetic fixed source row: parser must reject stale source"
+            ],
+            "semantics": {
+              "subject": "Pure parser/refusal only; Runner replay remains a parent obligation.",
+              "oracle": "A legal patch parses successfully and rejects stale source.",
+              "producer": "Original synthetic parser control Producer",
+              "positive_control": "A legal patch parses successfully and rejects stale source.",
+              "negative_control": "A stale patch is rejected.",
+              "observation_status": "NOT_RUN; expected text is not observed behavior."
+            },
+            "links": []
+          }
+        ],
+        "coverage": [
+          {
+            "source_unit": "synthetic-parser-control",
+            "status": "MAPPED",
+            "disposition": "Synthetic parser controls"
+          }
+        ]
       }
     },
     {
@@ -57,34 +83,147 @@
       "expected_review": "ACCEPT_SCOPED_SPECIFICATION_ONLY",
       "proposal": {
         "schema": "factoryweaver/card-semantic-proposal/v1",
-        "cards": [{
-          "series": "SPEC", "title": "Synthetic corrected parser boundary", "source_status": "INSPECTED",
-          "evidence_topics": ["Synthetic fixed source row: bounded parser plus later task replay"],
-          "semantics": {
-            "given": "Current raw single-surface proposal and Owner-fixed allowlist/acceptance/source references are supplied.",
-            "when": "The parser checks JSON and compares fixed target/source references.",
-            "then": "Return ParsedProposal or DiagnosticRefusal without replay/training/provider effects.",
-            "inputs_outputs": "Raw proposal plus fixed inputs → ParsedProposal or DiagnosticRefusal; later Runner remains outside this atom.",
-            "forbidden": "No protected acceptance edits or provider effects.",
-            "negative_case": "Keep the allowed proposal fixed and change only expected source: DiagnosticRefusal, no replay/write.",
-            "unknown_effect": "Missing fixed input refuses; unknown earlier write needs original readback.",
-            "replay": "Identical parser inputs reproduce parse/refusal only; TaskSnapshot replay remains a parent requirement.",
-            "oracle": "Original control compares output variant, refused condition and unchanged fixed references.",
-            "original_owner": "Original synthetic parser control Producer"
-          }, "links": []
-        }, {
-          "series": "V", "title": "Synthetic corrected parser controls", "source_status": "INSPECTED",
-          "evidence_topics": ["Synthetic fixed source row: parser must reject stale source"],
-          "semantics": {
-            "subject": "Pure parser/refusal only; Runner replay remains a parent obligation.",
-            "oracle": "Original fixed input/result comparison checks output variant, named refusal and preserved references.",
-            "producer": "Original synthetic parser control Producer",
-            "positive_control": "Current allowed single-surface raw proposal plus fixed inputs returns ParsedProposal with no replay/write.",
-            "negative_control": "Change only expected source to stale: DiagnosticRefusal naming staleness, no replay/write; missing input also refuses.",
-            "observation_status": "NOT_RUN; expected text is not observed behavior."
-          }, "links": []
-        }],
-        "coverage": [{"source_unit": "synthetic-parser-slice", "status": "MAPPED", "disposition": "Synthetic corrected parser boundary"}]
+        "cards": [
+          {
+            "series": "SPEC",
+            "title": "Synthetic corrected parser boundary",
+            "source_status": "INSPECTED",
+            "evidence_topics": [
+              "Synthetic fixed source row: bounded parser plus later task replay"
+            ],
+            "semantics": {
+              "given": "Current raw single-surface proposal and Owner-fixed allowlist/acceptance/source references are supplied.",
+              "when": "The parser checks JSON and compares fixed target/source references.",
+              "then": "Return ParsedProposal or DiagnosticRefusal without replay/training/provider effects.",
+              "inputs_outputs": "Raw proposal plus fixed inputs → ParsedProposal or DiagnosticRefusal; later Runner remains outside this atom.",
+              "forbidden": "No protected acceptance edits or provider effects.",
+              "negative_case": "Keep the allowed proposal fixed and change only expected source: DiagnosticRefusal, no replay/write.",
+              "unknown_effect": "Missing fixed input refuses; unknown earlier write needs original readback.",
+              "replay": "Identical parser inputs reproduce parse/refusal only; TaskSnapshot replay remains a parent requirement.",
+              "oracle": "Original control compares output variant, refused condition and unchanged fixed references.",
+              "original_owner": "Original synthetic parser control Producer"
+            },
+            "links": []
+          },
+          {
+            "series": "V",
+            "title": "Synthetic corrected parser controls",
+            "source_status": "INSPECTED",
+            "evidence_topics": [
+              "Synthetic fixed source row: parser must reject stale source"
+            ],
+            "semantics": {
+              "subject": "Pure parser/refusal only; Runner replay remains a parent obligation.",
+              "oracle": "Original fixed input/result comparison checks output variant, named refusal and preserved references.",
+              "producer": "Original synthetic parser control Producer",
+              "positive_control": "Current allowed single-surface raw proposal plus fixed inputs returns ParsedProposal with no replay/write.",
+              "negative_control": "Change only expected source to stale: DiagnosticRefusal naming staleness, no replay/write; missing input also refuses.",
+              "observation_status": "NOT_RUN; expected text is not observed behavior."
+            },
+            "links": []
+          }
+        ],
+        "coverage": [
+          {
+            "source_unit": "synthetic-parser-slice",
+            "status": "MAPPED",
+            "disposition": "Synthetic corrected parser boundary"
+          }
+        ]
+      }
+    },
+    {
+      "name": "stale-parser-link-rationale",
+      "review_question": "After SPEC's input/output was corrected to raw bytes and opaque fixed references, is this implements-link rationale consistent with that same Parser Consumer?",
+      "counterexample": "A reference named TaskSnapshot is not loaded by the Parser; the corrected SPEC reads raw bytes and Owner-fixed opaque refs while the link rationale still describes decoded TaskSnapshot as input.",
+      "expected_review": "REVISE",
+      "proposal": {
+        "schema": "factoryweaver/card-semantic-proposal/v1",
+        "cards": [
+          {
+            "series": "SPEC",
+            "title": "Synthetic parser with stale link rationale",
+            "source_status": "INSPECTED",
+            "evidence_topics": [
+              "Synthetic fixed source row: bounded parser plus later task replay"
+            ],
+            "semantics": {
+              "given": "Owner provides raw PatchProposal bytes plus fixed_inputs with opaque TaskSnapshot/FailureScope references.",
+              "when": "parse_proposal(raw: bytes, fixed_inputs: Mapping) checks raw input and fixed references without reading referenced files.",
+              "then": "Return ParsedProposal or DiagnosticRefusal without replay/training/provider effects.",
+              "inputs_outputs": "Raw Proposal bytes and fixed Owner inputs → ParsedProposal or DiagnosticRefusal; no TaskSnapshot dereference.",
+              "forbidden": "No protected acceptance edits or provider effects.",
+              "negative_case": "Keep the allowed proposal fixed and change only expected source: DiagnosticRefusal, no replay/write.",
+              "unknown_effect": "Missing fixed input refuses; unknown earlier write needs original readback.",
+              "replay": "Identical parser inputs reproduce parse/refusal only; TaskSnapshot replay remains a parent requirement.",
+              "oracle": "Original control compares output variant, refused condition and unchanged fixed references.",
+              "original_owner": "Original synthetic parser control Producer"
+            },
+            "links": [
+              {
+                "relation": "implements",
+                "target_series": "REQ",
+                "target_topic": "Trainability",
+                "applicability": "Parser's local parse/refusal clause only; TaskSnapshot replay and training remain parent obligations.",
+                "counterfactual": "Raw PatchProposal JSON + TaskSnapshot + FailureScope → ParsedProposal or DiagnosticRefusal."
+              }
+            ]
+          }
+        ],
+        "coverage": [
+          {
+            "source_unit": "synthetic-parser-slice",
+            "status": "MAPPED",
+            "disposition": "Synthetic parser with stale link rationale"
+          }
+        ]
+      }
+    },
+    {
+      "name": "corrected-parser-link-rationale",
+      "review_question": "After SPEC's input/output was corrected to raw bytes and opaque fixed references, is this implements-link rationale consistent with that same Parser Consumer?",
+      "counterexample": "A parser result is not a Replay receipt; the clarified link cannot be used to close the parent requirement.",
+      "expected_review": "ACCEPT_SCOPED_SPECIFICATION_ONLY",
+      "proposal": {
+        "schema": "factoryweaver/card-semantic-proposal/v1",
+        "cards": [
+          {
+            "series": "SPEC",
+            "title": "Synthetic parser with corrected link rationale",
+            "source_status": "INSPECTED",
+            "evidence_topics": [
+              "Synthetic fixed source row: bounded parser plus later task replay"
+            ],
+            "semantics": {
+              "given": "Owner provides raw PatchProposal bytes plus fixed_inputs with opaque TaskSnapshot/FailureScope references.",
+              "when": "parse_proposal(raw: bytes, fixed_inputs: Mapping) checks raw input and fixed references without reading referenced files.",
+              "then": "Return ParsedProposal or DiagnosticRefusal without replay/training/provider effects.",
+              "inputs_outputs": "Raw Proposal bytes and fixed Owner inputs → ParsedProposal or DiagnosticRefusal; no TaskSnapshot dereference.",
+              "forbidden": "No protected acceptance edits or provider effects.",
+              "negative_case": "Keep the allowed proposal fixed and change only expected source: DiagnosticRefusal, no replay/write.",
+              "unknown_effect": "Missing fixed input refuses; unknown earlier write needs original readback.",
+              "replay": "Identical parser inputs reproduce parse/refusal only; TaskSnapshot replay remains a parent requirement.",
+              "oracle": "Original control compares output variant, refused condition and unchanged fixed references.",
+              "original_owner": "Original synthetic parser control Producer"
+            },
+            "links": [
+              {
+                "relation": "implements",
+                "target_series": "REQ",
+                "target_topic": "Trainability",
+                "applicability": "Parser's local parse/refusal clause only; TaskSnapshot replay and training remain parent obligations.",
+                "counterfactual": "If the original trainability outcome changes, review parse_proposal(raw: bytes, fixed_inputs: Mapping): raw proposal bytes and Owner-fixed opaque references yield immutable ParsedProposal or DiagnosticRefusal. TaskSnapshot contents are not loaded; Replay and Training remain separate parent obligations."
+              }
+            ]
+          }
+        ],
+        "coverage": [
+          {
+            "source_unit": "synthetic-parser-slice",
+            "status": "MAPPED",
+            "disposition": "Synthetic parser with corrected link rationale"
+          }
+        ]
       }
     }
   ],

@@ -17,9 +17,35 @@ Apply [Hook purpose and review boundaries](../../docs/hook-purpose-and-review-bo
 
 Read [Card Classification and Scope Assembly](../../references/card-classification-and-scope-assembly.md), including **all 15 per-series Outer/Inner Skill routes, multimodal source-coverage ledger and review-writing** semantics. Validate all 15 series are preserved; the five groups and seven core types are **organizing vocabulary**, not card quotas. Review each material CREATE/UPDATE **against its own series**: C requires mechanism and failure, Q requires unresolved decision and owner, K names missing prerequisite, N reconstructs observed sequence, V requires oracle and evidence state, SPEC requires behavioral I/O. Do not require an unknown K to explain an unavailable mechanism. `review-writing` then checks relevant actor/condition/causality/state/acceptance and source fidelity. Only actually inspected sources support assertive conclusions. Generic title paraphrases and copied boilerplate must receive REVISE/REUSE, not semantic ACCEPT.
 
-Verify each material edge's type, source/target direction and counterfactual dependency; reject 'W9 Coding Agents enables W10 Thanksgiving Recess', reverse V validated_by SPEC, and based_on attribution to an unread slide. Reuse cross-scope G and preserve named K. Ensure one causal Issue Atom assembles minimal sufficient cards and four runtime contracts are non-card sidecars. Verify task-local Prompt Delta names a **new** required behavior/constraint; no change means NOOP.
+Verify each material edge's type, source/target direction and counterfactual dependency. **Re-evaluate material edge explanations after any Card I/O revision**, including an `implements → REQ` rationale that still asserts direct TaskSnapshot input when the corrected parser only consumes raw bytes and Owner-fixed opaque references. The target/link direction can remain valid while its explanation is semantically stale; source-review it separately rather than awarding CLI semantics PASS. Reject 'W9 Coding Agents enables W10 Thanksgiving Recess', reverse V validated_by SPEC, and based_on attribution to an unread slide. Reuse cross-scope G and preserve named K. Ensure one causal Issue Atom assembles minimal sufficient cards and four runtime contracts are non-card sidecars. Verify task-local Prompt Delta names a **new** required behavior/constraint; no change means NOOP.
 
 For each new/updated card confirm its **type-specific Soodles Outer Loop Consumer**, the conditional original Poteto/pstack candidate method (without fabricating installation), and a real Behavior Scope purpose. Confirm the authoritative Host extracted any image/slide/graph/audio/video/table/code/trace content claimed and preserved its content/uncertainty. An unread source URL cannot justify a technical mechanism. Use `review-writing` to assess actor, condition, causality, state, acceptance, negative and unknown claims; use real P-class behavior evals only when instructions changed. The current JSON validator checks structure and registered targets only, **not semantic sufficiency**. Report SEMANTICS_NOT_VERIFIED when independent source-content review or actual evidence is absent; never convert schema/CI fixture green into Agent behavior PASS or native effect delivery.
+## Verify One-Shot prompt composition without pretending to run an Agent
+
+Check card-generation feedback at the earliest source/Consumer error, rather
+than accepting a final Worker Prompt that merely conceals a broken SPEC/V.
+For every selected R unit verify existing Card identities, justified dependency
+direction and no automatic Scope or continuation from its ordering. Compare
+Session-selected minimal Card semantics with the actual proposed One-Shot
+instruction: Goal/local clauses, relevant constraints and forbidden cases,
+original inputs, fixed oracle, stop/readback, and implementation freedom.
+Reject missing applicable G, deferred-parent-as-local-exit, card-payload
+concatenation, Roadmap-imposed native stages and invented IDs/argv. Absence of
+R for a standalone atom is not an error. Read-only `card_semantic.py roadmap`
+only binds existing references; it does not validate semantic completeness.
+Verify changed P-class instructions with original fresh Agent consumer and
+`schema pclass-feedback` separately from CLI and independent source review.
+
+When an R links a source-backed S/SPEC Entry, verify that it indexes only
+candidate knowledge and does not automatically inherit all V/C/G payloads.
+Compare the applicable prerequisite and local-exit clauses independently.
+Test both a missing necessary G and an irrelevant deferred G inserted into
+the local exit; report REVISE only from the actual source/Consumer review.
+The existing `prompt-carriers` CLI drive intentionally accepts these as
+low-trust proposals, proving no false semantic certainty. A NOOP Worker
+`PromptDelta` preserves the current Task context. Native Agent adherence
+remains NOT_RUN until original Soodles Consumer evidence exists.
+
 ## E2E proof of content and effects
 
 Apply the taxonomy contract's

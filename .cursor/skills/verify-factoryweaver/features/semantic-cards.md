@@ -24,14 +24,26 @@ Preconditions: Doctor returned ready and Python 3.12 plus jsonschema are install
 - Positive select returns exactly C, SPEC, V in order.
 - Positive inspect reports shape valid with semantics explicitly UNVERIFIED.
 - Negative change to SPEC source_status UNREAD must refuse.
-- Drive parser-claims-replay, v-copies-result-without-input and parser-refusal-local-exit. All remain structurally valid with semantics UNVERIFIED; the CLI must not award semantic ACCEPT to any of them.
+- Drive parser-claims-replay, v-copies-result-without-input, parser-refusal-local-exit, **stale-parser-link-rationale**, and **corrected-parser-link-rationale**. All remain structurally valid with semantics UNVERIFIED; the CLI must not award semantic ACCEPT to any of them. The latter pair differs only in its implements-edge justification after SPEC I/O was corrected to raw bytes plus opaque fixed references.
 - Proof: capture actual subprocess commands, stdout/stderr, exit codes, and result.json in external evidence after scratch cleanup.
+
+### One-Shot / Roadmap deterministic controls
+
+The same existing Card Semantic CLI also supports `roadmap RECORD` as a
+read-only index. Use the portable synthetic R fixture and observe
+only R links and directly referenced active Cards, without an all-Card dump
+or inferred Scope,
+Prompt, next or effects. A forged Roadmap target must receive the original
+v1 verification refusal. This verifies index/reference behavior, **not** that
+Session chose an optimal Scope. The independent reviewer must test omission
+of an applicable G, copied parent acceptance as local exit, and unchanged
+prompt-delta NOOP; source review and native P-class remain separate.
 
 ## Gotchas
 
 - Reading a title or PDF link alone is not inspecting the actual source.
 - Independent source/semantic review is still required.
-- Independent reviewer: compare fixed parser inputs and output against then; reject the first fixture's downstream replay claim and the second fixture's input-free V control. Review the corrected local exit while preserving the original parent replay requirement. These expected review criteria are not fresh native behavior observations.
+- Independent reviewer: compare fixed parser inputs and output against then; reject the downstream replay claim and the input-free V control. Also compare every affected Typed Link's applicability/counterfactual against the **current** SPEC input/output and actual Parser public API. The stale-link fixture wrongly describes decoded TaskSnapshot/FailureScope as parser inputs despite the corrected SPEC. The corrected-link fixture keeps raw bytes, opaque refs, and downstream replay/training separate. Both CLI results still have semantic proof ceiling UNVERIFIED, and no native Agent compliance is inferred. These expected review criteria are not fresh native behavior observations.
 
 All 15 N/Q/C/D/S/P/T/R/G/E/V/X/K/REQ/SPEC prompts are selected in a real CLI call during this journey. The grounded C/SPEC/V fixture and its negative unread-source control remain distinct. Every one of the fifteen types has existing per-type field tests; none is assumed semantically complete without reading the original source.
 

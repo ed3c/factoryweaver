@@ -14,6 +14,13 @@
 - **consequences** — source-backed and concrete; describe what changes in the engineering decision where applicable.
 - **exception** — source-backed and concrete; describe what changes in the engineering decision where applicable.
 
+**Conditional One-Shot reuse:** Reuse only the invariant clauses truly
+applicable to the selected Consumer. A global Reward/Training G may contribute
+only its protected-acceptance rule to a Parser atom; do not copy every
+training/rights/split condition into that atom's exit. Equally, removing a
+necessary no-effect G is not permissible merely to shorten a prompt.
+Typed-link validity cannot decide applicability; the Session and independent
+source reviewer must test both omissions and overreach.
 **Scope contribution:** Reusable hard constraint; link existing G rather than duplicate.
 
 **Rejection/non-case:** Copied universal safety G for unrelated chapter or new authority invented by prose.

@@ -64,6 +64,35 @@ Scope: assemble a minimal sufficient collection of relevant cards for one causal
 Semantic acceptance: a successful v1 JSON validation does not establish content quality, source fidelity or live behavior. Reject generic templates (e.g., 'Concept: Tool schema and validation; why it matters: select a mechanism'), duplicate G cards, reversed validated_by and false links such as 'Coding Agents enables Thanksgiving Recess'. Preserve original user outcomes and remaining work across Boot/Drill; no fabricated IDs, digests, cursors or measured results.
 
 Apply the linked taxonomy contract's **Consumer boundary and partial parent acceptance** check: SPEC output/then/oracle must cover the same Consumer; V needs discriminating input/result controls; the selected atom must distinguish its local clause acceptance from preserved parent obligations. Shape validation cannot perform this semantic check.
+## ONE-SHOT PROMPT TRANSFORMATION — SESSION, NOT CARD CONCATENATION
+
+Card generation is a source-grounded semantic process. The Session may apply a
+minimal, evidence-backed **generation feedback delta** before/during a Card
+CREATE/UPDATE: name the original wrong premise, the counterexample, the real
+Consumer and required correction. Review the saved REQ/SPEC/V/links against
+original source. This feedback is not executable `PromptDelta` and not an
+instruction to alter unrelated accepted Cards. No gain means REUSE/NOOP.
+
+An R Roadmap is a knowledge index of multiple causal units with prerequisites
+and only source-backed **Entry Card references**, not a complete Scope closure
+or scheduler. A `based_on` relation is not automatically a Scope entry or a
+demand to paste full Card payloads. The Session
+can choose a different scope when fresh evidence or original owner next requires
+it. The CLI can enumerate existing active card IDs and declared R edges, but
+cannot infer the correct behavior scope, semantic dependency or best wording.
+
+Only after current Source/REQ/Owner reconciliation does the Session compose a
+consumer-specific One-Shot Prompt from the selected minimal sufficient Cards.
+This is a semantic transformation of human intent, **not** copying Card payloads
+or adding boilerplate. It must retain the covered Goal/clauses, actual input
+contract, required behavior, hard invariants, distinct negative cases, oracle,
+stop/readback and implementation freedom. Unselected parent obligations stay in
+the full record. The existing `PromptDelta` is only the material new behavioral
+instruction proposed for the original Stage; when nothing new is needed it is
+NOOP. No generated IDs/digests/HEAD/argv/cursors/metrics/authorization.
+Actual permission and success remain with the original Soodles Owner and native
+Consumer, not with the Markdown prompt title or a Card.
+
 ## NEW CARD CONTRACTS
 
 `REQ|<stable-slug>` Requirement：
