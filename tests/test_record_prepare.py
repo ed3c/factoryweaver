@@ -19,7 +19,7 @@ class RecordPreparationTests(unittest.TestCase):
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory()
         self.addCleanup(self.temp.cleanup)
-        self.root = Path(self.temp.name)
+        self.root = Path(self.temp.name).resolve()
         self.source = self.root / "intent.txt"
         self.source.write_text("Keep the original line order.\n")
         self.draft = {
@@ -58,6 +58,22 @@ class RecordPreparationTests(unittest.TestCase):
                                text=True, capture_output=True)
         self.assertEqual(wrong.returncode, 2)
         self.assertIn("preparation_arguments_require_prepare", wrong.stderr)
+
+    def test_publication_refuses_symlink_directories_without_writing_outside_output(self):
+        outside = self.root / "outside"
+        outside.mkdir()
+        target = self.root / "prepared"
+        target.mkdir()
+        (target / "sources").symlink_to(outside, target_is_directory=True)
+        with self.assertRaisesRegex(ContractError, "output_directory"):
+            prepare(self.path, target)
+        self.assertEqual(list(outside.iterdir()), [])
+        self.assertFalse((target / "record.json").exists())
+        alias = self.root / "alias"
+        alias.symlink_to(outside, target_is_directory=True)
+        with self.assertRaisesRegex(ContractError, "output_directory"):
+            prepare(self.path, alias / "nested")
+        self.assertEqual(list(outside.iterdir()), [])
 
     def test_revision_keeps_identity_sources_and_old_failure(self):
         first = prepare(self.path, self.root / "v1")

@@ -34,7 +34,11 @@ Requirement 的 `source_ids`、Card 的 `evidence_ids` 與 progress 的 `evidenc
 舊 producer 未保存這項綁定的目錄也不覆寫。已完成 record 仍可由原 Reader 消費。
 已有 decision 或 action request 的 record 必須回原 owner；此入口拒絕代管或丟棄它們。
 
-程式先驗證整份結果，再逐檔原子發布。相同請求重送或並行重送讀回相同 bytes。
+程式先驗證整份結果，再逐檔原子發布。輸出路徑及其父目錄必須是真實目錄，不能經過符號連結。
+程式逐層固定 directory descriptor，從同一 descriptor 建立及發布檔案；
+既有 `sources` 或其他父目錄是符號連結時，以 `record_output_directory_required` 拒絕，
+不沿連結寫到其他目錄。已保存的部分輸出保留，續行仍須相同輸入。
+相同請求重送或並行重送讀回相同 bytes。
 不同輸入使用相同目的目錄時拒絕。中斷後可以用完全相同輸入續寫尚缺快照，
 但不能替換已有檔案。程式只在所有輸出保存後返回 `PREPARED_SPECIFICATION`。
 回應中的 `record` 是原程式計算的 FileRef，`references` 提供可供語義選取的真實 ID。

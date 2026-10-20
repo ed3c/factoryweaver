@@ -5,7 +5,8 @@ import hashlib
 import json
 import os
 from pathlib import Path
-import tempfile
+import secrets
+import stat
 
 from factoryweaver import ContractError, load, verify
 from card_delta import compile_delta
@@ -20,28 +21,57 @@ def identity(kind, *parts):
     return kind + "-" + hashlib.sha256(encoded(parts)).hexdigest()
 
 
-def publish(path, raw):
-    """Publish complete bytes once; a partial prior attempt can only be resumed."""
+def output_directory(path):
+    """Pin each real directory before publishing; never follow an output alias."""
     path = Path(path)
-    path.parent.mkdir(parents=True, exist_ok=True)
-    with tempfile.NamedTemporaryFile(dir=path.parent, delete=False) as stream:
-        temporary = Path(stream.name)
-        try:
-            stream.write(raw)
-            stream.flush()
-            os.fsync(stream.fileno())
+    if not path.is_absolute() or ".." in path.parts:
+        raise ContractError("record_output_directory_required:" + str(path))
+    descriptor = os.open(path.anchor, os.O_RDONLY | os.O_DIRECTORY)
+    try:
+        for part in path.parts[1:]:
             try:
-                os.link(temporary, path)
+                os.mkdir(part, dir_fd=descriptor)
             except FileExistsError:
-                if path.is_symlink() or not path.is_file() or path.read_bytes() != raw:
-                    raise ContractError("record_output_conflict_requires_readback:" + str(path))
-            descriptor = os.open(path.parent, os.O_RDONLY)
+                pass
+            child = os.open(part, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW, dir_fd=descriptor)
+            os.close(descriptor)
+            descriptor = child
+        return descriptor
+    except OSError as error:
+        os.close(descriptor)
+        raise ContractError("record_output_directory_required:" + str(path)) from error
+
+
+def publish(path, raw):
+    """Publish complete bytes once through pinned, non-symlink directories."""
+    path = Path(path)
+    directory = output_directory(path.parent)
+    temporary = ".record-" + secrets.token_hex(16)
+    try:
+        descriptor = os.open(temporary, os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_NOFOLLOW,
+                             0o600, dir_fd=directory)
+        try:
+            with os.fdopen(descriptor, "wb") as stream:
+                stream.write(raw)
+                stream.flush()
+                os.fsync(stream.fileno())
             try:
-                os.fsync(descriptor)
-            finally:
-                os.close(descriptor)
+                os.link(temporary, path.name, src_dir_fd=directory,
+                        dst_dir_fd=directory, follow_symlinks=False)
+            except FileExistsError:
+                try:
+                    existing = os.open(path.name, os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK,
+                                       dir_fd=directory)
+                except OSError as error:
+                    raise ContractError("record_output_conflict_requires_readback:" + str(path)) from error
+                with os.fdopen(existing, "rb") as stream:
+                    if not stat.S_ISREG(os.fstat(stream.fileno()).st_mode) or stream.read() != raw:
+                        raise ContractError("record_output_conflict_requires_readback:" + str(path))
+            os.fsync(directory)
         finally:
-            temporary.unlink()
+            os.unlink(temporary, dir_fd=directory)
+    finally:
+        os.close(directory)
     return {"path": str(path), "sha256": hashlib.sha256(raw).hexdigest()}
 
 
