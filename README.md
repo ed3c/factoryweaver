@@ -39,7 +39,9 @@ Use [the Soodles Scope Bundle export/readback contract](docs/factoryweaver-soodl
 
 ## 可執行的規格驗證
 
-純讀取 CLI 可驗證、投影、路由提案及渲染卡片。它不執行 Host actions。原 owner 仍負責 admission、執行與效果回讀。
+CLI 可驗證、投影、路由提案及渲染卡片。這些操作只讀取資料。
+[規格準備入口](docs/record-preparation.md)另將語義草稿與原來源保存成不可變的 v1 record，
+由原程式計算身分與版本。它不執行 Host actions。原 owner 仍負責 admission、執行與效果回讀。
 
 ```sh
 python3 -m pip install 'jsonschema>=4.20,<5'
