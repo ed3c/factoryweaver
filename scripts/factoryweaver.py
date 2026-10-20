@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""FactoryWeaver reference-only CLI: no shell, network, host write, or PR authority."""
+"""FactoryWeaver specification CLI; no worker, network, or PR authority."""
 from __future__ import annotations
 import argparse
 import json
@@ -236,11 +236,21 @@ def cards(record):
 
 def main(argv=None):
     parser = argparse.ArgumentParser()
-    parser.add_argument("command", choices=("validate", "project", "route", "cards"))
+    parser.add_argument("command", choices=("validate", "project", "route", "cards", "prepare"))
     parser.add_argument("input")
     parser.add_argument("--registry", help="Optional host capability registry for advisory routing only")
+    parser.add_argument("--output", help="Absolute directory for immutable specification preparation")
+    parser.add_argument("--previous", help="Previous accepted v1 record; retained and checked for history")
     args = parser.parse_args(argv)
     try:
+        if args.command == "prepare":
+            if not args.output or args.registry:
+                raise ContractError("prepare_output_required_no_registry")
+            from record_prepare import prepare
+            print(json.dumps(prepare(args.input, args.output, args.previous), ensure_ascii=False, sort_keys=True))
+            return 0
+        if args.output or args.previous:
+            raise ContractError("preparation_arguments_require_prepare")
         record = load(args.input)
         output = {
             "validate": lambda: verify(record),
@@ -250,7 +260,7 @@ def main(argv=None):
         }[args.command]()
         print(json.dumps(output, ensure_ascii=False, sort_keys=True) if not isinstance(output, str) else output, end="\n" if not isinstance(output, str) else "")
         return 0
-    except (OSError, ValueError, ValidationError, ContractError) as e:
+    except (OSError, ValueError, TypeError, KeyError, ValidationError, ContractError) as e:
         print(json.dumps({"valid": False, "error": str(e)}), file=sys.stderr)
         return 2
 
