@@ -241,15 +241,16 @@ def main(argv=None):
     parser.add_argument("--registry", help="Optional host capability registry for advisory routing only")
     parser.add_argument("--output", help="Absolute directory for immutable specification preparation")
     parser.add_argument("--previous", help="Previous accepted v1 record; retained and checked for history")
+    parser.add_argument("--progress-only", action="store_true", help="Require unchanged Cards and Requirements against --previous")
     args = parser.parse_args(argv)
     try:
         if args.command == "prepare":
             if not args.output or args.registry:
                 raise ContractError("prepare_output_required_no_registry")
             from record_prepare import prepare
-            print(json.dumps(prepare(args.input, args.output, args.previous), ensure_ascii=False, sort_keys=True))
+            print(json.dumps(prepare(args.input, args.output, args.previous, progress_only=args.progress_only), ensure_ascii=False, sort_keys=True))
             return 0
-        if args.output or args.previous:
+        if args.output or args.previous or args.progress_only:
             raise ContractError("preparation_arguments_require_prepare")
         record = load(args.input)
         output = {

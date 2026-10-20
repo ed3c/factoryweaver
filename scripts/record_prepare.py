@@ -45,7 +45,7 @@ def publish(path, raw):
     return {"path": str(path), "sha256": hashlib.sha256(raw).hexdigest()}
 
 
-def prepare(draft_path, output, previous=None):
+def prepare(draft_path, output, previous=None, *, progress_only=False):
     draft = load(draft_path)
     if not isinstance(draft, dict) or set(draft) != {
             "subject", "sources", "requirements", "cards", "progress"}:
@@ -63,6 +63,8 @@ def prepare(draft_path, output, previous=None):
         raise ContractError("semantic_cards_required")
     subject = {**draft["subject"], "id": identity("SUBJECT", draft["subject"])}
     prior = load(previous) if previous else None
+    if progress_only and prior is None:
+        raise ContractError("progress_only_requires_previous")
     if prior is not None:
         verify(prior)
         if prior.get("decisions") or prior["action_requests"]:
@@ -129,16 +131,24 @@ def prepare(draft_path, output, previous=None):
               "sources": list((retained | sources).values()), "requirements": requirements,
               "cards": cards, "action_requests": [], "progress": progress}
     verify(record)
+    if progress_only and any(record[key] != prior[key] for key in ("requirements", "cards")):
+        raise ContractError("progress_only_specification_changed")
     delta = compile_delta(prior, record, batch_size=4) if prior else None
     # Bind the attempt before any snapshots. A conflicting retry cannot replace history.
-    publish(root / "input.json", encoded({"draft": draft, "previous": prior,
-            "record_sha256": hashlib.sha256(encoded(record)).hexdigest()}))
+    binding = {"draft": draft, "previous": prior,
+               "record_sha256": hashlib.sha256(encoded(record)).hexdigest()}
+    if progress_only:
+        binding["progress_only"] = True
+    publish(root / "input.json", encoded(binding))
     for digest, raw in captures.items():
         publish(root / "sources" / digest, raw)
     if prior:
         publish(root / "previous.json", encoded(prior))
         publish(root / "delta.json", encoded(delta))
     reference = publish(root / "record.json", encoded(record))
-    return {"status": "PREPARED_SPECIFICATION", "record": reference,
+    result = {"status": "PREPARED_SPECIFICATION", "record": reference,
             "references": {"sources": source_names, "targets": targets},
             "effect_authority": False, "completion": "COMPILED_ONLY"}
+    if progress_only:
+        result["change_scope"] = "progress_only"
+    return result

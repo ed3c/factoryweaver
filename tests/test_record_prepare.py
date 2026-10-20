@@ -74,6 +74,63 @@ class RecordPreparationTests(unittest.TestCase):
         self.assertEqual(load(first["record"]["path"]), before)
         self.assertTrue((self.root / "v2/delta.json").is_file())
 
+    def test_progress_only_cli_binds_evidence_without_changing_specification(self):
+        first = prepare(self.path, self.root / "v1")
+        before = load(first["record"]["path"])
+        observation = self.root / "owner.txt"
+        observation.write_text("Original owner is waiting; no execution completed.\n")
+        self.draft["sources"]["owner"] = {"path": str(observation), "source_type": "other", "locator": "owner readback"}
+        self.draft["progress"]["delivery"] = {"state": "OWNER_WAIT", "evidence_refs": ["owner"]}
+        self.save()
+        target = self.root / "progress"
+        argv = [sys.executable, str(ROOT / "scripts/factoryweaver.py"), "prepare", str(self.path),
+                "--output", str(target), "--previous", first["record"]["path"], "--progress-only"]
+        with ThreadPoolExecutor(2) as pool:
+            runs = list(pool.map(lambda _: subprocess.run(argv, capture_output=True, text=True), range(2)))
+        self.assertEqual([run.returncode for run in runs], [0, 0], [run.stderr for run in runs])
+        replies = [json.loads(run.stdout) for run in runs]
+        self.assertEqual(replies[0], replies[1])
+        after = load(replies[0]["record"]["path"])
+        self.assertEqual(after["cards"], before["cards"])
+        self.assertEqual(after["requirements"], before["requirements"])
+        self.assertEqual(after["progress"]["delivery"]["state"], "OWNER_WAIT")
+        evidence = after["progress"]["delivery"]["evidence_refs"]
+        self.assertEqual(evidence, [replies[0]["references"]["sources"]["owner"]])
+        self.assertEqual(replies[0]["change_scope"], "progress_only")
+        self.assertFalse(replies[0]["effect_authority"])
+        self.assertTrue(load(target / "input.json")["progress_only"])
+        with self.assertRaisesRegex(ContractError, "output_conflict"):
+            prepare(self.path, target, first["record"]["path"])
+
+    def test_progress_only_rejects_specification_changes_before_publication(self):
+        first = prepare(self.path, self.root / "v1")
+        original = copy.deepcopy(self.draft)
+        for field in ("cards", "requirements"):
+            with self.subTest(field=field):
+                self.draft = copy.deepcopy(original)
+                if field == "cards":
+                    self.draft[field][0]["payload"] = "Sorted output is now allowed."
+                else:
+                    self.draft[field]["order"]["acceptance"] = ["Sorted output is allowed."]
+                self.save()
+                target = self.root / field
+                with self.assertRaisesRegex(ContractError, "progress_only_specification_changed"):
+                    prepare(self.path, target, first["record"]["path"], progress_only=True)
+                self.assertFalse(target.exists())
+                allowed = prepare(self.path, target, first["record"]["path"])
+                self.assertTrue(verify(load(allowed["record"]["path"]))["valid"])
+
+    def test_progress_only_requires_previous_and_prepare_command(self):
+        with self.assertRaisesRegex(ContractError, "progress_only_requires_previous"):
+            prepare(self.path, self.root / "missing", progress_only=True)
+        self.assertFalse((self.root / "missing").exists())
+        first = prepare(self.path, self.root / "v1")
+        run = subprocess.run([sys.executable, str(ROOT / "scripts/factoryweaver.py"),
+                              "validate", first["record"]["path"], "--progress-only"],
+                             capture_output=True, text=True)
+        self.assertEqual(run.returncode, 2)
+        self.assertIn("preparation_arguments_require_prepare", run.stderr)
+
     def test_installed_bundle_prepares_without_source_checkout(self):
         import build_skill_bundle
         bundle = self.root / "portable"

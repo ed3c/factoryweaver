@@ -43,3 +43,11 @@ Requirement 的 `source_ids`、Card 的 `evidence_ids` 與 progress 的 `evidenc
 下游沿原 `soodles_handoff.py` 產生 Bundle，再交原 Soodles Reader。
 每個執行綁定固定版本；修改草稿不會更新已派發任務的輸入。
 規格更正與任務修訂仍須原 owner 接受，並保留原 Goal、版本與失敗歷史。
+
+`prepare DRAFT --output DIRECTORY --previous RECORD --progress-only` 約束本次變更範圍。
+此模式需要原前版。程式解析完整 v1 資料後，核對 Cards 與 Requirements 均未改變；
+任何差異都在發布前以 `progress_only_specification_changed` 拒絕。
+新來源與 `progress` 可更新。回應的 `change_scope=progress_only` 只證明此資料邊界，
+不證明進度摘要、來源詮釋或實際效果正確，也不授權執行。
+模式保存在原 `input.json`；改用另一模式重送同一輸出目錄會拒絕。
+省略選項時保留原準備行為；一般規格修訂仍須獨立語義審查。
