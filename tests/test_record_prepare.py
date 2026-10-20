@@ -6,11 +6,13 @@ import subprocess
 import sys
 import tempfile
 import unittest
+from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 from factoryweaver import ContractError, load, verify
 from record_prepare import prepare
+import record_prepare
 
 
 class RecordPreparationTests(unittest.TestCase):
@@ -90,6 +92,28 @@ class RecordPreparationTests(unittest.TestCase):
         self.save()
         with self.assertRaisesRegex(ContractError, "output_conflict"):
             prepare(self.path, self.root / "v1")
+
+    def test_interrupted_attempt_rejects_changed_source_and_resumes_original_bytes(self):
+        target = self.root / "interrupted"
+        original = self.source.read_bytes()
+        publish = record_prepare.publish
+
+        def interrupt(path, raw):
+            result = publish(path, raw)
+            if Path(path).name == "input.json":
+                raise OSError("interrupted after attempt binding")
+            return result
+
+        with patch.object(record_prepare, "publish", side_effect=interrupt):
+            with self.assertRaisesRegex(OSError, "interrupted"):
+                prepare(self.path, target)
+        self.source.write_text("Changed source after interruption.\n")
+        with self.assertRaisesRegex(ContractError, "output_conflict"):
+            prepare(self.path, target)
+        self.assertFalse((target / "record.json").exists())
+        self.source.write_bytes(original)
+        resumed = prepare(self.path, target)
+        self.assertTrue(verify(load(resumed["record"]["path"]))["valid"])
 
     def test_rejects_removed_history_and_unknown_links_before_output(self):
         first = prepare(self.path, self.root / "v1")

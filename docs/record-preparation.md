@@ -29,6 +29,9 @@ Requirement 的 `source_ids`、Card 的 `evidence_ids` 與 progress 的 `evidenc
 原 Delta 拒絕刪除既有 Card。前版來源、record 與第一頁 Delta 保存在輸出中；
 後續頁仍由原 `card_delta.py` 消費它產生的 cursor。
 草稿及輸入前版保存於 `input.json`。原始失敗證據仍由原任務保管，不能用新版覆寫。
+`input.json` 同時綁定本次已讀來源所產生的完整 record 摘要。
+中斷後若來源 bytes 改變，原目錄拒絕重送；來源路徑相同不足以視為同一輸入。
+舊 producer 未保存這項綁定的目錄也不覆寫。已完成 record 仍可由原 Reader 消費。
 已有 decision 或 action request 的 record 必須回原 owner；此入口拒絕代管或丟棄它們。
 
 程式先驗證整份結果，再逐檔原子發布。相同請求重送或並行重送讀回相同 bytes。

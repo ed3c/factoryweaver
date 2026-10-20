@@ -131,7 +131,8 @@ def prepare(draft_path, output, previous=None):
     verify(record)
     delta = compile_delta(prior, record, batch_size=4) if prior else None
     # Bind the attempt before any snapshots. A conflicting retry cannot replace history.
-    publish(root / "input.json", encoded({"draft": draft, "previous": prior}))
+    publish(root / "input.json", encoded({"draft": draft, "previous": prior,
+            "record_sha256": hashlib.sha256(encoded(record)).hexdigest()}))
     for digest, raw in captures.items():
         publish(root / "sources" / digest, raw)
     if prior:
