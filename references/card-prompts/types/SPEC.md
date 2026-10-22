@@ -18,6 +18,8 @@
 - **oracle** — name the original method/Producer that discriminates this output and refusal boundary; it cannot be the desired result copied as a test method.
 - **original_owner** — source-backed and concrete; describe what changes in the engineering decision where applicable.
 
+**Source-to-target Consumer differential (when SPEC was migrated):** identify original and proposed typed Producer→Consumer boundaries under matched applicable inputs. Test positive behavior, a legitimate neighbor and a planted material divergence in exception/refusal, ordered side effect, unknown-effect readback or independent Oracle. A matching happy-path result or AST/import graph alone cannot prove behavioral parity or semantic correctness. Use an explicit owner-approved normalization only where the observed contract allows it; otherwise preserve the difference and the original raw observation. For deliberately changed behavior, use the newly authorized source SPEC rather than masking a failed original Golden Master.
+
 **Observed API versus opaque references:** When actual source code exists,
 name the *real* public API input variants and types, including which fields
 are opaque Producer references rather than loaded objects. Do not infer file
