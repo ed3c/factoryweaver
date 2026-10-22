@@ -115,3 +115,15 @@
 本次使用者已確認：「FCL-01 A、FCL-02 A、FCL-03 A」。
 
 要求結果：保留完整對話分層驗收；FactoryWeaver 原 Closed-loop v7.2 Registry 擁有本次 Card Revision；完成 Source Coverage、Typed Links、Scope／Prompt Delta、Acceptance 與文件 PR。產品 Runtime／Harness² Model-backed／正式 Promotion 不在本次授權內。
+
+## CL-20 — MGP approved Source-to-Consumer parity scope
+
+本次使用者已確認：「MGP-01 A、MGP-02 B」。
+
+要求結果：Portable v7.2 System Prompt 引入條件式 Source-to-Consumer Semantic Parity 和 Reuse-before-Rewrite，不讓所有 Card 強制走 AST／Codemod／Browser／Noodle Migration；僅修改實際受影響的 per-type Card Prompt、Owner Reference、原 Registry Revision 與驗證。原 Soodles migrate-class 為具名專案方法，不是每次編譯的新 Router、CLI 狀態或效果權限。
+
+## CL-21 — Fresh Native Consumer versus Source-only proof
+
+本次使用者已確認：「MGP-03 B」。
+
+要求結果：分別觀察 Source Identity、Matched Consumer Behavior Parity、Independent Semantic Correctness、Native Host/Agent/Provider Acceptance，設計舊版／新版 Prompt 正反案例。只在原 Host／訂閱登入與原 Owner 合法可用時執行真實 Native Consumer Evals；沒有實際 Session/Attempt/Observer/Provider 收據時保持 NOT_RUN 或 BLOCKED，不能用 GitHub CI、靜態 AST、金標 Fixture 或字句相似度冒充通用語義改善。
