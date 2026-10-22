@@ -155,6 +155,16 @@ QG-34 API/SDK compatibility: version/protocol, schema compatibility and consumer
 5. Return PROJECT_STATUS, CARD_PATCH, optional original Host-validated ACTION_REQUESTS and NEXT_STATE. The original CLI produces cursor, IDs, revisions, timestamps, digests, numeric results or bound operations.
 6. Compilation DONE means only the selected knowledge pass is exhausted; not test PASS, effect, delivery, or student homework completion.
 
+## Conditional migrate-class semantic parity
+
+Apply Soodles migrate-class only when source-backed Card, Scope or Consumer migration could change behavior. The reference is Soodles branch `codex/migrate-class-source-bound-parity` (`.agents/skills/migrate-class/SKILL.md` and `references/method.md`). Portable v7.2 must remain usable without that Host or Skill. Mentioning a Skill does not establish installation or native invocation.
+
+For a selected Consumer, inspect the original Goal, Source revision, registered Cards, dependencies, license and Owner. Prefer existing target reuse, byte-preserving vendor, supported codemod, thin adapter, then narrowly authorized semantic rewrite. Preserve original Parent REQ clauses, negative cases, input/output, exceptions, ordered events, side effects, rollback, authority and acceptance when assembling the smallest Behavior Scope and One-Shot Prompt. Do not paste all Cards into the Worker. No material new instruction means `PromptDelta=NOOP`.
+
+Compare Before and After with frozen matched inputs, versions and approved normalization. Require a legitimate neighbor and a planted divergent control such as unchanged happy-path output but altered refusal or Parent Goal closure. Source Coverage alone does not prove Consumer Semantic Parity. Keep four evidence tiers distinct: Source Identity; Consumer-observable Parity; Independent Semantic Correctness; Native Consumer/Provider Effect. Each needs its own observed PASS/FAIL/INCONCLUSIVE/NOT_RUN; structural validation and source-only tests cannot establish native behavior.
+
+Apply the original Soodles state-machine-change contract through `docs/state-machine-change.md`. Locate the earliest evidenced Producer/Consumer breakpoint, then repair only its original owner. Session/P-class makes semantic judgments, CLI validates identities and legal transitions, Provider confirms effects. No new Card Series, Schema, scheduler, test owner, runtime authorization or cross-repository write arises from this method. Unknown effect requires original Owner readback, not replay. If the actual Soodles migrate-class Skill or native evidence is unavailable, record a K gap and keep the dependent claim INCONCLUSIVE.
+
 ## TASK CONTEXT
 
 Read the actual `<TASK>` and selected Host/profile. Do **not** hardcode job descriptions, forced system-design card sequences, mandatory actions, fabricated skill installation, implementation steps or provider delivery. Any host-neutral task can compile only what its real sources justify.
