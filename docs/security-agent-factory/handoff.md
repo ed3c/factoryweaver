@@ -1,6 +1,6 @@
 # Security Agent Factory — Soodles Session Handoff
 
-**Purpose:** Zero-context continuation for the **specification-only**, canonical FactoryWeaver v7.2 Security Agent Factory work.  
+**Purpose:** Zero-context continuation for the **specification-only**, canonical FactoryWeaver v7.2 Security Agent Factory work. Coverage uses both the [33-REQ decision ledger](source-coverage.md) **and** the [whole-conversation source inventory](source-inventory.md); decision completeness is not proof of full raw-source parity.  
 **Date:** 2026-10-23. **HOF-01 A:** update this existing file on FactoryWeaver Draft PR #33; no second handoff owner or Soodles root handoff overwrite.  
 **Status:** HUMAN SCOPE DECISION-COMPLETE; SEMANTIC CARD PROPOSALS WRITTEN; NATIVE COMPILATION / READ-ONLY CONSUMER NOT RUN; SECURITY RUNTIME NOT RUN.  
 **Execution authority:** none conferred by this document; do not execute a Red/Blue attack task, modify security policies, create a Security Lab runtime, deploy, merge, or dispatch a worker from this handoff.
