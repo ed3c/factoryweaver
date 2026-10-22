@@ -2327,18 +2327,6 @@
         {
           "relation": "based_on",
           "target": "REQ-completion"
-        },
-        {
-          "relation": "based_on",
-          "target": "SPEC-outer-loop"
-        },
-        {
-          "relation": "based_on",
-          "target": "SPEC-inner-loop"
-        },
-        {
-          "relation": "based_on",
-          "target": "SPEC-stable-update"
         }
       ]
     },
