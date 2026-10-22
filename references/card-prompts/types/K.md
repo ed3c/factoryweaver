@@ -14,6 +14,8 @@
 - **next_source** — source-backed and concrete; describe what changes in the engineering decision where applicable.
 - **unaffected_work** — source-backed and concrete; describe what changes in the engineering decision where applicable.
 
+**Dynamic source uncertainty (conditional):** a static Code Intel/AST/canonical JSON analysis can locate source references but cannot prove runtime registration or downstream effects. Create or update K only when missing original dynamic Consumer/Provider observation changes an important next decision; name the actual source/owner/readback and unaffected work. Missing lexical parse capability does not force K for ordinary prose with sufficient inspected source and a legal unchanged next.
+
 **Scope contribution:** Explicit dependency gap, not a new Issue automatically.
 
 **Rejection/non-case:** A filler 'unknown' used to avoid checking available source or owner readback.
