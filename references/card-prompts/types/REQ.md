@@ -15,6 +15,8 @@
 - **acceptance** — preserve the whole required outcome and its observable conditions; a selected child atom covers only its explicitly mapped clauses.
 - **non_case** — source-backed and concrete; describe what changes in the engineering decision where applicable.
 
+**Semantic parity when an existing requirement is migrated:** preserve the original actor, Goal, full observable acceptance, forbidden/non-cases, owner and every decision-relevant source clause. A new target implementation preference is not a new Requirement. If a new user-approved behavior deliberately differs from the old REQ, preserve the before claim and record the authorized change; do not call it source-equivalent. A missing original clause remains source coverage UNKNOWN instead of silently reducing the denominator.
+
 **Scope contribution:** Whole-task goal/acceptance anchor for one or more atoms.
 
 **Rejection/non-case:** A reading's preferred implementation promoted to mandatory requirement.
