@@ -165,3 +165,7 @@ The following is **illustrative semantics**, not a measured result or an assumpt
 - New semantic Drill updates create a fresh delta cycle; old cursor is not reused; unchanged cards are not revised.
 - Native Hook/Cron, real future scheduling and actual p95 success require source/owner measurements, not model forecasts.
 - No unrecognized fields appear in legacy knowledge-record JSON; optional `extension_fields` stay in proposed sidecar until registered and validated.
+
+## Conditional migrate-class integration (source-bound)
+
+For a genuine migration of Card semantics into a Soodles Consumer, the current Session may select the original Soodles `migrate-class` Skill from branch `codex/migrate-class-source-bound-parity` only after confirming its installation and exact version in the active Host. The Skill is a method, not an executor or new admission step. Original Code-intel supplies supported structural facts, Test Manager selects differential/negative controls, Noodle Poteto performs authorized work, and the independent Observer/Provider supplies native readback. If unavailable, retain a K source/installation gap and mark native acceptance NOT_RUN. Do not copy the Skill into FactoryWeaver or require it for portable compilation. The v7.2 system prompt defines the corresponding four-tier Semantic Parity contract; ScopeManifest, SkillRoute, PromptDelta and Continuation remain non-card proposals. No new CLI operation or runtime permission is introduced.
