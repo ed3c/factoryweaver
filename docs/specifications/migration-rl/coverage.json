@@ -1,0 +1,648 @@
+{
+  "scope": "Explicit original conversation decisions and MRA obligations mapped to FactoryWeaver v7.2 record; exhaustive enumeration is not independent proof of uninspected source semantic completeness.",
+  "decisions": [
+    {
+      "id": "MRL-01",
+      "choice": "A",
+      "meaning": "Original and migrated programs really execute under matched inputs. REA recording/replay alone does not qualify.",
+      "source_id": "SRC-HUMAN",
+      "transport": "human user response in conversation; public v1 record cannot self-attest decision"
+    },
+    {
+      "id": "MRL-02",
+      "choice": "A",
+      "meaning": "Complete actual state/action/reset/reward and independent Evals before RL policy training; first deliverable is **RL-ready**, not **RL-trained**.",
+      "source_id": "SRC-HUMAN",
+      "transport": "human user response in conversation; public v1 record cannot self-attest decision"
+    },
+    {
+      "id": "MRL-03",
+      "choice": "A",
+      "meaning": "Pilot AIFS mathematical widgets and SeeCode renderer in medium-compiler; Stateful DB/API Full-stack follows later.",
+      "source_id": "SRC-HUMAN",
+      "transport": "human user response in conversation; public v1 record cannot self-attest decision"
+    },
+    {
+      "id": "MRL-04",
+      "choice": "A",
+      "meaning": "Agent may inspect, choose reuse/vendor/codemod/adapter, edit admitted target, build/run/test/inspect/repair/finish through original authorized tools.",
+      "source_id": "SRC-HUMAN",
+      "transport": "human user response in conversation; public v1 record cannot self-attest decision"
+    },
+    {
+      "id": "MRL-05",
+      "choice": "A",
+      "meaning": "Use paired real runs, Property-based, Metamorphic, boundaries, exceptions, numeric tolerance; no initial requirement for whole-project formal proof.",
+      "source_id": "SRC-HUMAN",
+      "transport": "human user response in conversation; public v1 record cannot self-attest decision"
+    },
+    {
+      "id": "MRL-06",
+      "choice": "A",
+      "meaning": "Reward only contracted equivalent behavior. Intentional feature changes/upgrades are separate authorized tasks, never silently mixed into parity.",
+      "source_id": "SRC-HUMAN",
+      "transport": "human user response in conversation; public v1 record cannot self-attest decision"
+    },
+    {
+      "id": "MRL-07",
+      "choice": "A",
+      "meaning": "Ground Human Intent assumptions, preconditions and falsifiers before making success claims; bounded sandbox experiments may resolve unknowns. No impossible proof-before-experiment gate.",
+      "source_id": "SRC-HUMAN",
+      "transport": "human user response in conversation; public v1 record cannot self-attest decision"
+    },
+    {
+      "id": "MRL-08",
+      "choice": "A",
+      "meaning": "Producer guarantees → Consumer requirements and Consumer feedback/errors → Producer expectations. **Not** universal mathematical reversibility.",
+      "source_id": "SRC-HUMAN",
+      "transport": "human user response in conversation; public v1 record cannot self-attest decision"
+    },
+    {
+      "id": "MRL-09",
+      "choice": "B",
+      "meaning": "Evaluate task-relevant dependency retrieval against independent frozen ground truth; report Recall, Coverage, abstentions and unresolved/dynamic edges separately. 99% is an **unmeasured target**, not current achieved quality.",
+      "source_id": "SRC-HUMAN",
+      "transport": "human user response in conversation; public v1 record cannot self-attest decision"
+    },
+    {
+      "id": "MRL-10",
+      "choice": "A",
+      "meaning": "Independent Native Evals produce a source-bound SPEC/V/G revision proposal. FactoryWeaver's original producer updates stable revisions; original Requirement Owner authorizes changes to Human Goal.",
+      "source_id": "SRC-HUMAN",
+      "transport": "human user response in conversation; public v1 record cannot self-attest decision"
+    },
+    {
+      "id": "FWC-01",
+      "choice": "A",
+      "meaning": "Canonical cards in separate ed3c/factoryweaver Knowledge Record and own branch",
+      "source_id": "SRC-HUMAN"
+    },
+    {
+      "id": "FWC-02",
+      "choice": "A",
+      "meaning": "Current scope is specification compilation/verification ONLY, no Migration-RL implementation or training",
+      "source_id": "SRC-HUMAN"
+    },
+    {
+      "id": "HOF-01",
+      "choice": "A",
+      "meaning": "Dedicated Soodles handoff branch and own file, unrelated docs/handoff.md preserved",
+      "source_id": "SRC-HUMAN"
+    },
+    {
+      "id": "FWP-01",
+      "choice": "A",
+      "meaning": "Portable v7.2 core + conditional Soodles migrate-class profile",
+      "source_id": "SRC-HUMAN"
+    },
+    {
+      "id": "FWP-02",
+      "choice": "A",
+      "meaning": "Repair affected cards and preserve original revisions",
+      "source_id": "SRC-HUMAN"
+    },
+    {
+      "id": "FWP-03",
+      "choice": "A",
+      "meaning": "Clause-level source coverage and missing raw source explicitly K",
+      "source_id": "SRC-HUMAN"
+    }
+  ],
+  "acceptance": [
+    {
+      "id": "MRA-01",
+      "source_clause": "Human Intent Hypothesis is grounded in original requirement, preconditions and falsifier; wrong premise cannot become proven.",
+      "requirement": "REQ-mrl-intent",
+      "cards": [
+        "REQ-intent",
+        "SPEC-intent",
+        "V-intent"
+      ],
+      "verification_status": "NOT_RUN"
+    },
+    {
+      "id": "MRA-02",
+      "source_clause": "Source rights and identity admissible; unlicensed asset, wrong SHA or wrong target refused.",
+      "requirement": "REQ-mrl-rights",
+      "cards": [
+        "REQ-rights",
+        "SPEC-rights",
+        "V-rights"
+      ],
+      "verification_status": "NOT_RUN"
+    },
+    {
+      "id": "MRA-03",
+      "source_clause": "Actual task-level AST/SCIP Migration Dependency Retrieval measures target Precision ≥99% against frozen ground truth and publishes Recall/Coverage/abstentions.",
+      "requirement": "REQ-mrl-retrieval",
+      "cards": [
+        "REQ-retrieval",
+        "SPEC-retrieval",
+        "V-retrieval"
+      ],
+      "verification_status": "NOT_RUN"
+    },
+    {
+      "id": "MRA-04",
+      "source_clause": "Dependency closure spans symbols, imports, registrations, assets and observed dynamic edges; missing critical edge blocks `CLOSED`.",
+      "requirement": "REQ-mrl-deps",
+      "cards": [
+        "REQ-deps",
+        "SPEC-deps",
+        "V-deps"
+      ],
+      "verification_status": "NOT_RUN"
+    },
+    {
+      "id": "MRA-05",
+      "source_clause": "Original and target are separately executed native runtimes, not REA/HAR replay masquerading as execution.",
+      "requirement": "REQ-mrl-runtimes",
+      "cards": [
+        "REQ-runtimes",
+        "SPEC-runtimes",
+        "V-runtimes"
+      ],
+      "verification_status": "NOT_RUN"
+    },
+    {
+      "id": "MRA-06",
+      "source_clause": "Authorized action changes actual target worktree/program state; foreign/unauthorized mutation is refused.",
+      "requirement": "REQ-mrl-mutation",
+      "cards": [
+        "REQ-mutation",
+        "SPEC-mutation",
+        "V-mutation"
+      ],
+      "verification_status": "NOT_RUN"
+    },
+    {
+      "id": "MRA-07",
+      "source_clause": "Mutation→Reset→readback restores clean worktree/process/browser/fixture state without cross-episode contamination.",
+      "requirement": "REQ-mrl-reset",
+      "cards": [
+        "REQ-reset",
+        "SPEC-reset",
+        "V-reset"
+      ],
+      "verification_status": "NOT_RUN"
+    },
+    {
+      "id": "MRA-08",
+      "source_clause": "Mathematical parity validates differential results, properties, metamorphic/boundary inputs and predeclared numeric error policy.",
+      "requirement": "REQ-mrl-math",
+      "cards": [
+        "REQ-math",
+        "SPEC-math",
+        "V-math"
+      ],
+      "verification_status": "NOT_RUN"
+    },
+    {
+      "id": "MRA-09",
+      "source_clause": "Producer→Consumer guarantees and Consumer→Producer prerequisites/feedback/exception obligations are both tested in scope.",
+      "requirement": "REQ-mrl-interfaces",
+      "cards": [
+        "REQ-interfaces",
+        "SPEC-interfaces",
+        "V-interfaces"
+      ],
+      "verification_status": "NOT_RUN"
+    },
+    {
+      "id": "MRA-10",
+      "source_clause": "Selected DOM/ARIA/focus/events/network/filesystem/persistence behavior and side-effect order remain contracted.",
+      "requirement": "REQ-mrl-ui-effects",
+      "cards": [
+        "REQ-ui-effects",
+        "SPEC-ui-effects",
+        "V-ui-effects"
+      ],
+      "verification_status": "NOT_RUN"
+    },
+    {
+      "id": "MRA-11",
+      "source_clause": "Plant false-equivalence, bad error, order and over-inference negatives; verifier rejects them.",
+      "requirement": "REQ-mrl-false-inference",
+      "cards": [
+        "REQ-false-inference",
+        "SPEC-false-inference",
+        "V-false-inference"
+      ],
+      "verification_status": "NOT_RUN"
+    },
+    {
+      "id": "MRA-12",
+      "source_clause": "Reward is independent and resists forged trace, agent self-score, changed Oracle and insufficient hard-gate evidence.",
+      "requirement": "REQ-mrl-reward",
+      "cards": [
+        "REQ-reward",
+        "SPEC-reward",
+        "V-reward"
+      ],
+      "verification_status": "NOT_RUN"
+    },
+    {
+      "id": "MRA-13",
+      "source_clause": "Native Evals are source-bound to correct SPEC/V/G revisions via original FactoryWeaver producer; unsupported changes do not become truth.",
+      "requirement": "REQ-mrl-cards",
+      "cards": [
+        "REQ-cards",
+        "SPEC-cards",
+        "V-cards"
+      ],
+      "verification_status": "NOT_RUN"
+    },
+    {
+      "id": "MRA-14",
+      "source_clause": "Source revision change, stale evidence, wrong card version, missing link and dependency updates yield targeted invalidation/recovery.",
+      "requirement": "REQ-mrl-invalidation",
+      "cards": [
+        "REQ-invalidation",
+        "SPEC-invalidation",
+        "V-invalidation"
+      ],
+      "verification_status": "NOT_RUN"
+    },
+    {
+      "id": "MRA-15",
+      "source_clause": "In the same supervising Session, Source/Owner-bound Outer reasoning (or NOOP) is consumed by the next authorized unsealed Poteto Stage; real inner feedback changes only warranted subsequent decisions/cards. Fresh Native Consumer and original Owner readback prove the handoff, not documentation.",
+      "requirement": "REQ-mrl-session",
+      "cards": [
+        "REQ-session",
+        "SPEC-session",
+        "V-session"
+      ],
+      "verification_status": "NOT_RUN"
+    },
+    {
+      "id": "MRA-16",
+      "source_clause": "Evaluation-first reproducible baseline, proper held-out split, success/failure/cost/latency/refusal/coverage metrics.",
+      "requirement": "REQ-mrl-baseline",
+      "cards": [
+        "REQ-baseline",
+        "SPEC-baseline",
+        "V-baseline"
+      ],
+      "verification_status": "NOT_RUN"
+    },
+    {
+      "id": "MRA-17",
+      "source_clause": "RL-ready vs trained-policy outcomes remain separate; no training improvement claims without actual controlled weights/checkpoints/held-out comparison.",
+      "requirement": "REQ-mrl-training",
+      "cards": [
+        "REQ-training",
+        "SPEC-training",
+        "V-training"
+      ],
+      "verification_status": "NOT_RUN"
+    },
+    {
+      "id": "MRA-18",
+      "source_clause": "Whole original Human Goal **and** applicable FactoryWeaver card obligations (revision/NOOP + native consumer uptake), remaining REQ inventory, real independent evidence and original Owner effect/readback converge; partial green, card DONE, unknown-write or cognitive NOOP cannot falsely close the parent goal.",
+      "requirement": "REQ-mrl-closure",
+      "cards": [
+        "REQ-closure",
+        "SPEC-closure",
+        "V-closure"
+      ],
+      "verification_status": "NOT_RUN"
+    }
+  ],
+  "additional_units": [
+    {
+      "id": "HUMAN-INTENT-FIRST-PRINCIPLES",
+      "requirement": "REQ-mrl-intent",
+      "source": "SRC-HUMAN",
+      "disposition": "Hypotheses, applicability, falsifiers before correctness claims"
+    },
+    {
+      "id": "TWO-PLANNED-MARKDOWNS",
+      "requirement": "REQ-mrl-design-docs",
+      "source": "SRC-HANDOFF",
+      "disposition": "Migration-RL — Implementation Scope.md and First Principles：真實數學 Runtime 不等於文字推論.md planned, not implemented"
+    },
+    {
+      "id": "AST-SCIP-99",
+      "requirement": "REQ-mrl-retrieval",
+      "source": "SRC-HUMAN",
+      "disposition": "Task-level Precision>=0.99 with Recall/Coverage/critical misses, not a measured outcome"
+    },
+    {
+      "id": "SINGLE-SUPERVISING-SESSION",
+      "requirement": "REQ-mrl-session",
+      "source": "SRC-HANDOFF",
+      "disposition": "Outer Thinking/Ambitious, inner bounded Poteto, independent evals, original card producer, CognitiveStop != HumanGoalClosed"
+    },
+    {
+      "id": "RELEASE-BOUNDARY",
+      "requirement": "REQ-mrl-closure",
+      "source": "SRC-HANDOFF",
+      "disposition": "Only original owner reconciles all REQs, accepted card revisions/NOOP, native effect receipts"
+    },
+    {
+      "id": "FWC-CARDS-ONLY",
+      "requirement": "REQ-mrl-spec-record",
+      "source": "SRC-HUMAN",
+      "disposition": "FWC-01 A and FWC-02 A, canonical new FactoryWeaver record and source-bound verification; no runtime"
+    }
+  ],
+  "source_registry": [
+    {
+      "id": "SRC-HUMAN",
+      "uri": "urn:chatgpt:conversation:migration-rl",
+      "locator": "Explicit user MRL-01–10, FWC-01 A, FWC-02 A and HOF-01 A",
+      "integrity": "UNPINNED",
+      "semantic_note": "Source metadata and relevant content inspected; no raw SHA256 computed or user/Host effect authorization inferred."
+    },
+    {
+      "id": "SRC-HANDOFF",
+      "uri": "https://github.com/ed3c/soodles/blob/7feb3e9510611b229e2e370d00ec9d11812e115c/docs/handoffs/migration-rl/handoff.md",
+      "locator": "Soodles migration handoff §§1–15: MRL, MRA, same-session convergence",
+      "integrity": "UNPINNED",
+      "semantic_note": "Source metadata and relevant content inspected; no raw SHA256 computed or user/Host effect authorization inferred."
+    },
+    {
+      "id": "SRC-ISSUE",
+      "uri": "https://github.com/ed3c/soodles/issues/446",
+      "locator": "Migration-RL Issue #446, prior open questions resolved by user",
+      "integrity": "UNPINNED",
+      "semantic_note": "Source metadata and relevant content inspected; no raw SHA256 computed or user/Host effect authorization inferred."
+    },
+    {
+      "id": "SRC-MIGRATE",
+      "uri": "https://github.com/ed3c/soodles/blob/c45d566e69bb074da33b63a89060022c893ff7de/.agents/skills/migrate-class/SKILL.md",
+      "locator": "Draft Skill at PR #444 head c45d566e69bb074da33b63a89060022c893ff7de",
+      "integrity": "UNPINNED",
+      "semantic_note": "Source metadata and relevant content inspected; no raw SHA256 computed or user/Host effect authorization inferred."
+    },
+    {
+      "id": "SRC-CODE",
+      "uri": "https://github.com/ed3c/soodles/blob/1f5bfbe19d553304ca2f60138fe2c22519d655dd/contracts/code-intel.md",
+      "locator": "Original Code-intel Python declaration/catalog facts only",
+      "integrity": "UNPINNED",
+      "semantic_note": "Source metadata and relevant content inspected; no raw SHA256 computed or user/Host effect authorization inferred."
+    },
+    {
+      "id": "SRC-FW-SCHEMA",
+      "uri": "https://github.com/ed3c/factoryweaver/blob/bc8d7815ed4b3446bb3eacb6e3b50675f24b6f32/contracts/v1/knowledge-record.schema.json",
+      "locator": "Actual FactoryWeaver v1 schema and validator reject invented Host-human confirmations",
+      "integrity": "UNPINNED",
+      "semantic_note": "Source metadata and relevant content inspected; no raw SHA256 computed or user/Host effect authorization inferred."
+    },
+    {
+      "id": "SRC-FW-CARDS",
+      "uri": "https://github.com/ed3c/factoryweaver/blob/bc8d7815ed4b3446bb3eacb6e3b50675f24b6f32/docs/card-delta-contract.md",
+      "locator": "Card delta and 15-type contract, original Producer and typed link revision semantics",
+      "integrity": "UNPINNED",
+      "semantic_note": "Source metadata and relevant content inspected; no raw SHA256 computed or user/Host effect authorization inferred."
+    },
+    {
+      "id": "SRC-AGENTENV",
+      "uri": "https://github.com/scaleapi/agentenv-framework",
+      "locator": "Environment SDK reference; no native run observed by this spec",
+      "integrity": "UNPINNED",
+      "semantic_note": "Source metadata and relevant content inspected; no raw SHA256 computed or user/Host effect authorization inferred."
+    },
+    {
+      "id": "SRC-REA",
+      "uri": "https://github.com/earakely-scale/rea-environments",
+      "locator": "REA showcase stateless replay, not actual original write side effects",
+      "integrity": "UNPINNED",
+      "semantic_note": "Source metadata and relevant content inspected; no raw SHA256 computed or user/Host effect authorization inferred."
+    },
+    {
+      "id": "SRC-PILOT",
+      "uri": "https://github.com/ed3c/medium-compiler/pull/72",
+      "locator": "Existing selected Chromium source-only comparison, not native agent",
+      "integrity": "UNPINNED",
+      "semantic_note": "Source metadata and relevant content inspected; no raw SHA256 computed or user/Host effect authorization inferred."
+    },
+    {
+      "id": "SRC-EVALS",
+      "uri": "https://github.com/ai-evals-course/evals-skills",
+      "locator": "AI Evals skills are methods, not proof of installation",
+      "integrity": "UNPINNED",
+      "semantic_note": "Source metadata and relevant content inspected; no raw SHA256 computed or user/Host effect authorization inferred."
+    }
+  ],
+  "limits": [
+    "No Host-verified human decision in public v1 record; decisions retained in external source-bound coverage with original user answers.",
+    "Coverage of 10 MRL, 18 MRA and 3 FWC/HOF choices does not prove all unprovided raw conversations have been inspected.",
+    "No evaluated AST/SCIP 99% measurement, Native dual runtime, reward or FactoryWeaver producer→Noodle Consumer run.",
+    "Existing source-only Chromium pilot cannot be promoted to native acceptance.",
+    "No cross-repository write/merge/production/training authorization.",
+    "Host-bound full raw historical chat has not been materialized; this clause inventory covers inspected text, not an unfounded all-history 100% claim."
+  ],
+  "counts": {
+    "MRL": 10,
+    "MRA": 18,
+    "FWC": 2,
+    "HOF": 1,
+    "REQ": 22,
+    "Card": 74,
+    "FWP": 3,
+    "source_clauses": 25
+  },
+  "source_clauses": [
+    {
+      "clause_id": "CLAUSE-INTENT",
+      "excerpt": "Human Intent falsifiable First Principles",
+      "source_scope": "actually inspected original User/Handoff/Soodles migrate-class source as applicable",
+      "requirement": "REQ-mrl-intent",
+      "card": "SPEC-intent",
+      "disposition": "MAPPED_WITH_SOURCE_CEILING"
+    },
+    {
+      "clause_id": "CLAUSE-NATIVE",
+      "excerpt": "Source/target actual dual Native runtime, not replay",
+      "source_scope": "actually inspected original User/Handoff/Soodles migrate-class source as applicable",
+      "requirement": "REQ-mrl-runtimes",
+      "card": "SPEC-runtimes",
+      "disposition": "MAPPED_WITH_SOURCE_CEILING"
+    },
+    {
+      "clause_id": "CLAUSE-EVAL",
+      "excerpt": "Evaluation-first before training",
+      "source_scope": "actually inspected original User/Handoff/Soodles migrate-class source as applicable",
+      "requirement": "REQ-mrl-baseline",
+      "card": "SPEC-baseline",
+      "disposition": "MAPPED_WITH_SOURCE_CEILING"
+    },
+    {
+      "clause_id": "CLAUSE-MATHUI",
+      "excerpt": "Math/UI pilot first then Stateful Full-stack",
+      "source_scope": "actually inspected original User/Handoff/Soodles migrate-class source as applicable",
+      "requirement": "REQ-mrl-math",
+      "card": "SPEC-math",
+      "disposition": "MAPPED_WITH_SOURCE_CEILING"
+    },
+    {
+      "clause_id": "CLAUSE-TOOLS",
+      "excerpt": "End-to-end authorized migration actions",
+      "source_scope": "actually inspected original User/Handoff/Soodles migrate-class source as applicable",
+      "requirement": "REQ-mrl-mutation",
+      "card": "SPEC-mutation",
+      "disposition": "MAPPED_WITH_SOURCE_CEILING"
+    },
+    {
+      "clause_id": "CLAUSE-PROPERTY",
+      "excerpt": "Differential/Property/Metamorphic/Boundary verification",
+      "source_scope": "actually inspected original User/Handoff/Soodles migrate-class source as applicable",
+      "requirement": "REQ-mrl-math",
+      "card": "SPEC-math",
+      "disposition": "MAPPED_WITH_SOURCE_CEILING"
+    },
+    {
+      "clause_id": "CLAUSE-PARITY",
+      "excerpt": "Strict source/target behavior parity",
+      "source_scope": "actually inspected original User/Handoff/Soodles migrate-class source as applicable",
+      "requirement": "REQ-mrl-math",
+      "card": "SPEC-math",
+      "disposition": "MAPPED_WITH_SOURCE_CEILING"
+    },
+    {
+      "clause_id": "CLAUSE-TWOSIDED",
+      "excerpt": "Producer guarantees and Consumer reverse feedback",
+      "source_scope": "actually inspected original User/Handoff/Soodles migrate-class source as applicable",
+      "requirement": "REQ-mrl-interfaces",
+      "card": "SPEC-interfaces",
+      "disposition": "MAPPED_WITH_SOURCE_CEILING"
+    },
+    {
+      "clause_id": "CLAUSE-INDEX",
+      "excerpt": "Task-level AST/SCIP >=99% precision with recall and unknown edges",
+      "source_scope": "actually inspected original User/Handoff/Soodles migrate-class source as applicable",
+      "requirement": "REQ-mrl-retrieval",
+      "card": "SPEC-retrieval",
+      "disposition": "MAPPED_WITH_SOURCE_CEILING"
+    },
+    {
+      "clause_id": "CLAUSE-CARDS",
+      "excerpt": "Independent Evals to original FactoryWeaver revision",
+      "source_scope": "actually inspected original User/Handoff/Soodles migrate-class source as applicable",
+      "requirement": "REQ-mrl-cards",
+      "card": "SPEC-cards",
+      "disposition": "MAPPED_WITH_SOURCE_CEILING"
+    },
+    {
+      "clause_id": "CLAUSE-LOOP",
+      "excerpt": "Outer Thinking/Ambitious and inner Poteto supervising Session",
+      "source_scope": "actually inspected original User/Handoff/Soodles migrate-class source as applicable",
+      "requirement": "REQ-mrl-session",
+      "card": "SPEC-session",
+      "disposition": "MAPPED_WITH_SOURCE_CEILING"
+    },
+    {
+      "clause_id": "CLAUSE-KX",
+      "excerpt": "Known/Unknown K/X and false inference",
+      "source_scope": "actually inspected original User/Handoff/Soodles migrate-class source as applicable",
+      "requirement": "REQ-mrl-cards",
+      "card": "SPEC-cards",
+      "disposition": "MAPPED_WITH_SOURCE_CEILING"
+    },
+    {
+      "clause_id": "CLAUSE-STRATEGY",
+      "excerpt": "Existing target → licensed vendor → codemod → thin adapter → authorized rewrite",
+      "source_scope": "actually inspected original User/Handoff/Soodles migrate-class source as applicable",
+      "requirement": "REQ-mrl-migration-method",
+      "card": "SPEC-migration-method",
+      "disposition": "MAPPED_WITH_SOURCE_CEILING"
+    },
+    {
+      "clause_id": "CLAUSE-RIGHTS",
+      "excerpt": "Single target and source/asset rights",
+      "source_scope": "actually inspected original User/Handoff/Soodles migrate-class source as applicable",
+      "requirement": "REQ-mrl-rights",
+      "card": "SPEC-rights",
+      "disposition": "MAPPED_WITH_SOURCE_CEILING"
+    },
+    {
+      "clause_id": "CLAUSE-STATIC",
+      "excerpt": "Python declaration index is not full SCIP call graph",
+      "source_scope": "actually inspected original User/Handoff/Soodles migrate-class source as applicable",
+      "requirement": "REQ-mrl-deps",
+      "card": "SPEC-deps",
+      "disposition": "MAPPED_WITH_SOURCE_CEILING"
+    },
+    {
+      "clause_id": "CLAUSE-NEGATIVE",
+      "excerpt": "False resolution, changed exception/effect order refused",
+      "source_scope": "actually inspected original User/Handoff/Soodles migrate-class source as applicable",
+      "requirement": "REQ-mrl-false-inference",
+      "card": "SPEC-false-inference",
+      "disposition": "MAPPED_WITH_SOURCE_CEILING"
+    },
+    {
+      "clause_id": "CLAUSE-RESET",
+      "excerpt": "Actual state mutation and reset",
+      "source_scope": "actually inspected original User/Handoff/Soodles migrate-class source as applicable",
+      "requirement": "REQ-mrl-reset",
+      "card": "SPEC-reset",
+      "disposition": "MAPPED_WITH_SOURCE_CEILING"
+    },
+    {
+      "clause_id": "CLAUSE-CLOSURE",
+      "excerpt": "CognitiveStop/Card DONE != HumanGoalClosed",
+      "source_scope": "actually inspected original User/Handoff/Soodles migrate-class source as applicable",
+      "requirement": "REQ-mrl-closure",
+      "card": "SPEC-closure",
+      "disposition": "MAPPED_WITH_SOURCE_CEILING"
+    },
+    {
+      "clause_id": "CLAUSE-DOCS",
+      "excerpt": "Migration-RL scope and First Principles .md future refs",
+      "source_scope": "actually inspected original User/Handoff/Soodles migrate-class source as applicable",
+      "requirement": "REQ-mrl-design-docs",
+      "card": "REQ-design-docs",
+      "disposition": "MAPPED_WITH_SOURCE_CEILING"
+    },
+    {
+      "clause_id": "CLAUSE-HOF",
+      "excerpt": "HOF dedicated original branch preserved",
+      "source_scope": "actually inspected original User/Handoff/Soodles migrate-class source as applicable",
+      "requirement": "REQ-mrl-clause-coverage",
+      "card": "SPEC-clause-coverage",
+      "disposition": "MAPPED_WITH_SOURCE_CEILING"
+    },
+    {
+      "clause_id": "CLAUSE-FWC",
+      "excerpt": "FactoryWeaver official Producer; spec-only scope",
+      "source_scope": "actually inspected original User/Handoff/Soodles migrate-class source as applicable",
+      "requirement": "REQ-mrl-clause-coverage",
+      "card": "SPEC-clause-coverage",
+      "disposition": "MAPPED_WITH_SOURCE_CEILING"
+    },
+    {
+      "clause_id": "CLAUSE-FWP1",
+      "excerpt": "FWP-01 Portable core + conditional migration profile",
+      "source_scope": "actually inspected original User/Handoff/Soodles migrate-class source as applicable",
+      "requirement": "REQ-mrl-clause-coverage",
+      "card": "SPEC-clause-coverage",
+      "disposition": "MAPPED_WITH_SOURCE_CEILING"
+    },
+    {
+      "clause_id": "CLAUSE-FWP2",
+      "excerpt": "FWP-02 Versioned card repair",
+      "source_scope": "actually inspected original User/Handoff/Soodles migrate-class source as applicable",
+      "requirement": "REQ-mrl-invalidation",
+      "card": "SPEC-invalidation",
+      "disposition": "MAPPED_WITH_SOURCE_CEILING"
+    },
+    {
+      "clause_id": "CLAUSE-FWP3",
+      "excerpt": "FWP-03 clause-level source coverage",
+      "source_scope": "actually inspected original User/Handoff/Soodles migrate-class source as applicable",
+      "requirement": "REQ-mrl-clause-coverage",
+      "card": "SPEC-clause-coverage",
+      "disposition": "MAPPED_WITH_SOURCE_CEILING"
+    },
+    {
+      "clause_id": "CLAUSE-OWNER",
+      "excerpt": "Session/CLI/effect Owner separation",
+      "source_scope": "actually inspected original User/Handoff/Soodles migrate-class source as applicable",
+      "requirement": "REQ-mrl-session",
+      "card": "SPEC-session",
+      "disposition": "MAPPED_WITH_SOURCE_CEILING"
+    }
+  ]
+}

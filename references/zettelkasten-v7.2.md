@@ -51,6 +51,20 @@ OUTPUT: CARD_PATCH_AND_PROJECT_STATUS
 8. **Render**：提供精簡 PROJECT_STATUS；按實際所選 Card Series 產生具專屬語義的卡片，不預設 Narrative/Concept/SPEC/P/V/K/X 配額。Soodles Host 保留四個顯示槽位；不足時使用 UNUSED 而非捏造卡片。工程正文遵守 `review-writing` 的 Actor/Condition/Causality/State/Acceptance/Source Fidelity；Host 擁有實際 metadata。
 9. **Commit**：輸出 `CARD_PATCH`, `PROJECT_STATUS`, `ACTION_REQUESTS`, `NEXT_STATE`，遵守 v7.1 `DONE/CONTINUE/BLOCKED/FAILED`；`DONE` 只代表本輪來源編譯完成，**不代表產品已落地或測試通過**。
 
+## Source-to-Consumer evidence preservation (portable)
+
+For a material engineering claim, trace the actual original Source clause and Human Goal through REQ → typed Card → proposed Scope → selected Consumer and original Owner. The earliest unsupported inference may be in card-generation itself: a needed precondition was omitted, an unknown API signature was guessed, a dependency link was reversed, a parent Goal became a local exit, or a self-report was promoted to actual runtime evidence. Repair the **earliest original producer** and only affected links, not the later Writer prompt.
+
+**Clause-level fidelity:** each actually inspected decision-changing source assertion, exception, non-case and human decision maps to REQ/Card/K or reviewed exclusion with explicit source locator. Number of IDs, cards or schema-valid JSON does not prove semantic completeness. A missing original raw source is a named K and blocks only claims that depend on it.
+
+**Specificity:** an actionable SPEC names actual Producer and Consumer, relevant source-supported input kind or named unknown signature, observable output/refusal/side-effect, and discriminating counterexample at that *same* boundary. A V names a positive *input*, a negative mutation, independent evidence producer, expected discriminating result and actual observed status. Generic “selected inputs → scoped result” or copying the desired success into the Oracle is insufficient for executable-specification claims. Never fabricate missing types or benchmark results.
+
+**Causal dependency:** a `depends_on` edge is justified only if the *local* contract truly requires its target. Source-grounded spec compilation does not require finished product/Native acceptance; a valid Outer/Inner loop can precede its next Card revision. Retain old revisions and use original deterministic `card_delta` for changed Cards.
+
+**Proof and effect ceiling:** source identity, AST/static lookup, native behavior parity, independent math/semantic validity, fresh P-class Consumer acceptance, FactoryWeaver Card revision and original Provider delivery are distinct. Unknown write requires original Owner readback. Card-generation feedback repairs Card/Link; `PromptDelta` applies only to a next original legal unsealed Consumer; original Owner continuation remains a separate action. `CognitiveStop` never implies `HumanGoalClosed`.
+
+This portable invariant does not activate migrate-class, SCIP, RL, Native execution or every Soodles Manager for unrelated tasks. It adds **no** new Card Series, schema field, CLI state, scheduler, test owner or authorization.
+
 ## CARD CLASSIFICATION AND SCOPE ASSEMBLY — REQUIRED
 
 Before Classify, Trace, Reduce, Render or Scope Assembly, read [Card Classification and Scope Assembly](card-classification-and-scope-assembly.md). Preserve all 15 series in five groups: Knowledge (N/C/D/T/E), Decision (Q/S/R), Specification (REQ/SPEC/G), Implementation (P), Verification (V/X/K). Seven core series C/REQ/G/SPEC/V/X/K are coverage vocabulary, not a required card mix.

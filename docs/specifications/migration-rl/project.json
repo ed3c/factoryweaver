@@ -1,0 +1,2541 @@
+{
+  "schema_version": "factoryweaver/v1",
+  "subject": {
+    "id": "migration-rl-fwc-spec-v72",
+    "scope": "FWC-01 A and FWC-02 A: FactoryWeaver cards-only scope; native Migration-RL implementation, RL training and cross-repo writes deferred.",
+    "consumer": "Original Soodles migrate-class session, only after separately authorized handoff/admission"
+  },
+  "sources": [
+    {
+      "source_id": "SRC-HUMAN",
+      "source_type": "human_decision",
+      "source_dependency_key": "human-decisions",
+      "locator": "Explicit user MRL-01–10, FWC-01 A, FWC-02 A and HOF-01 A",
+      "uri": "urn:chatgpt:conversation:migration-rl",
+      "source_role": "HUMAN_DECISION",
+      "integrity": "UNPINNED"
+    },
+    {
+      "source_id": "SRC-HANDOFF",
+      "source_type": "other",
+      "source_dependency_key": "soodles-migration-handoff",
+      "locator": "Soodles migration handoff §§1–15: MRL, MRA, same-session convergence",
+      "uri": "https://github.com/ed3c/soodles/blob/7feb3e9510611b229e2e370d00ec9d11812e115c/docs/handoffs/migration-rl/handoff.md",
+      "source_role": "SUBJECT_MATTER",
+      "integrity": "UNPINNED"
+    },
+    {
+      "source_id": "SRC-ISSUE",
+      "source_type": "other",
+      "source_dependency_key": "soodles-issue-446",
+      "locator": "Migration-RL Issue #446, prior open questions resolved by user",
+      "uri": "https://github.com/ed3c/soodles/issues/446",
+      "source_role": "SUBJECT_MATTER",
+      "integrity": "UNPINNED"
+    },
+    {
+      "source_id": "SRC-MIGRATE",
+      "source_type": "code",
+      "source_dependency_key": "migrate-skill-draft",
+      "locator": "Draft Skill at PR #444 head c45d566e69bb074da33b63a89060022c893ff7de",
+      "uri": "https://github.com/ed3c/soodles/blob/c45d566e69bb074da33b63a89060022c893ff7de/.agents/skills/migrate-class/SKILL.md",
+      "source_role": "SUBJECT_MATTER",
+      "integrity": "UNPINNED"
+    },
+    {
+      "source_id": "SRC-CODE",
+      "source_type": "code",
+      "source_dependency_key": "python-ast-codeintel",
+      "locator": "Original Code-intel Python declaration/catalog facts only",
+      "uri": "https://github.com/ed3c/soodles/blob/1f5bfbe19d553304ca2f60138fe2c22519d655dd/contracts/code-intel.md",
+      "source_role": "SUBJECT_MATTER",
+      "integrity": "UNPINNED"
+    },
+    {
+      "source_id": "SRC-FW-SCHEMA",
+      "source_type": "code",
+      "source_dependency_key": "factoryweaver-schema",
+      "locator": "Actual FactoryWeaver v1 schema and validator reject invented Host-human confirmations",
+      "uri": "https://github.com/ed3c/factoryweaver/blob/bc8d7815ed4b3446bb3eacb6e3b50675f24b6f32/contracts/v1/knowledge-record.schema.json",
+      "source_role": "SUBJECT_MATTER",
+      "integrity": "UNPINNED"
+    },
+    {
+      "source_id": "SRC-FW-CARDS",
+      "source_type": "official_doc",
+      "source_dependency_key": "factoryweaver-card-revision",
+      "locator": "Card delta and 15-type contract, original Producer and typed link revision semantics",
+      "uri": "https://github.com/ed3c/factoryweaver/blob/bc8d7815ed4b3446bb3eacb6e3b50675f24b6f32/docs/card-delta-contract.md",
+      "source_role": "SUBJECT_MATTER",
+      "integrity": "UNPINNED"
+    },
+    {
+      "source_id": "SRC-AGENTENV",
+      "source_type": "other",
+      "source_dependency_key": "agentenv-reference",
+      "locator": "Environment SDK reference; no native run observed by this spec",
+      "uri": "https://github.com/scaleapi/agentenv-framework",
+      "source_role": "SUBJECT_MATTER",
+      "integrity": "UNPINNED"
+    },
+    {
+      "source_id": "SRC-REA",
+      "source_type": "other",
+      "source_dependency_key": "rea-replay",
+      "locator": "REA showcase stateless replay, not actual original write side effects",
+      "uri": "https://github.com/earakely-scale/rea-environments",
+      "source_role": "SUBJECT_MATTER",
+      "integrity": "UNPINNED"
+    },
+    {
+      "source_id": "SRC-PILOT",
+      "source_type": "test_artifact",
+      "source_dependency_key": "medium-compiler-pr72",
+      "locator": "Existing selected Chromium source-only comparison, not native agent",
+      "uri": "https://github.com/ed3c/medium-compiler/pull/72",
+      "source_role": "TEST_ARTIFACT",
+      "integrity": "UNPINNED"
+    },
+    {
+      "source_id": "SRC-EVALS",
+      "source_type": "other",
+      "source_dependency_key": "external-evals-method",
+      "locator": "AI Evals skills are methods, not proof of installation",
+      "uri": "https://github.com/ai-evals-course/evals-skills",
+      "source_role": "SUBJECT_MATTER",
+      "integrity": "UNPINNED"
+    }
+  ],
+  "requirements": [
+    {
+      "id": "REQ-mrl-intent",
+      "statement": "Human Intent Hypothesis is grounded in original requirement, preconditions and falsifier; wrong premise cannot become proven.",
+      "claim_kind": "NORMATIVE",
+      "source_ids": [
+        "SRC-HUMAN",
+        "SRC-HANDOFF"
+      ],
+      "owner": "Soodles supervising Session",
+      "acceptance": [
+        "MRA-01: Human Intent Hypothesis is grounded in original requirement, preconditions and falsifier; wrong premise cannot become proven.",
+        "Positive: Named Human Goal assumption + falsifier",
+        "Negative: Wrong premise promoted from text to PROVEN",
+        "Oracle: Source-grounded falsification and original Owner"
+      ],
+      "knowledge_status": "SPECIFIED",
+      "engineering_status": "UNASSESSED",
+      "delivery_status": "NOT_STARTED",
+      "falsifier": "Wrong premise promoted from text to PROVEN",
+      "depends_on": []
+    },
+    {
+      "id": "REQ-mrl-rights",
+      "statement": "Source rights and identity admissible; unlicensed asset, wrong SHA or wrong target refused.",
+      "claim_kind": "NORMATIVE",
+      "source_ids": [
+        "SRC-HUMAN",
+        "SRC-HANDOFF",
+        "SRC-MIGRATE",
+        "SRC-ISSUE"
+      ],
+      "owner": "Original Source/Admission Owner",
+      "acceptance": [
+        "MRA-02: Source rights and identity admissible; unlicensed asset, wrong SHA or wrong target refused.",
+        "Positive: Explicit licensed source/asset and one admitted writable target",
+        "Negative: Incompatible asset/foreign worktree authorized",
+        "Oracle: Source license+NOTICE+Owner admission"
+      ],
+      "knowledge_status": "SPECIFIED",
+      "engineering_status": "UNASSESSED",
+      "delivery_status": "NOT_STARTED",
+      "falsifier": "Incompatible asset/foreign worktree authorized",
+      "depends_on": [
+        "REQ-mrl-intent"
+      ]
+    },
+    {
+      "id": "REQ-mrl-retrieval",
+      "statement": "Actual task-level AST/SCIP Migration Dependency Retrieval measures target Precision ≥99% against frozen ground truth and publishes Recall/Coverage/abstentions.",
+      "claim_kind": "NORMATIVE",
+      "source_ids": [
+        "SRC-HUMAN",
+        "SRC-HANDOFF",
+        "SRC-CODE"
+      ],
+      "owner": "Code-intel + independent evaluator",
+      "acceptance": [
+        "MRA-03: Actual task-level AST/SCIP Migration Dependency Retrieval measures target Precision ≥99% against frozen ground truth and publishes Recall/Coverage/abstentions.",
+        "Positive: Task-relevant symbol and dependency retrieval on frozen JS/TS AST+SCIP",
+        "Negative: Only one easy correct hit and omitted critical deps",
+        "Oracle: Frozen TP/FP/FN, Precision/Recall/Coverage"
+      ],
+      "knowledge_status": "SPECIFIED",
+      "engineering_status": "UNASSESSED",
+      "delivery_status": "NOT_STARTED",
+      "falsifier": "Only one easy correct hit and omitted critical deps",
+      "depends_on": [
+        "REQ-mrl-rights"
+      ]
+    },
+    {
+      "id": "REQ-mrl-deps",
+      "statement": "Dependency closure spans symbols, imports, registrations, assets and observed dynamic edges; missing critical edge blocks `CLOSED`.",
+      "claim_kind": "NORMATIVE",
+      "source_ids": [
+        "SRC-HUMAN",
+        "SRC-HANDOFF",
+        "SRC-CODE"
+      ],
+      "owner": "Selected Consumer owner",
+      "acceptance": [
+        "MRA-04: Dependency closure spans symbols, imports, registrations, assets and observed dynamic edges; missing critical edge blocks `CLOSED`.",
+        "Positive: Imports, registrations, assets and runtime edges traced",
+        "Negative: Dynamic missing edge called CLOSED",
+        "Oracle: Static graph plus real runtime dynamic trace"
+      ],
+      "knowledge_status": "SPECIFIED",
+      "engineering_status": "UNASSESSED",
+      "delivery_status": "NOT_STARTED",
+      "falsifier": "Dynamic missing edge called CLOSED",
+      "depends_on": [
+        "REQ-mrl-retrieval"
+      ]
+    },
+    {
+      "id": "REQ-mrl-runtimes",
+      "statement": "Original and target are separately executed native runtimes, not REA/HAR replay masquerading as execution.",
+      "claim_kind": "NORMATIVE",
+      "source_ids": [
+        "SRC-HUMAN",
+        "SRC-HANDOFF",
+        "SRC-AGENTENV",
+        "SRC-REA"
+      ],
+      "owner": "AgentEnv Environment Owner",
+      "acceptance": [
+        "MRA-05: Original and target are separately executed native runtimes, not REA/HAR replay masquerading as execution.",
+        "Positive: Separate original and target programs execute identical input",
+        "Negative: HAR Replay treated as actual process",
+        "Oracle: Native process traces under fixed images"
+      ],
+      "knowledge_status": "SPECIFIED",
+      "engineering_status": "UNASSESSED",
+      "delivery_status": "NOT_STARTED",
+      "falsifier": "HAR Replay treated as actual process",
+      "depends_on": [
+        "REQ-mrl-rights",
+        "REQ-mrl-deps"
+      ]
+    },
+    {
+      "id": "REQ-mrl-mutation",
+      "statement": "Authorized action changes actual target worktree/program state; foreign/unauthorized mutation is refused.",
+      "claim_kind": "NORMATIVE",
+      "source_ids": [
+        "SRC-HUMAN",
+        "SRC-HANDOFF",
+        "SRC-MIGRATE",
+        "SRC-ISSUE"
+      ],
+      "owner": "Original Noodle Worktree Owner",
+      "acceptance": [
+        "MRA-06: Authorized action changes actual target worktree/program state; foreign/unauthorized mutation is refused.",
+        "Positive: Authorized target modification changes actual file",
+        "Negative: Agent writes upstream or frozen target",
+        "Oracle: Worktree diff and original Owner effect receipt"
+      ],
+      "knowledge_status": "SPECIFIED",
+      "engineering_status": "UNASSESSED",
+      "delivery_status": "NOT_STARTED",
+      "falsifier": "Agent writes upstream or frozen target",
+      "depends_on": [
+        "REQ-mrl-rights"
+      ]
+    },
+    {
+      "id": "REQ-mrl-reset",
+      "statement": "Mutation→Reset→readback restores clean worktree/process/browser/fixture state without cross-episode contamination.",
+      "claim_kind": "NORMATIVE",
+      "source_ids": [
+        "SRC-HUMAN",
+        "SRC-HANDOFF",
+        "SRC-AGENTENV",
+        "SRC-REA"
+      ],
+      "owner": "AgentEnv Sandbox Owner",
+      "acceptance": [
+        "MRA-07: Mutation→Reset→readback restores clean worktree/process/browser/fixture state without cross-episode contamination.",
+        "Positive: Mutate file/cookie/process; reset restores clean seed",
+        "Negative: Reset returns OK with stale process/cookie",
+        "Oracle: Before/after isolated state readbacks"
+      ],
+      "knowledge_status": "SPECIFIED",
+      "engineering_status": "UNASSESSED",
+      "delivery_status": "NOT_STARTED",
+      "falsifier": "Reset returns OK with stale process/cookie",
+      "depends_on": [
+        "REQ-mrl-runtimes",
+        "REQ-mrl-mutation"
+      ]
+    },
+    {
+      "id": "REQ-mrl-math",
+      "statement": "Mathematical parity validates differential results, properties, metamorphic/boundary inputs and predeclared numeric error policy.",
+      "claim_kind": "NORMATIVE",
+      "source_ids": [
+        "SRC-HUMAN",
+        "SRC-HANDOFF",
+        "SRC-PILOT"
+      ],
+      "owner": "Independent mathematical Oracle",
+      "acceptance": [
+        "MRA-08: Mathematical parity validates differential results, properties, metamorphic/boundary inputs and predeclared numeric error policy.",
+        "Positive: Matched input, epsilon fixed before result, property/metamorphic/boundaries",
+        "Negative: Error type differs or epsilon adjusted after candidate",
+        "Oracle: Paired native math+properties/edge cases"
+      ],
+      "knowledge_status": "SPECIFIED",
+      "engineering_status": "UNASSESSED",
+      "delivery_status": "NOT_STARTED",
+      "falsifier": "Error type differs or epsilon adjusted after candidate",
+      "depends_on": [
+        "REQ-mrl-runtimes"
+      ]
+    },
+    {
+      "id": "REQ-mrl-interfaces",
+      "statement": "Producer→Consumer guarantees and Consumer→Producer prerequisites/feedback/exception obligations are both tested in scope.",
+      "claim_kind": "NORMATIVE",
+      "source_ids": [
+        "SRC-HUMAN",
+        "SRC-HANDOFF"
+      ],
+      "owner": "Interface Contract Owner",
+      "acceptance": [
+        "MRA-09: Producer→Consumer guarantees and Consumer→Producer prerequisites/feedback/exception obligations are both tested in scope.",
+        "Positive: Producer guarantee satisfies consumer accepted domain and feedback/ack",
+        "Negative: Lost acknowledgment or required inverse hash",
+        "Oracle: Typed interface and native return/error trace"
+      ],
+      "knowledge_status": "SPECIFIED",
+      "engineering_status": "UNASSESSED",
+      "delivery_status": "NOT_STARTED",
+      "falsifier": "Lost acknowledgment or required inverse hash",
+      "depends_on": [
+        "REQ-mrl-deps",
+        "REQ-mrl-runtimes"
+      ]
+    },
+    {
+      "id": "REQ-mrl-ui-effects",
+      "statement": "Selected DOM/ARIA/focus/events/network/filesystem/persistence behavior and side-effect order remain contracted.",
+      "claim_kind": "NORMATIVE",
+      "source_ids": [
+        "SRC-HUMAN",
+        "SRC-HANDOFF",
+        "SRC-PILOT"
+      ],
+      "owner": "Browser Consumer Owner",
+      "acceptance": [
+        "MRA-10: Selected DOM/ARIA/focus/events/network/filesystem/persistence behavior and side-effect order remain contracted.",
+        "Positive: Selected DOM/ARIA/focus/event/side-effects contract equivalent",
+        "Negative: Removed SeeCode edge or event reorder hidden by image",
+        "Oracle: Chromium native DOM+event+effect trace"
+      ],
+      "knowledge_status": "SPECIFIED",
+      "engineering_status": "UNASSESSED",
+      "delivery_status": "NOT_STARTED",
+      "falsifier": "Removed SeeCode edge or event reorder hidden by image",
+      "depends_on": [
+        "REQ-mrl-interfaces",
+        "REQ-mrl-runtimes"
+      ]
+    },
+    {
+      "id": "REQ-mrl-false-inference",
+      "statement": "Plant false-equivalence, bad error, order and over-inference negatives; verifier rejects them.",
+      "claim_kind": "NORMATIVE",
+      "source_ids": [
+        "SRC-HUMAN",
+        "SRC-HANDOFF"
+      ],
+      "owner": "Original Test Manager and independent Evals",
+      "acceptance": [
+        "MRA-11: Plant false-equivalence, bad error, order and over-inference negatives; verifier rejects them.",
+        "Positive: Known good and planted false-equivalence negative controls",
+        "Negative: Same happy path excuses wrong exception/order",
+        "Oracle: Selected discriminating negative controls"
+      ],
+      "knowledge_status": "SPECIFIED",
+      "engineering_status": "UNASSESSED",
+      "delivery_status": "NOT_STARTED",
+      "falsifier": "Same happy path excuses wrong exception/order",
+      "depends_on": [
+        "REQ-mrl-math",
+        "REQ-mrl-ui-effects"
+      ]
+    },
+    {
+      "id": "REQ-mrl-reward",
+      "statement": "Reward is independent and resists forged trace, agent self-score, changed Oracle and insufficient hard-gate evidence.",
+      "claim_kind": "NORMATIVE",
+      "source_ids": [
+        "SRC-HUMAN",
+        "SRC-HANDOFF"
+      ],
+      "owner": "AgentEnv Task Verifier and original outcome Owner",
+      "acceptance": [
+        "MRA-12: Reward is independent and resists forged trace, agent self-score, changed Oracle and insufficient hard-gate evidence.",
+        "Positive: Independent hard gates all observed true",
+        "Negative: Self-report or changed Golden yields reward one",
+        "Oracle: Independent recomputed reward and receipts"
+      ],
+      "knowledge_status": "SPECIFIED",
+      "engineering_status": "UNASSESSED",
+      "delivery_status": "NOT_STARTED",
+      "falsifier": "Self-report or changed Golden yields reward one",
+      "depends_on": [
+        "REQ-mrl-rights",
+        "REQ-mrl-runtimes",
+        "REQ-mrl-false-inference"
+      ]
+    },
+    {
+      "id": "REQ-mrl-cards",
+      "statement": "Native Evals are source-bound to correct SPEC/V/G revisions via original FactoryWeaver producer; unsupported changes do not become truth.",
+      "claim_kind": "NORMATIVE",
+      "source_ids": [
+        "SRC-HUMAN",
+        "SRC-HANDOFF",
+        "SRC-FW-CARDS"
+      ],
+      "owner": "FactoryWeaver original Card Producer",
+      "acceptance": [
+        "MRA-13: Native Evals are source-bound to correct SPEC/V/G revisions via original FactoryWeaver producer; unsupported changes do not become truth.",
+        "Positive: Observed failure produces source-bound SPEC/V/G revision proposal",
+        "Negative: Candidate failure causes rewriting oracle",
+        "Oracle: Original card producer/Owner revision and Evals"
+      ],
+      "knowledge_status": "SPECIFIED",
+      "engineering_status": "UNASSESSED",
+      "delivery_status": "NOT_STARTED",
+      "falsifier": "Candidate failure causes rewriting oracle",
+      "depends_on": [
+        "REQ-mrl-intent",
+        "REQ-mrl-false-inference"
+      ]
+    },
+    {
+      "id": "REQ-mrl-invalidation",
+      "statement": "Source revision change, stale evidence, wrong card version, missing link and dependency updates yield targeted invalidation/recovery.",
+      "claim_kind": "NORMATIVE",
+      "source_ids": [
+        "SRC-HUMAN",
+        "SRC-HANDOFF",
+        "SRC-FW-CARDS"
+      ],
+      "owner": "FactoryWeaver Card Producer",
+      "acceptance": [
+        "MRA-14: Source revision change, stale evidence, wrong card version, missing link and dependency updates yield targeted invalidation/recovery.",
+        "Positive: Changed SPEC invalidates dependent V while preserving history",
+        "Negative: Deletes/recycles card ID or analogue causes false invalidation",
+        "Oracle: Original card_delta and dependent consumer check"
+      ],
+      "knowledge_status": "SPECIFIED",
+      "engineering_status": "UNASSESSED",
+      "delivery_status": "NOT_STARTED",
+      "falsifier": "Deletes/recycles card ID or analogue causes false invalidation",
+      "depends_on": [
+        "REQ-mrl-cards"
+      ]
+    },
+    {
+      "id": "REQ-mrl-session",
+      "statement": "In the same supervising Session, Source/Owner-bound Outer reasoning (or NOOP) is consumed by the next authorized unsealed Poteto Stage; real inner feedback changes only warranted subsequent decisions/cards. Fresh Native Consumer and original Owner readback prove the handoff, not documentation.",
+      "claim_kind": "NORMATIVE",
+      "source_ids": [
+        "SRC-HUMAN",
+        "SRC-HANDOFF"
+      ],
+      "owner": "Soodles supervising Owner; Noodle Host",
+      "acceptance": [
+        "MRA-15: In the same supervising Session, Source/Owner-bound Outer reasoning (or NOOP) is consumed by the next authorized unsealed Poteto Stage; real inner feedback changes only warranted subsequent decisions/cards. Fresh Native Consumer and original Owner readback prove the handoff, not documentation.",
+        "Positive: One fused Delta/NOOP consumed in next legal unsealed Stage",
+        "Negative: Frozen Stage overwritten or local pass closes all",
+        "Oracle: Actual Stage inputs, result, original Owner next"
+      ],
+      "knowledge_status": "SPECIFIED",
+      "engineering_status": "UNASSESSED",
+      "delivery_status": "NOT_STARTED",
+      "falsifier": "Frozen Stage overwritten or local pass closes all",
+      "depends_on": [
+        "REQ-mrl-intent",
+        "REQ-mrl-mutation"
+      ]
+    },
+    {
+      "id": "REQ-mrl-baseline",
+      "statement": "Evaluation-first reproducible baseline, proper held-out split, success/failure/cost/latency/refusal/coverage metrics.",
+      "claim_kind": "NORMATIVE",
+      "source_ids": [
+        "SRC-HUMAN",
+        "SRC-HANDOFF"
+      ],
+      "owner": "Test Manager + Evals Supervisor",
+      "acceptance": [
+        "MRA-16: Evaluation-first reproducible baseline, proper held-out split, success/failure/cost/latency/refusal/coverage metrics.",
+        "Positive: Matched deterministic/untuned runs and held-out family/cost",
+        "Negative: Different budget or zero successes cost=0",
+        "Oracle: Real comparable episodes and denominators"
+      ],
+      "knowledge_status": "SPECIFIED",
+      "engineering_status": "UNASSESSED",
+      "delivery_status": "NOT_STARTED",
+      "falsifier": "Different budget or zero successes cost=0",
+      "depends_on": [
+        "REQ-mrl-reset",
+        "REQ-mrl-reward"
+      ]
+    },
+    {
+      "id": "REQ-mrl-training",
+      "statement": "RL-ready vs trained-policy outcomes remain separate; no training improvement claims without actual controlled weights/checkpoints/held-out comparison.",
+      "claim_kind": "NORMATIVE",
+      "source_ids": [
+        "SRC-HUMAN",
+        "SRC-HANDOFF"
+      ],
+      "owner": "Later Policy Training Owner",
+      "acceptance": [
+        "MRA-17: RL-ready vs trained-policy outcomes remain separate; no training improvement claims without actual controlled weights/checkpoints/held-out comparison.",
+        "Positive: RL-ready verified episodes kept distinct from trained weights",
+        "Negative: Replay success labeled RL-trained",
+        "Oracle: Separate checkpoints and trained-heldout comparison"
+      ],
+      "knowledge_status": "SPECIFIED",
+      "engineering_status": "UNASSESSED",
+      "delivery_status": "NOT_STARTED",
+      "falsifier": "Replay success labeled RL-trained",
+      "depends_on": [
+        "REQ-mrl-baseline"
+      ]
+    },
+    {
+      "id": "REQ-mrl-closure",
+      "statement": "Whole original Human Goal **and** applicable FactoryWeaver card obligations (revision/NOOP + native consumer uptake), remaining REQ inventory, real independent evidence and original Owner effect/readback converge; partial green, card DONE, unknown-write or cognitive NOOP cannot falsely close the parent goal.",
+      "claim_kind": "NORMATIVE",
+      "source_ids": [
+        "SRC-HUMAN",
+        "SRC-HANDOFF"
+      ],
+      "owner": "Original Parent Goal/Delivery Owner",
+      "acceptance": [
+        "MRA-18: Whole original Human Goal **and** applicable FactoryWeaver card obligations (revision/NOOP + native consumer uptake), remaining REQ inventory, real independent evidence and original Owner effect/readback converge; partial green, card DONE, unknown-write or cognitive NOOP cannot falsely close the parent goal.",
+        "Positive: Full REQ plus Cards obligations and original effects closed",
+        "Negative: Card DONE while human REQ open or unknown write",
+        "Oracle: Owner reconciliation of all parent obligations"
+      ],
+      "knowledge_status": "SPECIFIED",
+      "engineering_status": "UNASSESSED",
+      "delivery_status": "NOT_STARTED",
+      "falsifier": "Card DONE while human REQ open or unknown write",
+      "depends_on": [
+        "REQ-mrl-session",
+        "REQ-mrl-invalidation",
+        "REQ-mrl-baseline"
+      ]
+    },
+    {
+      "id": "REQ-mrl-spec-record",
+      "statement": "Create one canonical v7.2 FactoryWeaver Migration-RL record and complete MRL/MRA/HOF/FWC coverage.",
+      "claim_kind": "NORMATIVE",
+      "source_ids": [
+        "SRC-HUMAN",
+        "SRC-HANDOFF",
+        "SRC-FW-CARDS"
+      ],
+      "owner": "Original FactoryWeaver Producer for current cards; original Soodles Owner for deferred docs",
+      "acceptance": [
+        "Source-supported record contains all MRL-01–10 and MRA-01–18 mapping with typed, valid cards.",
+        "Card compilation is promoted to RL implementation completion."
+      ],
+      "knowledge_status": "SPECIFIED",
+      "engineering_status": "UNASSESSED",
+      "delivery_status": "NOT_STARTED",
+      "falsifier": "Card compilation is promoted to RL implementation completion.",
+      "depends_on": [
+        "REQ-mrl-intent"
+      ]
+    },
+    {
+      "id": "REQ-mrl-design-docs",
+      "statement": "Future implementation shall create separate migration-rl-implementation-scope.md and first-principles.md, linked by migrate-class P-class.",
+      "claim_kind": "NORMATIVE",
+      "source_ids": [
+        "SRC-HUMAN",
+        "SRC-HANDOFF",
+        "SRC-FW-CARDS"
+      ],
+      "owner": "Original FactoryWeaver Producer for current cards; original Soodles Owner for deferred docs",
+      "acceptance": [
+        "Each contract has the agreed twelve sections and independent source-bound verification when actually created.",
+        "Uncreated docs are claimed to be deployed or already consumed."
+      ],
+      "knowledge_status": "SPECIFIED",
+      "engineering_status": "UNASSESSED",
+      "delivery_status": "NOT_STARTED",
+      "falsifier": "Uncreated docs are claimed to be deployed or already consumed.",
+      "depends_on": [
+        "REQ-mrl-intent",
+        "REQ-mrl-session"
+      ]
+    },
+    {
+      "id": "REQ-mrl-migration-method",
+      "statement": "Source-preserving migrate-class must prioritize existing target reuse, rights-checked byte-preserving vendor, supported codemod, thin adapter, then separately authorized semantic rewrite, based on actual Consumer, license and structural source.",
+      "claim_kind": "NORMATIVE",
+      "source_ids": [
+        "SRC-HUMAN",
+        "SRC-HANDOFF",
+        "SRC-MIGRATE"
+      ],
+      "owner": "Original Soodles migrate-class Session",
+      "acceptance": [
+        "Source-dependent method order and decision proof; no forced unnecessary rewrite",
+        "Wrong asset rights or foreign target rejected"
+      ],
+      "knowledge_status": "SPECIFIED",
+      "engineering_status": "UNASSESSED",
+      "delivery_status": "NOT_STARTED",
+      "falsifier": "Blindly rewrite original mathematical engine despite reusable target and unknown rights",
+      "depends_on": [
+        "REQ-mrl-intent",
+        "REQ-mrl-rights"
+      ]
+    },
+    {
+      "id": "REQ-mrl-clause-coverage",
+      "statement": "Maintain source-clause lossless mapping of actually available original user conversation and Soodles migrate-class requirements, not merely MRA/MRL count, with missing raw historical source explicitly K.",
+      "claim_kind": "NORMATIVE",
+      "source_ids": [
+        "SRC-HUMAN",
+        "SRC-HANDOFF",
+        "SRC-MIGRATE"
+      ],
+      "owner": "FactoryWeaver original Source Reader",
+      "acceptance": [
+        "Every inspected decision-changing source claim mapped to a REQ/Card/K or reviewed exclusion",
+        "Unavailable original raw history explicitly K, never false 100% completeness"
+      ],
+      "knowledge_status": "SPECIFIED",
+      "engineering_status": "UNASSESSED",
+      "delivery_status": "NOT_STARTED",
+      "falsifier": "MRA 18/18 while migration order/negative clause omitted",
+      "depends_on": [
+        "REQ-mrl-intent"
+      ]
+    }
+  ],
+  "cards": [
+    {
+      "stable_id": "REQ-intent",
+      "canonical_key": "REQ|migration-rl|defines|intent|factoryweaver|v1",
+      "series": "REQ",
+      "revision": 1,
+      "status": "ACTIVE",
+      "title": "Migration-RL intent",
+      "payload": "Actor: Soodles supervising Session.\nGoal: Human Intent Hypothesis is grounded in original requirement, preconditions and falsifier; wrong premise cannot become proven.\nMeasurement: Source-grounded falsification and original Owner; actual native metrics NOT_RUN.\nPersistence: preserve this and all parent REQs across authorized bounded attempts.\nStop/Escalation: incomplete or unknown evidence blocks only dependent work, never claims whole completion.\nAcceptance: Named Human Goal assumption + falsifier.\nNon-case: Wrong premise promoted from text to PROVEN.",
+      "evidence_ids": [
+        "SRC-HUMAN",
+        "SRC-HANDOFF"
+      ],
+      "typed_links": [
+        {
+          "relation": "implements",
+          "target": "REQ-mrl-intent"
+        },
+        {
+          "relation": "validated_by",
+          "target": "V-intent"
+        }
+      ]
+    },
+    {
+      "stable_id": "SPEC-intent",
+      "canonical_key": "SPEC|migration-rl|defines|intent|factoryweaver|v1",
+      "series": "SPEC",
+      "revision": 2,
+      "status": "ACTIVE",
+      "title": "Migration-RL intent executable contract",
+      "payload": "Given: selected real source/Consumer, original Owner permission and applicable inputs; absent exact signature remains K.\nWhen: the selected supervising Session consumes its actual input.\nThen: Human Intent Hypothesis is grounded in original requirement, preconditions and falsifier; wrong premise cannot become proven.\nProducer: Human Requirement Owner.\nConsumer: supervising Session.\nInputs and conditions: original clause, source, condition and falsifier.\nOutputs/refusals/effects: scoped hypothesis/unknown.\nPositive: traced claim with counterexample.\nNegative/falsifier: missing source but fluent conclusion.\nUnknown effect: original Owner readback before any retry; no guessed status.\nReplay: previous source-only result may be retained as history, not native evidence.\nIndependent Oracle: actual observation from supervising Session; new native test NOT_RUN.",
+      "evidence_ids": [
+        "SRC-HUMAN",
+        "SRC-HANDOFF"
+      ],
+      "typed_links": [
+        {
+          "relation": "implements",
+          "target": "REQ-mrl-intent"
+        },
+        {
+          "relation": "validated_by",
+          "target": "V-intent"
+        }
+      ]
+    },
+    {
+      "stable_id": "V-intent",
+      "canonical_key": "V|migration-rl|defines|intent|factoryweaver|v1",
+      "series": "V",
+      "revision": 2,
+      "status": "ACTIVE",
+      "title": "Migration-RL intent independent verification",
+      "payload": "Subject: REQ-mrl-intent; not whole Human Goal.\nIndependent Oracle Producer: Human Requirement Owner to verify supervising Session.\nPositive input/control: traced claim with counterexample; selected input original clause, source, condition and falsifier.\nNegative mutation: missing source but fluent conclusion.\nExpected discriminator: scoped hypothesis/unknown.\nActual observation: NOT_RUN for new Migration-RL Native tests; source-only historical results remain narrower.\nUnobserved signatures/effects are K or original Owner readback, never inferred PASS.",
+      "evidence_ids": [
+        "SRC-HUMAN",
+        "SRC-HANDOFF"
+      ],
+      "typed_links": [
+        {
+          "relation": "depends_on",
+          "target": "SPEC-intent"
+        }
+      ]
+    },
+    {
+      "stable_id": "REQ-rights",
+      "canonical_key": "REQ|migration-rl|defines|rights|factoryweaver|v1",
+      "series": "REQ",
+      "revision": 1,
+      "status": "ACTIVE",
+      "title": "Migration-RL rights",
+      "payload": "Actor: Original Source/Admission Owner.\nGoal: Source rights and identity admissible; unlicensed asset, wrong SHA or wrong target refused.\nMeasurement: Source license+NOTICE+Owner admission; actual native metrics NOT_RUN.\nPersistence: preserve this and all parent REQs across authorized bounded attempts.\nStop/Escalation: incomplete or unknown evidence blocks only dependent work, never claims whole completion.\nAcceptance: Explicit licensed source/asset and one admitted writable target.\nNon-case: Incompatible asset/foreign worktree authorized.",
+      "evidence_ids": [
+        "SRC-HUMAN",
+        "SRC-HANDOFF",
+        "SRC-MIGRATE",
+        "SRC-ISSUE"
+      ],
+      "typed_links": [
+        {
+          "relation": "implements",
+          "target": "REQ-mrl-rights"
+        },
+        {
+          "relation": "validated_by",
+          "target": "V-rights"
+        },
+        {
+          "relation": "depends_on",
+          "target": "REQ-mrl-intent"
+        }
+      ]
+    },
+    {
+      "stable_id": "SPEC-rights",
+      "canonical_key": "SPEC|migration-rl|defines|rights|factoryweaver|v1",
+      "series": "SPEC",
+      "revision": 2,
+      "status": "ACTIVE",
+      "title": "Migration-RL rights executable contract",
+      "payload": "Given: selected real source/Consumer, original Owner permission and applicable inputs; absent exact signature remains K.\nWhen: the selected migration source selector consumes its actual input.\nThen: Source rights and identity admissible; unlicensed asset, wrong SHA or wrong target refused.\nProducer: rights/admission owner.\nConsumer: migration source selector.\nInputs and conditions: source revision, per-asset licenses, original Worktree scope.\nOutputs/refusals/effects: admissible/refused/unknown.\nPositive: legal Source and selected target.\nNegative/falsifier: unlicensed sub-asset or foreign repo.\nUnknown effect: original Owner readback before any retry; no guessed status.\nReplay: previous source-only result may be retained as history, not native evidence.\nIndependent Oracle: actual observation from migration source selector; new native test NOT_RUN.",
+      "evidence_ids": [
+        "SRC-HUMAN",
+        "SRC-HANDOFF",
+        "SRC-MIGRATE",
+        "SRC-ISSUE"
+      ],
+      "typed_links": [
+        {
+          "relation": "implements",
+          "target": "REQ-mrl-rights"
+        },
+        {
+          "relation": "validated_by",
+          "target": "V-rights"
+        },
+        {
+          "relation": "depends_on",
+          "target": "REQ-mrl-intent"
+        }
+      ]
+    },
+    {
+      "stable_id": "V-rights",
+      "canonical_key": "V|migration-rl|defines|rights|factoryweaver|v1",
+      "series": "V",
+      "revision": 2,
+      "status": "ACTIVE",
+      "title": "Migration-RL rights independent verification",
+      "payload": "Subject: REQ-mrl-rights; not whole Human Goal.\nIndependent Oracle Producer: rights/admission owner to verify migration source selector.\nPositive input/control: legal Source and selected target; selected input source revision, per-asset licenses, original Worktree scope.\nNegative mutation: unlicensed sub-asset or foreign repo.\nExpected discriminator: admissible/refused/unknown.\nActual observation: NOT_RUN for new Migration-RL Native tests; source-only historical results remain narrower.\nUnobserved signatures/effects are K or original Owner readback, never inferred PASS.",
+      "evidence_ids": [
+        "SRC-HUMAN",
+        "SRC-HANDOFF",
+        "SRC-MIGRATE",
+        "SRC-ISSUE"
+      ],
+      "typed_links": [
+        {
+          "relation": "depends_on",
+          "target": "SPEC-rights"
+        }
+      ]
+    },
+    {
+      "stable_id": "REQ-retrieval",
+      "canonical_key": "REQ|migration-rl|defines|retrieval|factoryweaver|v1",
+      "series": "REQ",
+      "revision": 1,
+      "status": "ACTIVE",
+      "title": "Migration-RL retrieval",
+      "payload": "Actor: Code-intel + independent evaluator.\nGoal: Actual task-level AST/SCIP Migration Dependency Retrieval measures target Precision ≥99% against frozen ground truth and publishes Recall/Coverage/abstentions.\nMeasurement: Frozen TP/FP/FN, Precision/Recall/Coverage; actual native metrics NOT_RUN.\nPersistence: preserve this and all parent REQs across authorized bounded attempts.\nStop/Escalation: incomplete or unknown evidence blocks only dependent work, never claims whole completion.\nAcceptance: Task-relevant symbol and dependency retrieval on frozen JS/TS AST+SCIP.\nNon-case: Only one easy correct hit and omitted critical deps.",
+      "evidence_ids": [
+        "SRC-HUMAN",
+        "SRC-HANDOFF",
+        "SRC-CODE"
+      ],
+      "typed_links": [
+        {
+          "relation": "implements",
+          "target": "REQ-mrl-retrieval"
+        },
+        {
+          "relation": "validated_by",
+          "target": "V-retrieval"
+        },
+        {
+          "relation": "depends_on",
+          "target": "REQ-mrl-rights"
+        }
+      ]
+    },
+    {
+      "stable_id": "SPEC-retrieval",
+      "canonical_key": "SPEC|migration-rl|defines|retrieval|factoryweaver|v1",
+      "series": "SPEC",
+      "revision": 2,
+      "status": "ACTIVE",
+      "title": "Migration-RL retrieval executable contract",
+      "payload": "Given: selected real source/Consumer, original Owner permission and applicable inputs; absent exact signature remains K.\nWhen: the selected independent retrieval evaluator consumes its actual input.\nThen: Actual task-level AST/SCIP Migration Dependency Retrieval measures target Precision ≥99% against frozen ground truth and publishes Recall/Coverage/abstentions.\nProducer: actual JS/TS AST+SCIP Indexer.\nConsumer: independent retrieval evaluator.\nInputs and conditions: compiler configuration, labeled symbol/consumer/asset population.\nOutputs/refusals/effects: TP/FP/FN, precision/recall/coverage/abstention.\nPositive: labeled definition and consumer reference.\nNegative/falsifier: one easy hit hides missed dynamic edge.\nUnknown effect: original Owner readback before any retry; no guessed status.\nReplay: previous source-only result may be retained as history, not native evidence.\nIndependent Oracle: actual observation from independent retrieval evaluator; new native test NOT_RUN.",
+      "evidence_ids": [
+        "SRC-HUMAN",
+        "SRC-HANDOFF",
+        "SRC-CODE"
+      ],
+      "typed_links": [
+        {
+          "relation": "implements",
+          "target": "REQ-mrl-retrieval"
+        },
+        {
+          "relation": "validated_by",
+          "target": "V-retrieval"
+        },
+        {
+          "relation": "depends_on",
+          "target": "REQ-mrl-rights"
+        }
+      ]
+    },
+    {
+      "stable_id": "V-retrieval",
+      "canonical_key": "V|migration-rl|defines|retrieval|factoryweaver|v1",
+      "series": "V",
+      "revision": 2,
+      "status": "ACTIVE",
+      "title": "Migration-RL retrieval independent verification",
+      "payload": "Subject: REQ-mrl-retrieval; not whole Human Goal.\nIndependent Oracle Producer: actual JS/TS AST+SCIP Indexer to verify independent retrieval evaluator.\nPositive input/control: labeled definition and consumer reference; selected input compiler configuration, labeled symbol/consumer/asset population.\nNegative mutation: one easy hit hides missed dynamic edge.\nExpected discriminator: TP/FP/FN, precision/recall/coverage/abstention.\nActual observation: NOT_RUN for new Migration-RL Native tests; source-only historical results remain narrower.\nUnobserved signatures/effects are K or original Owner readback, never inferred PASS.",
+      "evidence_ids": [
+        "SRC-HUMAN",
+        "SRC-HANDOFF",
+        "SRC-CODE"
+      ],
+      "typed_links": [
+        {
+          "relation": "depends_on",
+          "target": "SPEC-retrieval"
+        }
+      ]
+    },
+    {
+      "stable_id": "REQ-deps",
+      "canonical_key": "REQ|migration-rl|defines|deps|factoryweaver|v1",
+      "series": "REQ",
+      "revision": 1,
+      "status": "ACTIVE",
+      "title": "Migration-RL deps",
+      "payload": "Actor: Selected Consumer owner.\nGoal: Dependency closure spans symbols, imports, registrations, assets and observed dynamic edges; missing critical edge blocks `CLOSED`.\nMeasurement: Static graph plus real runtime dynamic trace; actual native metrics NOT_RUN.\nPersistence: preserve this and all parent REQs across authorized bounded attempts.\nStop/Escalation: incomplete or unknown evidence blocks only dependent work, never claims whole completion.\nAcceptance: Imports, registrations, assets and runtime edges traced.\nNon-case: Dynamic missing edge called CLOSED.",
+      "evidence_ids": [
+        "SRC-HUMAN",
+        "SRC-HANDOFF",
+        "SRC-CODE"
+      ],
+      "typed_links": [
+        {
+          "relation": "implements",
+          "target": "REQ-mrl-deps"
+        },
+        {
+          "relation": "validated_by",
+          "target": "V-deps"
+        },
+        {
+          "relation": "depends_on",
+          "target": "REQ-mrl-retrieval"
+        }
+      ]
+    },
+    {
+      "stable_id": "SPEC-deps",
+      "canonical_key": "SPEC|migration-rl|defines|deps|factoryweaver|v1",
+      "series": "SPEC",
+      "revision": 2,
+      "status": "ACTIVE",
+      "title": "Migration-RL deps executable contract",
+      "payload": "Given: selected real source/Consumer, original Owner permission and applicable inputs; absent exact signature remains K.\nWhen: the selected dependency closure verifier consumes its actual input.\nThen: Dependency closure spans symbols, imports, registrations, assets and observed dynamic edges; missing critical edge blocks `CLOSED`.\nProducer: AST+SCIP structural producer and native dynamic trace.\nConsumer: dependency closure verifier.\nInputs and conditions: imports, CSS/assets, dynamic registration and side-effect edges.\nOutputs/refusals/effects: supported/unknown critical dependencies.\nPositive: import and runtime handler both observed.\nNegative/falsifier: critical handler omitted but closure called complete.\nUnknown effect: original Owner readback before any retry; no guessed status.\nReplay: previous source-only result may be retained as history, not native evidence.\nIndependent Oracle: actual observation from dependency closure verifier; new native test NOT_RUN.",
+      "evidence_ids": [
+        "SRC-HUMAN",
+        "SRC-HANDOFF",
+        "SRC-CODE"
+      ],
+      "typed_links": [
+        {
+          "relation": "implements",
+          "target": "REQ-mrl-deps"
+        },
+        {
+          "relation": "validated_by",
+          "target": "V-deps"
+        },
+        {
+          "relation": "depends_on",
+          "target": "REQ-mrl-retrieval"
+        }
+      ]
+    },
+    {
+      "stable_id": "V-deps",
+      "canonical_key": "V|migration-rl|defines|deps|factoryweaver|v1",
+      "series": "V",
+      "revision": 2,
+      "status": "ACTIVE",
+      "title": "Migration-RL deps independent verification",
+      "payload": "Subject: REQ-mrl-deps; not whole Human Goal.\nIndependent Oracle Producer: AST+SCIP structural producer and native dynamic trace to verify dependency closure verifier.\nPositive input/control: import and runtime handler both observed; selected input imports, CSS/assets, dynamic registration and side-effect edges.\nNegative mutation: critical handler omitted but closure called complete.\nExpected discriminator: supported/unknown critical dependencies.\nActual observation: NOT_RUN for new Migration-RL Native tests; source-only historical results remain narrower.\nUnobserved signatures/effects are K or original Owner readback, never inferred PASS.",
+      "evidence_ids": [
+        "SRC-HUMAN",
+        "SRC-HANDOFF",
+        "SRC-CODE"
+      ],
+      "typed_links": [
+        {
+          "relation": "depends_on",
+          "target": "SPEC-deps"
+        }
+      ]
+    },
+    {
+      "stable_id": "REQ-runtimes",
+      "canonical_key": "REQ|migration-rl|defines|runtimes|factoryweaver|v1",
+      "series": "REQ",
+      "revision": 1,
+      "status": "ACTIVE",
+      "title": "Migration-RL runtimes",
+      "payload": "Actor: AgentEnv Environment Owner.\nGoal: Original and target are separately executed native runtimes, not REA/HAR replay masquerading as execution.\nMeasurement: Native process traces under fixed images; actual native metrics NOT_RUN.\nPersistence: preserve this and all parent REQs across authorized bounded attempts.\nStop/Escalation: incomplete or unknown evidence blocks only dependent work, never claims whole completion.\nAcceptance: Separate original and target programs execute identical input.\nNon-case: HAR Replay treated as actual process.",
+      "evidence_ids": [
+        "SRC-HUMAN",
+        "SRC-HANDOFF",
+        "SRC-AGENTENV",
+        "SRC-REA"
+      ],
+      "typed_links": [
+        {
+          "relation": "implements",
+          "target": "REQ-mrl-runtimes"
+        },
+        {
+          "relation": "validated_by",
+          "target": "V-runtimes"
+        },
+        {
+          "relation": "depends_on",
+          "target": "REQ-mrl-rights"
+        },
+        {
+          "relation": "depends_on",
+          "target": "REQ-mrl-deps"
+        }
+      ]
+    },
+    {
+      "stable_id": "SPEC-runtimes",
+      "canonical_key": "SPEC|migration-rl|defines|runtimes|factoryweaver|v1",
+      "series": "SPEC",
+      "revision": 2,
+      "status": "ACTIVE",
+      "title": "Migration-RL runtimes executable contract",
+      "payload": "Given: selected real source/Consumer, original Owner permission and applicable inputs; absent exact signature remains K.\nWhen: the selected independent paired runtime Consumer consumes its actual input.\nThen: Original and target are separately executed native runtimes, not REA/HAR replay masquerading as execution.\nProducer: original and target native process owners.\nConsumer: independent paired runtime Consumer.\nInputs and conditions: matched math/UI fixture, pinned versions, real process launch.\nOutputs/refusals/effects: separate output/error/DOM/event traces.\nPositive: two actual programs run matched input.\nNegative/falsifier: HAR Replay substitutes for source process.\nUnknown effect: original Owner readback before any retry; no guessed status.\nReplay: previous source-only result may be retained as history, not native evidence.\nIndependent Oracle: actual observation from independent paired runtime Consumer; new native test NOT_RUN.",
+      "evidence_ids": [
+        "SRC-HUMAN",
+        "SRC-HANDOFF",
+        "SRC-AGENTENV",
+        "SRC-REA"
+      ],
+      "typed_links": [
+        {
+          "relation": "implements",
+          "target": "REQ-mrl-runtimes"
+        },
+        {
+          "relation": "validated_by",
+          "target": "V-runtimes"
+        },
+        {
+          "relation": "depends_on",
+          "target": "REQ-mrl-rights"
+        },
+        {
+          "relation": "depends_on",
+          "target": "REQ-mrl-deps"
+        }
+      ]
+    },
+    {
+      "stable_id": "V-runtimes",
+      "canonical_key": "V|migration-rl|defines|runtimes|factoryweaver|v1",
+      "series": "V",
+      "revision": 2,
+      "status": "ACTIVE",
+      "title": "Migration-RL runtimes independent verification",
+      "payload": "Subject: REQ-mrl-runtimes; not whole Human Goal.\nIndependent Oracle Producer: original and target native process owners to verify independent paired runtime Consumer.\nPositive input/control: two actual programs run matched input; selected input matched math/UI fixture, pinned versions, real process launch.\nNegative mutation: HAR Replay substitutes for source process.\nExpected discriminator: separate output/error/DOM/event traces.\nActual observation: NOT_RUN for new Migration-RL Native tests; source-only historical results remain narrower.\nUnobserved signatures/effects are K or original Owner readback, never inferred PASS.",
+      "evidence_ids": [
+        "SRC-HUMAN",
+        "SRC-HANDOFF",
+        "SRC-AGENTENV",
+        "SRC-REA"
+      ],
+      "typed_links": [
+        {
+          "relation": "depends_on",
+          "target": "SPEC-runtimes"
+        }
+      ]
+    },
+    {
+      "stable_id": "REQ-mutation",
+      "canonical_key": "REQ|migration-rl|defines|mutation|factoryweaver|v1",
+      "series": "REQ",
+      "revision": 1,
+      "status": "ACTIVE",
+      "title": "Migration-RL mutation",
+      "payload": "Actor: Original Noodle Worktree Owner.\nGoal: Authorized action changes actual target worktree/program state; foreign/unauthorized mutation is refused.\nMeasurement: Worktree diff and original Owner effect receipt; actual native metrics NOT_RUN.\nPersistence: preserve this and all parent REQs across authorized bounded attempts.\nStop/Escalation: incomplete or unknown evidence blocks only dependent work, never claims whole completion.\nAcceptance: Authorized target modification changes actual file.\nNon-case: Agent writes upstream or frozen target.",
+      "evidence_ids": [
+        "SRC-HUMAN",
+        "SRC-HANDOFF",
+        "SRC-MIGRATE",
+        "SRC-ISSUE"
+      ],
+      "typed_links": [
+        {
+          "relation": "implements",
+          "target": "REQ-mrl-mutation"
+        },
+        {
+          "relation": "validated_by",
+          "target": "V-mutation"
+        },
+        {
+          "relation": "depends_on",
+          "target": "REQ-mrl-rights"
+        }
+      ]
+    },
+    {
+      "stable_id": "SPEC-mutation",
+      "canonical_key": "SPEC|migration-rl|defines|mutation|factoryweaver|v1",
+      "series": "SPEC",
+      "revision": 2,
+      "status": "ACTIVE",
+      "title": "Migration-RL mutation executable contract",
+      "payload": "Given: selected real source/Consumer, original Owner permission and applicable inputs; absent exact signature remains K.\nWhen: the selected authorized target Worktree consumes its actual input.\nThen: Authorized action changes actual target worktree/program state; foreign/unauthorized mutation is refused.\nProducer: original admitted Noodle Stage.\nConsumer: authorized target Worktree.\nInputs and conditions: allowed write path and Owner next.\nOutputs/refusals/effects: actual diff/effect or refused/unknown.\nPositive: authorized patch visible in target.\nNegative/falsifier: foreign write or Frozen Stage mutation.\nUnknown effect: original Owner readback before any retry; no guessed status.\nReplay: previous source-only result may be retained as history, not native evidence.\nIndependent Oracle: actual observation from authorized target Worktree; new native test NOT_RUN.",
+      "evidence_ids": [
+        "SRC-HUMAN",
+        "SRC-HANDOFF",
+        "SRC-MIGRATE",
+        "SRC-ISSUE"
+      ],
+      "typed_links": [
+        {
+          "relation": "implements",
+          "target": "REQ-mrl-mutation"
+        },
+        {
+          "relation": "validated_by",
+          "target": "V-mutation"
+        },
+        {
+          "relation": "depends_on",
+          "target": "REQ-mrl-rights"
+        }
+      ]
+    },
+    {
+      "stable_id": "V-mutation",
+      "canonical_key": "V|migration-rl|defines|mutation|factoryweaver|v1",
+      "series": "V",
+      "revision": 2,
+      "status": "ACTIVE",
+      "title": "Migration-RL mutation independent verification",
+      "payload": "Subject: REQ-mrl-mutation; not whole Human Goal.\nIndependent Oracle Producer: original admitted Noodle Stage to verify authorized target Worktree.\nPositive input/control: authorized patch visible in target; selected input allowed write path and Owner next.\nNegative mutation: foreign write or Frozen Stage mutation.\nExpected discriminator: actual diff/effect or refused/unknown.\nActual observation: NOT_RUN for new Migration-RL Native tests; source-only historical results remain narrower.\nUnobserved signatures/effects are K or original Owner readback, never inferred PASS.",
+      "evidence_ids": [
+        "SRC-HUMAN",
+        "SRC-HANDOFF",
+        "SRC-MIGRATE",
+        "SRC-ISSUE"
+      ],
+      "typed_links": [
+        {
+          "relation": "depends_on",
+          "target": "SPEC-mutation"
+        }
+      ]
+    },
+    {
+      "stable_id": "REQ-reset",
+      "canonical_key": "REQ|migration-rl|defines|reset|factoryweaver|v1",
+      "series": "REQ",
+      "revision": 1,
+      "status": "ACTIVE",
+      "title": "Migration-RL reset",
+      "payload": "Actor: AgentEnv Sandbox Owner.\nGoal: Mutation→Reset→readback restores clean worktree/process/browser/fixture state without cross-episode contamination.\nMeasurement: Before/after isolated state readbacks; actual native metrics NOT_RUN.\nPersistence: preserve this and all parent REQs across authorized bounded attempts.\nStop/Escalation: incomplete or unknown evidence blocks only dependent work, never claims whole completion.\nAcceptance: Mutate file/cookie/process; reset restores clean seed.\nNon-case: Reset returns OK with stale process/cookie.",
+      "evidence_ids": [
+        "SRC-HUMAN",
+        "SRC-HANDOFF",
+        "SRC-AGENTENV",
+        "SRC-REA"
+      ],
+      "typed_links": [
+        {
+          "relation": "implements",
+          "target": "REQ-mrl-reset"
+        },
+        {
+          "relation": "validated_by",
+          "target": "V-reset"
+        },
+        {
+          "relation": "depends_on",
+          "target": "REQ-mrl-runtimes"
+        },
+        {
+          "relation": "depends_on",
+          "target": "REQ-mrl-mutation"
+        }
+      ]
+    },
+    {
+      "stable_id": "SPEC-reset",
+      "canonical_key": "SPEC|migration-rl|defines|reset|factoryweaver|v1",
+      "series": "SPEC",
+      "revision": 2,
+      "status": "ACTIVE",
+      "title": "Migration-RL reset executable contract",
+      "payload": "Given: selected real source/Consumer, original Owner permission and applicable inputs; absent exact signature remains K.\nWhen: the selected independent episode reset verifier consumes its actual input.\nThen: Mutation→Reset→readback restores clean worktree/process/browser/fixture state without cross-episode contamination.\nProducer: actual AgentEnv state/reset adapter.\nConsumer: independent episode reset verifier.\nInputs and conditions: mutated file, cookie, process, seed.\nOutputs/refusals/effects: clean snapshot or residual state.\nPositive: mutate and compare clean restored state.\nNegative/falsifier: reset OK while stale process remains.\nUnknown effect: original Owner readback before any retry; no guessed status.\nReplay: previous source-only result may be retained as history, not native evidence.\nIndependent Oracle: actual observation from independent episode reset verifier; new native test NOT_RUN.",
+      "evidence_ids": [
+        "SRC-HUMAN",
+        "SRC-HANDOFF",
+        "SRC-AGENTENV",
+        "SRC-REA"
+      ],
+      "typed_links": [
+        {
+          "relation": "implements",
+          "target": "REQ-mrl-reset"
+        },
+        {
+          "relation": "validated_by",
+          "target": "V-reset"
+        },
+        {
+          "relation": "depends_on",
+          "target": "REQ-mrl-runtimes"
+        },
+        {
+          "relation": "depends_on",
+          "target": "REQ-mrl-mutation"
+        }
+      ]
+    },
+    {
+      "stable_id": "V-reset",
+      "canonical_key": "V|migration-rl|defines|reset|factoryweaver|v1",
+      "series": "V",
+      "revision": 2,
+      "status": "ACTIVE",
+      "title": "Migration-RL reset independent verification",
+      "payload": "Subject: REQ-mrl-reset; not whole Human Goal.\nIndependent Oracle Producer: actual AgentEnv state/reset adapter to verify independent episode reset verifier.\nPositive input/control: mutate and compare clean restored state; selected input mutated file, cookie, process, seed.\nNegative mutation: reset OK while stale process remains.\nExpected discriminator: clean snapshot or residual state.\nActual observation: NOT_RUN for new Migration-RL Native tests; source-only historical results remain narrower.\nUnobserved signatures/effects are K or original Owner readback, never inferred PASS.",
+      "evidence_ids": [
+        "SRC-HUMAN",
+        "SRC-HANDOFF",
+        "SRC-AGENTENV",
+        "SRC-REA"
+      ],
+      "typed_links": [
+        {
+          "relation": "depends_on",
+          "target": "SPEC-reset"
+        }
+      ]
+    },
+    {
+      "stable_id": "REQ-math",
+      "canonical_key": "REQ|migration-rl|defines|math|factoryweaver|v1",
+      "series": "REQ",
+      "revision": 1,
+      "status": "ACTIVE",
+      "title": "Migration-RL math",
+      "payload": "Actor: Independent mathematical Oracle.\nGoal: Mathematical parity validates differential results, properties, metamorphic/boundary inputs and predeclared numeric error policy.\nMeasurement: Paired native math+properties/edge cases; actual native metrics NOT_RUN.\nPersistence: preserve this and all parent REQs across authorized bounded attempts.\nStop/Escalation: incomplete or unknown evidence blocks only dependent work, never claims whole completion.\nAcceptance: Matched input, epsilon fixed before result, property/metamorphic/boundaries.\nNon-case: Error type differs or epsilon adjusted after candidate.",
+      "evidence_ids": [
+        "SRC-HUMAN",
+        "SRC-HANDOFF",
+        "SRC-PILOT"
+      ],
+      "typed_links": [
+        {
+          "relation": "implements",
+          "target": "REQ-mrl-math"
+        },
+        {
+          "relation": "validated_by",
+          "target": "V-math"
+        },
+        {
+          "relation": "depends_on",
+          "target": "REQ-mrl-runtimes"
+        }
+      ]
+    },
+    {
+      "stable_id": "SPEC-math",
+      "canonical_key": "SPEC|migration-rl|defines|math|factoryweaver|v1",
+      "series": "SPEC",
+      "revision": 2,
+      "status": "ACTIVE",
+      "title": "Migration-RL math executable contract",
+      "payload": "Given: selected real source/Consumer, original Owner permission and applicable inputs; absent exact signature remains K.\nWhen: the selected independent property Oracle consumes its actual input.\nThen: Mathematical parity validates differential results, properties, metamorphic/boundary inputs and predeclared numeric error policy.\nProducer: source and target AIFS engine.\nConsumer: independent property Oracle.\nInputs and conditions: same slider domain and predeclared epsilon/boundary.\nOutputs/refusals/effects: numbers/NaN/errors and property outcomes.\nPositive: matched real computation satisfies invariant.\nNegative/falsifier: epsilon changed after candidate fails.\nUnknown effect: original Owner readback before any retry; no guessed status.\nReplay: previous source-only result may be retained as history, not native evidence.\nIndependent Oracle: actual observation from independent property Oracle; new native test NOT_RUN.",
+      "evidence_ids": [
+        "SRC-HUMAN",
+        "SRC-HANDOFF",
+        "SRC-PILOT"
+      ],
+      "typed_links": [
+        {
+          "relation": "implements",
+          "target": "REQ-mrl-math"
+        },
+        {
+          "relation": "validated_by",
+          "target": "V-math"
+        },
+        {
+          "relation": "depends_on",
+          "target": "REQ-mrl-runtimes"
+        }
+      ]
+    },
+    {
+      "stable_id": "V-math",
+      "canonical_key": "V|migration-rl|defines|math|factoryweaver|v1",
+      "series": "V",
+      "revision": 2,
+      "status": "ACTIVE",
+      "title": "Migration-RL math independent verification",
+      "payload": "Subject: REQ-mrl-math; not whole Human Goal.\nIndependent Oracle Producer: source and target AIFS engine to verify independent property Oracle.\nPositive input/control: matched real computation satisfies invariant; selected input same slider domain and predeclared epsilon/boundary.\nNegative mutation: epsilon changed after candidate fails.\nExpected discriminator: numbers/NaN/errors and property outcomes.\nActual observation: NOT_RUN for new Migration-RL Native tests; source-only historical results remain narrower.\nUnobserved signatures/effects are K or original Owner readback, never inferred PASS.",
+      "evidence_ids": [
+        "SRC-HUMAN",
+        "SRC-HANDOFF",
+        "SRC-PILOT"
+      ],
+      "typed_links": [
+        {
+          "relation": "depends_on",
+          "target": "SPEC-math"
+        }
+      ]
+    },
+    {
+      "stable_id": "REQ-interfaces",
+      "canonical_key": "REQ|migration-rl|defines|interfaces|factoryweaver|v1",
+      "series": "REQ",
+      "revision": 1,
+      "status": "ACTIVE",
+      "title": "Migration-RL interfaces",
+      "payload": "Actor: Interface Contract Owner.\nGoal: Producer→Consumer guarantees and Consumer→Producer prerequisites/feedback/exception obligations are both tested in scope.\nMeasurement: Typed interface and native return/error trace; actual native metrics NOT_RUN.\nPersistence: preserve this and all parent REQs across authorized bounded attempts.\nStop/Escalation: incomplete or unknown evidence blocks only dependent work, never claims whole completion.\nAcceptance: Producer guarantee satisfies consumer accepted domain and feedback/ack.\nNon-case: Lost acknowledgment or required inverse hash.",
+      "evidence_ids": [
+        "SRC-HUMAN",
+        "SRC-HANDOFF"
+      ],
+      "typed_links": [
+        {
+          "relation": "implements",
+          "target": "REQ-mrl-interfaces"
+        },
+        {
+          "relation": "validated_by",
+          "target": "V-interfaces"
+        },
+        {
+          "relation": "depends_on",
+          "target": "REQ-mrl-deps"
+        },
+        {
+          "relation": "depends_on",
+          "target": "REQ-mrl-runtimes"
+        }
+      ]
+    },
+    {
+      "stable_id": "SPEC-interfaces",
+      "canonical_key": "SPEC|migration-rl|defines|interfaces|factoryweaver|v1",
+      "series": "SPEC",
+      "revision": 2,
+      "status": "ACTIVE",
+      "title": "Migration-RL interfaces executable contract",
+      "payload": "Given: selected real source/Consumer, original Owner permission and applicable inputs; absent exact signature remains K.\nWhen: the selected two-sided interface Consumer consumes its actual input.\nThen: Producer→Consumer guarantees and Consumer→Producer prerequisites/feedback/exception obligations are both tested in scope.\nProducer: module Producer.\nConsumer: two-sided interface Consumer.\nInputs and conditions: producer values, accepted domain and required ack/error.\nOutputs/refusals/effects: forward acceptance and reverse feedback.\nPositive: actual input accepted with ack.\nNegative/falsifier: missing error ack with same forward value.\nUnknown effect: original Owner readback before any retry; no guessed status.\nReplay: previous source-only result may be retained as history, not native evidence.\nIndependent Oracle: actual observation from two-sided interface Consumer; new native test NOT_RUN.",
+      "evidence_ids": [
+        "SRC-HUMAN",
+        "SRC-HANDOFF"
+      ],
+      "typed_links": [
+        {
+          "relation": "implements",
+          "target": "REQ-mrl-interfaces"
+        },
+        {
+          "relation": "validated_by",
+          "target": "V-interfaces"
+        },
+        {
+          "relation": "depends_on",
+          "target": "REQ-mrl-deps"
+        },
+        {
+          "relation": "depends_on",
+          "target": "REQ-mrl-runtimes"
+        }
+      ]
+    },
+    {
+      "stable_id": "V-interfaces",
+      "canonical_key": "V|migration-rl|defines|interfaces|factoryweaver|v1",
+      "series": "V",
+      "revision": 2,
+      "status": "ACTIVE",
+      "title": "Migration-RL interfaces independent verification",
+      "payload": "Subject: REQ-mrl-interfaces; not whole Human Goal.\nIndependent Oracle Producer: module Producer to verify two-sided interface Consumer.\nPositive input/control: actual input accepted with ack; selected input producer values, accepted domain and required ack/error.\nNegative mutation: missing error ack with same forward value.\nExpected discriminator: forward acceptance and reverse feedback.\nActual observation: NOT_RUN for new Migration-RL Native tests; source-only historical results remain narrower.\nUnobserved signatures/effects are K or original Owner readback, never inferred PASS.",
+      "evidence_ids": [
+        "SRC-HUMAN",
+        "SRC-HANDOFF"
+      ],
+      "typed_links": [
+        {
+          "relation": "depends_on",
+          "target": "SPEC-interfaces"
+        }
+      ]
+    },
+    {
+      "stable_id": "REQ-ui-effects",
+      "canonical_key": "REQ|migration-rl|defines|ui-effects|factoryweaver|v1",
+      "series": "REQ",
+      "revision": 1,
+      "status": "ACTIVE",
+      "title": "Migration-RL ui-effects",
+      "payload": "Actor: Browser Consumer Owner.\nGoal: Selected DOM/ARIA/focus/events/network/filesystem/persistence behavior and side-effect order remain contracted.\nMeasurement: Chromium native DOM+event+effect trace; actual native metrics NOT_RUN.\nPersistence: preserve this and all parent REQs across authorized bounded attempts.\nStop/Escalation: incomplete or unknown evidence blocks only dependent work, never claims whole completion.\nAcceptance: Selected DOM/ARIA/focus/event/side-effects contract equivalent.\nNon-case: Removed SeeCode edge or event reorder hidden by image.",
+      "evidence_ids": [
+        "SRC-HUMAN",
+        "SRC-HANDOFF",
+        "SRC-PILOT"
+      ],
+      "typed_links": [
+        {
+          "relation": "implements",
+          "target": "REQ-mrl-ui-effects"
+        },
+        {
+          "relation": "validated_by",
+          "target": "V-ui-effects"
+        },
+        {
+          "relation": "depends_on",
+          "target": "REQ-mrl-interfaces"
+        },
+        {
+          "relation": "depends_on",
+          "target": "REQ-mrl-runtimes"
+        }
+      ]
+    },
+    {
+      "stable_id": "SPEC-ui-effects",
+      "canonical_key": "SPEC|migration-rl|defines|ui-effects|factoryweaver|v1",
+      "series": "SPEC",
+      "revision": 2,
+      "status": "ACTIVE",
+      "title": "Migration-RL ui-effects executable contract",
+      "payload": "Given: selected real source/Consumer, original Owner permission and applicable inputs; absent exact signature remains K.\nWhen: the selected independent Browser differential consumes its actual input.\nThen: Selected DOM/ARIA/focus/events/network/filesystem/persistence behavior and side-effect order remain contracted.\nProducer: source SeeCode Renderer and migrated Browser.\nConsumer: independent Browser differential.\nInputs and conditions: four nodes/three edges and step/focus actions.\nOutputs/refusals/effects: DOM/ARIA/focus/ordered effects.\nPositive: source and target preserve edge and focus.\nNegative/falsifier: edge removed but screenshot matches.\nUnknown effect: original Owner readback before any retry; no guessed status.\nReplay: previous source-only result may be retained as history, not native evidence.\nIndependent Oracle: actual observation from independent Browser differential; new native test NOT_RUN.",
+      "evidence_ids": [
+        "SRC-HUMAN",
+        "SRC-HANDOFF",
+        "SRC-PILOT"
+      ],
+      "typed_links": [
+        {
+          "relation": "implements",
+          "target": "REQ-mrl-ui-effects"
+        },
+        {
+          "relation": "validated_by",
+          "target": "V-ui-effects"
+        },
+        {
+          "relation": "depends_on",
+          "target": "REQ-mrl-interfaces"
+        },
+        {
+          "relation": "depends_on",
+          "target": "REQ-mrl-runtimes"
+        }
+      ]
+    },
+    {
+      "stable_id": "V-ui-effects",
+      "canonical_key": "V|migration-rl|defines|ui-effects|factoryweaver|v1",
+      "series": "V",
+      "revision": 2,
+      "status": "ACTIVE",
+      "title": "Migration-RL ui-effects independent verification",
+      "payload": "Subject: REQ-mrl-ui-effects; not whole Human Goal.\nIndependent Oracle Producer: source SeeCode Renderer and migrated Browser to verify independent Browser differential.\nPositive input/control: source and target preserve edge and focus; selected input four nodes/three edges and step/focus actions.\nNegative mutation: edge removed but screenshot matches.\nExpected discriminator: DOM/ARIA/focus/ordered effects.\nActual observation: NOT_RUN for new Migration-RL Native tests; source-only historical results remain narrower.\nUnobserved signatures/effects are K or original Owner readback, never inferred PASS.",
+      "evidence_ids": [
+        "SRC-HUMAN",
+        "SRC-HANDOFF",
+        "SRC-PILOT"
+      ],
+      "typed_links": [
+        {
+          "relation": "depends_on",
+          "target": "SPEC-ui-effects"
+        }
+      ]
+    },
+    {
+      "stable_id": "REQ-false-inference",
+      "canonical_key": "REQ|migration-rl|defines|false-inference|factoryweaver|v1",
+      "series": "REQ",
+      "revision": 1,
+      "status": "ACTIVE",
+      "title": "Migration-RL false-inference",
+      "payload": "Actor: Original Test Manager and independent Evals.\nGoal: Plant false-equivalence, bad error, order and over-inference negatives; verifier rejects them.\nMeasurement: Selected discriminating negative controls; actual native metrics NOT_RUN.\nPersistence: preserve this and all parent REQs across authorized bounded attempts.\nStop/Escalation: incomplete or unknown evidence blocks only dependent work, never claims whole completion.\nAcceptance: Known good and planted false-equivalence negative controls.\nNon-case: Same happy path excuses wrong exception/order.",
+      "evidence_ids": [
+        "SRC-HUMAN",
+        "SRC-HANDOFF"
+      ],
+      "typed_links": [
+        {
+          "relation": "implements",
+          "target": "REQ-mrl-false-inference"
+        },
+        {
+          "relation": "validated_by",
+          "target": "V-false-inference"
+        },
+        {
+          "relation": "depends_on",
+          "target": "REQ-mrl-math"
+        },
+        {
+          "relation": "depends_on",
+          "target": "REQ-mrl-ui-effects"
+        }
+      ]
+    },
+    {
+      "stable_id": "SPEC-false-inference",
+      "canonical_key": "SPEC|migration-rl|defines|false-inference|factoryweaver|v1",
+      "series": "SPEC",
+      "revision": 2,
+      "status": "ACTIVE",
+      "title": "Migration-RL false-inference executable contract",
+      "payload": "Given: selected real source/Consumer, original Owner permission and applicable inputs; absent exact signature remains K.\nWhen: the selected Test Manager-selected independent verifier consumes its actual input.\nThen: Plant false-equivalence, bad error, order and over-inference negatives; verifier rejects them.\nProducer: original Source/Runtime Owner.\nConsumer: Test Manager-selected independent verifier.\nInputs and conditions: normal case and planted exception/order mismatch.\nOutputs/refusals/effects: honest scoped verdict.\nPositive: scope-limited PASS with untested cases unknown.\nNegative/falsifier: same output but changed effects accepted.\nUnknown effect: original Owner readback before any retry; no guessed status.\nReplay: previous source-only result may be retained as history, not native evidence.\nIndependent Oracle: actual observation from Test Manager-selected independent verifier; new native test NOT_RUN.",
+      "evidence_ids": [
+        "SRC-HUMAN",
+        "SRC-HANDOFF"
+      ],
+      "typed_links": [
+        {
+          "relation": "implements",
+          "target": "REQ-mrl-false-inference"
+        },
+        {
+          "relation": "validated_by",
+          "target": "V-false-inference"
+        },
+        {
+          "relation": "depends_on",
+          "target": "REQ-mrl-math"
+        },
+        {
+          "relation": "depends_on",
+          "target": "REQ-mrl-ui-effects"
+        }
+      ]
+    },
+    {
+      "stable_id": "V-false-inference",
+      "canonical_key": "V|migration-rl|defines|false-inference|factoryweaver|v1",
+      "series": "V",
+      "revision": 2,
+      "status": "ACTIVE",
+      "title": "Migration-RL false-inference independent verification",
+      "payload": "Subject: REQ-mrl-false-inference; not whole Human Goal.\nIndependent Oracle Producer: original Source/Runtime Owner to verify Test Manager-selected independent verifier.\nPositive input/control: scope-limited PASS with untested cases unknown; selected input normal case and planted exception/order mismatch.\nNegative mutation: same output but changed effects accepted.\nExpected discriminator: honest scoped verdict.\nActual observation: NOT_RUN for new Migration-RL Native tests; source-only historical results remain narrower.\nUnobserved signatures/effects are K or original Owner readback, never inferred PASS.",
+      "evidence_ids": [
+        "SRC-HUMAN",
+        "SRC-HANDOFF"
+      ],
+      "typed_links": [
+        {
+          "relation": "depends_on",
+          "target": "SPEC-false-inference"
+        }
+      ]
+    },
+    {
+      "stable_id": "REQ-reward",
+      "canonical_key": "REQ|migration-rl|defines|reward|factoryweaver|v1",
+      "series": "REQ",
+      "revision": 1,
+      "status": "ACTIVE",
+      "title": "Migration-RL reward",
+      "payload": "Actor: AgentEnv Task Verifier and original outcome Owner.\nGoal: Reward is independent and resists forged trace, agent self-score, changed Oracle and insufficient hard-gate evidence.\nMeasurement: Independent recomputed reward and receipts; actual native metrics NOT_RUN.\nPersistence: preserve this and all parent REQs across authorized bounded attempts.\nStop/Escalation: incomplete or unknown evidence blocks only dependent work, never claims whole completion.\nAcceptance: Independent hard gates all observed true.\nNon-case: Self-report or changed Golden yields reward one.",
+      "evidence_ids": [
+        "SRC-HUMAN",
+        "SRC-HANDOFF"
+      ],
+      "typed_links": [
+        {
+          "relation": "implements",
+          "target": "REQ-mrl-reward"
+        },
+        {
+          "relation": "validated_by",
+          "target": "V-reward"
+        },
+        {
+          "relation": "depends_on",
+          "target": "REQ-mrl-rights"
+        },
+        {
+          "relation": "depends_on",
+          "target": "REQ-mrl-runtimes"
+        },
+        {
+          "relation": "depends_on",
+          "target": "REQ-mrl-false-inference"
+        }
+      ]
+    },
+    {
+      "stable_id": "SPEC-reward",
+      "canonical_key": "SPEC|migration-rl|defines|reward|factoryweaver|v1",
+      "series": "SPEC",
+      "revision": 2,
+      "status": "ACTIVE",
+      "title": "Migration-RL reward executable contract",
+      "payload": "Given: selected real source/Consumer, original Owner permission and applicable inputs; absent exact signature remains K.\nWhen: the selected AgentEnv outcome grader consumes its actual input.\nThen: Reward is independent and resists forged trace, agent self-score, changed Oracle and insufficient hard-gate evidence.\nProducer: independent rights/parity/Native Owners.\nConsumer: AgentEnv outcome grader.\nInputs and conditions: all actually evaluated hard gate receipts.\nOutputs/refusals/effects: success only for fully observed accepted migration.\nPositive: independent reward recomputation matches.\nNegative/falsifier: Candidate self-score or unknown gate yields 1.\nUnknown effect: original Owner readback before any retry; no guessed status.\nReplay: previous source-only result may be retained as history, not native evidence.\nIndependent Oracle: actual observation from AgentEnv outcome grader; new native test NOT_RUN.",
+      "evidence_ids": [
+        "SRC-HUMAN",
+        "SRC-HANDOFF"
+      ],
+      "typed_links": [
+        {
+          "relation": "implements",
+          "target": "REQ-mrl-reward"
+        },
+        {
+          "relation": "validated_by",
+          "target": "V-reward"
+        },
+        {
+          "relation": "depends_on",
+          "target": "REQ-mrl-rights"
+        },
+        {
+          "relation": "depends_on",
+          "target": "REQ-mrl-runtimes"
+        },
+        {
+          "relation": "depends_on",
+          "target": "REQ-mrl-false-inference"
+        }
+      ]
+    },
+    {
+      "stable_id": "V-reward",
+      "canonical_key": "V|migration-rl|defines|reward|factoryweaver|v1",
+      "series": "V",
+      "revision": 2,
+      "status": "ACTIVE",
+      "title": "Migration-RL reward independent verification",
+      "payload": "Subject: REQ-mrl-reward; not whole Human Goal.\nIndependent Oracle Producer: independent rights/parity/Native Owners to verify AgentEnv outcome grader.\nPositive input/control: independent reward recomputation matches; selected input all actually evaluated hard gate receipts.\nNegative mutation: Candidate self-score or unknown gate yields 1.\nExpected discriminator: success only for fully observed accepted migration.\nActual observation: NOT_RUN for new Migration-RL Native tests; source-only historical results remain narrower.\nUnobserved signatures/effects are K or original Owner readback, never inferred PASS.",
+      "evidence_ids": [
+        "SRC-HUMAN",
+        "SRC-HANDOFF"
+      ],
+      "typed_links": [
+        {
+          "relation": "depends_on",
+          "target": "SPEC-reward"
+        }
+      ]
+    },
+    {
+      "stable_id": "REQ-cards",
+      "canonical_key": "REQ|migration-rl|defines|cards|factoryweaver|v1",
+      "series": "REQ",
+      "revision": 1,
+      "status": "ACTIVE",
+      "title": "Migration-RL cards",
+      "payload": "Actor: FactoryWeaver original Card Producer.\nGoal: Native Evals are source-bound to correct SPEC/V/G revisions via original FactoryWeaver producer; unsupported changes do not become truth.\nMeasurement: Original card producer/Owner revision and Evals; actual native metrics NOT_RUN.\nPersistence: preserve this and all parent REQs across authorized bounded attempts.\nStop/Escalation: incomplete or unknown evidence blocks only dependent work, never claims whole completion.\nAcceptance: Observed failure produces source-bound SPEC/V/G revision proposal.\nNon-case: Candidate failure causes rewriting oracle.",
+      "evidence_ids": [
+        "SRC-HUMAN",
+        "SRC-HANDOFF",
+        "SRC-FW-CARDS"
+      ],
+      "typed_links": [
+        {
+          "relation": "implements",
+          "target": "REQ-mrl-cards"
+        },
+        {
+          "relation": "validated_by",
+          "target": "V-cards"
+        },
+        {
+          "relation": "depends_on",
+          "target": "REQ-mrl-intent"
+        },
+        {
+          "relation": "depends_on",
+          "target": "REQ-mrl-false-inference"
+        }
+      ]
+    },
+    {
+      "stable_id": "SPEC-cards",
+      "canonical_key": "SPEC|migration-rl|defines|cards|factoryweaver|v1",
+      "series": "SPEC",
+      "revision": 2,
+      "status": "ACTIVE",
+      "title": "Migration-RL cards executable contract",
+      "payload": "Given: selected real source/Consumer, original Owner permission and applicable inputs; absent exact signature remains K.\nWhen: the selected versioned SPEC/V/G/K/X consumes its actual input.\nThen: Native Evals are source-bound to correct SPEC/V/G revisions via original FactoryWeaver producer; unsupported changes do not become truth.\nProducer: independent Evals & FactoryWeaver producer.\nConsumer: versioned SPEC/V/G/K/X.\nInputs and conditions: original REQ/Card, real trace and falsifier.\nOutputs/refusals/effects: original revision proposal or NOOP.\nPositive: actual falsifier suggests precise card correction.\nNegative/falsifier: candidate fails and rewrites Golden.\nUnknown effect: original Owner readback before any retry; no guessed status.\nReplay: previous source-only result may be retained as history, not native evidence.\nIndependent Oracle: actual observation from versioned SPEC/V/G/K/X; new native test NOT_RUN.",
+      "evidence_ids": [
+        "SRC-HUMAN",
+        "SRC-HANDOFF",
+        "SRC-FW-CARDS"
+      ],
+      "typed_links": [
+        {
+          "relation": "implements",
+          "target": "REQ-mrl-cards"
+        },
+        {
+          "relation": "validated_by",
+          "target": "V-cards"
+        },
+        {
+          "relation": "depends_on",
+          "target": "REQ-mrl-intent"
+        },
+        {
+          "relation": "depends_on",
+          "target": "REQ-mrl-false-inference"
+        }
+      ]
+    },
+    {
+      "stable_id": "V-cards",
+      "canonical_key": "V|migration-rl|defines|cards|factoryweaver|v1",
+      "series": "V",
+      "revision": 2,
+      "status": "ACTIVE",
+      "title": "Migration-RL cards independent verification",
+      "payload": "Subject: REQ-mrl-cards; not whole Human Goal.\nIndependent Oracle Producer: independent Evals & FactoryWeaver producer to verify versioned SPEC/V/G/K/X.\nPositive input/control: actual falsifier suggests precise card correction; selected input original REQ/Card, real trace and falsifier.\nNegative mutation: candidate fails and rewrites Golden.\nExpected discriminator: original revision proposal or NOOP.\nActual observation: NOT_RUN for new Migration-RL Native tests; source-only historical results remain narrower.\nUnobserved signatures/effects are K or original Owner readback, never inferred PASS.",
+      "evidence_ids": [
+        "SRC-HUMAN",
+        "SRC-HANDOFF",
+        "SRC-FW-CARDS"
+      ],
+      "typed_links": [
+        {
+          "relation": "depends_on",
+          "target": "SPEC-cards"
+        }
+      ]
+    },
+    {
+      "stable_id": "REQ-invalidation",
+      "canonical_key": "REQ|migration-rl|defines|invalidation|factoryweaver|v1",
+      "series": "REQ",
+      "revision": 1,
+      "status": "ACTIVE",
+      "title": "Migration-RL invalidation",
+      "payload": "Actor: FactoryWeaver Card Producer.\nGoal: Source revision change, stale evidence, wrong card version, missing link and dependency updates yield targeted invalidation/recovery.\nMeasurement: Original card_delta and dependent consumer check; actual native metrics NOT_RUN.\nPersistence: preserve this and all parent REQs across authorized bounded attempts.\nStop/Escalation: incomplete or unknown evidence blocks only dependent work, never claims whole completion.\nAcceptance: Changed SPEC invalidates dependent V while preserving history.\nNon-case: Deletes/recycles card ID or analogue causes false invalidation.",
+      "evidence_ids": [
+        "SRC-HUMAN",
+        "SRC-HANDOFF",
+        "SRC-FW-CARDS"
+      ],
+      "typed_links": [
+        {
+          "relation": "implements",
+          "target": "REQ-mrl-invalidation"
+        },
+        {
+          "relation": "validated_by",
+          "target": "V-invalidation"
+        },
+        {
+          "relation": "depends_on",
+          "target": "REQ-mrl-cards"
+        }
+      ]
+    },
+    {
+      "stable_id": "SPEC-invalidation",
+      "canonical_key": "SPEC|migration-rl|defines|invalidation|factoryweaver|v1",
+      "series": "SPEC",
+      "revision": 2,
+      "status": "ACTIVE",
+      "title": "Migration-RL invalidation executable contract",
+      "payload": "Given: selected real source/Consumer, original Owner permission and applicable inputs; absent exact signature remains K.\nWhen: the selected card_delta affected consumer consumes its actual input.\nThen: Source revision change, stale evidence, wrong card version, missing link and dependency updates yield targeted invalidation/recovery.\nProducer: actual original FactoryWeaver before/after.\nConsumer: card_delta affected consumer.\nInputs and conditions: stable IDs, old/new content, directed links.\nOutputs/refusals/effects: revision/history and affected_nodes.\nPositive: SPEC change invalidates dependent V.\nNegative/falsifier: old ID deleted or analogy treated as prerequisite.\nUnknown effect: original Owner readback before any retry; no guessed status.\nReplay: previous source-only result may be retained as history, not native evidence.\nIndependent Oracle: actual observation from card_delta affected consumer; new native test NOT_RUN.",
+      "evidence_ids": [
+        "SRC-HUMAN",
+        "SRC-HANDOFF",
+        "SRC-FW-CARDS"
+      ],
+      "typed_links": [
+        {
+          "relation": "implements",
+          "target": "REQ-mrl-invalidation"
+        },
+        {
+          "relation": "validated_by",
+          "target": "V-invalidation"
+        },
+        {
+          "relation": "depends_on",
+          "target": "REQ-mrl-cards"
+        }
+      ]
+    },
+    {
+      "stable_id": "V-invalidation",
+      "canonical_key": "V|migration-rl|defines|invalidation|factoryweaver|v1",
+      "series": "V",
+      "revision": 2,
+      "status": "ACTIVE",
+      "title": "Migration-RL invalidation independent verification",
+      "payload": "Subject: REQ-mrl-invalidation; not whole Human Goal.\nIndependent Oracle Producer: actual original FactoryWeaver before/after to verify card_delta affected consumer.\nPositive input/control: SPEC change invalidates dependent V; selected input stable IDs, old/new content, directed links.\nNegative mutation: old ID deleted or analogy treated as prerequisite.\nExpected discriminator: revision/history and affected_nodes.\nActual observation: NOT_RUN for new Migration-RL Native tests; source-only historical results remain narrower.\nUnobserved signatures/effects are K or original Owner readback, never inferred PASS.",
+      "evidence_ids": [
+        "SRC-HUMAN",
+        "SRC-HANDOFF",
+        "SRC-FW-CARDS"
+      ],
+      "typed_links": [
+        {
+          "relation": "depends_on",
+          "target": "SPEC-invalidation"
+        }
+      ]
+    },
+    {
+      "stable_id": "REQ-session",
+      "canonical_key": "REQ|migration-rl|defines|session|factoryweaver|v1",
+      "series": "REQ",
+      "revision": 2,
+      "status": "ACTIVE",
+      "title": "Migration-RL session",
+      "payload": "Actor: Soodles supervising Owner; Noodle Host.\nGoal: In the same supervising Session, Source/Owner-bound Outer reasoning (or NOOP) is consumed by the next authorized unsealed Poteto Stage; real inner feedback changes only warranted subsequent decisions/cards. Fresh Native Consumer and original Owner readback prove the handoff, not documentation.\nMeasurement: Actual Stage inputs, result, original Owner next; actual native metrics NOT_RUN.\nPersistence: preserve this and all parent REQs across authorized bounded attempts.\nStop/Escalation: incomplete or unknown evidence blocks only dependent work, never claims whole completion.\nAcceptance: One fused Delta/NOOP consumed in next legal unsealed Stage.\nNon-case: Frozen Stage overwritten or local pass closes all.\nCorrection: an authorized Outer/Inner Session can start and later discover a required Card revision.",
+      "evidence_ids": [
+        "SRC-HUMAN",
+        "SRC-HANDOFF"
+      ],
+      "typed_links": [
+        {
+          "relation": "implements",
+          "target": "REQ-mrl-session"
+        },
+        {
+          "relation": "validated_by",
+          "target": "V-session"
+        },
+        {
+          "relation": "depends_on",
+          "target": "REQ-mrl-intent"
+        },
+        {
+          "relation": "depends_on",
+          "target": "REQ-mrl-mutation"
+        }
+      ]
+    },
+    {
+      "stable_id": "SPEC-session",
+      "canonical_key": "SPEC|migration-rl|defines|session|factoryweaver|v1",
+      "series": "SPEC",
+      "revision": 2,
+      "status": "ACTIVE",
+      "title": "Migration-RL session executable contract",
+      "payload": "Given: selected real source/Consumer, original Owner permission and applicable inputs; absent exact signature remains K.\nWhen: the selected admitted unsealed Poteto Stage consumes its actual input.\nThen: In the same supervising Session, Source/Owner-bound Outer reasoning (or NOOP) is consumed by the next authorized unsealed Poteto Stage; real inner feedback changes only warranted subsequent decisions/cards. Fresh Native Consumer and original Owner readback prove the handoff, not documentation.\nProducer: current Soodles Session and valid Owner next.\nConsumer: admitted unsealed Poteto Stage.\nInputs and conditions: full original Goal and minimal Delta/NOOP.\nOutputs/refusals/effects: native stage consumption and Owner readback.\nPositive: NOOP valid next continues.\nNegative/falsifier: Frozen Stage changed or card prerequisite invented.\nUnknown effect: original Owner readback before any retry; no guessed status.\nReplay: previous source-only result may be retained as history, not native evidence.\nIndependent Oracle: actual observation from admitted unsealed Poteto Stage; new native test NOT_RUN.",
+      "evidence_ids": [
+        "SRC-HUMAN",
+        "SRC-HANDOFF"
+      ],
+      "typed_links": [
+        {
+          "relation": "implements",
+          "target": "REQ-mrl-session"
+        },
+        {
+          "relation": "validated_by",
+          "target": "V-session"
+        },
+        {
+          "relation": "depends_on",
+          "target": "REQ-mrl-intent"
+        },
+        {
+          "relation": "depends_on",
+          "target": "REQ-mrl-mutation"
+        }
+      ]
+    },
+    {
+      "stable_id": "V-session",
+      "canonical_key": "V|migration-rl|defines|session|factoryweaver|v1",
+      "series": "V",
+      "revision": 2,
+      "status": "ACTIVE",
+      "title": "Migration-RL session independent verification",
+      "payload": "Subject: REQ-mrl-session; not whole Human Goal.\nIndependent Oracle Producer: current Soodles Session and valid Owner next to verify admitted unsealed Poteto Stage.\nPositive input/control: NOOP valid next continues; selected input full original Goal and minimal Delta/NOOP.\nNegative mutation: Frozen Stage changed or card prerequisite invented.\nExpected discriminator: native stage consumption and Owner readback.\nActual observation: NOT_RUN for new Migration-RL Native tests; source-only historical results remain narrower.\nUnobserved signatures/effects are K or original Owner readback, never inferred PASS.",
+      "evidence_ids": [
+        "SRC-HUMAN",
+        "SRC-HANDOFF"
+      ],
+      "typed_links": [
+        {
+          "relation": "depends_on",
+          "target": "SPEC-session"
+        }
+      ]
+    },
+    {
+      "stable_id": "REQ-baseline",
+      "canonical_key": "REQ|migration-rl|defines|baseline|factoryweaver|v1",
+      "series": "REQ",
+      "revision": 1,
+      "status": "ACTIVE",
+      "title": "Migration-RL baseline",
+      "payload": "Actor: Test Manager + Evals Supervisor.\nGoal: Evaluation-first reproducible baseline, proper held-out split, success/failure/cost/latency/refusal/coverage metrics.\nMeasurement: Real comparable episodes and denominators; actual native metrics NOT_RUN.\nPersistence: preserve this and all parent REQs across authorized bounded attempts.\nStop/Escalation: incomplete or unknown evidence blocks only dependent work, never claims whole completion.\nAcceptance: Matched deterministic/untuned runs and held-out family/cost.\nNon-case: Different budget or zero successes cost=0.",
+      "evidence_ids": [
+        "SRC-HUMAN",
+        "SRC-HANDOFF"
+      ],
+      "typed_links": [
+        {
+          "relation": "implements",
+          "target": "REQ-mrl-baseline"
+        },
+        {
+          "relation": "validated_by",
+          "target": "V-baseline"
+        },
+        {
+          "relation": "depends_on",
+          "target": "REQ-mrl-reset"
+        },
+        {
+          "relation": "depends_on",
+          "target": "REQ-mrl-reward"
+        }
+      ]
+    },
+    {
+      "stable_id": "SPEC-baseline",
+      "canonical_key": "SPEC|migration-rl|defines|baseline|factoryweaver|v1",
+      "series": "SPEC",
+      "revision": 2,
+      "status": "ACTIVE",
+      "title": "Migration-RL baseline executable contract",
+      "payload": "Given: selected real source/Consumer, original Owner permission and applicable inputs; absent exact signature remains K.\nWhen: the selected independent held-out evaluator consumes its actual input.\nThen: Evaluation-first reproducible baseline, proper held-out split, success/failure/cost/latency/refusal/coverage metrics.\nProducer: native episodes and Test Manager costs.\nConsumer: independent held-out evaluator.\nInputs and conditions: matched budget/model/task family and real cost.\nOutputs/refusals/effects: comparable success/refusal/latency/cost.\nPositive: same-budget baseline and treatment.\nNegative/falsifier: different budget credited to RL.\nUnknown effect: original Owner readback before any retry; no guessed status.\nReplay: previous source-only result may be retained as history, not native evidence.\nIndependent Oracle: actual observation from independent held-out evaluator; new native test NOT_RUN.",
+      "evidence_ids": [
+        "SRC-HUMAN",
+        "SRC-HANDOFF"
+      ],
+      "typed_links": [
+        {
+          "relation": "implements",
+          "target": "REQ-mrl-baseline"
+        },
+        {
+          "relation": "validated_by",
+          "target": "V-baseline"
+        },
+        {
+          "relation": "depends_on",
+          "target": "REQ-mrl-reset"
+        },
+        {
+          "relation": "depends_on",
+          "target": "REQ-mrl-reward"
+        }
+      ]
+    },
+    {
+      "stable_id": "V-baseline",
+      "canonical_key": "V|migration-rl|defines|baseline|factoryweaver|v1",
+      "series": "V",
+      "revision": 2,
+      "status": "ACTIVE",
+      "title": "Migration-RL baseline independent verification",
+      "payload": "Subject: REQ-mrl-baseline; not whole Human Goal.\nIndependent Oracle Producer: native episodes and Test Manager costs to verify independent held-out evaluator.\nPositive input/control: same-budget baseline and treatment; selected input matched budget/model/task family and real cost.\nNegative mutation: different budget credited to RL.\nExpected discriminator: comparable success/refusal/latency/cost.\nActual observation: NOT_RUN for new Migration-RL Native tests; source-only historical results remain narrower.\nUnobserved signatures/effects are K or original Owner readback, never inferred PASS.",
+      "evidence_ids": [
+        "SRC-HUMAN",
+        "SRC-HANDOFF"
+      ],
+      "typed_links": [
+        {
+          "relation": "depends_on",
+          "target": "SPEC-baseline"
+        }
+      ]
+    },
+    {
+      "stable_id": "REQ-training",
+      "canonical_key": "REQ|migration-rl|defines|training|factoryweaver|v1",
+      "series": "REQ",
+      "revision": 1,
+      "status": "ACTIVE",
+      "title": "Migration-RL training",
+      "payload": "Actor: Later Policy Training Owner.\nGoal: RL-ready vs trained-policy outcomes remain separate; no training improvement claims without actual controlled weights/checkpoints/held-out comparison.\nMeasurement: Separate checkpoints and trained-heldout comparison; actual native metrics NOT_RUN.\nPersistence: preserve this and all parent REQs across authorized bounded attempts.\nStop/Escalation: incomplete or unknown evidence blocks only dependent work, never claims whole completion.\nAcceptance: RL-ready verified episodes kept distinct from trained weights.\nNon-case: Replay success labeled RL-trained.",
+      "evidence_ids": [
+        "SRC-HUMAN",
+        "SRC-HANDOFF"
+      ],
+      "typed_links": [
+        {
+          "relation": "implements",
+          "target": "REQ-mrl-training"
+        },
+        {
+          "relation": "validated_by",
+          "target": "V-training"
+        },
+        {
+          "relation": "depends_on",
+          "target": "REQ-mrl-baseline"
+        }
+      ]
+    },
+    {
+      "stable_id": "SPEC-training",
+      "canonical_key": "SPEC|migration-rl|defines|training|factoryweaver|v1",
+      "series": "SPEC",
+      "revision": 2,
+      "status": "ACTIVE",
+      "title": "Migration-RL training executable contract",
+      "payload": "Given: selected real source/Consumer, original Owner permission and applicable inputs; absent exact signature remains K.\nWhen: the selected held-out trained policy evaluator consumes its actual input.\nThen: RL-ready vs trained-policy outcomes remain separate; no training improvement claims without actual controlled weights/checkpoints/held-out comparison.\nProducer: future training/checkpoint Owner.\nConsumer: held-out trained policy evaluator.\nInputs and conditions: verified episodes, separate training grant.\nOutputs/refusals/effects: RL-ready now, RL-trained only future.\nPositive: no checkpoints -> NOT_RUN.\nNegative/falsifier: Replay called trained checkpoint.\nUnknown effect: original Owner readback before any retry; no guessed status.\nReplay: previous source-only result may be retained as history, not native evidence.\nIndependent Oracle: actual observation from held-out trained policy evaluator; new native test NOT_RUN.",
+      "evidence_ids": [
+        "SRC-HUMAN",
+        "SRC-HANDOFF"
+      ],
+      "typed_links": [
+        {
+          "relation": "implements",
+          "target": "REQ-mrl-training"
+        },
+        {
+          "relation": "validated_by",
+          "target": "V-training"
+        },
+        {
+          "relation": "depends_on",
+          "target": "REQ-mrl-baseline"
+        }
+      ]
+    },
+    {
+      "stable_id": "V-training",
+      "canonical_key": "V|migration-rl|defines|training|factoryweaver|v1",
+      "series": "V",
+      "revision": 2,
+      "status": "ACTIVE",
+      "title": "Migration-RL training independent verification",
+      "payload": "Subject: REQ-mrl-training; not whole Human Goal.\nIndependent Oracle Producer: future training/checkpoint Owner to verify held-out trained policy evaluator.\nPositive input/control: no checkpoints -> NOT_RUN; selected input verified episodes, separate training grant.\nNegative mutation: Replay called trained checkpoint.\nExpected discriminator: RL-ready now, RL-trained only future.\nActual observation: NOT_RUN for new Migration-RL Native tests; source-only historical results remain narrower.\nUnobserved signatures/effects are K or original Owner readback, never inferred PASS.",
+      "evidence_ids": [
+        "SRC-HUMAN",
+        "SRC-HANDOFF"
+      ],
+      "typed_links": [
+        {
+          "relation": "depends_on",
+          "target": "SPEC-training"
+        }
+      ]
+    },
+    {
+      "stable_id": "REQ-closure",
+      "canonical_key": "REQ|migration-rl|defines|closure|factoryweaver|v1",
+      "series": "REQ",
+      "revision": 1,
+      "status": "ACTIVE",
+      "title": "Migration-RL closure",
+      "payload": "Actor: Original Parent Goal/Delivery Owner.\nGoal: Whole original Human Goal **and** applicable FactoryWeaver card obligations (revision/NOOP + native consumer uptake), remaining REQ inventory, real independent evidence and original Owner effect/readback converge; partial green, card DONE, unknown-write or cognitive NOOP cannot falsely close the parent goal.\nMeasurement: Owner reconciliation of all parent obligations; actual native metrics NOT_RUN.\nPersistence: preserve this and all parent REQs across authorized bounded attempts.\nStop/Escalation: incomplete or unknown evidence blocks only dependent work, never claims whole completion.\nAcceptance: Full REQ plus Cards obligations and original effects closed.\nNon-case: Card DONE while human REQ open or unknown write.",
+      "evidence_ids": [
+        "SRC-HUMAN",
+        "SRC-HANDOFF"
+      ],
+      "typed_links": [
+        {
+          "relation": "implements",
+          "target": "REQ-mrl-closure"
+        },
+        {
+          "relation": "validated_by",
+          "target": "V-closure"
+        },
+        {
+          "relation": "depends_on",
+          "target": "REQ-mrl-session"
+        },
+        {
+          "relation": "depends_on",
+          "target": "REQ-mrl-invalidation"
+        },
+        {
+          "relation": "depends_on",
+          "target": "REQ-mrl-baseline"
+        }
+      ]
+    },
+    {
+      "stable_id": "SPEC-closure",
+      "canonical_key": "SPEC|migration-rl|defines|closure|factoryweaver|v1",
+      "series": "SPEC",
+      "revision": 2,
+      "status": "ACTIVE",
+      "title": "Migration-RL closure executable contract",
+      "payload": "Given: selected real source/Consumer, original Owner permission and applicable inputs; absent exact signature remains K.\nWhen: the selected whole Human Goal reconciler consumes its actual input.\nThen: Whole original Human Goal **and** applicable FactoryWeaver card obligations (revision/NOOP + native consumer uptake), remaining REQ inventory, real independent evidence and original Owner effect/readback converge; partial green, card DONE, unknown-write or cognitive NOOP cannot falsely close the parent goal.\nProducer: original parent REQ/Card and Provider owner.\nConsumer: whole Human Goal reconciler.\nInputs and conditions: all REQs, card revisions/NOOP, actual effect receipts.\nOutputs/refusals/effects: closed or named blocked remainder.\nPositive: local PASS but REQ open -> continue.\nNegative/falsifier: Card DONE with missing original effect.\nUnknown effect: original Owner readback before any retry; no guessed status.\nReplay: previous source-only result may be retained as history, not native evidence.\nIndependent Oracle: actual observation from whole Human Goal reconciler; new native test NOT_RUN.",
+      "evidence_ids": [
+        "SRC-HUMAN",
+        "SRC-HANDOFF"
+      ],
+      "typed_links": [
+        {
+          "relation": "implements",
+          "target": "REQ-mrl-closure"
+        },
+        {
+          "relation": "validated_by",
+          "target": "V-closure"
+        },
+        {
+          "relation": "depends_on",
+          "target": "REQ-mrl-session"
+        },
+        {
+          "relation": "depends_on",
+          "target": "REQ-mrl-invalidation"
+        },
+        {
+          "relation": "depends_on",
+          "target": "REQ-mrl-baseline"
+        }
+      ]
+    },
+    {
+      "stable_id": "V-closure",
+      "canonical_key": "V|migration-rl|defines|closure|factoryweaver|v1",
+      "series": "V",
+      "revision": 2,
+      "status": "ACTIVE",
+      "title": "Migration-RL closure independent verification",
+      "payload": "Subject: REQ-mrl-closure; not whole Human Goal.\nIndependent Oracle Producer: original parent REQ/Card and Provider owner to verify whole Human Goal reconciler.\nPositive input/control: local PASS but REQ open -> continue; selected input all REQs, card revisions/NOOP, actual effect receipts.\nNegative mutation: Card DONE with missing original effect.\nExpected discriminator: closed or named blocked remainder.\nActual observation: NOT_RUN for new Migration-RL Native tests; source-only historical results remain narrower.\nUnobserved signatures/effects are K or original Owner readback, never inferred PASS.",
+      "evidence_ids": [
+        "SRC-HUMAN",
+        "SRC-HANDOFF"
+      ],
+      "typed_links": [
+        {
+          "relation": "depends_on",
+          "target": "SPEC-closure"
+        }
+      ]
+    },
+    {
+      "stable_id": "REQ-spec-record",
+      "canonical_key": "REQ|migration-rl|defines|spec-record|factoryweaver|v1",
+      "series": "REQ",
+      "revision": 2,
+      "status": "ACTIVE",
+      "title": "spec-record",
+      "payload": "Actor: original FactoryWeaver/Soodles Owner, per scope.\nGoal: Create one canonical v7.2 FactoryWeaver Migration-RL record and complete MRL/MRA/HOF/FWC coverage.\nMeasurement: Source-supported record contains all MRL-01–10 and MRA-01–18 mapping with typed, valid cards.\nPersistence: preserve pending implementation after cards complete.\nStop: original owner readback and stage-specific acceptance.\nNon-case: Card compilation is promoted to RL implementation completion.\nCorrection: card compilation is a local goal and does not depend on full parent Goal closure.",
+      "evidence_ids": [
+        "SRC-HUMAN",
+        "SRC-HANDOFF",
+        "SRC-FW-CARDS"
+      ],
+      "typed_links": [
+        {
+          "relation": "implements",
+          "target": "REQ-mrl-spec-record"
+        },
+        {
+          "relation": "depends_on",
+          "target": "REQ-mrl-intent"
+        }
+      ]
+    },
+    {
+      "stable_id": "REQ-design-docs",
+      "canonical_key": "REQ|migration-rl|defines|design-docs|factoryweaver|v1",
+      "series": "REQ",
+      "revision": 1,
+      "status": "ACTIVE",
+      "title": "design-docs",
+      "payload": "Actor: original FactoryWeaver/Soodles Owner, per scope.\nGoal: Future implementation shall create separate migration-rl-implementation-scope.md and first-principles.md, linked by migrate-class P-class.\nMeasurement: Each contract has the agreed twelve sections and independent source-bound verification when actually created.\nPersistence: preserve pending implementation after cards complete.\nStop: original owner readback and stage-specific acceptance.\nNon-case: Uncreated docs are claimed to be deployed or already consumed.",
+      "evidence_ids": [
+        "SRC-HUMAN",
+        "SRC-HANDOFF",
+        "SRC-FW-CARDS"
+      ],
+      "typed_links": [
+        {
+          "relation": "implements",
+          "target": "REQ-mrl-design-docs"
+        },
+        {
+          "relation": "depends_on",
+          "target": "REQ-mrl-intent"
+        },
+        {
+          "relation": "depends_on",
+          "target": "REQ-mrl-session"
+        }
+      ]
+    },
+    {
+      "stable_id": "C-native-truth",
+      "canonical_key": "C|migration-rl|defines|native-truth|factoryweaver|v1",
+      "series": "C",
+      "revision": 1,
+      "status": "ACTIVE",
+      "title": "Native mathematical runtime differs from text/Replay",
+      "payload": "Mechanism: actual pinned original and migrated processes compute numerical or DOM/event outcomes under matched inputs; REA captures recorded evidence, not arbitrary stateful writes. Conditions: real images, fixture/seed, independent runtime trace. Failure: HAR expected JSON with no executed original process. Decision: Native Evals cannot be replaced by Replay.",
+      "evidence_ids": [
+        "SRC-HUMAN",
+        "SRC-HANDOFF",
+        "SRC-REA",
+        "SRC-AGENTENV"
+      ],
+      "typed_links": [
+        {
+          "relation": "based_on",
+          "target": "REQ-mrl-runtimes"
+        }
+      ]
+    },
+    {
+      "stable_id": "C-two-sided",
+      "canonical_key": "C|migration-rl|defines|two-sided|factoryweaver|v1",
+      "series": "C",
+      "revision": 1,
+      "status": "ACTIVE",
+      "title": "Two-sided interface proof is not invertibility",
+      "payload": "Mechanism: within specified preconditions, Producer guarantees meet Consumer accepted domain; reverse error/acknowledgment obligations must independently match Producer expectations. Inputs: typed Producer values, Consumer events, acknowledgments. Failure: lost error ack or forcing inverse hash/aggregation. Decision: verify both contract directions while avoiding invalid universal inverse claim.",
+      "evidence_ids": [
+        "SRC-HUMAN",
+        "SRC-HANDOFF"
+      ],
+      "typed_links": [
+        {
+          "relation": "based_on",
+          "target": "REQ-mrl-interfaces"
+        }
+      ]
+    },
+    {
+      "stable_id": "C-goal-loop",
+      "canonical_key": "C|migration-rl|defines|goal-loop|factoryweaver|v1",
+      "series": "C",
+      "revision": 1,
+      "status": "ACTIVE",
+      "title": "One supervising Session converges human goal and cards",
+      "payload": "Mechanism: Outer Thinking V2/optional V3 × Ambitious finds actual causal breakpoint; admitted Poteto executes bounded work; independent Native results inform original FactoryWeaver card revisions/NOOP; original Owner next resumes. Conditions: real stage/owner and unsealed input. Failure: local PASS or card DONE closes unfinished REQs. Distinct exits: CognitiveStop != HumanGoalClosed.",
+      "evidence_ids": [
+        "SRC-HUMAN",
+        "SRC-HANDOFF",
+        "SRC-FW-CARDS"
+      ],
+      "typed_links": [
+        {
+          "relation": "based_on",
+          "target": "REQ-mrl-session"
+        },
+        {
+          "relation": "based_on",
+          "target": "REQ-mrl-closure"
+        }
+      ]
+    },
+    {
+      "stable_id": "G-license-owner",
+      "canonical_key": "G|migration-rl|defines|license-owner|factoryweaver|v1",
+      "series": "G",
+      "revision": 1,
+      "status": "ACTIVE",
+      "title": "Legal source and original owner authority",
+      "payload": "Invariant: multi-source read != multi-target write; repo-level OSS license does not automatically license all assets. Applicability: legal vendor/codemod/adapter and website capture. Authority: original Source/Admission/Provider Owner. Refusal: missing asset rights, foreign write or unknown effect. Consequence: only dependent action blocked. Exception: separately authorized and rights-checked task.",
+      "evidence_ids": [
+        "SRC-HUMAN",
+        "SRC-ISSUE",
+        "SRC-MIGRATE"
+      ],
+      "typed_links": [
+        {
+          "relation": "based_on",
+          "target": "REQ-mrl-rights"
+        }
+      ]
+    },
+    {
+      "stable_id": "G-evidence",
+      "canonical_key": "G|migration-rl|defines|evidence|factoryweaver|v1",
+      "series": "G",
+      "revision": 1,
+      "status": "ACTIVE",
+      "title": "Independent proof ceiling and untouched Golden",
+      "payload": "Invariant: Source Identity, behavior parity, math correctness, Native acceptance, card producer and human closure remain separate. Applicability: AST/SCIP, CI, replay, Native Reward and card status. Authority: original Test/Verifier/Owner. Refusal: Candidate self-score, fabricated report, oracle changed for green. Consequence: NOT_RUN/UNKNOWN stay honest. Exception: true oracle error corrected only by its original owner with historical evidence retained.",
+      "evidence_ids": [
+        "SRC-HUMAN",
+        "SRC-HANDOFF"
+      ],
+      "typed_links": [
+        {
+          "relation": "based_on",
+          "target": "REQ-mrl-false-inference"
+        },
+        {
+          "relation": "based_on",
+          "target": "REQ-mrl-reward"
+        }
+      ]
+    },
+    {
+      "stable_id": "G-card-owner",
+      "canonical_key": "G|migration-rl|defines|card-owner|factoryweaver|v1",
+      "series": "G",
+      "revision": 1,
+      "status": "ACTIVE",
+      "title": "Versioned FactoryWeaver cards cannot rewrite Human Intent",
+      "payload": "Invariant: original FactoryWeaver producer owns stable IDs, revisions, typed invalidation and historical cards; goal changes need original Human Owner. Applicability: Evals-driven SPEC/V/G/K/X revisions. Authority: FactoryWeaver original producer. Refusal: fabricated human_confirmed=true, replacing Golden or card as effect authority. Consequence: revised card must have fresh Consumer proof. Exception: material source-grounded original Owner-approved revision.",
+      "evidence_ids": [
+        "SRC-HUMAN",
+        "SRC-FW-SCHEMA",
+        "SRC-FW-CARDS"
+      ],
+      "typed_links": [
+        {
+          "relation": "based_on",
+          "target": "REQ-mrl-cards"
+        }
+      ]
+    },
+    {
+      "stable_id": "K-native-missing",
+      "canonical_key": "K|migration-rl|defines|native-missing|factoryweaver|v1",
+      "series": "K",
+      "revision": 1,
+      "status": "ACTIVE",
+      "title": "Missing dual Native and Noodle Owner receipts",
+      "payload": "Missing input: Missing: paired executable original/target trace, actual reset, native Noodle stage and independent oracle. Producer: original AgentEnv/Noodle/Test Manager/Provider. Why: old Chromium source-only results are not native acceptance. Affected: MRA-05–12 and MRA-15–18. Unaffected: this specification compilation.\nNext evidence: real named producer receipts, never invented commands or SHA. Affected dependent requirement: REQ-mrl-runtimes.",
+      "evidence_ids": [
+        "SRC-HUMAN",
+        "SRC-HANDOFF"
+      ],
+      "typed_links": [
+        {
+          "relation": "depends_on",
+          "target": "REQ-mrl-runtimes"
+        }
+      ]
+    },
+    {
+      "stable_id": "K-scip-missing",
+      "canonical_key": "K|migration-rl|defines|scip-missing|factoryweaver|v1",
+      "series": "K",
+      "revision": 1,
+      "status": "ACTIVE",
+      "title": "Missing independently labeled AST/SCIP retrieval data",
+      "payload": "Missing input: Missing: real JS/TS indexer, frozen task ground truth and independent TP/FP/FN/critical dynamic edges. Producer: original Code-intel/indexer and retrieval evaluator. Why: current Soodles Python-only index cannot prove 99%. Affected: MRA-03–04. Unaffected: rights/design cards.\nNext evidence: real named producer receipts, never invented commands or SHA. Affected dependent requirement: REQ-mrl-retrieval.",
+      "evidence_ids": [
+        "SRC-HUMAN",
+        "SRC-HANDOFF"
+      ],
+      "typed_links": [
+        {
+          "relation": "depends_on",
+          "target": "REQ-mrl-retrieval"
+        }
+      ]
+    },
+    {
+      "stable_id": "K-card-native-missing",
+      "canonical_key": "K|migration-rl|defines|card-native-missing|factoryweaver|v1",
+      "series": "K",
+      "revision": 1,
+      "status": "ACTIVE",
+      "title": "Missing card Producer and fresh native card Consumer uptake",
+      "payload": "Missing input: Missing: real FactoryWeaver revision, Host-bound exact Scope bundle, fresh Noodle Consumer and original Owner readback. Producer: original FactoryWeaver and Soodles/Noodle Owner. Why: card_delta DONE is not implementation acceptance. Affected: MRA-13–15,18. Unaffected: proposed spec.\nNext evidence: real named producer receipts, never invented commands or SHA. Affected dependent requirement: REQ-mrl-cards.",
+      "evidence_ids": [
+        "SRC-HUMAN",
+        "SRC-HANDOFF"
+      ],
+      "typed_links": [
+        {
+          "relation": "depends_on",
+          "target": "REQ-mrl-cards"
+        }
+      ]
+    },
+    {
+      "stable_id": "K-asset-license-missing",
+      "canonical_key": "K|migration-rl|defines|asset-license-missing|factoryweaver|v1",
+      "series": "K",
+      "revision": 1,
+      "status": "ACTIVE",
+      "title": "Missing dependency/asset commercial-license closure",
+      "payload": "Missing input: Missing: actual selected upstream asset/license dependency closure and intended redistribution policy. Producer: Source rights/admission Owner. Why: MIT top-level is not blanket file rights. Affected: real mutation and publication. Unaffected: source-only cards.\nNext evidence: real named producer receipts, never invented commands or SHA. Affected dependent requirement: REQ-mrl-rights.",
+      "evidence_ids": [
+        "SRC-HUMAN",
+        "SRC-HANDOFF"
+      ],
+      "typed_links": [
+        {
+          "relation": "depends_on",
+          "target": "REQ-mrl-rights"
+        }
+      ]
+    },
+    {
+      "stable_id": "R-causal-atoms",
+      "canonical_key": "R|migration-rl|defines|causal-atoms|factoryweaver|v1",
+      "series": "R",
+      "revision": 2,
+      "status": "ACTIVE",
+      "title": "Bounded Migration-RL causal atoms (advisory only)",
+      "payload": "Parent Goal: lawful, verified source/target native Migration-RL with Session Human Goal/Card closure. Units: 1) spec-only cards, 2) approved .md/P-class, 3) AST/SCIP benchmark, 4) real math/UI runtime+reset, 5) independent Reward/Evals, 6) card producer→native Consumer, 7) comparable held-out baseline. Stateful Full-stack and RL Training deferred. Prerequisites: rights/source and original Owner next; no guessed Tool authority. Exit gates: scoped MRA-01–18 and actual Owner receipts. This Roadmap does not schedule, select tests, or replace Session choices.",
+      "evidence_ids": [
+        "SRC-HUMAN",
+        "SRC-HANDOFF"
+      ],
+      "typed_links": [
+        {
+          "relation": "based_on",
+          "target": "REQ-mrl-intent"
+        }
+      ]
+    },
+    {
+      "stable_id": "REQ-migration-method",
+      "canonical_key": "REQ|migration-rl|defines|migration-method|factoryweaver|v1",
+      "series": "REQ",
+      "revision": 1,
+      "status": "ACTIVE",
+      "title": "Migration strategy lawful reuse first",
+      "payload": "Actor: original migrate-class Session. Goal: existing target implementation → licensed immutable vendor → supported codemod → thin adapter → necessary authorized semantic rewrite, only when genuinely applicable. Measurement: original Source/Consumer readback and method evidence. Noncase: automatic rewrite or unapproved source/assets. Persistence: original Owner next, one admitted target.",
+      "evidence_ids": [
+        "SRC-HUMAN",
+        "SRC-HANDOFF",
+        "SRC-MIGRATE"
+      ],
+      "typed_links": [
+        {
+          "relation": "implements",
+          "target": "REQ-mrl-migration-method"
+        },
+        {
+          "relation": "validated_by",
+          "target": "V-migration-method"
+        },
+        {
+          "relation": "depends_on",
+          "target": "REQ-mrl-rights"
+        }
+      ]
+    },
+    {
+      "stable_id": "SPEC-migration-method",
+      "canonical_key": "SPEC|migration-rl|defines|migration-method|factoryweaver|v1",
+      "series": "SPEC",
+      "revision": 1,
+      "status": "ACTIVE",
+      "title": "Original migrate-class strategy consumer",
+      "payload": "Given: actual source/asset rights, current target module, supported codemod and original permitted Worktree. When: original Session selects strategy. Producer: original Code-intel plus Source Rights owner. Consumer: admitted Noodle action. Inputs: target reuse, source bytes/license, supported transformation, adapter requirement, necessary semantic rewrite reason. Outputs: first legally applicable method or refusal/unknown. Positive: target already implements contract and is reused. Negative: unsupported codemod or unlicensed asset cannot silently escalate to rewrite. Oracle: original Source/Owner/Consumer trace. Native NOT_RUN.",
+      "evidence_ids": [
+        "SRC-HUMAN",
+        "SRC-HANDOFF",
+        "SRC-MIGRATE"
+      ],
+      "typed_links": [
+        {
+          "relation": "implements",
+          "target": "REQ-mrl-migration-method"
+        },
+        {
+          "relation": "validated_by",
+          "target": "V-migration-method"
+        }
+      ]
+    },
+    {
+      "stable_id": "V-migration-method",
+      "canonical_key": "V|migration-rl|defines|migration-method|factoryweaver|v1",
+      "series": "V",
+      "revision": 1,
+      "status": "ACTIVE",
+      "title": "Migration decision discriminators",
+      "payload": "Subject: bounded strategy choice, not whole native parity. Positive input: real target engine already meets contract and source revision verified -> reuse without math rewrite. Negative: vendor dependency/asset rights unavailable or unsupported codemod -> refuse dependent action, not unauthorized rewrite. Independent Oracle: original code/rights and target Consumer confirmation. Observation NOT_RUN.",
+      "evidence_ids": [
+        "SRC-HUMAN",
+        "SRC-HANDOFF",
+        "SRC-MIGRATE"
+      ],
+      "typed_links": [
+        {
+          "relation": "depends_on",
+          "target": "SPEC-migration-method"
+        }
+      ]
+    },
+    {
+      "stable_id": "REQ-clause-coverage",
+      "canonical_key": "REQ|migration-rl|defines|clause-coverage|factoryweaver|v1",
+      "series": "REQ",
+      "revision": 1,
+      "status": "ACTIVE",
+      "title": "Source-clause coverage instead of ID-count proxy",
+      "payload": "Actor: original Source Reader. Goal: source-bound clause-level trace, preserve non-case/conditions, no invented complete raw chat. Measurement: Source clauses mapped to REQ/Card/K/exclusion reviewed by independent semantic owner. Positive: strategy order and FWP confirmed decisions included. Noncase: MRA count equals complete source meaning. Stop: original unavailable raw source remains K.",
+      "evidence_ids": [
+        "SRC-HUMAN",
+        "SRC-HANDOFF",
+        "SRC-MIGRATE"
+      ],
+      "typed_links": [
+        {
+          "relation": "implements",
+          "target": "REQ-mrl-clause-coverage"
+        },
+        {
+          "relation": "validated_by",
+          "target": "V-clause-coverage"
+        },
+        {
+          "relation": "depends_on",
+          "target": "REQ-mrl-intent"
+        }
+      ]
+    },
+    {
+      "stable_id": "SPEC-clause-coverage",
+      "canonical_key": "SPEC|migration-rl|defines|clause-coverage|factoryweaver|v1",
+      "series": "SPEC",
+      "revision": 1,
+      "status": "ACTIVE",
+      "title": "Original clause-to-card producer boundary",
+      "payload": "Given: actually inspected Human turns, fixed handoff and migrate-class draft Source, not guessed full history. When: original Reader compiles source clauses. Producer: original Host Source Reader. Consumer: FactoryWeaver semantic reviewer and original Card Producer. Inputs: clause locator, semantic constraint/exception, source identity. Outputs: mapped REQ/Card/K or reviewed exclusion and explicit missing full raw Source. Positive: five-method reuse ladder and non-case mapped. Negative: omit adapter precondition while MRA 18/18 still passes. Oracle: independent inspected original Source, not cardinality.",
+      "evidence_ids": [
+        "SRC-HUMAN",
+        "SRC-HANDOFF",
+        "SRC-MIGRATE"
+      ],
+      "typed_links": [
+        {
+          "relation": "implements",
+          "target": "REQ-mrl-clause-coverage"
+        },
+        {
+          "relation": "validated_by",
+          "target": "V-clause-coverage"
+        }
+      ]
+    },
+    {
+      "stable_id": "V-clause-coverage",
+      "canonical_key": "V|migration-rl|defines|clause-coverage|factoryweaver|v1",
+      "series": "V",
+      "revision": 1,
+      "status": "ACTIVE",
+      "title": "Clause omission independent review",
+      "payload": "Subject: available original source/decision units, not all unheard raw history. Positive: direct Human decisions, migrate source strategy and noncases are mapped with locators. Negative: delete legitimate thin-adapter step while 18 MRA IDs remain => semantic review flags missing source clause. Oracle: original Host Source Reader and independent reviewer. Full original raw dialogue proof NOT_RUN.",
+      "evidence_ids": [
+        "SRC-HUMAN",
+        "SRC-HANDOFF",
+        "SRC-MIGRATE"
+      ],
+      "typed_links": [
+        {
+          "relation": "depends_on",
+          "target": "SPEC-clause-coverage"
+        }
+      ]
+    },
+    {
+      "stable_id": "K-missing-original-dialogue",
+      "canonical_key": "K|migration-rl|defines|missing-original-dialogue|factoryweaver|v1",
+      "series": "K",
+      "revision": 1,
+      "status": "ACTIVE",
+      "title": "Full raw dialogue unavailable for completeness proof",
+      "payload": "Missing input: Host-materialized complete original pre-handoff conversation with exact source locator and trustworthy Source readback. Why: summary + selected User turns do not prove all unseen words were inspected. Producer: conversation Source Reader/Host. Affected only universal all-history clause completeness; explicit known mapping and other specs may proceed.",
+      "evidence_ids": [
+        "SRC-HUMAN",
+        "SRC-HANDOFF"
+      ],
+      "typed_links": [
+        {
+          "relation": "depends_on",
+          "target": "REQ-mrl-clause-coverage"
+        }
+      ]
+    }
+  ],
+  "action_requests": [],
+  "progress": {
+    "knowledge": {
+      "state": "SPECIFIED",
+      "evidence_refs": [
+        "SRC-HUMAN",
+        "SRC-HANDOFF",
+        "SRC-FW-CARDS"
+      ]
+    },
+    "engineering": {
+      "state": "UNASSESSED",
+      "evidence_refs": []
+    },
+    "delivery": {
+      "state": "NOT_STARTED",
+      "evidence_refs": []
+    }
+  }
+}

@@ -36,3 +36,7 @@ Keep local `then`, I/O and oracle bounded to that same Consumer.
 **Review-writing:** Check actor, condition before required action, evidence and causal direction, proposed vs observed state, acceptance/unknown, exact technical terms, and preservation of original goal. Apply only this card's meaningful slots; do not require a `K` card to know an unavailable mechanism. Only a real P-class instruction edit triggers scoped behavior evals.
 
 **Output:** semantic CREATE/UPDATE/REUSE/NOOP proposal, source-grounded field content, typed links with direction/counterfactual, and relevant continuation obligation. The original Host resolves stable identity and version. A valid shape is not a semantic PASS.
+
+## Consumer-specific semantic refusal
+
+Do not label a SPEC executable when its entire I/O is “original Owner data + selected inputs → scoped result.” Instead name the **inspected** Producer, selected real Consumer, applicable precondition, known input/opaque reference or named missing source, output/refusal/effects and a negative that distinguishes an invalid result from the correct one. Then/Oracle must refer to this same Consumer, not a later Runner or whole product. Migration-only claims may refer to AST/SCIP, Native math/Browser and two-sided module contracts only when the actual selected Consumer demands them; never invent a source function signature. Review each `depends_on`: card creation and Outer iteration need not depend on whole-goal closure or a not-yet-produced revised Card.
