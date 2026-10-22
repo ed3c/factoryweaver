@@ -7,7 +7,7 @@ The original FactoryWeaver public Python CLI validates **shape, identities, perm
 ```bash
 python3 scripts/factoryweaver.py validate docs/specifications/migration-rl/project.json
 python3 scripts/factoryweaver.py project docs/specifications/migration-rl/project.json
-python3 -m unittest tests.test_migration_rl_spec_artifacts -v
+python3 -m unittest discover -s tests -p 'test_migration_rl_spec_artifacts.py' -v
 ```
 
 On a PR, the repository's existing `verify-public-contract` workflow discovers `tests/test_migration_rl_spec_artifacts.py` without creating a parallel Test Manager. This record may be machine-validated by that workflow; actual native execution and Provider acceptance must be checked separately.
