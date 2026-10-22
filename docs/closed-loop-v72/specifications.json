@@ -143,7 +143,8 @@
         "CL-10",
         "CL-15",
         "CL-17",
-        "CL-19"
+        "CL-19",
+        "CL-21"
       ],
       "actor": "compiler／卡片 owner",
       "input_contract": "Accepted source/old Card identity + new original Source/Consumer counterexample + existing typed dependencies",
@@ -153,16 +154,19 @@
       "then": "FactoryWeaver 原 Registry 以同一 stable ID revision+1 保留 before/after/原因和真正依賴影響；無錯誤卡片時 NOOP 並修程式，不創新 Card 身分",
       "non_cases": [
         "程式缺陷時竄改規格／Oracle 讓測試變綠",
-        "遺失原 REQ 或用新 stable ID 抹除歷史"
+        "遺失原 REQ 或用新 stable ID 抹除歷史",
+        "SOURCE_PARITY: preserve original negation, condition, exception, rights, unknown-effect readback, and actual linked Consumer when revising a source-derived Card.",
+        "If intentionally new approved behavior differs, retain both old Source and new authorized acceptance; never rewrite original Golden Master to create parity.",
+        "Correct implementation defect under valid SPEC without Card revision."
       ],
       "cases": {
         "positive": "FactoryWeaver 原 Registry 以同一 stable ID revision+1 保留 before/after/原因和真正依賴影響；無錯誤卡片時 NOOP 並修程式，不創新 Card 身分",
-        "negative": "程式缺陷時竄改規格／Oracle 讓測試變綠；遺失原 REQ 或用新 stable ID 抹除歷史",
+        "negative": "程式缺陷時竄改規格／Oracle 讓測試變綠；遺失原 REQ 或用新 stable ID 抹除歷史；SOURCE_PARITY: preserve original negation, condition, exception, rights, unknown-effect readback, and actual linked Consumer when revising a source-derived Card.；If intentionally new approved behavior differs, retain both old Source and new authorized acceptance; never rewrite original Golden Master to create parity.；Correct implementation defect under valid SPEC without Card revision.",
         "unknown_effect": "缺原 Provider 真相或不明寫入先保留 UNKNOWN、回到原 Owner Readback，只阻塞依賴工作",
         "replay": "同來源／同 Revision／同原合法 Next 不重建 Stage 或卡片；不變修正 NOOP"
       },
       "auth_boundary": "FactoryWeaver Registry owns Card revision; Soodles Original Owner owns admission, acceptance and external effects; Noodle only admitted Stage",
-      "verification_oracle": "Actual original Source/Owner selection, FactoryWeaver before/after card delta, independently observed Noodle/Test/Schema/Provider readbacks, and V-runtime-gap discriminating controls",
+      "verification_oracle": "Actual original Source/Owner selection, FactoryWeaver before/after card delta, independently observed Noodle/Test/Schema/Provider readbacks, and V-runtime-gap discriminating controls Separate Source Identity, Behavioral Parity, Independent Semantic Correctness, and Native Consumer/Provider proof; actual E2E remains NOT_RUN unless independently observed.",
       "rollback": "以原 FactoryWeaver Card Delta 保存前版、差異與合法最新內容，不改原 runtime receipt",
       "execution_status": "UNTESTED",
       "registered_adapter": null,
@@ -405,7 +409,8 @@
         "CL-08",
         "CL-13",
         "CL-15",
-        "CL-16"
+        "CL-16",
+        "CL-20"
       ],
       "actor": "原 Noodle execute session",
       "input_contract": "Original admitted task envelope + relevant REQ/SPEC/G/V/negative cases + selected local prompt delta or NOOP",
@@ -415,16 +420,18 @@
       "then": "Poteto 在合法 Stage 自選 implementation，完成必要原 Test Manager 控制與 diff 審查，再將真實 candidate/trace/finding 返回原 Soodles Owner；修程式與修 Specification 需區分",
       "non_cases": [
         "正確 SPEC 下的 implementation failure 卻改規格讓測試 PASS",
-        "改寫已 Frozen Stage 或未經授權發布"
+        "改寫已 Frozen Stage 或未經授權發布",
+        "Only when migration task is admitted, prefer target reuse / pinned vendor / supported codemod / thin adapter before justified semantic rewrite.",
+        "No automatic TypeScript/AST parsing for a prose-only consumer and no external repo writes from reading extra source."
       ],
       "cases": {
         "positive": "Poteto 在合法 Stage 自選 implementation，完成必要原 Test Manager 控制與 diff 審查，再將真實 candidate/trace/finding 返回原 Soodles Owner；修程式與修 Specification 需區分",
-        "negative": "正確 SPEC 下的 implementation failure 卻改規格讓測試 PASS；改寫已 Frozen Stage 或未經授權發布",
+        "negative": "正確 SPEC 下的 implementation failure 卻改規格讓測試 PASS；改寫已 Frozen Stage 或未經授權發布；Only when migration task is admitted, prefer target reuse / pinned vendor / supported codemod / thin adapter before justified semantic rewrite.；No automatic TypeScript/AST parsing for a prose-only consumer and no external repo writes from reading extra source.",
         "unknown_effect": "缺原 Provider 真相或不明寫入先保留 UNKNOWN、回到原 Owner Readback，只阻塞依賴工作",
         "replay": "同來源／同 Revision／同原合法 Next 不重建 Stage 或卡片；不變修正 NOOP"
       },
       "auth_boundary": "FactoryWeaver Registry owns Card revision; Soodles Original Owner owns admission, acceptance and external effects; Noodle only admitted Stage",
-      "verification_oracle": "Actual original Source/Owner selection, FactoryWeaver before/after card delta, independently observed Noodle/Test/Schema/Provider readbacks, and V-runtime-gap discriminating controls",
+      "verification_oracle": "Actual original Source/Owner selection, FactoryWeaver before/after card delta, independently observed Noodle/Test/Schema/Provider readbacks, and V-runtime-gap discriminating controls Separate Source Identity, Behavioral Parity, Independent Semantic Correctness, and Native Consumer/Provider proof; actual E2E remains NOT_RUN unless independently observed.",
       "rollback": "原 Owner 處理合法 code rollback；保留先前真實 failure history",
       "execution_status": "UNTESTED",
       "registered_adapter": null,
@@ -441,7 +448,8 @@
         "CL-13",
         "CL-15",
         "CL-16",
-        "CL-19"
+        "CL-19",
+        "CL-20"
       ],
       "actor": "原 Soodles task／Issue owner",
       "input_contract": "Original Owner current request/next + actual Noodle Stage output + selected FactoryWeaver Card/REQ + Source/Provider original readbacks",
@@ -451,16 +459,19 @@
       "then": "沿原 next/NOOP，或辨識 implementation 修程式、真正 falsified specification 修原卡、缺證據查原 Producer、未決架構才走 Thinking V2/條件式 V3；全 REQ 原驗收方可關閉",
       "non_cases": [
         "有合法 next 卻強制再跑 Thinking/FactoryWeaver",
-        "單次 Stage PASS/CI 綠被當成 Parent Goal 完成"
+        "單次 Stage PASS/CI 綠被當成 Parent Goal 完成",
+        "Before asserting migrated source/target meaning, identify original target Consumer and separate source identity, observable behavior, semantic correctness and native acceptance.",
+        "A source-only structural/AST PASS or same happy output does not certify correct Human Intent or actual Provider effects.",
+        "Existing valid original Owner next implies PromptDelta=NOOP rather than forced migration workflow."
       ],
       "cases": {
         "positive": "沿原 next/NOOP，或辨識 implementation 修程式、真正 falsified specification 修原卡、缺證據查原 Producer、未決架構才走 Thinking V2/條件式 V3；全 REQ 原驗收方可關閉",
-        "negative": "有合法 next 卻強制再跑 Thinking/FactoryWeaver；單次 Stage PASS/CI 綠被當成 Parent Goal 完成",
+        "negative": "有合法 next 卻強制再跑 Thinking/FactoryWeaver；單次 Stage PASS/CI 綠被當成 Parent Goal 完成；Before asserting migrated source/target meaning, identify original target Consumer and separate source identity, observable behavior, semantic correctness and native acceptance.；A source-only structural/AST PASS or same happy output does not certify correct Human Intent or actual Provider effects.；Existing valid original Owner next implies PromptDelta=NOOP rather than forced migration workflow.",
         "unknown_effect": "缺原 Provider 真相或不明寫入先保留 UNKNOWN、回到原 Owner Readback，只阻塞依賴工作",
         "replay": "同來源／同 Revision／同原合法 Next 不重建 Stage 或卡片；不變修正 NOOP"
       },
       "auth_boundary": "FactoryWeaver Registry owns Card revision; Soodles Original Owner owns admission, acceptance and external effects; Noodle only admitted Stage",
-      "verification_oracle": "Actual original Source/Owner selection, FactoryWeaver before/after card delta, independently observed Noodle/Test/Schema/Provider readbacks, and V-runtime-gap discriminating controls",
+      "verification_oracle": "Actual original Source/Owner selection, FactoryWeaver before/after card delta, independently observed Noodle/Test/Schema/Provider readbacks, and V-runtime-gap discriminating controls Separate Source Identity, Behavioral Parity, Independent Semantic Correctness, and Native Consumer/Provider proof; actual E2E remains NOT_RUN unless independently observed.",
       "rollback": "不覆寫原 receipt；撤回不支援的 completion、保持原來源和 pending REQs",
       "execution_status": "UNTESTED",
       "registered_adapter": null,
