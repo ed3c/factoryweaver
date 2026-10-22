@@ -41,6 +41,33 @@
       "uri": "https://github.com/ed3c/soodles/blob/092dfa94aae6c9888d055102e35479a18f64214d/docs/handoffs/2026-10-21-harness2/handoff.md",
       "integrity": "UNPINNED",
       "source_role": "SUBJECT_MATTER"
+    },
+    {
+      "source_id": "SRC-2026-MGP-DECISIONS",
+      "source_type": "human_decision",
+      "source_dependency_key": "migrate-parity-v72-decisions-2026-10-23",
+      "locator": "User: MGP-01 A, MGP-02 B, MGP-03 B; maintain full conversation and accepted FCL/INT/HOF while updating v7.2 original prompt and real consumers",
+      "uri": "urn:factoryweaver:migrate-semantic-parity:2026-10-23",
+      "integrity": "UNPINNED",
+      "source_role": "HUMAN_DECISION"
+    },
+    {
+      "source_id": "SRC-SOODLES-MIGRATE-PR444",
+      "source_type": "code",
+      "source_dependency_key": "soodles-migrate-class-2026-10-21",
+      "locator": ".agents/skills/migrate-class/SKILL.md and references/method.md at exact unmerged Soodles PR #444 head c45d566e69bb074da33b63a89060022c893ff7de; migration method, not a runnable proof",
+      "uri": "https://github.com/ed3c/soodles/blob/c45d566e69bb074da33b63a89060022c893ff7de/.agents/skills/migrate-class/SKILL.md",
+      "integrity": "UNPINNED",
+      "source_role": "SUBJECT_MATTER"
+    },
+    {
+      "source_id": "SRC-SOODLES-STATE-CURRENT",
+      "source_type": "official_doc",
+      "source_dependency_key": "soodles-state-machine-current-2026-10",
+      "locator": "Soodles original contracts/state-machine-change.md at commit 1f5bfbe19d553304ca2f60138fe2c22519d655dd; reference historical local snapshot ef828 separately",
+      "uri": "https://github.com/ed3c/soodles/blob/1f5bfbe19d553304ca2f60138fe2c22519d655dd/contracts/state-machine-change.md",
+      "integrity": "UNPINNED",
+      "source_role": "SUBJECT_MATTER"
     }
   ],
   "requirements": [
@@ -958,15 +985,18 @@
       "stable_id": "SPEC-stable-update",
       "canonical_key": "SPEC|closed-loop|defines|stable-update|portable|v1",
       "series": "SPEC",
-      "revision": 2,
+      "revision": 3,
       "status": "ACTIVE",
       "title": "卡片可增修但保留歷史",
-      "payload": "given: FactoryWeaver accepted stable Card ID/canonical key and historical source/REQ/typed-link record exist.\nwhen: Original Noodle/independent Observer supplies new verified source/Consumer counterexample or necessary missing prerequisite.\nthen: Locate earliest erroneous producer. Correct SPEC/Oracle/typed link with the SAME stable ID, revision+1, original before/after bytes, reason and targeted actual dependency invalidation; create K only if needed producer evidence changes a dependent decision; X only for actual conflicting authoritative claims. If code alone is wrong, leave card unchanged and return code repair. If no materially new semantics, NOOP.\ninputs_outputs: Actual original Source/Consumer and accepted before Card -> source-grounded revision proposal + advisory affected links; no new execution authority.\nforbidden: Do not delete parent REQ, reset failed history with new ID, alter independent Oracle merely to make CI green, or overwrite native receipts.\nnegative_case: Implementation bug with correct accepted SPEC -> no Card revision. Stale cursor/changed before data -> refuse.\nunknown_effect: Lack of provider truth stays named UNKNOWN and cannot become verified source fact.\nreplay: Exact same before/after -> NOOP; changed content -> one increment; old revision retained by Before/After delta.\noracle: Original FactoryWeaver verify/card_delta + independent source fidelity review, and later fresh native Consumer checks for behavior.\noriginal_owner: FactoryWeaver Compiler/Registry for Cards, original Soodles Owner for runtime effects. Execution UNTESTED.",
+      "payload": "given: FactoryWeaver accepted stable Card ID/canonical key and historical source/REQ/typed-link record exist.\nwhen: Original Noodle/independent Observer supplies new verified source/Consumer counterexample or necessary missing prerequisite.\nthen: Locate earliest erroneous producer. Correct SPEC/Oracle/typed link with the SAME stable ID, revision+1, original before/after bytes, reason and targeted actual dependency invalidation; create K only if needed producer evidence changes a dependent decision; X only for actual conflicting authoritative claims. If code alone is wrong, leave card unchanged and return code repair. If no materially new semantics, NOOP.\ninputs_outputs: Actual original Source/Consumer and accepted before Card -> source-grounded revision proposal + advisory affected links; no new execution authority.\nforbidden: Do not delete parent REQ, reset failed history with new ID, alter independent Oracle merely to make CI green, or overwrite native receipts.\nnegative_case: Implementation bug with correct accepted SPEC -> no Card revision. Stale cursor/changed before data -> refuse.\nunknown_effect: Lack of provider truth stays named UNKNOWN and cannot become verified source fact.\nreplay: Exact same before/after -> NOOP; changed content -> one increment; old revision retained by Before/After delta.\noracle: Original FactoryWeaver verify/card_delta + independent source fidelity review, and later fresh native Consumer checks for behavior.\noriginal_owner: FactoryWeaver Compiler/Registry for Cards, original Soodles Owner for runtime effects. Execution UNTESTED.\nMGP Card revision rule: reuse accepted adequate REQ/SPEC/G/V and original typed links before prose rewrites. Compare current original Source/Consumer semantics and selected changed Card; preserve negation, timing, unknown-write readback, original Owner, license and explicit exclusions even when target prose is shorter. Same semantic producer supported -> REUSE/NOOP. Material source-falsified Card/typed link -> original Registry stable ID revision+1 with reason and actual dependencies invalidated. Changed target design expressly approved by original user is a newly judged SPEC, not claimed equivalent to old Source. Never rewrite a sound SPEC to hide an implementation bug.",
       "evidence_ids": [
         "SRC-TASK",
         "SRC-V72",
         "SRC-2026-FCL-DECISIONS",
-        "SRC-2026-HARNESS-HANDOFF"
+        "SRC-2026-HARNESS-HANDOFF",
+        "SRC-2026-MGP-DECISIONS",
+        "SRC-SOODLES-MIGRATE-PR444",
+        "SRC-SOODLES-STATE-CURRENT"
       ],
       "typed_links": [
         {
@@ -1336,15 +1366,18 @@
       "stable_id": "SPEC-inner-loop",
       "canonical_key": "SPEC|closed-loop|defines|inner-loop|portable|v1",
       "series": "SPEC",
-      "revision": 2,
+      "revision": 3,
       "status": "ACTIVE",
       "title": "Noodle Poteto 小迴圈完成可驗收單位",
-      "payload": "given: The real Noodle execute Stage is admitted, carries a frozen task/worktree/write-and-effect boundary and applicable accepted REQ/SPEC/G/V plus one fused Prompt Delta or NOOP.\nwhen: An actionable task unit is ready, or implementation reveals a reproducible failure/important missing observation.\nthen: Poteto freely selects engineering method under admitted playbook, inspects real callers, makes bounded code changes, consumes necessary original Test Manager selection, reviews actual diff, and returns native Stage Result/Candidate/trace and classified finding to the original Soodles Owner. A source-falsified requirement is only a feedback hypothesis for FactoryWeaver until original producer reviews it; a code bug stays code.\ninputs_outputs: Original frozen Stage input and original Owner-selected controls -> actual native artifact/feedback/next/readback; not a FactoryWeaver Card acceptance nor global task state.\nforbidden: No rewriting a prior Frozen Stage, Oracle, REQ or external effects; no invented SHA/argv; no global harness promotion on writer completion.\nnegative_case: Stage completed with protected regression fails -> no whole-goal PASS. Valid SPEC with implementation defect -> modify code, not SPEC.\nunknown_effect: Missing original session/effect readback blocks dependent operation only. Unknown write cannot be blindly replayed.\nreplay: Same admitted task/effect returns original receipt, no duplicate worker or Card revision.\noracle: Fresh Noodle input/trace, actual selected tests and independent original Soodles acceptance & Provider readback.\noriginal_owner: Noodle worktree/Stage/process for execution; Soodles original Issue/Review/Provider for effects. Execution UNTESTED.",
+      "payload": "given: The real Noodle execute Stage is admitted, carries a frozen task/worktree/write-and-effect boundary and applicable accepted REQ/SPEC/G/V plus one fused Prompt Delta or NOOP.\nwhen: An actionable task unit is ready, or implementation reveals a reproducible failure/important missing observation.\nthen: Poteto freely selects engineering method under admitted playbook, inspects real callers, makes bounded code changes, consumes necessary original Test Manager selection, reviews actual diff, and returns native Stage Result/Candidate/trace and classified finding to the original Soodles Owner. A source-falsified requirement is only a feedback hypothesis for FactoryWeaver until original producer reviews it; a code bug stays code.\ninputs_outputs: Original frozen Stage input and original Owner-selected controls -> actual native artifact/feedback/next/readback; not a FactoryWeaver Card acceptance nor global task state.\nforbidden: No rewriting a prior Frozen Stage, Oracle, REQ or external effects; no invented SHA/argv; no global harness promotion on writer completion.\nnegative_case: Stage completed with protected regression fails -> no whole-goal PASS. Valid SPEC with implementation defect -> modify code, not SPEC.\nunknown_effect: Missing original session/effect readback blocks dependent operation only. Unknown write cannot be blindly replayed.\nreplay: Same admitted task/effect returns original receipt, no duplicate worker or Card revision.\noracle: Fresh Noodle input/trace, actual selected tests and independent original Soodles acceptance & Provider readback.\noriginal_owner: Noodle worktree/Stage/process for execution; Soodles original Issue/Review/Provider for effects. Execution UNTESTED.\nMGP implementation freedom: only when original Owner admits a migration task, Poteto should prefer actual target reuse, then source-preserving vendor with license/NOTICE, an available deterministic codemod/recipe, thin compatible adapter, and owner-authorized semantic rewrite only as needed. Use actual source-domain structure parser when decision-critical, not Python Code Intel on TS/HTML; record unknown runtime registration or side effects. A completed copy/AST path is source identity only; actual matched Consumer parity requires original independent Observer and tests.",
       "evidence_ids": [
         "SRC-TASK",
         "SRC-V72",
         "SRC-2026-FCL-DECISIONS",
-        "SRC-2026-HARNESS-HANDOFF"
+        "SRC-2026-HARNESS-HANDOFF",
+        "SRC-2026-MGP-DECISIONS",
+        "SRC-SOODLES-MIGRATE-PR444",
+        "SRC-SOODLES-STATE-CURRENT"
       ],
       "typed_links": [
         {
@@ -1392,15 +1425,18 @@
       "stable_id": "SPEC-outer-loop",
       "canonical_key": "SPEC|closed-loop|defines|outer-loop|portable|v1",
       "series": "SPEC",
-      "revision": 2,
+      "revision": 3,
       "status": "ACTIVE",
       "title": "Soodles 外迴圈維持全部需求分母",
-      "payload": "given: Original supervising Soodles Session retains all Parent REQ, unchanged accepted Card versions, current authorized original Owner next and source/Provider readbacks.\nwhen: One original Noodle task returns a real candidate/feedback, failure or UNKNOWN; or original Owner next is already legal.\nthen: Classify first unsupported premise. Existing valid next -> consume original next, Thinking/PromptDelta NOOP. Implementation defect under accepted correct SPEC -> repair code within original scope. Falsified source-backed REQ/SPEC/V/typed link -> return Card-generation feedback to FactoryWeaver producer. Missing observation -> name original producer, block only dependents. Genuine architecture tradeoff -> Thinking V2, conditional V3 × Ambitious, then propose one minimum causal Scope. Original Owner alone adjudicates complete Parent REQ closure.\ninputs_outputs: Original full REQ inventory + accepted Card refs + original Stage result/candidate + selected Test/Schema/Provider observations -> source-bound semantic disposition and necessary proposed Scope/PromptDelta; never another state machine or executable argv.\nforbidden: Writer Completed, CI PASS, Card Delta DONE, single next=null or Harness2 internal adoption cannot close Human Intent. Do not rerun Thinking when original next is actionable.\nnegative_case: A completed inner stage with unverified Parent REQ must remain incomplete. Wrong SPEC uses actual source/Consumer counterexample; correct SPEC with code bug must not be rewritten to pass.\nunknown_effect: Ambiguous write requires original effect Owner readback before another effect; independent authorized work continues.\nreplay: Same original next/source/revision and no new material evidence -> NOOP; preserve original receipts.\noracle: Match native input/Stage and exact current Owner next to independent Test/Schema/Provider output, source-bound REQ denominator and actual production readback; no self-graded completion.\noriginal_owner: Soodles Session and original Issue/Admission/Review/Provider owners. Execution UNTESTED.",
+      "payload": "given: Original supervising Soodles Session retains all Parent REQ, unchanged accepted Card versions, current authorized original Owner next and source/Provider readbacks.\nwhen: One original Noodle task returns a real candidate/feedback, failure or UNKNOWN; or original Owner next is already legal.\nthen: Classify first unsupported premise. Existing valid next -> consume original next, Thinking/PromptDelta NOOP. Implementation defect under accepted correct SPEC -> repair code within original scope. Falsified source-backed REQ/SPEC/V/typed link -> return Card-generation feedback to FactoryWeaver producer. Missing observation -> name original producer, block only dependents. Genuine architecture tradeoff -> Thinking V2, conditional V3 × Ambitious, then propose one minimum causal Scope. Original Owner alone adjudicates complete Parent REQ closure.\ninputs_outputs: Original full REQ inventory + accepted Card refs + original Stage result/candidate + selected Test/Schema/Provider observations -> source-bound semantic disposition and necessary proposed Scope/PromptDelta; never another state machine or executable argv.\nforbidden: Writer Completed, CI PASS, Card Delta DONE, single next=null or Harness2 internal adoption cannot close Human Intent. Do not rerun Thinking when original next is actionable.\nnegative_case: A completed inner stage with unverified Parent REQ must remain incomplete. Wrong SPEC uses actual source/Consumer counterexample; correct SPEC with code bug must not be rewritten to pass.\nunknown_effect: Ambiguous write requires original effect Owner readback before another effect; independent authorized work continues.\nreplay: Same original next/source/revision and no new material evidence -> NOOP; preserve original receipts.\noracle: Match native input/Stage and exact current Owner next to independent Test/Schema/Provider output, source-bound REQ denominator and actual production readback; no self-graded completion.\noriginal_owner: Soodles Session and original Issue/Admission/Review/Provider owners. Execution UNTESTED.\nMGP source-to-Consumer proof: when an original legitimate Soodles Source/Consumer migration is truly selected, Outer may consult source-bound migrate-class method only after original next and Source. It must differentiate original source identity, matched behavior parity including exceptions/ordered effects, independent semantic correctness and native owner readback. Static Code Intel/AST is material source evidence, not proof of a complete dynamic graph. A proposed parity FAIL under intentionally amended user REQ is not a reason to undo the new accepted behavior; compare the new Owner-approved specification separately. Do not force migration analysis for a stable instruction/normal bug.",
       "evidence_ids": [
         "SRC-TASK",
         "SRC-V72",
         "SRC-2026-FCL-DECISIONS",
-        "SRC-2026-HARNESS-HANDOFF"
+        "SRC-2026-HARNESS-HANDOFF",
+        "SRC-2026-MGP-DECISIONS",
+        "SRC-SOODLES-MIGRATE-PR444",
+        "SRC-SOODLES-STATE-CURRENT"
       ],
       "typed_links": [
         {
@@ -2309,15 +2345,18 @@
       "stable_id": "V-runtime-gap",
       "canonical_key": "V|closed-loop|explains|v-runtime-gap|portable|v1",
       "series": "V",
-      "revision": 2,
+      "revision": 3,
       "status": "ACTIVE",
       "title": "目前 runtime 驗收仍未執行",
-      "payload": "subject: Actual Intent-to-Acceptance Closure for one original Parent Goal, not general system reliability.\noracle: Original FactoryWeaver source/record + before/after card_delta; original Soodles/Noodle native Stage input and result; original Test/Schema/Provider receipts independently covering ALL applicable Parent REQ. A green card JSON alone is insufficient.\nproducer: Original FactoryWeaver Registry and independently observed native Noodle/Test/Schema/Provider Owners; no candidate may self-sign acceptance.\npositive_control: PROPOSED NOT_RUN: source-bound admitted Noodle task produces a genuine counterexample against accepted SPEC; same Soodles Outer Session returns it to original FactoryWeaver Producer; that SPEC and V revise without ID/history loss; only a NEW not-frozen Stage consumes revised approved Delta; real independent tests and Provider readback confirm whole Parent REQ closure.\nnegative_control: PROPOSED NOT_RUN: (a) correct SPEC but wrong implementation -> code fix only, no Card change; (b) inner writer PASS but parent requirement unfinished -> no whole-goal closure; (c) valid current next -> Thinking/FactoryWeaver NOOP; (d) stale source/unknown write -> preserve original owner readback, no replay; (e) Harness2 internal selected final without verified baseline gain -> NO_PROMOTION; (f) public PR CI proposal cannot dispatch the local CLI.\nobservation_status: Source-only SPEC proposals and historical NOT_RUN are preserved. This revision does not claim actual fresh Noodle, independent held-out, pstack formal proof or Provider acceptance. Native controls remain NOT_RUN.\nscope: This V can validate scoped source semantics now; execution/activation/benefit needs original future native receipts.",
+      "payload": "subject: Actual Intent-to-Acceptance Closure for one original Parent Goal, not general system reliability.\noracle: Original FactoryWeaver source/record + before/after card_delta; original Soodles/Noodle native Stage input and result; original Test/Schema/Provider receipts independently covering ALL applicable Parent REQ. A green card JSON alone is insufficient.\nproducer: Original FactoryWeaver Registry and independently observed native Noodle/Test/Schema/Provider Owners; no candidate may self-sign acceptance.\npositive_control: PROPOSED NOT_RUN: source-bound admitted Noodle task produces a genuine counterexample against accepted SPEC; same Soodles Outer Session returns it to original FactoryWeaver Producer; that SPEC and V revise without ID/history loss; only a NEW not-frozen Stage consumes revised approved Delta; real independent tests and Provider readback confirm whole Parent REQ closure.\nnegative_control: PROPOSED NOT_RUN: (a) correct SPEC but wrong implementation -> code fix only, no Card change; (b) inner writer PASS but parent requirement unfinished -> no whole-goal closure; (c) valid current next -> Thinking/FactoryWeaver NOOP; (d) stale source/unknown write -> preserve original owner readback, no replay; (e) Harness2 internal selected final without verified baseline gain -> NO_PROMOTION; (f) public PR CI proposal cannot dispatch the local CLI.\nobservation_status: Source-only SPEC proposals and historical NOT_RUN are preserved. This revision does not claim actual fresh Noodle, independent held-out, pstack formal proof or Provider acceptance. Native controls remain NOT_RUN.\nscope: This V can validate scoped source semantics now; execution/activation/benefit needs original future native receipts.\nMGP differential evidence: additional future independent positive and planted negative cases must separately evaluate (1) original source identity/provenance, (2) applicable matched Consumer behavior parity including exceptions, ordered effects, rights and ambiguous writes, (3) independent Human Intent semantic correctness and source omissions, (4) actual fresh Host/Agent/Provider consumption. Both false equality (same happy output but lost unknown write readback) and false inequality (owner-approved intentional requirement change) must be detected. Static source-only tests/CI and structural comparator are not Fresh Native Consumer Evals; actual original Host/Attempt/Observer cannot be inferred. No new native eval was executed in this Card revision; status remains NOT_RUN for native.",
       "evidence_ids": [
         "SRC-TASK",
         "SRC-V72",
         "SRC-2026-FCL-DECISIONS",
-        "SRC-2026-HARNESS-HANDOFF"
+        "SRC-2026-HARNESS-HANDOFF",
+        "SRC-2026-MGP-DECISIONS",
+        "SRC-SOODLES-MIGRATE-PR444",
+        "SRC-SOODLES-STATE-CURRENT"
       ],
       "typed_links": [
         {
