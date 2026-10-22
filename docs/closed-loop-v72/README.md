@@ -11,3 +11,12 @@
 本次交付是規格及有限 eval。全部 runtime REQ 保持 engineering=UNASSESSED、delivery=NOT_STARTED；adapter 為 UNBOUND、task unit 為 NOT_RUN。文件 PR 的 merge 只驗收筆記交付，不啟用 native Hook／Cron 或啟動 Noodle。
 
 PR #15 的規格交付時尚未包含 reference compiler CLI。現在的純讀取 CLI 可驗證與投影這份規格，不能據此宣稱原 Noodle、四個 Manager 或 native Hook／Cron 已完成 runtime 驗收。
+
+## Current FCL supplement — Intent-to-Acceptance Closure (2026-10-23)
+
+This newer specification increment preserves the **historical** original 30 REQ / 68 stable Card IDs and all original NOT_RUN states. It adds CL-15…CL-19 to [source clauses](source-clauses.md) / [coverage](coverage.json), updates exactly four preexisting Card revisions (SPEC-outer-loop, SPEC-inner-loop, SPEC-stable-update, V-runtime-gap), and aligns their [structured SPECs](specifications.json). The [source-bound ScopeManifest / SkillRoute / PromptDelta / Continuation](intent-to-acceptance-scope.json) is proposal-only.
+
+[Complete Harness² × NeoWeaver × pstack INT/HOF and A01–A20 coverage](intent-to-acceptance-coverage.md) stays linked to its **original cross-repo Owners**, not duplicated as another FactoryWeaver registry. [Positive/negative verification contract](intent-to-acceptance-verification.md) declares real native tests that are still NOT_RUN until the original Noodle/Soodles/Provider executors return observations.
+
+**Scope:** accepted FCL-01 A / FCL-02 A / FCL-03 A — card/coverage/specification documents and PR only. No Harness² runtime, Noodle admission, card-to-native auto-dispatch, formal proof, paid API key, provider landing or main merge authorized by this supplement.
+

@@ -1,5 +1,7 @@
 # 閉環資料流卡片盒
 
+Current r2 card entries must be read from [project.json](project.json), not assumed from historical printed card excerpts below. See [current FCL source and acceptance supplement](intent-to-acceptance-coverage.md).
+
 此筆記使用 Zettelkasten Specification Compiler v7.2 portable profile。這次交付規格與 eval 審計。30 個 REQ 描述待實作或待驗的結果，不能因筆記合併便稱系統已完成。
 
 卡片內容以 [project.json](project.json) 為交換資料。[specifications.json](specifications.json) 補完整 SPEC 欄位。[coverage.json](coverage.json) 保留 14 個原句分組、逐項映射及每批最多 12 卡的 cursor。原句分組仍須對照原要求，映射齊全不證明語義無漏項。

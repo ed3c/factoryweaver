@@ -1,0 +1,163 @@
+{
+  "protocol": "factoryweaver/intent-to-acceptance-scope/v1",
+  "status": "PROPOSED_NOT_ADMITTED",
+  "source_refs": [
+    "SRC-2026-FCL-DECISIONS",
+    "SRC-2026-HARNESS-HANDOFF"
+  ],
+  "decisions": {
+    "FCL_01": "A: full conversation preserved with stratified acceptance",
+    "FCL_02": "A: existing FactoryWeaver closed-loop Registry is card owner, independent NeoWeaver 10 REQ/44 cards retained",
+    "FCL_03": "A: card/coverage/verification documents and PR, no runtime implementation"
+  },
+  "upstream_source": "https://github.com/ed3c/soodles/pull/445",
+  "ScopeManifest": {
+    "goal": "Same supervising Soodles Session interleaves conditional Outer Thinking and admitted Noodle Poteto Inner engineering, uses original readbacks to classify Known/Unknown and first causal failure, corrects original FactoryWeaver Cards only where a specification premise is falsified, and pursues independent whole Human Intent acceptance.",
+    "measurement": "Source-bound REQ denominator + original Owner next + actual native Noodle input/trace + independent Test/Schema/Provider readback + correct Card before/after revision, with missing evidence represented UNKNOWN not PASS.",
+    "persistence": "Original FactoryWeaver 30 REQ and 68 stable Card IDs retained; NeoWeaver independent 10 REQ/44 Cards and full Harness² A01-A20 obligations persist in their owner domain; no historical fail/NOT_RUN overwritten.",
+    "stop_and_escalation": "No unexpected effect, untrusted public proposal, stale original source, false oracle correction or unauthorized frozen Stage change. Dependent work stops on UNKNOWN effect until original provider readback; legal independent work continues. Card compilation DONE never equals whole-Goal closure.",
+    "requirement_ids": [
+      "REQ-intent",
+      "REQ-coverage",
+      "REQ-dependencies",
+      "REQ-stable-update",
+      "REQ-correction",
+      "REQ-inner-loop",
+      "REQ-outer-loop",
+      "REQ-eval-evidence",
+      "REQ-consumption",
+      "REQ-completion",
+      "REQ-handoff",
+      "REQ-safety"
+    ],
+    "card_ids": [
+      "SPEC-outer-loop",
+      "SPEC-inner-loop",
+      "SPEC-stable-update",
+      "V-runtime-gap"
+    ],
+    "source_clauses": [
+      "CL-15",
+      "CL-16",
+      "CL-17",
+      "CL-18",
+      "CL-19"
+    ],
+    "work_kind": "DOCUMENTATION_SPECIFICATION_ONLY",
+    "original_owner": "FactoryWeaver v7.2 Compiler/Registry for cards; Soodles original Session/Admission/Review/Provider and Noodle original Stage for future effects",
+    "first_causal_breakpoint": "A native implementation counterexample does not itself establish whether the original specification or product code is wrong, and historical schema PASS does not prove whole-task closure.",
+    "positive_exit": "Four existing cards revised with same stable IDs, source clauses mapped, negative control/oracle specified, new crossrepo overlay and PR reviewable; no runtime effect.",
+    "negative_exit": "Do not infer a generated card or PR PASS authorizes model optimization, Noodle admission, whole-task completion or Provider landing.",
+    "external_obligation_ids": [
+      "A01",
+      "A02",
+      "A03",
+      "A04",
+      "A05",
+      "A06",
+      "A07",
+      "A08",
+      "A09",
+      "A10",
+      "A11",
+      "A12",
+      "A13",
+      "A14",
+      "A15",
+      "A16",
+      "A17",
+      "A18",
+      "A19",
+      "A20"
+    ]
+  },
+  "SkillRoute": {
+    "status": "CONDITIONAL",
+    "selection": "FactoryWeaver v7.2 single compiler entry; Soodles Thinking Route V2/conditional V3 × Ambitious only for real unresolved semantics; original issue-atom and Test Manager only on original owner triggers; Noodle Poteto only after admitted execute",
+    "non_trigger": "Valid current owner next => PromptDelta NOOP. No automatic Harness², Noodle, Hook/Cron, extra manager or formal verifier merely for displaying cards."
+  },
+  "PromptDelta": {
+    "status": "PROPOSED_NOT_CONSUMED",
+    "bullets": [
+      "Retain entire Parent Goal/REQ inventory and legitimate Owner next; do not select a new thinking method for known next.",
+      "Use original Native/Provider readback to classify implementation bug versus falsified specification versus named necessary Unknown, and identify the first unsupported Producer→Consumer premise.",
+      "Correct the original FactoryWeaver source/Card Revision (same stable ID/history) only after evidence proves REQ/SPEC/V/typed-link wrong; otherwise fix code, read original owner or NOOP.",
+      "Send only necessary new behavior/constraint/verification semantics to the next not-frozen, actually admitted Noodle Stage; let Poteto select local implementation.",
+      "Independent Soodles/FactoryWeaver/NeoWeaver Test/Schema/Provider and formal verification owners retain real acceptance. Preserve A01–A20 statuses and allow NO_PROMOTION."
+    ],
+    "native_consumer_provenance": "NOT_RUN"
+  },
+  "Continuation": {
+    "original_requirement_ids": [
+      "REQ-intent",
+      "REQ-coverage",
+      "REQ-dependencies",
+      "REQ-spec-data",
+      "REQ-stable-update",
+      "REQ-correction",
+      "REQ-identity",
+      "REQ-events",
+      "REQ-schema",
+      "REQ-test",
+      "REQ-hook",
+      "REQ-cron",
+      "REQ-inner-loop",
+      "REQ-outer-loop",
+      "REQ-manager-feedback",
+      "REQ-consumption",
+      "REQ-completion",
+      "REQ-invalidation",
+      "REQ-replay",
+      "REQ-unknown-effect",
+      "REQ-retry-budget",
+      "REQ-thinking-router",
+      "REQ-ponytail",
+      "REQ-eval-evidence",
+      "REQ-compiler-audit",
+      "REQ-adapters",
+      "REQ-safety",
+      "REQ-handoff",
+      "REQ-cost",
+      "REQ-publication"
+    ],
+    "original_card_denominator": 68,
+    "updated_card_revisions": [
+      {
+        "stable_id": "SPEC-outer-loop",
+        "before": 1,
+        "after": 2
+      },
+      {
+        "stable_id": "SPEC-inner-loop",
+        "before": 1,
+        "after": 2
+      },
+      {
+        "stable_id": "SPEC-stable-update",
+        "before": 1,
+        "after": 2
+      },
+      {
+        "stable_id": "V-runtime-gap",
+        "before": 1,
+        "after": 2
+      }
+    ],
+    "external_sources": [
+      "https://github.com/ed3c/NeoWeaver/blob/main/docs/compiled/specification.json",
+      "https://github.com/ed3c/soodles/pull/445"
+    ],
+    "original_owner_next": "UNOBSERVED_IN_THIS_SPECIFICATION_REVIEW",
+    "native_intent_closure": "NOT_RUN",
+    "harness2_model_backed": "NOT_RUN",
+    "pstack_formal_promotion": "NOT_RUN",
+    "publication": "NOT_RUN"
+  },
+  "authority": {
+    "effects": [],
+    "authorizes_landing": false,
+    "authorizes_admission": false,
+    "authorizes_promotion": false,
+    "authorizes_training": false
+  }
+}

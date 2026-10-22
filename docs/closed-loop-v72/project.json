@@ -23,6 +23,24 @@
       "uri": "https://github.com/ed3c/factoryweaver/blob/30eaffd359f44d00b47809b6e5491209dd1fff0f/references/zettelkasten-v7.2.md",
       "integrity": "PINNED_SHA256",
       "sha256": "e7ce14877290f6dae4676df0c1f450543e0b6f035b05c6f3709a2ee234f9d078"
+    },
+    {
+      "source_id": "SRC-2026-FCL-DECISIONS",
+      "source_type": "human_decision",
+      "source_dependency_key": "fcl-decisions-2026-10-23",
+      "locator": "Current conversation: outer Thinking Route × inner Poteto; FCL-01 A / FCL-02 A / FCL-03 A, specification-only",
+      "uri": "urn:factoryweaver:closed-loop:fcl-2026-10-23",
+      "integrity": "UNPINNED",
+      "source_role": "HUMAN_DECISION"
+    },
+    {
+      "source_id": "SRC-2026-HARNESS-HANDOFF",
+      "source_type": "other",
+      "source_dependency_key": "harness2-handoff-2026-10-21",
+      "locator": "Soodles PR #445 approved handoff: complete Harness2, NeoWeaver, pstack, INT/HOF and A01–A20",
+      "uri": "https://github.com/ed3c/soodles/blob/092dfa94aae6c9888d055102e35479a18f64214d/docs/handoffs/2026-10-21-harness2/handoff.md",
+      "integrity": "UNPINNED",
+      "source_role": "SUBJECT_MATTER"
     }
   ],
   "requirements": [
@@ -940,13 +958,15 @@
       "stable_id": "SPEC-stable-update",
       "canonical_key": "SPEC|closed-loop|defines|stable-update|portable|v1",
       "series": "SPEC",
-      "revision": 1,
+      "revision": 2,
       "status": "ACTIVE",
       "title": "卡片可增修但保留歷史",
-      "payload": "Given 已有 stable ID 與 canonical key。When 新事實或必要未知出現。Then 就地更新現行 revision；保留原版、差異、理由及 supersedes；必要新問題新增 K／X。Negative 不得刪原要求以消除 FAIL。Unknown 無新證據的現況主張保持假設。Replay 相同新證據重送不增加 revision。邊界 重寫現行文字不改原始 logs／receipts。回滾 切回上一 revision，保持 superseded 關係。Execution UNTESTED。",
+      "payload": "given: FactoryWeaver accepted stable Card ID/canonical key and historical source/REQ/typed-link record exist.\nwhen: Original Noodle/independent Observer supplies new verified source/Consumer counterexample or necessary missing prerequisite.\nthen: Locate earliest erroneous producer. Correct SPEC/Oracle/typed link with the SAME stable ID, revision+1, original before/after bytes, reason and targeted actual dependency invalidation; create K only if needed producer evidence changes a dependent decision; X only for actual conflicting authoritative claims. If code alone is wrong, leave card unchanged and return code repair. If no materially new semantics, NOOP.\ninputs_outputs: Actual original Source/Consumer and accepted before Card -> source-grounded revision proposal + advisory affected links; no new execution authority.\nforbidden: Do not delete parent REQ, reset failed history with new ID, alter independent Oracle merely to make CI green, or overwrite native receipts.\nnegative_case: Implementation bug with correct accepted SPEC -> no Card revision. Stale cursor/changed before data -> refuse.\nunknown_effect: Lack of provider truth stays named UNKNOWN and cannot become verified source fact.\nreplay: Exact same before/after -> NOOP; changed content -> one increment; old revision retained by Before/After delta.\noracle: Original FactoryWeaver verify/card_delta + independent source fidelity review, and later fresh native Consumer checks for behavior.\noriginal_owner: FactoryWeaver Compiler/Registry for Cards, original Soodles Owner for runtime effects. Execution UNTESTED.",
       "evidence_ids": [
         "SRC-TASK",
-        "SRC-V72"
+        "SRC-V72",
+        "SRC-2026-FCL-DECISIONS",
+        "SRC-2026-HARNESS-HANDOFF"
       ],
       "typed_links": [
         {
@@ -956,6 +976,10 @@
         {
           "relation": "depends_on",
           "target": "REQ-spec-data"
+        },
+        {
+          "relation": "validated_by",
+          "target": "V-runtime-gap"
         }
       ]
     },
@@ -1312,13 +1336,15 @@
       "stable_id": "SPEC-inner-loop",
       "canonical_key": "SPEC|closed-loop|defines|inner-loop|portable|v1",
       "series": "SPEC",
-      "revision": 1,
+      "revision": 2,
       "status": "ACTIVE",
       "title": "Noodle Poteto 小迴圈完成可驗收單位",
-      "payload": "Given 原 admission／execution envelope 固定且工作授權有效。When 已有可執行 task unit。Then 選原 Poteto playbook，讀相似實作，小步修改、必要驗證、自審 diff，回填本單位結果後继续其他可做需求。Negative 局部 commit／PASS 不能作整份任務 stopping point。Unknown 缺原 session 身分只停需要該身分的效果。Replay 原終態 session 不自行重啟；重送結果回原紀錄。邊界 本次交接不啟動 Noodle、不製造 admission。回滾 由原 owner 回滾該單位，保留失敗歷史。Execution UNTESTED。",
+      "payload": "given: The real Noodle execute Stage is admitted, carries a frozen task/worktree/write-and-effect boundary and applicable accepted REQ/SPEC/G/V plus one fused Prompt Delta or NOOP.\nwhen: An actionable task unit is ready, or implementation reveals a reproducible failure/important missing observation.\nthen: Poteto freely selects engineering method under admitted playbook, inspects real callers, makes bounded code changes, consumes necessary original Test Manager selection, reviews actual diff, and returns native Stage Result/Candidate/trace and classified finding to the original Soodles Owner. A source-falsified requirement is only a feedback hypothesis for FactoryWeaver until original producer reviews it; a code bug stays code.\ninputs_outputs: Original frozen Stage input and original Owner-selected controls -> actual native artifact/feedback/next/readback; not a FactoryWeaver Card acceptance nor global task state.\nforbidden: No rewriting a prior Frozen Stage, Oracle, REQ or external effects; no invented SHA/argv; no global harness promotion on writer completion.\nnegative_case: Stage completed with protected regression fails -> no whole-goal PASS. Valid SPEC with implementation defect -> modify code, not SPEC.\nunknown_effect: Missing original session/effect readback blocks dependent operation only. Unknown write cannot be blindly replayed.\nreplay: Same admitted task/effect returns original receipt, no duplicate worker or Card revision.\noracle: Fresh Noodle input/trace, actual selected tests and independent original Soodles acceptance & Provider readback.\noriginal_owner: Noodle worktree/Stage/process for execution; Soodles original Issue/Review/Provider for effects. Execution UNTESTED.",
       "evidence_ids": [
         "SRC-TASK",
-        "SRC-V72"
+        "SRC-V72",
+        "SRC-2026-FCL-DECISIONS",
+        "SRC-2026-HARNESS-HANDOFF"
       ],
       "typed_links": [
         {
@@ -1332,6 +1358,10 @@
         {
           "relation": "depends_on",
           "target": "REQ-spec-data"
+        },
+        {
+          "relation": "validated_by",
+          "target": "V-runtime-gap"
         }
       ]
     },
@@ -1362,13 +1392,15 @@
       "stable_id": "SPEC-outer-loop",
       "canonical_key": "SPEC|closed-loop|defines|outer-loop|portable|v1",
       "series": "SPEC",
-      "revision": 1,
+      "revision": 2,
       "status": "ACTIVE",
       "title": "Soodles 外迴圈維持全部需求分母",
-      "payload": "Given 整份需求及全部局部結果仍可讀。When 一個小迴圈返回結果。Then 核對全部 REQ、未映射原句、缺件與下一步；可做項目继续，只有全要求具證據才整體完成。Negative 單一 owner next=null 或無新 bug 不能結束整份能力工作。Unknown 沒有原身份的歷史欠帳保留在原任務，不阻塞獨立新工作。Replay 終態新證據按原任務邊界處理，不重開生命週期。邊界 外迴圈不把 runtime 確認責任塞回 compiler。回滾 撤回錯誤 whole-task complete，回到剩餘需求。Execution UNTESTED。",
+      "payload": "given: Original supervising Soodles Session retains all Parent REQ, unchanged accepted Card versions, current authorized original Owner next and source/Provider readbacks.\nwhen: One original Noodle task returns a real candidate/feedback, failure or UNKNOWN; or original Owner next is already legal.\nthen: Classify first unsupported premise. Existing valid next -> consume original next, Thinking/PromptDelta NOOP. Implementation defect under accepted correct SPEC -> repair code within original scope. Falsified source-backed REQ/SPEC/V/typed link -> return Card-generation feedback to FactoryWeaver producer. Missing observation -> name original producer, block only dependents. Genuine architecture tradeoff -> Thinking V2, conditional V3 × Ambitious, then propose one minimum causal Scope. Original Owner alone adjudicates complete Parent REQ closure.\ninputs_outputs: Original full REQ inventory + accepted Card refs + original Stage result/candidate + selected Test/Schema/Provider observations -> source-bound semantic disposition and necessary proposed Scope/PromptDelta; never another state machine or executable argv.\nforbidden: Writer Completed, CI PASS, Card Delta DONE, single next=null or Harness2 internal adoption cannot close Human Intent. Do not rerun Thinking when original next is actionable.\nnegative_case: A completed inner stage with unverified Parent REQ must remain incomplete. Wrong SPEC uses actual source/Consumer counterexample; correct SPEC with code bug must not be rewritten to pass.\nunknown_effect: Ambiguous write requires original effect Owner readback before another effect; independent authorized work continues.\nreplay: Same original next/source/revision and no new material evidence -> NOOP; preserve original receipts.\noracle: Match native input/Stage and exact current Owner next to independent Test/Schema/Provider output, source-bound REQ denominator and actual production readback; no self-graded completion.\noriginal_owner: Soodles Session and original Issue/Admission/Review/Provider owners. Execution UNTESTED.",
       "evidence_ids": [
         "SRC-TASK",
-        "SRC-V72"
+        "SRC-V72",
+        "SRC-2026-FCL-DECISIONS",
+        "SRC-2026-HARNESS-HANDOFF"
       ],
       "typed_links": [
         {
@@ -1382,6 +1414,10 @@
         {
           "relation": "depends_on",
           "target": "REQ-inner-loop"
+        },
+        {
+          "relation": "validated_by",
+          "target": "V-runtime-gap"
         }
       ]
     },
@@ -2273,13 +2309,15 @@
       "stable_id": "V-runtime-gap",
       "canonical_key": "V|closed-loop|explains|v-runtime-gap|portable|v1",
       "series": "V",
-      "revision": 1,
+      "revision": 2,
       "status": "ACTIVE",
       "title": "目前 runtime 驗收仍未執行",
-      "payload": "本次驗證卡片資料及有限指引消費。真實 Noodle admission／execute、原生 Hook／Cron、四 Manager 自動触發與 whole-task effect readback 均 NOT_RUN。候選說明或 schema 合法不能解除這些缺口。",
+      "payload": "subject: Actual Intent-to-Acceptance Closure for one original Parent Goal, not general system reliability.\noracle: Original FactoryWeaver source/record + before/after card_delta; original Soodles/Noodle native Stage input and result; original Test/Schema/Provider receipts independently covering ALL applicable Parent REQ. A green card JSON alone is insufficient.\nproducer: Original FactoryWeaver Registry and independently observed native Noodle/Test/Schema/Provider Owners; no candidate may self-sign acceptance.\npositive_control: PROPOSED NOT_RUN: source-bound admitted Noodle task produces a genuine counterexample against accepted SPEC; same Soodles Outer Session returns it to original FactoryWeaver Producer; that SPEC and V revise without ID/history loss; only a NEW not-frozen Stage consumes revised approved Delta; real independent tests and Provider readback confirm whole Parent REQ closure.\nnegative_control: PROPOSED NOT_RUN: (a) correct SPEC but wrong implementation -> code fix only, no Card change; (b) inner writer PASS but parent requirement unfinished -> no whole-goal closure; (c) valid current next -> Thinking/FactoryWeaver NOOP; (d) stale source/unknown write -> preserve original owner readback, no replay; (e) Harness2 internal selected final without verified baseline gain -> NO_PROMOTION; (f) public PR CI proposal cannot dispatch the local CLI.\nobservation_status: Source-only SPEC proposals and historical NOT_RUN are preserved. This revision does not claim actual fresh Noodle, independent held-out, pstack formal proof or Provider acceptance. Native controls remain NOT_RUN.\nscope: This V can validate scoped source semantics now; execution/activation/benefit needs original future native receipts.",
       "evidence_ids": [
         "SRC-TASK",
-        "SRC-V72"
+        "SRC-V72",
+        "SRC-2026-FCL-DECISIONS",
+        "SRC-2026-HARNESS-HANDOFF"
       ],
       "typed_links": [
         {
