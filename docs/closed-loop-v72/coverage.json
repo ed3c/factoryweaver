@@ -170,6 +170,65 @@
         "REQ-ponytail",
         "REQ-compiler-audit"
       ]
+    },
+    {
+      "id": "CL-15",
+      "source_quote": "同一 Session 的 outer Thinking Route ↔ inner Poteto 互動並保留 Parent Human Intent",
+      "requirements": [
+        "REQ-intent",
+        "REQ-inner-loop",
+        "REQ-outer-loop",
+        "REQ-thinking-router",
+        "REQ-consumption",
+        "REQ-completion"
+      ]
+    },
+    {
+      "id": "CL-16",
+      "source_quote": "以 Known／Unknown、架構假設和實際 Native Evidence 決定修程式或修 Spec",
+      "requirements": [
+        "REQ-correction",
+        "REQ-dependencies",
+        "REQ-stable-update",
+        "REQ-invalidation",
+        "REQ-unknown-effect",
+        "REQ-eval-evidence"
+      ]
+    },
+    {
+      "id": "CL-17",
+      "source_quote": "FactoryWeaver v7.2 Card-generation Feedback 和 Worker Prompt Delta 不混用，修正既有 Revision",
+      "requirements": [
+        "REQ-coverage",
+        "REQ-spec-data",
+        "REQ-stable-update",
+        "REQ-correction",
+        "REQ-handoff"
+      ]
+    },
+    {
+      "id": "CL-18",
+      "source_quote": "完整保留 Harness² × NeoWeaver × pstack、INT/HOF 決策及 A01–A20，分層接受且不複製原 Owner Registry",
+      "requirements": [
+        "REQ-intent",
+        "REQ-coverage",
+        "REQ-dependencies",
+        "REQ-safety",
+        "REQ-eval-evidence",
+        "REQ-completion",
+        "REQ-handoff"
+      ]
+    },
+    {
+      "id": "CL-19",
+      "source_quote": "FCL-01 A／FCL-02 A／FCL-03 A：完整對話，現有 FactoryWeaver Closed-loop Registry，規格卡片與文件 PR only",
+      "requirements": [
+        "REQ-coverage",
+        "REQ-stable-update",
+        "REQ-outer-loop",
+        "REQ-publication",
+        "REQ-handoff"
+      ]
     }
   ],
   "batches": [
