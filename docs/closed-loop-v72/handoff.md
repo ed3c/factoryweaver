@@ -43,3 +43,12 @@ Task unit 僅切工作。既有事件 log 和 owner receipt 保存實際 state�
 本 writer 的 unit manifest 在 [delta-unit.json](delta-unit.json)。原 session 依 Test Manager 所選 controls 取得 CLI observation，完成獨立 review，並經原 stage feedback 入口消費 Schema 返回的 next。這些程序的結果以實際外部 evidence 為準，不能從本段說明推定 PASS 或 effect 已完成。
 
 交付順序是：writer 保存已驗證的單元 commit，經原 stage-outcome 入口交還本單元；原 publication owner 再完成 PR、exact-head CI；原 landing owner 最後確認 provider main 與本機 main terminal readback。這不授權 compiler 執行 runtime effects，也不轉移原 order／session／control root 或重設失敗歷史與 budget。未知寫入仍先由原 owner readback。
+
+## Current FCL supplement — Intent-to-Acceptance Closure (2026-10-23)
+
+This newer specification increment preserves the **historical** original 30 REQ / 68 stable Card IDs and all original NOT_RUN states. It adds CL-15…CL-19 to [source clauses](source-clauses.md) / [coverage](coverage.json), updates exactly four preexisting Card revisions (SPEC-outer-loop, SPEC-inner-loop, SPEC-stable-update, V-runtime-gap), and aligns their [structured SPECs](specifications.json). The [source-bound ScopeManifest / SkillRoute / PromptDelta / Continuation](intent-to-acceptance-scope.json) is proposal-only.
+
+[Complete Harness² × NeoWeaver × pstack INT/HOF and A01–A20 coverage](intent-to-acceptance-coverage.md) stays linked to its **original cross-repo Owners**, not duplicated as another FactoryWeaver registry. [Positive/negative verification contract](intent-to-acceptance-verification.md) declares real native tests that are still NOT_RUN until the original Noodle/Soodles/Provider executors return observations.
+
+**Scope:** accepted FCL-01 A / FCL-02 A / FCL-03 A — card/coverage/specification documents and PR only. No Harness² runtime, Noodle admission, card-to-native auto-dispatch, formal proof, paid API key, provider landing or main merge authorized by this supplement.
+
