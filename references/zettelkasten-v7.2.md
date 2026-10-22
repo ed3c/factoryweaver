@@ -157,7 +157,7 @@ QG-34 API/SDK compatibility: version/protocol, schema compatibility and consumer
 
 ## Conditional migrate-class semantic parity
 
-Apply Soodles migrate-class only when source-backed Card, Scope or Consumer migration could change behavior. The reference is Soodles branch `codex/migrate-class-source-bound-parity` (`.agents/skills/migrate-class/SKILL.md` and `references/method.md`). Portable v7.2 must remain usable without that Host or Skill. Mentioning a Skill does not establish installation or native invocation.
+Apply Soodles migrate-class only when source-backed Card, Scope or Consumer migration could change behavior. The reviewed upstream reference is Soodles PR #444 branch `codex/migrate-class-source-bound-parity`, **read at commit `c45d566e69bb074da33b63a89060022c893ff7de`**, with `.agents/skills/migrate-class/SKILL.md` and `.agents/skills/migrate-class/references/method.md`. Re-read and re-bind when that source revision changes; a floating branch name is not an immutable source pin. Portable v7.2 must remain usable without that Host or Skill. Mentioning a Skill does not establish installation or native invocation.
 
 For a selected Consumer, inspect the original Goal, Source revision, registered Cards, dependencies, license and Owner. Prefer existing target reuse, byte-preserving vendor, supported codemod, thin adapter, then narrowly authorized semantic rewrite. Preserve original Parent REQ clauses, negative cases, input/output, exceptions, ordered events, side effects, rollback, authority and acceptance when assembling the smallest Behavior Scope and One-Shot Prompt. Do not paste all Cards into the Worker. No material new instruction means `PromptDelta=NOOP`.
 
