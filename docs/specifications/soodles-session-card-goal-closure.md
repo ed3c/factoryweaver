@@ -117,3 +117,7 @@ Existing source documents already describe the v7.2 compiler, Scope Bundle produ
 CARD_PATCH: proposed REQ/C/SPEC/SPEC/V/V/K/R, canonical IDs UNASSIGNED.
 ACTION_REQUESTS: none (no Host-registered effect request).
 NEXT_STATE: compilation complete for current inspected sources; **delivery INCONCLUSIVE**, awaiting original Registry/Owner/Native evidence.
+
+## Exact decision index for source coverage
+
+FWC-01 A; FWC-02 B; FWC-03 A; FWC-04 A; FWC-05 A; FWC-06 A; FWC-07 A. HOF-01 A; HOF-02 A. QWR-01 B; QWR-02 A; QWR-03 A; QWR-04 A; QWR-05 A; QWR-06 A; QWR-07 A; QWR-08 A; QWR-09 A; QWR-10 A; QWR-11 A; QWR-12 A. This index records user decisions, not Registry IDs or runtime evidence.
