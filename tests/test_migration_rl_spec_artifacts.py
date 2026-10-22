@@ -27,15 +27,15 @@ class MigrationRLSpecificationArtifacts(unittest.TestCase):
         self.assertTrue(result["valid"])
         self.assertEqual(result["proof_ceiling"], "SCHEMA_FIXTURE_ONLY")
         self.assertFalse(result["effect_authority"])
-        self.assertEqual(result["requirements"], 20)
-        self.assertEqual(result["cards"], 67)
+        self.assertEqual(result["requirements"], 22)
+        self.assertEqual(result["cards"], 74)
 
     def test_all_locked_human_decisions_preserved_without_forged_confirmation(self):
         decisions = {item["id"]: item["choice"] for item in self.coverage["decisions"]}
-        self.assertEqual(len(decisions), 13)
+        self.assertEqual(len(decisions), 16)
         for i in range(1, 11):
             self.assertEqual(decisions[f"MRL-{i:02d}"], "B" if i == 9 else "A")
-        for decision_id in ("HOF-01", "FWC-01", "FWC-02"):
+        for decision_id in ("HOF-01", "FWC-01", "FWC-02", "FWP-01", "FWP-02", "FWP-03"):
             self.assertEqual(decisions[decision_id], "A")
         self.assertFalse(self.record.get("decisions"))
 
@@ -52,6 +52,40 @@ class MigrationRLSpecificationArtifacts(unittest.TestCase):
                 self.assertIn(card_id, cards)
             spec = cards[clause["cards"][1]]
             self.assertIn({"relation": "validated_by", "target": clause["cards"][2]}, spec["typed_links"])
+
+    def test_source_clause_mapping_and_first_false_dependency(self):
+        ids = {c["stable_id"] for c in self.record["cards"]}
+        self.assertEqual(len(self.coverage["source_clauses"]), 25)
+        self.assertTrue(all(c["card"] in ids for c in self.coverage["source_clauses"]))
+        rr = {r["id"]: r for r in self.record["requirements"]}
+        self.assertNotIn("REQ-mrl-closure", rr["REQ-mrl-spec-record"].get("depends_on", []))
+        self.assertNotIn("REQ-mrl-cards", rr["REQ-mrl-session"].get("depends_on", []))
+        self.assertIn("REQ-mrl-migration-method", rr)
+
+    def test_specific_consumer_spec_and_verification(self):
+        cards = {c["stable_id"]: c for c in self.record["cards"]}
+        for slug in ("retrieval", "math", "interfaces", "session", "ui-effects"):
+            self.assertIn("Producer:", cards["SPEC-"+slug]["payload"])
+            self.assertIn("Consumer:", cards["SPEC-"+slug]["payload"])
+            self.assertIn("Inputs and conditions:", cards["SPEC-"+slug]["payload"])
+            self.assertIn("Positive input/control:", cards["V-"+slug]["payload"])
+            self.assertIn("Negative mutation:", cards["V-"+slug]["payload"])
+
+    def test_original_card_delta_preserves_revision_history(self):
+        from card_delta import compile_delta
+        original = json.loads((SPEC/"history"/"project-before-fwp.json").read_text(encoding="utf-8"))
+        receipt = compile_delta(original, self.record, batch_size=4)
+        self.assertEqual(len(receipt["patch"]), 4)
+        self.assertFalse(receipt["effect_authority"])
+        before = {c["stable_id"]: c for c in original["cards"]}
+        for c in self.record["cards"]:
+            if c["stable_id"] not in before:
+                self.assertEqual(c["revision"], 1)
+            else:
+                old = before[c["stable_id"]]
+                self.assertEqual(c["revision"], old["revision"]+int(
+                    {k:v for k,v in old.items() if k!="revision"} !=
+                    {k:v for k,v in c.items() if k!="revision"}))
 
     def test_card_only_scope_cannot_claim_effects(self):
         self.assertEqual(self.record["action_requests"], [])

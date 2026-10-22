@@ -88,6 +88,24 @@
       "choice": "A",
       "meaning": "Dedicated Soodles handoff branch and own file, unrelated docs/handoff.md preserved",
       "source_id": "SRC-HUMAN"
+    },
+    {
+      "id": "FWP-01",
+      "choice": "A",
+      "meaning": "Portable v7.2 core + conditional Soodles migrate-class profile",
+      "source_id": "SRC-HUMAN"
+    },
+    {
+      "id": "FWP-02",
+      "choice": "A",
+      "meaning": "Repair affected cards and preserve original revisions",
+      "source_id": "SRC-HUMAN"
+    },
+    {
+      "id": "FWP-03",
+      "choice": "A",
+      "meaning": "Clause-level source coverage and missing raw source explicitly K",
+      "source_id": "SRC-HUMAN"
     }
   ],
   "acceptance": [
@@ -412,14 +430,219 @@
     "Coverage of 10 MRL, 18 MRA and 3 FWC/HOF choices does not prove all unprovided raw conversations have been inspected.",
     "No evaluated AST/SCIP 99% measurement, Native dual runtime, reward or FactoryWeaver producer→Noodle Consumer run.",
     "Existing source-only Chromium pilot cannot be promoted to native acceptance.",
-    "No cross-repository write/merge/production/training authorization."
+    "No cross-repository write/merge/production/training authorization.",
+    "Host-bound full raw historical chat has not been materialized; this clause inventory covers inspected text, not an unfounded all-history 100% claim."
   ],
   "counts": {
     "MRL": 10,
     "MRA": 18,
     "FWC": 2,
     "HOF": 1,
-    "REQ": 20,
-    "Card": 67
-  }
+    "REQ": 22,
+    "Card": 74,
+    "FWP": 3,
+    "source_clauses": 25
+  },
+  "source_clauses": [
+    {
+      "clause_id": "CLAUSE-INTENT",
+      "excerpt": "Human Intent falsifiable First Principles",
+      "source_scope": "actually inspected original User/Handoff/Soodles migrate-class source as applicable",
+      "requirement": "REQ-mrl-intent",
+      "card": "SPEC-intent",
+      "disposition": "MAPPED_WITH_SOURCE_CEILING"
+    },
+    {
+      "clause_id": "CLAUSE-NATIVE",
+      "excerpt": "Source/target actual dual Native runtime, not replay",
+      "source_scope": "actually inspected original User/Handoff/Soodles migrate-class source as applicable",
+      "requirement": "REQ-mrl-runtimes",
+      "card": "SPEC-runtimes",
+      "disposition": "MAPPED_WITH_SOURCE_CEILING"
+    },
+    {
+      "clause_id": "CLAUSE-EVAL",
+      "excerpt": "Evaluation-first before training",
+      "source_scope": "actually inspected original User/Handoff/Soodles migrate-class source as applicable",
+      "requirement": "REQ-mrl-baseline",
+      "card": "SPEC-baseline",
+      "disposition": "MAPPED_WITH_SOURCE_CEILING"
+    },
+    {
+      "clause_id": "CLAUSE-MATHUI",
+      "excerpt": "Math/UI pilot first then Stateful Full-stack",
+      "source_scope": "actually inspected original User/Handoff/Soodles migrate-class source as applicable",
+      "requirement": "REQ-mrl-math",
+      "card": "SPEC-math",
+      "disposition": "MAPPED_WITH_SOURCE_CEILING"
+    },
+    {
+      "clause_id": "CLAUSE-TOOLS",
+      "excerpt": "End-to-end authorized migration actions",
+      "source_scope": "actually inspected original User/Handoff/Soodles migrate-class source as applicable",
+      "requirement": "REQ-mrl-mutation",
+      "card": "SPEC-mutation",
+      "disposition": "MAPPED_WITH_SOURCE_CEILING"
+    },
+    {
+      "clause_id": "CLAUSE-PROPERTY",
+      "excerpt": "Differential/Property/Metamorphic/Boundary verification",
+      "source_scope": "actually inspected original User/Handoff/Soodles migrate-class source as applicable",
+      "requirement": "REQ-mrl-math",
+      "card": "SPEC-math",
+      "disposition": "MAPPED_WITH_SOURCE_CEILING"
+    },
+    {
+      "clause_id": "CLAUSE-PARITY",
+      "excerpt": "Strict source/target behavior parity",
+      "source_scope": "actually inspected original User/Handoff/Soodles migrate-class source as applicable",
+      "requirement": "REQ-mrl-math",
+      "card": "SPEC-math",
+      "disposition": "MAPPED_WITH_SOURCE_CEILING"
+    },
+    {
+      "clause_id": "CLAUSE-TWOSIDED",
+      "excerpt": "Producer guarantees and Consumer reverse feedback",
+      "source_scope": "actually inspected original User/Handoff/Soodles migrate-class source as applicable",
+      "requirement": "REQ-mrl-interfaces",
+      "card": "SPEC-interfaces",
+      "disposition": "MAPPED_WITH_SOURCE_CEILING"
+    },
+    {
+      "clause_id": "CLAUSE-INDEX",
+      "excerpt": "Task-level AST/SCIP >=99% precision with recall and unknown edges",
+      "source_scope": "actually inspected original User/Handoff/Soodles migrate-class source as applicable",
+      "requirement": "REQ-mrl-retrieval",
+      "card": "SPEC-retrieval",
+      "disposition": "MAPPED_WITH_SOURCE_CEILING"
+    },
+    {
+      "clause_id": "CLAUSE-CARDS",
+      "excerpt": "Independent Evals to original FactoryWeaver revision",
+      "source_scope": "actually inspected original User/Handoff/Soodles migrate-class source as applicable",
+      "requirement": "REQ-mrl-cards",
+      "card": "SPEC-cards",
+      "disposition": "MAPPED_WITH_SOURCE_CEILING"
+    },
+    {
+      "clause_id": "CLAUSE-LOOP",
+      "excerpt": "Outer Thinking/Ambitious and inner Poteto supervising Session",
+      "source_scope": "actually inspected original User/Handoff/Soodles migrate-class source as applicable",
+      "requirement": "REQ-mrl-session",
+      "card": "SPEC-session",
+      "disposition": "MAPPED_WITH_SOURCE_CEILING"
+    },
+    {
+      "clause_id": "CLAUSE-KX",
+      "excerpt": "Known/Unknown K/X and false inference",
+      "source_scope": "actually inspected original User/Handoff/Soodles migrate-class source as applicable",
+      "requirement": "REQ-mrl-cards",
+      "card": "SPEC-cards",
+      "disposition": "MAPPED_WITH_SOURCE_CEILING"
+    },
+    {
+      "clause_id": "CLAUSE-STRATEGY",
+      "excerpt": "Existing target → licensed vendor → codemod → thin adapter → authorized rewrite",
+      "source_scope": "actually inspected original User/Handoff/Soodles migrate-class source as applicable",
+      "requirement": "REQ-mrl-migration-method",
+      "card": "SPEC-migration-method",
+      "disposition": "MAPPED_WITH_SOURCE_CEILING"
+    },
+    {
+      "clause_id": "CLAUSE-RIGHTS",
+      "excerpt": "Single target and source/asset rights",
+      "source_scope": "actually inspected original User/Handoff/Soodles migrate-class source as applicable",
+      "requirement": "REQ-mrl-rights",
+      "card": "SPEC-rights",
+      "disposition": "MAPPED_WITH_SOURCE_CEILING"
+    },
+    {
+      "clause_id": "CLAUSE-STATIC",
+      "excerpt": "Python declaration index is not full SCIP call graph",
+      "source_scope": "actually inspected original User/Handoff/Soodles migrate-class source as applicable",
+      "requirement": "REQ-mrl-deps",
+      "card": "SPEC-deps",
+      "disposition": "MAPPED_WITH_SOURCE_CEILING"
+    },
+    {
+      "clause_id": "CLAUSE-NEGATIVE",
+      "excerpt": "False resolution, changed exception/effect order refused",
+      "source_scope": "actually inspected original User/Handoff/Soodles migrate-class source as applicable",
+      "requirement": "REQ-mrl-false-inference",
+      "card": "SPEC-false-inference",
+      "disposition": "MAPPED_WITH_SOURCE_CEILING"
+    },
+    {
+      "clause_id": "CLAUSE-RESET",
+      "excerpt": "Actual state mutation and reset",
+      "source_scope": "actually inspected original User/Handoff/Soodles migrate-class source as applicable",
+      "requirement": "REQ-mrl-reset",
+      "card": "SPEC-reset",
+      "disposition": "MAPPED_WITH_SOURCE_CEILING"
+    },
+    {
+      "clause_id": "CLAUSE-CLOSURE",
+      "excerpt": "CognitiveStop/Card DONE != HumanGoalClosed",
+      "source_scope": "actually inspected original User/Handoff/Soodles migrate-class source as applicable",
+      "requirement": "REQ-mrl-closure",
+      "card": "SPEC-closure",
+      "disposition": "MAPPED_WITH_SOURCE_CEILING"
+    },
+    {
+      "clause_id": "CLAUSE-DOCS",
+      "excerpt": "Migration-RL scope and First Principles .md future refs",
+      "source_scope": "actually inspected original User/Handoff/Soodles migrate-class source as applicable",
+      "requirement": "REQ-mrl-design-docs",
+      "card": "REQ-design-docs",
+      "disposition": "MAPPED_WITH_SOURCE_CEILING"
+    },
+    {
+      "clause_id": "CLAUSE-HOF",
+      "excerpt": "HOF dedicated original branch preserved",
+      "source_scope": "actually inspected original User/Handoff/Soodles migrate-class source as applicable",
+      "requirement": "REQ-mrl-clause-coverage",
+      "card": "SPEC-clause-coverage",
+      "disposition": "MAPPED_WITH_SOURCE_CEILING"
+    },
+    {
+      "clause_id": "CLAUSE-FWC",
+      "excerpt": "FactoryWeaver official Producer; spec-only scope",
+      "source_scope": "actually inspected original User/Handoff/Soodles migrate-class source as applicable",
+      "requirement": "REQ-mrl-clause-coverage",
+      "card": "SPEC-clause-coverage",
+      "disposition": "MAPPED_WITH_SOURCE_CEILING"
+    },
+    {
+      "clause_id": "CLAUSE-FWP1",
+      "excerpt": "FWP-01 Portable core + conditional migration profile",
+      "source_scope": "actually inspected original User/Handoff/Soodles migrate-class source as applicable",
+      "requirement": "REQ-mrl-clause-coverage",
+      "card": "SPEC-clause-coverage",
+      "disposition": "MAPPED_WITH_SOURCE_CEILING"
+    },
+    {
+      "clause_id": "CLAUSE-FWP2",
+      "excerpt": "FWP-02 Versioned card repair",
+      "source_scope": "actually inspected original User/Handoff/Soodles migrate-class source as applicable",
+      "requirement": "REQ-mrl-invalidation",
+      "card": "SPEC-invalidation",
+      "disposition": "MAPPED_WITH_SOURCE_CEILING"
+    },
+    {
+      "clause_id": "CLAUSE-FWP3",
+      "excerpt": "FWP-03 clause-level source coverage",
+      "source_scope": "actually inspected original User/Handoff/Soodles migrate-class source as applicable",
+      "requirement": "REQ-mrl-clause-coverage",
+      "card": "SPEC-clause-coverage",
+      "disposition": "MAPPED_WITH_SOURCE_CEILING"
+    },
+    {
+      "clause_id": "CLAUSE-OWNER",
+      "excerpt": "Session/CLI/effect Owner separation",
+      "source_scope": "actually inspected original User/Handoff/Soodles migrate-class source as applicable",
+      "requirement": "REQ-mrl-session",
+      "card": "SPEC-session",
+      "disposition": "MAPPED_WITH_SOURCE_CEILING"
+    }
+  ]
 }

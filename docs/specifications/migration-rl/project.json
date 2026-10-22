@@ -589,6 +589,51 @@
         "REQ-mrl-intent",
         "REQ-mrl-session"
       ]
+    },
+    {
+      "id": "REQ-mrl-migration-method",
+      "statement": "Source-preserving migrate-class must prioritize existing target reuse, rights-checked byte-preserving vendor, supported codemod, thin adapter, then separately authorized semantic rewrite, based on actual Consumer, license and structural source.",
+      "claim_kind": "NORMATIVE",
+      "source_ids": [
+        "SRC-HUMAN",
+        "SRC-HANDOFF",
+        "SRC-MIGRATE"
+      ],
+      "owner": "Original Soodles migrate-class Session",
+      "acceptance": [
+        "Source-dependent method order and decision proof; no forced unnecessary rewrite",
+        "Wrong asset rights or foreign target rejected"
+      ],
+      "knowledge_status": "SPECIFIED",
+      "engineering_status": "UNASSESSED",
+      "delivery_status": "NOT_STARTED",
+      "falsifier": "Blindly rewrite original mathematical engine despite reusable target and unknown rights",
+      "depends_on": [
+        "REQ-mrl-intent",
+        "REQ-mrl-rights"
+      ]
+    },
+    {
+      "id": "REQ-mrl-clause-coverage",
+      "statement": "Maintain source-clause lossless mapping of actually available original user conversation and Soodles migrate-class requirements, not merely MRA/MRL count, with missing raw historical source explicitly K.",
+      "claim_kind": "NORMATIVE",
+      "source_ids": [
+        "SRC-HUMAN",
+        "SRC-HANDOFF",
+        "SRC-MIGRATE"
+      ],
+      "owner": "FactoryWeaver original Source Reader",
+      "acceptance": [
+        "Every inspected decision-changing source claim mapped to a REQ/Card/K or reviewed exclusion",
+        "Unavailable original raw history explicitly K, never false 100% completeness"
+      ],
+      "knowledge_status": "SPECIFIED",
+      "engineering_status": "UNASSESSED",
+      "delivery_status": "NOT_STARTED",
+      "falsifier": "MRA 18/18 while migration order/negative clause omitted",
+      "depends_on": [
+        "REQ-mrl-intent"
+      ]
     }
   ],
   "cards": [
@@ -2307,6 +2352,169 @@
         {
           "relation": "based_on",
           "target": "REQ-mrl-intent"
+        }
+      ]
+    },
+    {
+      "stable_id": "REQ-migration-method",
+      "canonical_key": "REQ|migration-rl|defines|migration-method|factoryweaver|v1",
+      "series": "REQ",
+      "revision": 1,
+      "status": "ACTIVE",
+      "title": "Migration strategy lawful reuse first",
+      "payload": "Actor: original migrate-class Session. Goal: existing target implementation → licensed immutable vendor → supported codemod → thin adapter → necessary authorized semantic rewrite, only when genuinely applicable. Measurement: original Source/Consumer readback and method evidence. Noncase: automatic rewrite or unapproved source/assets. Persistence: original Owner next, one admitted target.",
+      "evidence_ids": [
+        "SRC-HUMAN",
+        "SRC-HANDOFF",
+        "SRC-MIGRATE"
+      ],
+      "typed_links": [
+        {
+          "relation": "implements",
+          "target": "REQ-mrl-migration-method"
+        },
+        {
+          "relation": "validated_by",
+          "target": "V-migration-method"
+        },
+        {
+          "relation": "depends_on",
+          "target": "REQ-mrl-rights"
+        }
+      ]
+    },
+    {
+      "stable_id": "SPEC-migration-method",
+      "canonical_key": "SPEC|migration-rl|defines|migration-method|factoryweaver|v1",
+      "series": "SPEC",
+      "revision": 1,
+      "status": "ACTIVE",
+      "title": "Original migrate-class strategy consumer",
+      "payload": "Given: actual source/asset rights, current target module, supported codemod and original permitted Worktree. When: original Session selects strategy. Producer: original Code-intel plus Source Rights owner. Consumer: admitted Noodle action. Inputs: target reuse, source bytes/license, supported transformation, adapter requirement, necessary semantic rewrite reason. Outputs: first legally applicable method or refusal/unknown. Positive: target already implements contract and is reused. Negative: unsupported codemod or unlicensed asset cannot silently escalate to rewrite. Oracle: original Source/Owner/Consumer trace. Native NOT_RUN.",
+      "evidence_ids": [
+        "SRC-HUMAN",
+        "SRC-HANDOFF",
+        "SRC-MIGRATE"
+      ],
+      "typed_links": [
+        {
+          "relation": "implements",
+          "target": "REQ-mrl-migration-method"
+        },
+        {
+          "relation": "validated_by",
+          "target": "V-migration-method"
+        }
+      ]
+    },
+    {
+      "stable_id": "V-migration-method",
+      "canonical_key": "V|migration-rl|defines|migration-method|factoryweaver|v1",
+      "series": "V",
+      "revision": 1,
+      "status": "ACTIVE",
+      "title": "Migration decision discriminators",
+      "payload": "Subject: bounded strategy choice, not whole native parity. Positive input: real target engine already meets contract and source revision verified -> reuse without math rewrite. Negative: vendor dependency/asset rights unavailable or unsupported codemod -> refuse dependent action, not unauthorized rewrite. Independent Oracle: original code/rights and target Consumer confirmation. Observation NOT_RUN.",
+      "evidence_ids": [
+        "SRC-HUMAN",
+        "SRC-HANDOFF",
+        "SRC-MIGRATE"
+      ],
+      "typed_links": [
+        {
+          "relation": "depends_on",
+          "target": "SPEC-migration-method"
+        }
+      ]
+    },
+    {
+      "stable_id": "REQ-clause-coverage",
+      "canonical_key": "REQ|migration-rl|defines|clause-coverage|factoryweaver|v1",
+      "series": "REQ",
+      "revision": 1,
+      "status": "ACTIVE",
+      "title": "Source-clause coverage instead of ID-count proxy",
+      "payload": "Actor: original Source Reader. Goal: source-bound clause-level trace, preserve non-case/conditions, no invented complete raw chat. Measurement: Source clauses mapped to REQ/Card/K/exclusion reviewed by independent semantic owner. Positive: strategy order and FWP confirmed decisions included. Noncase: MRA count equals complete source meaning. Stop: original unavailable raw source remains K.",
+      "evidence_ids": [
+        "SRC-HUMAN",
+        "SRC-HANDOFF",
+        "SRC-MIGRATE"
+      ],
+      "typed_links": [
+        {
+          "relation": "implements",
+          "target": "REQ-mrl-clause-coverage"
+        },
+        {
+          "relation": "validated_by",
+          "target": "V-clause-coverage"
+        },
+        {
+          "relation": "depends_on",
+          "target": "REQ-mrl-intent"
+        }
+      ]
+    },
+    {
+      "stable_id": "SPEC-clause-coverage",
+      "canonical_key": "SPEC|migration-rl|defines|clause-coverage|factoryweaver|v1",
+      "series": "SPEC",
+      "revision": 1,
+      "status": "ACTIVE",
+      "title": "Original clause-to-card producer boundary",
+      "payload": "Given: actually inspected Human turns, fixed handoff and migrate-class draft Source, not guessed full history. When: original Reader compiles source clauses. Producer: original Host Source Reader. Consumer: FactoryWeaver semantic reviewer and original Card Producer. Inputs: clause locator, semantic constraint/exception, source identity. Outputs: mapped REQ/Card/K or reviewed exclusion and explicit missing full raw Source. Positive: five-method reuse ladder and non-case mapped. Negative: omit adapter precondition while MRA 18/18 still passes. Oracle: independent inspected original Source, not cardinality.",
+      "evidence_ids": [
+        "SRC-HUMAN",
+        "SRC-HANDOFF",
+        "SRC-MIGRATE"
+      ],
+      "typed_links": [
+        {
+          "relation": "implements",
+          "target": "REQ-mrl-clause-coverage"
+        },
+        {
+          "relation": "validated_by",
+          "target": "V-clause-coverage"
+        }
+      ]
+    },
+    {
+      "stable_id": "V-clause-coverage",
+      "canonical_key": "V|migration-rl|defines|clause-coverage|factoryweaver|v1",
+      "series": "V",
+      "revision": 1,
+      "status": "ACTIVE",
+      "title": "Clause omission independent review",
+      "payload": "Subject: available original source/decision units, not all unheard raw history. Positive: direct Human decisions, migrate source strategy and noncases are mapped with locators. Negative: delete legitimate thin-adapter step while 18 MRA IDs remain => semantic review flags missing source clause. Oracle: original Host Source Reader and independent reviewer. Full original raw dialogue proof NOT_RUN.",
+      "evidence_ids": [
+        "SRC-HUMAN",
+        "SRC-HANDOFF",
+        "SRC-MIGRATE"
+      ],
+      "typed_links": [
+        {
+          "relation": "depends_on",
+          "target": "SPEC-clause-coverage"
+        }
+      ]
+    },
+    {
+      "stable_id": "K-missing-original-dialogue",
+      "canonical_key": "K|migration-rl|defines|missing-original-dialogue|factoryweaver|v1",
+      "series": "K",
+      "revision": 1,
+      "status": "ACTIVE",
+      "title": "Full raw dialogue unavailable for completeness proof",
+      "payload": "Missing input: Host-materialized complete original pre-handoff conversation with exact source locator and trustworthy Source readback. Why: summary + selected User turns do not prove all unseen words were inspected. Producer: conversation Source Reader/Host. Affected only universal all-history clause completeness; explicit known mapping and other specs may proceed.",
+      "evidence_ids": [
+        "SRC-HUMAN",
+        "SRC-HANDOFF"
+      ],
+      "typed_links": [
+        {
+          "relation": "depends_on",
+          "target": "REQ-mrl-clause-coverage"
         }
       ]
     }

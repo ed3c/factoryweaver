@@ -6,7 +6,7 @@
 
 | File | Purpose / truth ceiling |
 |---|---|
-| `project.json` | Original `factoryweaver/v1` closed-schema Knowledge Record: 20 REQs, 67 distinct active REQ/SPEC/V/C/G/K/R cards, source registry and source-grounded links |
+| `project.json` | Original `factoryweaver/v1` closed-schema Knowledge Record: 22 REQs, 74 distinct active REQ/SPEC/V/C/G/K/R cards, source registry and source-grounded links |
 | `cards.md` | Human-readable full Card projection from the canonical record, not a second source of truth |
 | `coverage.json` | MRL-01–10, MRA-01–18, FWC-01 A, FWC-02 A, HOF-01 A, source-to-REQ/card mapping |
 | `scope.md` | Goal, Measurement, Persistence, Stop and four advisory sidecars for a future authorized Soodles Consumer |
@@ -30,3 +30,7 @@ Source URI paths can pin Git commits, but this card author has **not calculated 
 ## Explicit exclusions
 
 This record does not reimplement the original Soodles/FactoryWeaver managers, assert AST/SCIP measured Precision ≥99%, produce Native source/target state, perform an independent RL Reward run, create a trainer checkpoint, or approve any cross-repository write. `knowledge=SPECIFIED`, `engineering=UNASSESSED`, `delivery=NOT_STARTED` are separate. Completion of the card compilation **does not mean the Migration-RL parent Goal is complete**.
+
+## FWP Source-to-Consumer correction
+
+FWP-01/02/03 A update v7.2 portable invariant, conditional Soodles source profile, SPEC/V semantic contents, source clause coverage and the first false dependency edge. Original prior state is retained under history/project-before-fwp.json; no Native improvement or Merge claimed.

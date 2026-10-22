@@ -1,8 +1,8 @@
-# Migration-RL revised FactoryWeaver Cards
+# Migration-RL — FactoryWeaver v7.2 revised Cards
 
-Canonical record: project.json. Original version preserved in history/project-before-fwp.json.
+Canonical source project.json. History retained in history/project-before-fwp.json. Native acceptance NOT_RUN.
 
-## REQ-intent | Migration-RL intent (revision 1)
+## REQ-intent — Migration-RL intent (revision 1)
 
 Actor: Soodles supervising Session.
 Goal: Human Intent Hypothesis is grounded in original requirement, preconditions and falsifier; wrong premise cannot become proven.
@@ -13,9 +13,9 @@ Acceptance: Named Human Goal assumption + falsifier.
 Non-case: Wrong premise promoted from text to PROVEN.
 
 Evidence: SRC-HUMAN, SRC-HANDOFF
-Typed Links: implements → REQ-mrl-intent, validated_by → V-intent
+Links: implements → REQ-mrl-intent; validated_by → V-intent
 
-## SPEC-intent | Migration-RL intent executable contract (revision 2)
+## SPEC-intent — Migration-RL intent executable contract (revision 2)
 
 Given: selected real source/Consumer, original Owner permission and applicable inputs; absent exact signature remains K.
 When: the selected supervising Session consumes its actual input.
@@ -31,9 +31,9 @@ Replay: previous source-only result may be retained as history, not native evide
 Independent Oracle: actual observation from supervising Session; new native test NOT_RUN.
 
 Evidence: SRC-HUMAN, SRC-HANDOFF
-Typed Links: implements → REQ-mrl-intent, validated_by → V-intent
+Links: implements → REQ-mrl-intent; validated_by → V-intent
 
-## V-intent | Migration-RL intent independent verification (revision 2)
+## V-intent — Migration-RL intent independent verification (revision 2)
 
 Subject: REQ-mrl-intent; not whole Human Goal.
 Independent Oracle Producer: Human Requirement Owner to verify supervising Session.
@@ -44,9 +44,9 @@ Actual observation: NOT_RUN for new Migration-RL Native tests; source-only histo
 Unobserved signatures/effects are K or original Owner readback, never inferred PASS.
 
 Evidence: SRC-HUMAN, SRC-HANDOFF
-Typed Links: depends_on → SPEC-intent
+Links: depends_on → SPEC-intent
 
-## REQ-rights | Migration-RL rights (revision 1)
+## REQ-rights — Migration-RL rights (revision 1)
 
 Actor: Original Source/Admission Owner.
 Goal: Source rights and identity admissible; unlicensed asset, wrong SHA or wrong target refused.
@@ -57,9 +57,9 @@ Acceptance: Explicit licensed source/asset and one admitted writable target.
 Non-case: Incompatible asset/foreign worktree authorized.
 
 Evidence: SRC-HUMAN, SRC-HANDOFF, SRC-MIGRATE, SRC-ISSUE
-Typed Links: implements → REQ-mrl-rights, validated_by → V-rights, depends_on → REQ-mrl-intent
+Links: implements → REQ-mrl-rights; validated_by → V-rights; depends_on → REQ-mrl-intent
 
-## SPEC-rights | Migration-RL rights executable contract (revision 2)
+## SPEC-rights — Migration-RL rights executable contract (revision 2)
 
 Given: selected real source/Consumer, original Owner permission and applicable inputs; absent exact signature remains K.
 When: the selected migration source selector consumes its actual input.
@@ -75,9 +75,9 @@ Replay: previous source-only result may be retained as history, not native evide
 Independent Oracle: actual observation from migration source selector; new native test NOT_RUN.
 
 Evidence: SRC-HUMAN, SRC-HANDOFF, SRC-MIGRATE, SRC-ISSUE
-Typed Links: implements → REQ-mrl-rights, validated_by → V-rights, depends_on → REQ-mrl-intent
+Links: implements → REQ-mrl-rights; validated_by → V-rights; depends_on → REQ-mrl-intent
 
-## V-rights | Migration-RL rights independent verification (revision 2)
+## V-rights — Migration-RL rights independent verification (revision 2)
 
 Subject: REQ-mrl-rights; not whole Human Goal.
 Independent Oracle Producer: rights/admission owner to verify migration source selector.
@@ -88,9 +88,9 @@ Actual observation: NOT_RUN for new Migration-RL Native tests; source-only histo
 Unobserved signatures/effects are K or original Owner readback, never inferred PASS.
 
 Evidence: SRC-HUMAN, SRC-HANDOFF, SRC-MIGRATE, SRC-ISSUE
-Typed Links: depends_on → SPEC-rights
+Links: depends_on → SPEC-rights
 
-## REQ-retrieval | Migration-RL retrieval (revision 1)
+## REQ-retrieval — Migration-RL retrieval (revision 1)
 
 Actor: Code-intel + independent evaluator.
 Goal: Actual task-level AST/SCIP Migration Dependency Retrieval measures target Precision ≥99% against frozen ground truth and publishes Recall/Coverage/abstentions.
@@ -101,9 +101,9 @@ Acceptance: Task-relevant symbol and dependency retrieval on frozen JS/TS AST+SC
 Non-case: Only one easy correct hit and omitted critical deps.
 
 Evidence: SRC-HUMAN, SRC-HANDOFF, SRC-CODE
-Typed Links: implements → REQ-mrl-retrieval, validated_by → V-retrieval, depends_on → REQ-mrl-rights
+Links: implements → REQ-mrl-retrieval; validated_by → V-retrieval; depends_on → REQ-mrl-rights
 
-## SPEC-retrieval | Migration-RL retrieval executable contract (revision 2)
+## SPEC-retrieval — Migration-RL retrieval executable contract (revision 2)
 
 Given: selected real source/Consumer, original Owner permission and applicable inputs; absent exact signature remains K.
 When: the selected independent retrieval evaluator consumes its actual input.
@@ -119,9 +119,9 @@ Replay: previous source-only result may be retained as history, not native evide
 Independent Oracle: actual observation from independent retrieval evaluator; new native test NOT_RUN.
 
 Evidence: SRC-HUMAN, SRC-HANDOFF, SRC-CODE
-Typed Links: implements → REQ-mrl-retrieval, validated_by → V-retrieval, depends_on → REQ-mrl-rights
+Links: implements → REQ-mrl-retrieval; validated_by → V-retrieval; depends_on → REQ-mrl-rights
 
-## V-retrieval | Migration-RL retrieval independent verification (revision 2)
+## V-retrieval — Migration-RL retrieval independent verification (revision 2)
 
 Subject: REQ-mrl-retrieval; not whole Human Goal.
 Independent Oracle Producer: actual JS/TS AST+SCIP Indexer to verify independent retrieval evaluator.
@@ -132,9 +132,9 @@ Actual observation: NOT_RUN for new Migration-RL Native tests; source-only histo
 Unobserved signatures/effects are K or original Owner readback, never inferred PASS.
 
 Evidence: SRC-HUMAN, SRC-HANDOFF, SRC-CODE
-Typed Links: depends_on → SPEC-retrieval
+Links: depends_on → SPEC-retrieval
 
-## REQ-deps | Migration-RL deps (revision 1)
+## REQ-deps — Migration-RL deps (revision 1)
 
 Actor: Selected Consumer owner.
 Goal: Dependency closure spans symbols, imports, registrations, assets and observed dynamic edges; missing critical edge blocks `CLOSED`.
@@ -145,9 +145,9 @@ Acceptance: Imports, registrations, assets and runtime edges traced.
 Non-case: Dynamic missing edge called CLOSED.
 
 Evidence: SRC-HUMAN, SRC-HANDOFF, SRC-CODE
-Typed Links: implements → REQ-mrl-deps, validated_by → V-deps, depends_on → REQ-mrl-retrieval
+Links: implements → REQ-mrl-deps; validated_by → V-deps; depends_on → REQ-mrl-retrieval
 
-## SPEC-deps | Migration-RL deps executable contract (revision 2)
+## SPEC-deps — Migration-RL deps executable contract (revision 2)
 
 Given: selected real source/Consumer, original Owner permission and applicable inputs; absent exact signature remains K.
 When: the selected dependency closure verifier consumes its actual input.
@@ -163,9 +163,9 @@ Replay: previous source-only result may be retained as history, not native evide
 Independent Oracle: actual observation from dependency closure verifier; new native test NOT_RUN.
 
 Evidence: SRC-HUMAN, SRC-HANDOFF, SRC-CODE
-Typed Links: implements → REQ-mrl-deps, validated_by → V-deps, depends_on → REQ-mrl-retrieval
+Links: implements → REQ-mrl-deps; validated_by → V-deps; depends_on → REQ-mrl-retrieval
 
-## V-deps | Migration-RL deps independent verification (revision 2)
+## V-deps — Migration-RL deps independent verification (revision 2)
 
 Subject: REQ-mrl-deps; not whole Human Goal.
 Independent Oracle Producer: AST+SCIP structural producer and native dynamic trace to verify dependency closure verifier.
@@ -176,9 +176,9 @@ Actual observation: NOT_RUN for new Migration-RL Native tests; source-only histo
 Unobserved signatures/effects are K or original Owner readback, never inferred PASS.
 
 Evidence: SRC-HUMAN, SRC-HANDOFF, SRC-CODE
-Typed Links: depends_on → SPEC-deps
+Links: depends_on → SPEC-deps
 
-## REQ-runtimes | Migration-RL runtimes (revision 1)
+## REQ-runtimes — Migration-RL runtimes (revision 1)
 
 Actor: AgentEnv Environment Owner.
 Goal: Original and target are separately executed native runtimes, not REA/HAR replay masquerading as execution.
@@ -189,9 +189,9 @@ Acceptance: Separate original and target programs execute identical input.
 Non-case: HAR Replay treated as actual process.
 
 Evidence: SRC-HUMAN, SRC-HANDOFF, SRC-AGENTENV, SRC-REA
-Typed Links: implements → REQ-mrl-runtimes, validated_by → V-runtimes, depends_on → REQ-mrl-rights, depends_on → REQ-mrl-deps
+Links: implements → REQ-mrl-runtimes; validated_by → V-runtimes; depends_on → REQ-mrl-rights; depends_on → REQ-mrl-deps
 
-## SPEC-runtimes | Migration-RL runtimes executable contract (revision 2)
+## SPEC-runtimes — Migration-RL runtimes executable contract (revision 2)
 
 Given: selected real source/Consumer, original Owner permission and applicable inputs; absent exact signature remains K.
 When: the selected independent paired runtime Consumer consumes its actual input.
@@ -207,9 +207,9 @@ Replay: previous source-only result may be retained as history, not native evide
 Independent Oracle: actual observation from independent paired runtime Consumer; new native test NOT_RUN.
 
 Evidence: SRC-HUMAN, SRC-HANDOFF, SRC-AGENTENV, SRC-REA
-Typed Links: implements → REQ-mrl-runtimes, validated_by → V-runtimes, depends_on → REQ-mrl-rights, depends_on → REQ-mrl-deps
+Links: implements → REQ-mrl-runtimes; validated_by → V-runtimes; depends_on → REQ-mrl-rights; depends_on → REQ-mrl-deps
 
-## V-runtimes | Migration-RL runtimes independent verification (revision 2)
+## V-runtimes — Migration-RL runtimes independent verification (revision 2)
 
 Subject: REQ-mrl-runtimes; not whole Human Goal.
 Independent Oracle Producer: original and target native process owners to verify independent paired runtime Consumer.
@@ -220,9 +220,9 @@ Actual observation: NOT_RUN for new Migration-RL Native tests; source-only histo
 Unobserved signatures/effects are K or original Owner readback, never inferred PASS.
 
 Evidence: SRC-HUMAN, SRC-HANDOFF, SRC-AGENTENV, SRC-REA
-Typed Links: depends_on → SPEC-runtimes
+Links: depends_on → SPEC-runtimes
 
-## REQ-mutation | Migration-RL mutation (revision 1)
+## REQ-mutation — Migration-RL mutation (revision 1)
 
 Actor: Original Noodle Worktree Owner.
 Goal: Authorized action changes actual target worktree/program state; foreign/unauthorized mutation is refused.
@@ -233,9 +233,9 @@ Acceptance: Authorized target modification changes actual file.
 Non-case: Agent writes upstream or frozen target.
 
 Evidence: SRC-HUMAN, SRC-HANDOFF, SRC-MIGRATE, SRC-ISSUE
-Typed Links: implements → REQ-mrl-mutation, validated_by → V-mutation, depends_on → REQ-mrl-rights
+Links: implements → REQ-mrl-mutation; validated_by → V-mutation; depends_on → REQ-mrl-rights
 
-## SPEC-mutation | Migration-RL mutation executable contract (revision 2)
+## SPEC-mutation — Migration-RL mutation executable contract (revision 2)
 
 Given: selected real source/Consumer, original Owner permission and applicable inputs; absent exact signature remains K.
 When: the selected authorized target Worktree consumes its actual input.
@@ -251,9 +251,9 @@ Replay: previous source-only result may be retained as history, not native evide
 Independent Oracle: actual observation from authorized target Worktree; new native test NOT_RUN.
 
 Evidence: SRC-HUMAN, SRC-HANDOFF, SRC-MIGRATE, SRC-ISSUE
-Typed Links: implements → REQ-mrl-mutation, validated_by → V-mutation, depends_on → REQ-mrl-rights
+Links: implements → REQ-mrl-mutation; validated_by → V-mutation; depends_on → REQ-mrl-rights
 
-## V-mutation | Migration-RL mutation independent verification (revision 2)
+## V-mutation — Migration-RL mutation independent verification (revision 2)
 
 Subject: REQ-mrl-mutation; not whole Human Goal.
 Independent Oracle Producer: original admitted Noodle Stage to verify authorized target Worktree.
@@ -264,9 +264,9 @@ Actual observation: NOT_RUN for new Migration-RL Native tests; source-only histo
 Unobserved signatures/effects are K or original Owner readback, never inferred PASS.
 
 Evidence: SRC-HUMAN, SRC-HANDOFF, SRC-MIGRATE, SRC-ISSUE
-Typed Links: depends_on → SPEC-mutation
+Links: depends_on → SPEC-mutation
 
-## REQ-reset | Migration-RL reset (revision 1)
+## REQ-reset — Migration-RL reset (revision 1)
 
 Actor: AgentEnv Sandbox Owner.
 Goal: Mutation→Reset→readback restores clean worktree/process/browser/fixture state without cross-episode contamination.
@@ -277,9 +277,9 @@ Acceptance: Mutate file/cookie/process; reset restores clean seed.
 Non-case: Reset returns OK with stale process/cookie.
 
 Evidence: SRC-HUMAN, SRC-HANDOFF, SRC-AGENTENV, SRC-REA
-Typed Links: implements → REQ-mrl-reset, validated_by → V-reset, depends_on → REQ-mrl-runtimes, depends_on → REQ-mrl-mutation
+Links: implements → REQ-mrl-reset; validated_by → V-reset; depends_on → REQ-mrl-runtimes; depends_on → REQ-mrl-mutation
 
-## SPEC-reset | Migration-RL reset executable contract (revision 2)
+## SPEC-reset — Migration-RL reset executable contract (revision 2)
 
 Given: selected real source/Consumer, original Owner permission and applicable inputs; absent exact signature remains K.
 When: the selected independent episode reset verifier consumes its actual input.
@@ -295,9 +295,9 @@ Replay: previous source-only result may be retained as history, not native evide
 Independent Oracle: actual observation from independent episode reset verifier; new native test NOT_RUN.
 
 Evidence: SRC-HUMAN, SRC-HANDOFF, SRC-AGENTENV, SRC-REA
-Typed Links: implements → REQ-mrl-reset, validated_by → V-reset, depends_on → REQ-mrl-runtimes, depends_on → REQ-mrl-mutation
+Links: implements → REQ-mrl-reset; validated_by → V-reset; depends_on → REQ-mrl-runtimes; depends_on → REQ-mrl-mutation
 
-## V-reset | Migration-RL reset independent verification (revision 2)
+## V-reset — Migration-RL reset independent verification (revision 2)
 
 Subject: REQ-mrl-reset; not whole Human Goal.
 Independent Oracle Producer: actual AgentEnv state/reset adapter to verify independent episode reset verifier.
@@ -308,9 +308,9 @@ Actual observation: NOT_RUN for new Migration-RL Native tests; source-only histo
 Unobserved signatures/effects are K or original Owner readback, never inferred PASS.
 
 Evidence: SRC-HUMAN, SRC-HANDOFF, SRC-AGENTENV, SRC-REA
-Typed Links: depends_on → SPEC-reset
+Links: depends_on → SPEC-reset
 
-## REQ-math | Migration-RL math (revision 1)
+## REQ-math — Migration-RL math (revision 1)
 
 Actor: Independent mathematical Oracle.
 Goal: Mathematical parity validates differential results, properties, metamorphic/boundary inputs and predeclared numeric error policy.
@@ -321,9 +321,9 @@ Acceptance: Matched input, epsilon fixed before result, property/metamorphic/bou
 Non-case: Error type differs or epsilon adjusted after candidate.
 
 Evidence: SRC-HUMAN, SRC-HANDOFF, SRC-PILOT
-Typed Links: implements → REQ-mrl-math, validated_by → V-math, depends_on → REQ-mrl-runtimes
+Links: implements → REQ-mrl-math; validated_by → V-math; depends_on → REQ-mrl-runtimes
 
-## SPEC-math | Migration-RL math executable contract (revision 2)
+## SPEC-math — Migration-RL math executable contract (revision 2)
 
 Given: selected real source/Consumer, original Owner permission and applicable inputs; absent exact signature remains K.
 When: the selected independent property Oracle consumes its actual input.
@@ -339,9 +339,9 @@ Replay: previous source-only result may be retained as history, not native evide
 Independent Oracle: actual observation from independent property Oracle; new native test NOT_RUN.
 
 Evidence: SRC-HUMAN, SRC-HANDOFF, SRC-PILOT
-Typed Links: implements → REQ-mrl-math, validated_by → V-math, depends_on → REQ-mrl-runtimes
+Links: implements → REQ-mrl-math; validated_by → V-math; depends_on → REQ-mrl-runtimes
 
-## V-math | Migration-RL math independent verification (revision 2)
+## V-math — Migration-RL math independent verification (revision 2)
 
 Subject: REQ-mrl-math; not whole Human Goal.
 Independent Oracle Producer: source and target AIFS engine to verify independent property Oracle.
@@ -352,9 +352,9 @@ Actual observation: NOT_RUN for new Migration-RL Native tests; source-only histo
 Unobserved signatures/effects are K or original Owner readback, never inferred PASS.
 
 Evidence: SRC-HUMAN, SRC-HANDOFF, SRC-PILOT
-Typed Links: depends_on → SPEC-math
+Links: depends_on → SPEC-math
 
-## REQ-interfaces | Migration-RL interfaces (revision 1)
+## REQ-interfaces — Migration-RL interfaces (revision 1)
 
 Actor: Interface Contract Owner.
 Goal: Producer→Consumer guarantees and Consumer→Producer prerequisites/feedback/exception obligations are both tested in scope.
@@ -365,9 +365,9 @@ Acceptance: Producer guarantee satisfies consumer accepted domain and feedback/a
 Non-case: Lost acknowledgment or required inverse hash.
 
 Evidence: SRC-HUMAN, SRC-HANDOFF
-Typed Links: implements → REQ-mrl-interfaces, validated_by → V-interfaces, depends_on → REQ-mrl-deps, depends_on → REQ-mrl-runtimes
+Links: implements → REQ-mrl-interfaces; validated_by → V-interfaces; depends_on → REQ-mrl-deps; depends_on → REQ-mrl-runtimes
 
-## SPEC-interfaces | Migration-RL interfaces executable contract (revision 2)
+## SPEC-interfaces — Migration-RL interfaces executable contract (revision 2)
 
 Given: selected real source/Consumer, original Owner permission and applicable inputs; absent exact signature remains K.
 When: the selected two-sided interface Consumer consumes its actual input.
@@ -383,9 +383,9 @@ Replay: previous source-only result may be retained as history, not native evide
 Independent Oracle: actual observation from two-sided interface Consumer; new native test NOT_RUN.
 
 Evidence: SRC-HUMAN, SRC-HANDOFF
-Typed Links: implements → REQ-mrl-interfaces, validated_by → V-interfaces, depends_on → REQ-mrl-deps, depends_on → REQ-mrl-runtimes
+Links: implements → REQ-mrl-interfaces; validated_by → V-interfaces; depends_on → REQ-mrl-deps; depends_on → REQ-mrl-runtimes
 
-## V-interfaces | Migration-RL interfaces independent verification (revision 2)
+## V-interfaces — Migration-RL interfaces independent verification (revision 2)
 
 Subject: REQ-mrl-interfaces; not whole Human Goal.
 Independent Oracle Producer: module Producer to verify two-sided interface Consumer.
@@ -396,9 +396,9 @@ Actual observation: NOT_RUN for new Migration-RL Native tests; source-only histo
 Unobserved signatures/effects are K or original Owner readback, never inferred PASS.
 
 Evidence: SRC-HUMAN, SRC-HANDOFF
-Typed Links: depends_on → SPEC-interfaces
+Links: depends_on → SPEC-interfaces
 
-## REQ-ui-effects | Migration-RL ui-effects (revision 1)
+## REQ-ui-effects — Migration-RL ui-effects (revision 1)
 
 Actor: Browser Consumer Owner.
 Goal: Selected DOM/ARIA/focus/events/network/filesystem/persistence behavior and side-effect order remain contracted.
@@ -409,9 +409,9 @@ Acceptance: Selected DOM/ARIA/focus/event/side-effects contract equivalent.
 Non-case: Removed SeeCode edge or event reorder hidden by image.
 
 Evidence: SRC-HUMAN, SRC-HANDOFF, SRC-PILOT
-Typed Links: implements → REQ-mrl-ui-effects, validated_by → V-ui-effects, depends_on → REQ-mrl-interfaces, depends_on → REQ-mrl-runtimes
+Links: implements → REQ-mrl-ui-effects; validated_by → V-ui-effects; depends_on → REQ-mrl-interfaces; depends_on → REQ-mrl-runtimes
 
-## SPEC-ui-effects | Migration-RL ui-effects executable contract (revision 2)
+## SPEC-ui-effects — Migration-RL ui-effects executable contract (revision 2)
 
 Given: selected real source/Consumer, original Owner permission and applicable inputs; absent exact signature remains K.
 When: the selected independent Browser differential consumes its actual input.
@@ -427,9 +427,9 @@ Replay: previous source-only result may be retained as history, not native evide
 Independent Oracle: actual observation from independent Browser differential; new native test NOT_RUN.
 
 Evidence: SRC-HUMAN, SRC-HANDOFF, SRC-PILOT
-Typed Links: implements → REQ-mrl-ui-effects, validated_by → V-ui-effects, depends_on → REQ-mrl-interfaces, depends_on → REQ-mrl-runtimes
+Links: implements → REQ-mrl-ui-effects; validated_by → V-ui-effects; depends_on → REQ-mrl-interfaces; depends_on → REQ-mrl-runtimes
 
-## V-ui-effects | Migration-RL ui-effects independent verification (revision 2)
+## V-ui-effects — Migration-RL ui-effects independent verification (revision 2)
 
 Subject: REQ-mrl-ui-effects; not whole Human Goal.
 Independent Oracle Producer: source SeeCode Renderer and migrated Browser to verify independent Browser differential.
@@ -440,9 +440,9 @@ Actual observation: NOT_RUN for new Migration-RL Native tests; source-only histo
 Unobserved signatures/effects are K or original Owner readback, never inferred PASS.
 
 Evidence: SRC-HUMAN, SRC-HANDOFF, SRC-PILOT
-Typed Links: depends_on → SPEC-ui-effects
+Links: depends_on → SPEC-ui-effects
 
-## REQ-false-inference | Migration-RL false-inference (revision 1)
+## REQ-false-inference — Migration-RL false-inference (revision 1)
 
 Actor: Original Test Manager and independent Evals.
 Goal: Plant false-equivalence, bad error, order and over-inference negatives; verifier rejects them.
@@ -453,9 +453,9 @@ Acceptance: Known good and planted false-equivalence negative controls.
 Non-case: Same happy path excuses wrong exception/order.
 
 Evidence: SRC-HUMAN, SRC-HANDOFF
-Typed Links: implements → REQ-mrl-false-inference, validated_by → V-false-inference, depends_on → REQ-mrl-math, depends_on → REQ-mrl-ui-effects
+Links: implements → REQ-mrl-false-inference; validated_by → V-false-inference; depends_on → REQ-mrl-math; depends_on → REQ-mrl-ui-effects
 
-## SPEC-false-inference | Migration-RL false-inference executable contract (revision 2)
+## SPEC-false-inference — Migration-RL false-inference executable contract (revision 2)
 
 Given: selected real source/Consumer, original Owner permission and applicable inputs; absent exact signature remains K.
 When: the selected Test Manager-selected independent verifier consumes its actual input.
@@ -471,9 +471,9 @@ Replay: previous source-only result may be retained as history, not native evide
 Independent Oracle: actual observation from Test Manager-selected independent verifier; new native test NOT_RUN.
 
 Evidence: SRC-HUMAN, SRC-HANDOFF
-Typed Links: implements → REQ-mrl-false-inference, validated_by → V-false-inference, depends_on → REQ-mrl-math, depends_on → REQ-mrl-ui-effects
+Links: implements → REQ-mrl-false-inference; validated_by → V-false-inference; depends_on → REQ-mrl-math; depends_on → REQ-mrl-ui-effects
 
-## V-false-inference | Migration-RL false-inference independent verification (revision 2)
+## V-false-inference — Migration-RL false-inference independent verification (revision 2)
 
 Subject: REQ-mrl-false-inference; not whole Human Goal.
 Independent Oracle Producer: original Source/Runtime Owner to verify Test Manager-selected independent verifier.
@@ -484,9 +484,9 @@ Actual observation: NOT_RUN for new Migration-RL Native tests; source-only histo
 Unobserved signatures/effects are K or original Owner readback, never inferred PASS.
 
 Evidence: SRC-HUMAN, SRC-HANDOFF
-Typed Links: depends_on → SPEC-false-inference
+Links: depends_on → SPEC-false-inference
 
-## REQ-reward | Migration-RL reward (revision 1)
+## REQ-reward — Migration-RL reward (revision 1)
 
 Actor: AgentEnv Task Verifier and original outcome Owner.
 Goal: Reward is independent and resists forged trace, agent self-score, changed Oracle and insufficient hard-gate evidence.
@@ -497,9 +497,9 @@ Acceptance: Independent hard gates all observed true.
 Non-case: Self-report or changed Golden yields reward one.
 
 Evidence: SRC-HUMAN, SRC-HANDOFF
-Typed Links: implements → REQ-mrl-reward, validated_by → V-reward, depends_on → REQ-mrl-rights, depends_on → REQ-mrl-runtimes, depends_on → REQ-mrl-false-inference
+Links: implements → REQ-mrl-reward; validated_by → V-reward; depends_on → REQ-mrl-rights; depends_on → REQ-mrl-runtimes; depends_on → REQ-mrl-false-inference
 
-## SPEC-reward | Migration-RL reward executable contract (revision 2)
+## SPEC-reward — Migration-RL reward executable contract (revision 2)
 
 Given: selected real source/Consumer, original Owner permission and applicable inputs; absent exact signature remains K.
 When: the selected AgentEnv outcome grader consumes its actual input.
@@ -515,9 +515,9 @@ Replay: previous source-only result may be retained as history, not native evide
 Independent Oracle: actual observation from AgentEnv outcome grader; new native test NOT_RUN.
 
 Evidence: SRC-HUMAN, SRC-HANDOFF
-Typed Links: implements → REQ-mrl-reward, validated_by → V-reward, depends_on → REQ-mrl-rights, depends_on → REQ-mrl-runtimes, depends_on → REQ-mrl-false-inference
+Links: implements → REQ-mrl-reward; validated_by → V-reward; depends_on → REQ-mrl-rights; depends_on → REQ-mrl-runtimes; depends_on → REQ-mrl-false-inference
 
-## V-reward | Migration-RL reward independent verification (revision 2)
+## V-reward — Migration-RL reward independent verification (revision 2)
 
 Subject: REQ-mrl-reward; not whole Human Goal.
 Independent Oracle Producer: independent rights/parity/Native Owners to verify AgentEnv outcome grader.
@@ -528,9 +528,9 @@ Actual observation: NOT_RUN for new Migration-RL Native tests; source-only histo
 Unobserved signatures/effects are K or original Owner readback, never inferred PASS.
 
 Evidence: SRC-HUMAN, SRC-HANDOFF
-Typed Links: depends_on → SPEC-reward
+Links: depends_on → SPEC-reward
 
-## REQ-cards | Migration-RL cards (revision 1)
+## REQ-cards — Migration-RL cards (revision 1)
 
 Actor: FactoryWeaver original Card Producer.
 Goal: Native Evals are source-bound to correct SPEC/V/G revisions via original FactoryWeaver producer; unsupported changes do not become truth.
@@ -541,9 +541,9 @@ Acceptance: Observed failure produces source-bound SPEC/V/G revision proposal.
 Non-case: Candidate failure causes rewriting oracle.
 
 Evidence: SRC-HUMAN, SRC-HANDOFF, SRC-FW-CARDS
-Typed Links: implements → REQ-mrl-cards, validated_by → V-cards, depends_on → REQ-mrl-intent, depends_on → REQ-mrl-false-inference
+Links: implements → REQ-mrl-cards; validated_by → V-cards; depends_on → REQ-mrl-intent; depends_on → REQ-mrl-false-inference
 
-## SPEC-cards | Migration-RL cards executable contract (revision 2)
+## SPEC-cards — Migration-RL cards executable contract (revision 2)
 
 Given: selected real source/Consumer, original Owner permission and applicable inputs; absent exact signature remains K.
 When: the selected versioned SPEC/V/G/K/X consumes its actual input.
@@ -559,9 +559,9 @@ Replay: previous source-only result may be retained as history, not native evide
 Independent Oracle: actual observation from versioned SPEC/V/G/K/X; new native test NOT_RUN.
 
 Evidence: SRC-HUMAN, SRC-HANDOFF, SRC-FW-CARDS
-Typed Links: implements → REQ-mrl-cards, validated_by → V-cards, depends_on → REQ-mrl-intent, depends_on → REQ-mrl-false-inference
+Links: implements → REQ-mrl-cards; validated_by → V-cards; depends_on → REQ-mrl-intent; depends_on → REQ-mrl-false-inference
 
-## V-cards | Migration-RL cards independent verification (revision 2)
+## V-cards — Migration-RL cards independent verification (revision 2)
 
 Subject: REQ-mrl-cards; not whole Human Goal.
 Independent Oracle Producer: independent Evals & FactoryWeaver producer to verify versioned SPEC/V/G/K/X.
@@ -572,9 +572,9 @@ Actual observation: NOT_RUN for new Migration-RL Native tests; source-only histo
 Unobserved signatures/effects are K or original Owner readback, never inferred PASS.
 
 Evidence: SRC-HUMAN, SRC-HANDOFF, SRC-FW-CARDS
-Typed Links: depends_on → SPEC-cards
+Links: depends_on → SPEC-cards
 
-## REQ-invalidation | Migration-RL invalidation (revision 1)
+## REQ-invalidation — Migration-RL invalidation (revision 1)
 
 Actor: FactoryWeaver Card Producer.
 Goal: Source revision change, stale evidence, wrong card version, missing link and dependency updates yield targeted invalidation/recovery.
@@ -585,9 +585,9 @@ Acceptance: Changed SPEC invalidates dependent V while preserving history.
 Non-case: Deletes/recycles card ID or analogue causes false invalidation.
 
 Evidence: SRC-HUMAN, SRC-HANDOFF, SRC-FW-CARDS
-Typed Links: implements → REQ-mrl-invalidation, validated_by → V-invalidation, depends_on → REQ-mrl-cards
+Links: implements → REQ-mrl-invalidation; validated_by → V-invalidation; depends_on → REQ-mrl-cards
 
-## SPEC-invalidation | Migration-RL invalidation executable contract (revision 2)
+## SPEC-invalidation — Migration-RL invalidation executable contract (revision 2)
 
 Given: selected real source/Consumer, original Owner permission and applicable inputs; absent exact signature remains K.
 When: the selected card_delta affected consumer consumes its actual input.
@@ -603,9 +603,9 @@ Replay: previous source-only result may be retained as history, not native evide
 Independent Oracle: actual observation from card_delta affected consumer; new native test NOT_RUN.
 
 Evidence: SRC-HUMAN, SRC-HANDOFF, SRC-FW-CARDS
-Typed Links: implements → REQ-mrl-invalidation, validated_by → V-invalidation, depends_on → REQ-mrl-cards
+Links: implements → REQ-mrl-invalidation; validated_by → V-invalidation; depends_on → REQ-mrl-cards
 
-## V-invalidation | Migration-RL invalidation independent verification (revision 2)
+## V-invalidation — Migration-RL invalidation independent verification (revision 2)
 
 Subject: REQ-mrl-invalidation; not whole Human Goal.
 Independent Oracle Producer: actual original FactoryWeaver before/after to verify card_delta affected consumer.
@@ -616,9 +616,9 @@ Actual observation: NOT_RUN for new Migration-RL Native tests; source-only histo
 Unobserved signatures/effects are K or original Owner readback, never inferred PASS.
 
 Evidence: SRC-HUMAN, SRC-HANDOFF, SRC-FW-CARDS
-Typed Links: depends_on → SPEC-invalidation
+Links: depends_on → SPEC-invalidation
 
-## REQ-session | Migration-RL session (revision 2)
+## REQ-session — Migration-RL session (revision 2)
 
 Actor: Soodles supervising Owner; Noodle Host.
 Goal: In the same supervising Session, Source/Owner-bound Outer reasoning (or NOOP) is consumed by the next authorized unsealed Poteto Stage; real inner feedback changes only warranted subsequent decisions/cards. Fresh Native Consumer and original Owner readback prove the handoff, not documentation.
@@ -630,9 +630,9 @@ Non-case: Frozen Stage overwritten or local pass closes all.
 Correction: an authorized Outer/Inner Session can start and later discover a required Card revision.
 
 Evidence: SRC-HUMAN, SRC-HANDOFF
-Typed Links: implements → REQ-mrl-session, validated_by → V-session, depends_on → REQ-mrl-intent, depends_on → REQ-mrl-mutation
+Links: implements → REQ-mrl-session; validated_by → V-session; depends_on → REQ-mrl-intent; depends_on → REQ-mrl-mutation
 
-## SPEC-session | Migration-RL session executable contract (revision 2)
+## SPEC-session — Migration-RL session executable contract (revision 2)
 
 Given: selected real source/Consumer, original Owner permission and applicable inputs; absent exact signature remains K.
 When: the selected admitted unsealed Poteto Stage consumes its actual input.
@@ -648,9 +648,9 @@ Replay: previous source-only result may be retained as history, not native evide
 Independent Oracle: actual observation from admitted unsealed Poteto Stage; new native test NOT_RUN.
 
 Evidence: SRC-HUMAN, SRC-HANDOFF
-Typed Links: implements → REQ-mrl-session, validated_by → V-session, depends_on → REQ-mrl-intent, depends_on → REQ-mrl-mutation
+Links: implements → REQ-mrl-session; validated_by → V-session; depends_on → REQ-mrl-intent; depends_on → REQ-mrl-mutation
 
-## V-session | Migration-RL session independent verification (revision 2)
+## V-session — Migration-RL session independent verification (revision 2)
 
 Subject: REQ-mrl-session; not whole Human Goal.
 Independent Oracle Producer: current Soodles Session and valid Owner next to verify admitted unsealed Poteto Stage.
@@ -661,9 +661,9 @@ Actual observation: NOT_RUN for new Migration-RL Native tests; source-only histo
 Unobserved signatures/effects are K or original Owner readback, never inferred PASS.
 
 Evidence: SRC-HUMAN, SRC-HANDOFF
-Typed Links: depends_on → SPEC-session
+Links: depends_on → SPEC-session
 
-## REQ-baseline | Migration-RL baseline (revision 1)
+## REQ-baseline — Migration-RL baseline (revision 1)
 
 Actor: Test Manager + Evals Supervisor.
 Goal: Evaluation-first reproducible baseline, proper held-out split, success/failure/cost/latency/refusal/coverage metrics.
@@ -674,9 +674,9 @@ Acceptance: Matched deterministic/untuned runs and held-out family/cost.
 Non-case: Different budget or zero successes cost=0.
 
 Evidence: SRC-HUMAN, SRC-HANDOFF
-Typed Links: implements → REQ-mrl-baseline, validated_by → V-baseline, depends_on → REQ-mrl-reset, depends_on → REQ-mrl-reward
+Links: implements → REQ-mrl-baseline; validated_by → V-baseline; depends_on → REQ-mrl-reset; depends_on → REQ-mrl-reward
 
-## SPEC-baseline | Migration-RL baseline executable contract (revision 2)
+## SPEC-baseline — Migration-RL baseline executable contract (revision 2)
 
 Given: selected real source/Consumer, original Owner permission and applicable inputs; absent exact signature remains K.
 When: the selected independent held-out evaluator consumes its actual input.
@@ -692,9 +692,9 @@ Replay: previous source-only result may be retained as history, not native evide
 Independent Oracle: actual observation from independent held-out evaluator; new native test NOT_RUN.
 
 Evidence: SRC-HUMAN, SRC-HANDOFF
-Typed Links: implements → REQ-mrl-baseline, validated_by → V-baseline, depends_on → REQ-mrl-reset, depends_on → REQ-mrl-reward
+Links: implements → REQ-mrl-baseline; validated_by → V-baseline; depends_on → REQ-mrl-reset; depends_on → REQ-mrl-reward
 
-## V-baseline | Migration-RL baseline independent verification (revision 2)
+## V-baseline — Migration-RL baseline independent verification (revision 2)
 
 Subject: REQ-mrl-baseline; not whole Human Goal.
 Independent Oracle Producer: native episodes and Test Manager costs to verify independent held-out evaluator.
@@ -705,9 +705,9 @@ Actual observation: NOT_RUN for new Migration-RL Native tests; source-only histo
 Unobserved signatures/effects are K or original Owner readback, never inferred PASS.
 
 Evidence: SRC-HUMAN, SRC-HANDOFF
-Typed Links: depends_on → SPEC-baseline
+Links: depends_on → SPEC-baseline
 
-## REQ-training | Migration-RL training (revision 1)
+## REQ-training — Migration-RL training (revision 1)
 
 Actor: Later Policy Training Owner.
 Goal: RL-ready vs trained-policy outcomes remain separate; no training improvement claims without actual controlled weights/checkpoints/held-out comparison.
@@ -718,9 +718,9 @@ Acceptance: RL-ready verified episodes kept distinct from trained weights.
 Non-case: Replay success labeled RL-trained.
 
 Evidence: SRC-HUMAN, SRC-HANDOFF
-Typed Links: implements → REQ-mrl-training, validated_by → V-training, depends_on → REQ-mrl-baseline
+Links: implements → REQ-mrl-training; validated_by → V-training; depends_on → REQ-mrl-baseline
 
-## SPEC-training | Migration-RL training executable contract (revision 2)
+## SPEC-training — Migration-RL training executable contract (revision 2)
 
 Given: selected real source/Consumer, original Owner permission and applicable inputs; absent exact signature remains K.
 When: the selected held-out trained policy evaluator consumes its actual input.
@@ -736,9 +736,9 @@ Replay: previous source-only result may be retained as history, not native evide
 Independent Oracle: actual observation from held-out trained policy evaluator; new native test NOT_RUN.
 
 Evidence: SRC-HUMAN, SRC-HANDOFF
-Typed Links: implements → REQ-mrl-training, validated_by → V-training, depends_on → REQ-mrl-baseline
+Links: implements → REQ-mrl-training; validated_by → V-training; depends_on → REQ-mrl-baseline
 
-## V-training | Migration-RL training independent verification (revision 2)
+## V-training — Migration-RL training independent verification (revision 2)
 
 Subject: REQ-mrl-training; not whole Human Goal.
 Independent Oracle Producer: future training/checkpoint Owner to verify held-out trained policy evaluator.
@@ -749,9 +749,9 @@ Actual observation: NOT_RUN for new Migration-RL Native tests; source-only histo
 Unobserved signatures/effects are K or original Owner readback, never inferred PASS.
 
 Evidence: SRC-HUMAN, SRC-HANDOFF
-Typed Links: depends_on → SPEC-training
+Links: depends_on → SPEC-training
 
-## REQ-closure | Migration-RL closure (revision 1)
+## REQ-closure — Migration-RL closure (revision 1)
 
 Actor: Original Parent Goal/Delivery Owner.
 Goal: Whole original Human Goal **and** applicable FactoryWeaver card obligations (revision/NOOP + native consumer uptake), remaining REQ inventory, real independent evidence and original Owner effect/readback converge; partial green, card DONE, unknown-write or cognitive NOOP cannot falsely close the parent goal.
@@ -762,9 +762,9 @@ Acceptance: Full REQ plus Cards obligations and original effects closed.
 Non-case: Card DONE while human REQ open or unknown write.
 
 Evidence: SRC-HUMAN, SRC-HANDOFF
-Typed Links: implements → REQ-mrl-closure, validated_by → V-closure, depends_on → REQ-mrl-session, depends_on → REQ-mrl-invalidation, depends_on → REQ-mrl-baseline
+Links: implements → REQ-mrl-closure; validated_by → V-closure; depends_on → REQ-mrl-session; depends_on → REQ-mrl-invalidation; depends_on → REQ-mrl-baseline
 
-## SPEC-closure | Migration-RL closure executable contract (revision 2)
+## SPEC-closure — Migration-RL closure executable contract (revision 2)
 
 Given: selected real source/Consumer, original Owner permission and applicable inputs; absent exact signature remains K.
 When: the selected whole Human Goal reconciler consumes its actual input.
@@ -780,9 +780,9 @@ Replay: previous source-only result may be retained as history, not native evide
 Independent Oracle: actual observation from whole Human Goal reconciler; new native test NOT_RUN.
 
 Evidence: SRC-HUMAN, SRC-HANDOFF
-Typed Links: implements → REQ-mrl-closure, validated_by → V-closure, depends_on → REQ-mrl-session, depends_on → REQ-mrl-invalidation, depends_on → REQ-mrl-baseline
+Links: implements → REQ-mrl-closure; validated_by → V-closure; depends_on → REQ-mrl-session; depends_on → REQ-mrl-invalidation; depends_on → REQ-mrl-baseline
 
-## V-closure | Migration-RL closure independent verification (revision 2)
+## V-closure — Migration-RL closure independent verification (revision 2)
 
 Subject: REQ-mrl-closure; not whole Human Goal.
 Independent Oracle Producer: original parent REQ/Card and Provider owner to verify whole Human Goal reconciler.
@@ -793,9 +793,9 @@ Actual observation: NOT_RUN for new Migration-RL Native tests; source-only histo
 Unobserved signatures/effects are K or original Owner readback, never inferred PASS.
 
 Evidence: SRC-HUMAN, SRC-HANDOFF
-Typed Links: depends_on → SPEC-closure
+Links: depends_on → SPEC-closure
 
-## REQ-spec-record | spec-record (revision 2)
+## REQ-spec-record — spec-record (revision 2)
 
 Actor: original FactoryWeaver/Soodles Owner, per scope.
 Goal: Create one canonical v7.2 FactoryWeaver Migration-RL record and complete MRL/MRA/HOF/FWC coverage.
@@ -806,9 +806,9 @@ Non-case: Card compilation is promoted to RL implementation completion.
 Correction: card compilation is a local goal and does not depend on full parent Goal closure.
 
 Evidence: SRC-HUMAN, SRC-HANDOFF, SRC-FW-CARDS
-Typed Links: implements → REQ-mrl-spec-record, depends_on → REQ-mrl-intent
+Links: implements → REQ-mrl-spec-record; depends_on → REQ-mrl-intent
 
-## REQ-design-docs | design-docs (revision 1)
+## REQ-design-docs — design-docs (revision 1)
 
 Actor: original FactoryWeaver/Soodles Owner, per scope.
 Goal: Future implementation shall create separate migration-rl-implementation-scope.md and first-principles.md, linked by migrate-class P-class.
@@ -818,86 +818,135 @@ Stop: original owner readback and stage-specific acceptance.
 Non-case: Uncreated docs are claimed to be deployed or already consumed.
 
 Evidence: SRC-HUMAN, SRC-HANDOFF, SRC-FW-CARDS
-Typed Links: implements → REQ-mrl-design-docs, depends_on → REQ-mrl-intent, depends_on → REQ-mrl-session
+Links: implements → REQ-mrl-design-docs; depends_on → REQ-mrl-intent; depends_on → REQ-mrl-session
 
-## C-native-truth | Native mathematical runtime differs from text/Replay (revision 1)
+## C-native-truth — Native mathematical runtime differs from text/Replay (revision 1)
 
 Mechanism: actual pinned original and migrated processes compute numerical or DOM/event outcomes under matched inputs; REA captures recorded evidence, not arbitrary stateful writes. Conditions: real images, fixture/seed, independent runtime trace. Failure: HAR expected JSON with no executed original process. Decision: Native Evals cannot be replaced by Replay.
 
 Evidence: SRC-HUMAN, SRC-HANDOFF, SRC-REA, SRC-AGENTENV
-Typed Links: based_on → REQ-mrl-runtimes
+Links: based_on → REQ-mrl-runtimes
 
-## C-two-sided | Two-sided interface proof is not invertibility (revision 1)
+## C-two-sided — Two-sided interface proof is not invertibility (revision 1)
 
 Mechanism: within specified preconditions, Producer guarantees meet Consumer accepted domain; reverse error/acknowledgment obligations must independently match Producer expectations. Inputs: typed Producer values, Consumer events, acknowledgments. Failure: lost error ack or forcing inverse hash/aggregation. Decision: verify both contract directions while avoiding invalid universal inverse claim.
 
 Evidence: SRC-HUMAN, SRC-HANDOFF
-Typed Links: based_on → REQ-mrl-interfaces
+Links: based_on → REQ-mrl-interfaces
 
-## C-goal-loop | One supervising Session converges human goal and cards (revision 1)
+## C-goal-loop — One supervising Session converges human goal and cards (revision 1)
 
 Mechanism: Outer Thinking V2/optional V3 × Ambitious finds actual causal breakpoint; admitted Poteto executes bounded work; independent Native results inform original FactoryWeaver card revisions/NOOP; original Owner next resumes. Conditions: real stage/owner and unsealed input. Failure: local PASS or card DONE closes unfinished REQs. Distinct exits: CognitiveStop != HumanGoalClosed.
 
 Evidence: SRC-HUMAN, SRC-HANDOFF, SRC-FW-CARDS
-Typed Links: based_on → REQ-mrl-session, based_on → REQ-mrl-closure
+Links: based_on → REQ-mrl-session; based_on → REQ-mrl-closure
 
-## G-license-owner | Legal source and original owner authority (revision 1)
+## G-license-owner — Legal source and original owner authority (revision 1)
 
 Invariant: multi-source read != multi-target write; repo-level OSS license does not automatically license all assets. Applicability: legal vendor/codemod/adapter and website capture. Authority: original Source/Admission/Provider Owner. Refusal: missing asset rights, foreign write or unknown effect. Consequence: only dependent action blocked. Exception: separately authorized and rights-checked task.
 
 Evidence: SRC-HUMAN, SRC-ISSUE, SRC-MIGRATE
-Typed Links: based_on → REQ-mrl-rights
+Links: based_on → REQ-mrl-rights
 
-## G-evidence | Independent proof ceiling and untouched Golden (revision 1)
+## G-evidence — Independent proof ceiling and untouched Golden (revision 1)
 
 Invariant: Source Identity, behavior parity, math correctness, Native acceptance, card producer and human closure remain separate. Applicability: AST/SCIP, CI, replay, Native Reward and card status. Authority: original Test/Verifier/Owner. Refusal: Candidate self-score, fabricated report, oracle changed for green. Consequence: NOT_RUN/UNKNOWN stay honest. Exception: true oracle error corrected only by its original owner with historical evidence retained.
 
 Evidence: SRC-HUMAN, SRC-HANDOFF
-Typed Links: based_on → REQ-mrl-false-inference, based_on → REQ-mrl-reward
+Links: based_on → REQ-mrl-false-inference; based_on → REQ-mrl-reward
 
-## G-card-owner | Versioned FactoryWeaver cards cannot rewrite Human Intent (revision 1)
+## G-card-owner — Versioned FactoryWeaver cards cannot rewrite Human Intent (revision 1)
 
 Invariant: original FactoryWeaver producer owns stable IDs, revisions, typed invalidation and historical cards; goal changes need original Human Owner. Applicability: Evals-driven SPEC/V/G/K/X revisions. Authority: FactoryWeaver original producer. Refusal: fabricated human_confirmed=true, replacing Golden or card as effect authority. Consequence: revised card must have fresh Consumer proof. Exception: material source-grounded original Owner-approved revision.
 
 Evidence: SRC-HUMAN, SRC-FW-SCHEMA, SRC-FW-CARDS
-Typed Links: based_on → REQ-mrl-cards
+Links: based_on → REQ-mrl-cards
 
-## K-native-missing | Missing dual Native and Noodle Owner receipts (revision 1)
+## K-native-missing — Missing dual Native and Noodle Owner receipts (revision 1)
 
 Missing input: Missing: paired executable original/target trace, actual reset, native Noodle stage and independent oracle. Producer: original AgentEnv/Noodle/Test Manager/Provider. Why: old Chromium source-only results are not native acceptance. Affected: MRA-05–12 and MRA-15–18. Unaffected: this specification compilation.
 Next evidence: real named producer receipts, never invented commands or SHA. Affected dependent requirement: REQ-mrl-runtimes.
 
 Evidence: SRC-HUMAN, SRC-HANDOFF
-Typed Links: depends_on → REQ-mrl-runtimes
+Links: depends_on → REQ-mrl-runtimes
 
-## K-scip-missing | Missing independently labeled AST/SCIP retrieval data (revision 1)
+## K-scip-missing — Missing independently labeled AST/SCIP retrieval data (revision 1)
 
 Missing input: Missing: real JS/TS indexer, frozen task ground truth and independent TP/FP/FN/critical dynamic edges. Producer: original Code-intel/indexer and retrieval evaluator. Why: current Soodles Python-only index cannot prove 99%. Affected: MRA-03–04. Unaffected: rights/design cards.
 Next evidence: real named producer receipts, never invented commands or SHA. Affected dependent requirement: REQ-mrl-retrieval.
 
 Evidence: SRC-HUMAN, SRC-HANDOFF
-Typed Links: depends_on → REQ-mrl-retrieval
+Links: depends_on → REQ-mrl-retrieval
 
-## K-card-native-missing | Missing card Producer and fresh native card Consumer uptake (revision 1)
+## K-card-native-missing — Missing card Producer and fresh native card Consumer uptake (revision 1)
 
 Missing input: Missing: real FactoryWeaver revision, Host-bound exact Scope bundle, fresh Noodle Consumer and original Owner readback. Producer: original FactoryWeaver and Soodles/Noodle Owner. Why: card_delta DONE is not implementation acceptance. Affected: MRA-13–15,18. Unaffected: proposed spec.
 Next evidence: real named producer receipts, never invented commands or SHA. Affected dependent requirement: REQ-mrl-cards.
 
 Evidence: SRC-HUMAN, SRC-HANDOFF
-Typed Links: depends_on → REQ-mrl-cards
+Links: depends_on → REQ-mrl-cards
 
-## K-asset-license-missing | Missing dependency/asset commercial-license closure (revision 1)
+## K-asset-license-missing — Missing dependency/asset commercial-license closure (revision 1)
 
 Missing input: Missing: actual selected upstream asset/license dependency closure and intended redistribution policy. Producer: Source rights/admission Owner. Why: MIT top-level is not blanket file rights. Affected: real mutation and publication. Unaffected: source-only cards.
 Next evidence: real named producer receipts, never invented commands or SHA. Affected dependent requirement: REQ-mrl-rights.
 
 Evidence: SRC-HUMAN, SRC-HANDOFF
-Typed Links: depends_on → REQ-mrl-rights
+Links: depends_on → REQ-mrl-rights
 
-## R-causal-atoms | Bounded Migration-RL causal atoms (advisory only) (revision 2)
+## R-causal-atoms — Bounded Migration-RL causal atoms (advisory only) (revision 2)
 
 Parent Goal: lawful, verified source/target native Migration-RL with Session Human Goal/Card closure. Units: 1) spec-only cards, 2) approved .md/P-class, 3) AST/SCIP benchmark, 4) real math/UI runtime+reset, 5) independent Reward/Evals, 6) card producer→native Consumer, 7) comparable held-out baseline. Stateful Full-stack and RL Training deferred. Prerequisites: rights/source and original Owner next; no guessed Tool authority. Exit gates: scoped MRA-01–18 and actual Owner receipts. This Roadmap does not schedule, select tests, or replace Session choices.
 
 Evidence: SRC-HUMAN, SRC-HANDOFF
-Typed Links: based_on → REQ-mrl-intent
+Links: based_on → REQ-mrl-intent
+
+## REQ-migration-method — Migration strategy lawful reuse first (revision 1)
+
+Actor: original migrate-class Session. Goal: existing target implementation → licensed immutable vendor → supported codemod → thin adapter → necessary authorized semantic rewrite, only when genuinely applicable. Measurement: original Source/Consumer readback and method evidence. Noncase: automatic rewrite or unapproved source/assets. Persistence: original Owner next, one admitted target.
+
+Evidence: SRC-HUMAN, SRC-HANDOFF, SRC-MIGRATE
+Links: implements → REQ-mrl-migration-method; validated_by → V-migration-method; depends_on → REQ-mrl-rights
+
+## SPEC-migration-method — Original migrate-class strategy consumer (revision 1)
+
+Given: actual source/asset rights, current target module, supported codemod and original permitted Worktree. When: original Session selects strategy. Producer: original Code-intel plus Source Rights owner. Consumer: admitted Noodle action. Inputs: target reuse, source bytes/license, supported transformation, adapter requirement, necessary semantic rewrite reason. Outputs: first legally applicable method or refusal/unknown. Positive: target already implements contract and is reused. Negative: unsupported codemod or unlicensed asset cannot silently escalate to rewrite. Oracle: original Source/Owner/Consumer trace. Native NOT_RUN.
+
+Evidence: SRC-HUMAN, SRC-HANDOFF, SRC-MIGRATE
+Links: implements → REQ-mrl-migration-method; validated_by → V-migration-method
+
+## V-migration-method — Migration decision discriminators (revision 1)
+
+Subject: bounded strategy choice, not whole native parity. Positive input: real target engine already meets contract and source revision verified -> reuse without math rewrite. Negative: vendor dependency/asset rights unavailable or unsupported codemod -> refuse dependent action, not unauthorized rewrite. Independent Oracle: original code/rights and target Consumer confirmation. Observation NOT_RUN.
+
+Evidence: SRC-HUMAN, SRC-HANDOFF, SRC-MIGRATE
+Links: depends_on → SPEC-migration-method
+
+## REQ-clause-coverage — Source-clause coverage instead of ID-count proxy (revision 1)
+
+Actor: original Source Reader. Goal: source-bound clause-level trace, preserve non-case/conditions, no invented complete raw chat. Measurement: Source clauses mapped to REQ/Card/K/exclusion reviewed by independent semantic owner. Positive: strategy order and FWP confirmed decisions included. Noncase: MRA count equals complete source meaning. Stop: original unavailable raw source remains K.
+
+Evidence: SRC-HUMAN, SRC-HANDOFF, SRC-MIGRATE
+Links: implements → REQ-mrl-clause-coverage; validated_by → V-clause-coverage; depends_on → REQ-mrl-intent
+
+## SPEC-clause-coverage — Original clause-to-card producer boundary (revision 1)
+
+Given: actually inspected Human turns, fixed handoff and migrate-class draft Source, not guessed full history. When: original Reader compiles source clauses. Producer: original Host Source Reader. Consumer: FactoryWeaver semantic reviewer and original Card Producer. Inputs: clause locator, semantic constraint/exception, source identity. Outputs: mapped REQ/Card/K or reviewed exclusion and explicit missing full raw Source. Positive: five-method reuse ladder and non-case mapped. Negative: omit adapter precondition while MRA 18/18 still passes. Oracle: independent inspected original Source, not cardinality.
+
+Evidence: SRC-HUMAN, SRC-HANDOFF, SRC-MIGRATE
+Links: implements → REQ-mrl-clause-coverage; validated_by → V-clause-coverage
+
+## V-clause-coverage — Clause omission independent review (revision 1)
+
+Subject: available original source/decision units, not all unheard raw history. Positive: direct Human decisions, migrate source strategy and noncases are mapped with locators. Negative: delete legitimate thin-adapter step while 18 MRA IDs remain => semantic review flags missing source clause. Oracle: original Host Source Reader and independent reviewer. Full original raw dialogue proof NOT_RUN.
+
+Evidence: SRC-HUMAN, SRC-HANDOFF, SRC-MIGRATE
+Links: depends_on → SPEC-clause-coverage
+
+## K-missing-original-dialogue — Full raw dialogue unavailable for completeness proof (revision 1)
+
+Missing input: Host-materialized complete original pre-handoff conversation with exact source locator and trustworthy Source readback. Why: summary + selected User turns do not prove all unseen words were inspected. Producer: conversation Source Reader/Host. Affected only universal all-history clause completeness; explicit known mapping and other specs may proceed.
+
+Evidence: SRC-HUMAN, SRC-HANDOFF
+Links: depends_on → REQ-mrl-clause-coverage
 
