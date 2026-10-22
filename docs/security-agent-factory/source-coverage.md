@@ -1,6 +1,6 @@
 # Complete Requirement & Source Coverage Ledger
 
-**Scope:** Security Agent Factory decisions SEC-01..16 and the later MacBook-first SEC-10R refinement. Sources are of two distinct types: **HUMAN_DECISION** (explicitly supplied in the supervising conversation) and **OFFICIAL_DOC / REPO_SOURCE** (read for capability/contract facts). This file preserves semantic excerpts and all decisions; it is *not* a cryptographically bound original conversation transcript.
+**Scope:** Security Agent Factory decisions SEC-01..16 and the later MacBook-first SEC-10R refinement. This ledger enumerates **confirmed decision-derived requirements only**; [source-inventory.md](source-inventory.md) separately preserves earlier named security tools, defenses, alternatives and hypotheses that were not selected as Phase-1 requirements. Do not call the 33-row decision ledger whole-conversation source completeness. Sources are of two distinct types: **HUMAN_DECISION** (explicitly supplied in the supervising conversation) and **OFFICIAL_DOC / REPO_SOURCE** (read for capability/contract facts). This file preserves semantic excerpts and all decisions; it is *not* a cryptographically bound original conversation transcript.
 
 ## Decision-to-requirement trace
 
