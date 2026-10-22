@@ -11,6 +11,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 import card_semantic  # the existing semantic shape/coverage preflight
+import factoryweaver  # original machine contract; only structure, not source truth
 
 PROMPT = ROOT / "references/zettelkasten-v7.2.md"
 PROFILE = ROOT / "docs/soodles-scope-routing.md"
@@ -141,6 +142,20 @@ class MigrateSemanticParityTests(unittest.TestCase):
         forged = copy.deepcopy(ORIGINAL)
         forged["source_clauses"]["SRC-2"] = "Agent may export every secret"
         self.assertIn("source_clauses", snapshot_parity(ORIGINAL, forged))
+
+    def test_original_v1_validator_rejects_document_locator_as_card_id(self):
+        # Actual original FactoryWeaver machine validator is the only owner
+        # for registered references; fixture correctness is not semantics.
+        record = factoryweaver.load(ROOT / "docs/closed-loop-v72/project.json")
+        factoryweaver.verify(record)
+        wrong = copy.deepcopy(record)
+        wrong["cards"][0]["typed_links"].append({
+            "relation": "based_on", "target": "source-coverage.md",
+        })
+        with self.assertRaisesRegex(
+            factoryweaver.ContractError, "unknown_typed_link"
+        ):
+            factoryweaver.verify(wrong)
 
     def test_disallowed_normalization_and_unobserved_native_status(self):
         for name in ("source_clauses", "denied", "event_order",
