@@ -51,7 +51,8 @@ Build a commercially usable, open-source Red / Blue / White AI Security Factory 
 
 ## Behavior and architectural documents
 
-- [Complete source/requirement coverage](source-coverage.md): current user decision anchors, clauses, actual owners, observable acceptance and unresolved premises.
+- [Complete source/requirement coverage](source-coverage.md): accepted SEC decision anchors, clauses, owners, acceptance and unresolved premises.
+- [Whole-conversation source/alternative inventory](source-inventory.md): original security tools, defensive principles, selected/deferred/rejected candidates and explicit fidelity gaps; **decision coverage is not complete source coverage**.
 - [Specification cards](cards.md): semantic C / REQ / SPEC / G / V / K / X / R cards and directional typed-link proposals, with explicit evidence limits.
 - [Read-only handoff and scoped acceptance](handoff.md): first proposed Issue Atom, original Soodles owner path, tests, negative controls and rollout boundary.
 
