@@ -1,6 +1,6 @@
 # Migration-RL — Soodles Behavior Scope (advisory, spec-only)
 
-**Selected Scope:** FWC-01 A / FWC-02 A. Original FactoryWeaver v7.2 producer stores one canonical Migration-RL knowledge record with its original Human Goal and all MRL/MRA obligations. This card compilation does **not** authorize Soodles or Noodle execution.
+**Selected Scope:** FWC-01 A / FWC-02 A; FWP-01 A / FWP-02 A / FWP-03 A source-to-consumer corrections. Original FactoryWeaver v7.2 producer stores one canonical Migration-RL knowledge record with its original Human Goal and all MRL/MRA obligations. This card compilation does **not** authorize Soodles or Noodle execution.
 
 ## Goal / Measurement / Persistence / Stop
 
@@ -8,7 +8,7 @@
 
 **Local current goal:** Deliver FactoryWeaver v1-valid cards and full confirmed decisions/acceptance/source ledger, without implementing or training Migration-RL. Local spec success must not be confused with full parent goal completion.
 
-**Measurement:** 10 MRL decisions, MRA-01–18, FWC-01 A, FWC-02 A and HOF-01 A mapped to canonical REQs and actual typed cards; original CLI `verify()` and `project()` return read-only Schema/Scope results; no invalid links, no rights/effects claims. Measured Runtime Precision, Native Migration Success and RL results are **NOT_RUN**, not zero.
+**Measurement:** 10 MRL decisions, MRA-01–18, FWC-01 A, FWC-02 A, FWP-01/02/03 A and HOF-01 A plus 25 mapped inspected source clauses in 22 REQs and 74 Cards; original CLI `verify()` and `project()` return read-only Schema/Scope results; no invalid links, no rights/effects claims. Measured Runtime Precision, Native Migration Success and RL results are **NOT_RUN**, not zero.
 
 **Persistence:** Original supervising Session retains all remaining REQ/Spec/Card obligations and the verified legal Owner next across bounded Poteto iterations and versioned card revisions. Unknown blocks only the dependent work. No new autonomous background scheduler, extra P-class decision state or new Owner.
 
