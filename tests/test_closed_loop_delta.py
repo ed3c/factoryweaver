@@ -119,8 +119,14 @@ class ClosedLoopDeltaTests(unittest.TestCase):
         self.assertEqual(sizes, [12, 12, 12, 12, 12, 8])
         self.assertEqual([p["card"]["stable_id"] for p in patches], CARD_IDS)
         self.assertEqual([p["previous_card"] for p in patches], before["cards"])
-        self.assertTrue(all(p["operation"] == "UPDATE" and p["previous_revision"] == 1
-                            and p["card"]["revision"] == 2 for p in patches))
+        # Some accepted cards already have newer revisions. Every update must
+        # increment its actual before revision exactly once without losing history.
+        self.assertTrue(all(
+            p["operation"] == "UPDATE"
+            and p["previous_revision"] == previous["revision"]
+            and p["card"]["revision"] == previous["revision"] + 1
+            for p, previous in zip(patches, before["cards"])
+        ))
         reconstructed = copy.deepcopy(before)
         reconstructed["cards"] = [p["card"] for p in patches]
         self.assertEqual(reconstructed, after)
