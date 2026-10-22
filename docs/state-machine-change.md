@@ -6,6 +6,12 @@
 這是未改寫的離線快照，不宣稱該 commit 已發布到遠端，也不需要執行 Soodles 才能讀取。
 通用規則只在原來源修正後更新版本；本頁只補本 repo 的接口與效果邊界。
 
+## Current source reconciliation for v7.2 migrate-semantic parity
+
+The immutable earlier [local Soodles state-machine change contract snapshot](../references/soodles/ef828ca0b236d980607299d727f13cda0c290765/state-machine-change.md) remains unchanged and its original SOURCE.json retains its historical integrity. For this new FactoryWeaver System Prompt change, also read [the actual current Soodles main contract at 1f5bfbe](https://github.com/ed3c/soodles/blob/1f5bfbe19d553304ca2f60138fe2c22519d655dd/contracts/state-machine-change.md): the later original Owner/session continuation, idempotent tools, unknown write readback and exact source/Consumer effect distinction extend the older snapshot. The [migrate-class methodology is pinned separately at c45d566e](https://github.com/ed3c/soodles/blob/c45d566e69bb074da33b63a89060022c893ff7de/.agents/skills/migrate-class/SKILL.md) and remains **Draft PR #444**, not a merged Soodles main or installed FactoryWeaver Skill.
+
+Apply the five existing Soodles state-machine modification principles to the selected FactoryWeaver original Producer → Consumer boundary: keep pure methodology separate from cases, do not re-run Thinking for legal Next, keep P-class guidance conditional without turning it into runtime status, leave deterministic identity/revision/bindings to original CLI, and correct only an evidenced wrong Producer/Validator/Consumer. Source semantic parity is independent of source identity, structural CLI validation and actual Provider effects; no new acceptance owner, Scheduler, runtime state, nor implied authorization. A Soodles change after the two pinned commits needs fresh source/owner reconciliation; do not silently overwrite this historical pin.
+
 ## 獨立使用與原責任
 
 FactoryWeaver 保留 Source、Card Registry、Scope 與 PromptDelta 的語義。既有 exporter 只提供來源綁定提案，不能由 Card 直接取得 worker、測試或發布權限。沿原 card/Scope CLI 與選定驗證入口處理結構；Session 核對語義與原 Goal。
