@@ -52,3 +52,6 @@ This newer specification increment preserves the **historical** original 30 REQ 
 
 **Scope:** accepted FCL-01 A / FCL-02 A / FCL-03 A — card/coverage/specification documents and PR only. No Harness² runtime, Noodle admission, card-to-native auto-dispatch, formal proof, paid API key, provider landing or main merge authorized by this supplement.
 
+## Current MGP Source Fidelity / Migration Parity amendment
+
+The accepted FactoryWeaver v7.2 [System Prompt](../../references/zettelkasten-v7.2.md), [card Registry](project.json) and [MGP Source/Consumer differential protocol](../evals/v72-migrate-semantic-parity.md) guide future native Consumer experiments. This supplement records MGP-01 A / MGP-02 B / MGP-03 B in CL-20/21 without replacing Parent Intent, all 30 REQ, original 68 stable Card IDs, NeoWeaver original independent registry or Harness² A01–A20. Read real Original Owner Next before selecting a conditional migration. If no original Host/session/attempt independent Observer is available, native Prompt behavior is NOT_RUN—not implied by source diff or CI. No automatic merge/landing.

@@ -42,3 +42,8 @@ No CLI result by itself proves human intent or the complete native FactoryWeaver
 ## Future suggested Skills
 
 FactoryWeaver original single entry (and SPEC/V per-type references); Soodles thinking-router, ambitious-route, test-manager, verify-soodles, code-intel, original issue-atom, Noodle Poteto only after valid admission; original pstack formal Create/Maintain only for actual required code property. Reading a Skill does not establish native invocation.
+
+## MGP semantic-parity continuation (source-only)
+
+Read [original FactoryWeaver System Prompt](../../references/zettelkasten-v7.2.md) and the [MGP verification protocol](../evals/v72-migrate-semantic-parity.md) for the conditional migrate-class source → Consumer lens. CL-20 and CL-21 are additions to original CL-01…CL-19; Source-Identity, Behavior-Parity, Semantic-Correctness and fresh Native Agent/Provider proof have separate evidence ceilings. Current actual source-bound cards SPEC-outer-loop, SPEC-inner-loop, SPEC-stable-update and V-runtime-gap are **r3**. Original 30 REQ and 68 stable IDs remain. Earlier r1→r2 statement below is historical; the new r2→r3 card delta must be checked at exact files/HEAD. Existing Runtime remains NOT_RUN unless original Host/Owner proves otherwise.
+

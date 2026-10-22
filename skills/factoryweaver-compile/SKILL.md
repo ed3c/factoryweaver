@@ -35,6 +35,12 @@ Only the changed required behavior enters the existing `prompt_delta` selection;
 reused constraints are referenced, not repeated as new requirements. Do not
 make a new Prompt schema, author runtime metadata or reduce Worker autonomy.
 
+## Source-preserving transforms and their proof ceilings (conditional)
+
+Before creating/revising REQ/SPEC/V from an already accepted source/target representation, compare the actual source and destination Consumer. Preserve material conditions, exceptions, negation, effect/ordering, source authority and named missing observations. Choose REUSE/NOOP when accepted Cards suffice; an intentional user-approved change needs its own acceptance instead of declaring previous-behavior parity. Prefer an existing reference/mapping over speculative semantic rewriting. Structural AST/source evidence is selected only for actual source domain and cannot certify dynamic effects. Source identity, observable parity, independent semantic correctness and fresh native consumption are separate observations, as described by the original v7.2 reference.
+
+Generation feedback to the earliest incorrect REQ/SPEC/V producer is **not** a new Noodle Prompt Delta; the original Session remains responsible for the minimal necessary worker behavior. Do not add unsupported migration operations or change the original Authorizing Owner.
+
 ## Classification and graph composition (all Hosts)
 
 After the v7.2 System Prompt, **read [the authoritative taxonomy and Scope Assembly contract](../../references/card-classification-and-scope-assembly.md)**, including **all 15 per-series Soodles/Poteto-pstack Skill Consumers, modality-agnostic source coverage, and review-writing expectations**. All 15 card series remain available; the core seven C/REQ/G/SPEC/V/X/K are not mandatory per case. Choose series by source-supported knowledge function, not chapter position or a C,C,G,SPEC template. Reuse existing G/C across Scopes, update only after a distinct semantic gain, and leave unread PDFs as K/source catalogs.

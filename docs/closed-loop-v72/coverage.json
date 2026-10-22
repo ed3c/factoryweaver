@@ -229,6 +229,32 @@
         "REQ-publication",
         "REQ-handoff"
       ]
+    },
+    {
+      "id": "CL-20",
+      "source_quote": "MGP-01 A、MGP-02 B：Portable v7.2 條件式 Source-to-Consumer Semantic Parity + 專案 migrate-class 依需求選用；修改真正影響的 System Prompt、Card Prompt、卡片與測試",
+      "requirements": [
+        "REQ-coverage",
+        "REQ-spec-data",
+        "REQ-outer-loop",
+        "REQ-inner-loop",
+        "REQ-adapters",
+        "REQ-safety",
+        "REQ-stable-update",
+        "REQ-correction"
+      ]
+    },
+    {
+      "id": "CL-21",
+      "source_quote": "MGP-03 B：Source/CLI 與 Fresh Native Consumer Evals 分層，保留未觀察 Native Host 的 NOT_RUN；不以 schema/Golden/AST PASS 代替語義正確",
+      "requirements": [
+        "REQ-eval-evidence",
+        "REQ-compiler-audit",
+        "REQ-completion",
+        "REQ-handoff",
+        "REQ-cost",
+        "REQ-unknown-effect"
+      ]
     }
   ],
   "batches": [

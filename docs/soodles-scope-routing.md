@@ -34,6 +34,12 @@ Every behavior scope has a **Goal-Oriented Contract** with these semantic fields
 
 A statement such as "keep trying, potentially for weeks" is **persistence policy**, not a promise that a model is executing in background. It requires the original authorized host/session/scheduler to exist for future runs, with actual cost/time/attempt limits or an explicitly unknown budget. Maintain the goal until satisfied or a real blocker is returned; do not endlessly replay failed commands, effects or identical experiments. Respect existing three-failed-corrections causal reassessment and unknown-write readback.
 
+### Conditional Migrate Class methodology for source-to-Consumer Cards
+
+The [source-bound original Soodles migrate-class at c45d566e](https://github.com/ed3c/soodles/blob/c45d566e69bb074da33b63a89060022c893ff7de/.agents/skills/migrate-class/SKILL.md) is a **method/reference**, not proof it is installed or selected in the present Host. Check the original target Consumer, pinned source, license, allowed write target and actual registered Code Intel/structural readers first. Read many sources only as authorized; a Card proposal does not grant multi-repository write. For **actual migration** choose target reuse → source-preserving dependency/license-respecting reuse → supported codemod/recipe → minimum mapping/adapter → separately authorized semantic rewrite. The original Soodles Session (Thinking V2/conditional V3 × Ambitious) judges genuinely material goals; Noodle Poteto only works inside its original admitted Stage. This sequence does not apply to routine Cards, reading-only tasks or a current valid Owner next.
+
+For a migration scope, the Test Manager/independent original Oracle must distinguish pinned bytes, consumer-observable equivalence including errors/ordered effects, human Goal semantic correctness, and fresh native Agent/Provider effect. An unchanged happy-path example cannot replace a planted changed error/side-effect/unknown-write negative. Do not forge normalization or Golden Master after seeing treatment output; missing native carrier is BLOCKED/NOT_RUN, not a reason to reroute through a new Manager. Keep this host profile conditional; no new State, authorization, Skill Route, or P-class type.
+
 ## 2. Strict outer loop / inner loop split
 
 **Soodles outer loop (Session / Issue Atom / original owner):**

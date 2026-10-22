@@ -3,12 +3,18 @@
   "status": "PROPOSED_NOT_ADMITTED",
   "source_refs": [
     "SRC-2026-FCL-DECISIONS",
-    "SRC-2026-HARNESS-HANDOFF"
+    "SRC-2026-HARNESS-HANDOFF",
+    "SRC-2026-MGP-DECISIONS",
+    "SRC-SOODLES-MIGRATE-PR444",
+    "SRC-SOODLES-STATE-CURRENT"
   ],
   "decisions": {
     "FCL_01": "A: full conversation preserved with stratified acceptance",
     "FCL_02": "A: existing FactoryWeaver closed-loop Registry is card owner, independent NeoWeaver 10 REQ/44 cards retained",
-    "FCL_03": "A: card/coverage/verification documents and PR, no runtime implementation"
+    "FCL_03": "A: card/coverage/verification documents and PR, no runtime implementation",
+    "MGP_01": "A: portable source-to-Consumer semantic parity is conditional; project migration method on real source only",
+    "MGP_02": "B: amend v7.2 system prompt and actually affected per-type prompts/consumer profile/card revision + source tests, do not redesign original CLI",
+    "MGP_03": "B: source/CLI plus real fresh Native Consumer Evals only with supported authenticated original Host and independent original Owner receipts; otherwise NOT_RUN/BLOCKED"
   },
   "upstream_source": "https://github.com/ed3c/soodles/pull/445",
   "ScopeManifest": {
@@ -41,13 +47,15 @@
       "CL-16",
       "CL-17",
       "CL-18",
-      "CL-19"
+      "CL-19",
+      "CL-20",
+      "CL-21"
     ],
     "work_kind": "DOCUMENTATION_SPECIFICATION_ONLY",
     "original_owner": "FactoryWeaver v7.2 Compiler/Registry for cards; Soodles original Session/Admission/Review/Provider and Noodle original Stage for future effects",
     "first_causal_breakpoint": "A native implementation counterexample does not itself establish whether the original specification or product code is wrong, and historical schema PASS does not prove whole-task closure.",
-    "positive_exit": "Four existing cards revised with same stable IDs, source clauses mapped, negative control/oracle specified, new crossrepo overlay and PR reviewable; no runtime effect.",
-    "negative_exit": "Do not infer a generated card or PR PASS authorizes model optimization, Noodle admission, whole-task completion or Provider landing.",
+    "positive_exit": "Four existing cards revised with same stable IDs, source clauses mapped, negative control/oracle specified, new crossrepo overlay and PR reviewable; no runtime effect. Original FactoryWeaver CLI/CI source-only controls and versioned review prove only their own structural scope; Native behavior requires independent fresh run.",
+    "negative_exit": "Do not infer a generated card or PR PASS authorizes model optimization, Noodle admission, whole-task completion or Provider landing. Source-only semantic parity claims, automatic AST on prose and forced migration route are not accepted.",
     "external_obligation_ids": [
       "A01",
       "A02",
@@ -69,12 +77,13 @@
       "A18",
       "A19",
       "A20"
-    ]
+    ],
+    "causal_change": "undefined MGP method amendment: conditionally protect semantic preservation across sources/consumers; separate Source Identity, Behavior Parity, Independent Semantic Correctness and Fresh Native Acceptance; use reusable original target before rewriting."
   },
   "SkillRoute": {
     "status": "CONDITIONAL",
     "selection": "FactoryWeaver v7.2 single compiler entry; Soodles Thinking Route V2/conditional V3 × Ambitious only for real unresolved semantics; original issue-atom and Test Manager only on original owner triggers; Noodle Poteto only after admitted execute",
-    "non_trigger": "Valid current owner next => PromptDelta NOOP. No automatic Harness², Noodle, Hook/Cron, extra manager or formal verifier merely for displaying cards."
+    "non_trigger": "Valid current owner next => PromptDelta NOOP. No automatic Harness², Noodle, Hook/Cron, extra manager or formal verifier merely for displaying cards. migrate-class reference is conditional; code/AST tools only for material source type and actual Consumer."
   },
   "PromptDelta": {
     "status": "PROPOSED_NOT_CONSUMED",
@@ -83,9 +92,11 @@
       "Use original Native/Provider readback to classify implementation bug versus falsified specification versus named necessary Unknown, and identify the first unsupported Producer→Consumer premise.",
       "Correct the original FactoryWeaver source/Card Revision (same stable ID/history) only after evidence proves REQ/SPEC/V/typed-link wrong; otherwise fix code, read original owner or NOOP.",
       "Send only necessary new behavior/constraint/verification semantics to the next not-frozen, actually admitted Noodle Stage; let Poteto select local implementation.",
-      "Independent Soodles/FactoryWeaver/NeoWeaver Test/Schema/Provider and formal verification owners retain real acceptance. Preserve A01–A20 statuses and allow NO_PROMOTION."
+      "Independent Soodles/FactoryWeaver/NeoWeaver Test/Schema/Provider and formal verification owners retain real acceptance. Preserve A01–A20 statuses and allow NO_PROMOTION.",
+      "For material source transformation, reuse original accepted REQ/SPEC/G/V and target source first; run matched original-versus-proposed Consumer conditions with a planted changed error/side-effect/unknown-write negative; intentional owner-approved changes use distinct acceptance, not false parity.",
+      "Keep four evidence tiers separately: original Source Identity, matched Behavior Parity, independent semantic correctness, and fresh actual Host/Provider consumption; do not infer higher tiers from code-intel, schematic links, CI, browser smoke or prompt wording."
     ],
-    "native_consumer_provenance": "NOT_RUN"
+    "native_consumer_provenance": "NOT_RUN_NO_TRUSTED_ORIGINAL_HOST_RECEIPT"
   },
   "Continuation": {
     "original_requirement_ids": [
@@ -125,22 +136,22 @@
       {
         "stable_id": "SPEC-outer-loop",
         "before": 1,
-        "after": 2
+        "after": 3
       },
       {
         "stable_id": "SPEC-inner-loop",
         "before": 1,
-        "after": 2
+        "after": 3
       },
       {
         "stable_id": "SPEC-stable-update",
         "before": 1,
-        "after": 2
+        "after": 3
       },
       {
         "stable_id": "V-runtime-gap",
         "before": 1,
-        "after": 2
+        "after": 3
       }
     ],
     "external_sources": [
@@ -151,7 +162,8 @@
     "native_intent_closure": "NOT_RUN",
     "harness2_model_backed": "NOT_RUN",
     "pstack_formal_promotion": "NOT_RUN",
-    "publication": "NOT_RUN"
+    "publication": "NOT_RUN",
+    "native_migrate_parity": "NOT_RUN; selected original Soodles migrate-class source is draft, not evidence of installed Host invocation"
   },
   "authority": {
     "effects": [],

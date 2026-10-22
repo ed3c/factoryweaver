@@ -74,6 +74,14 @@ unchanged instruction means NOOP. Host/CLI binds IDs/refs; original admission
 supplies authority; Noodle chooses code and sequence within the admitted Scope.
 Independent source review and real fresh-consumer behavior remain separate.
 
+## Conditional migrate-class semantic parity (portable source, Soodles-selected method)
+
+The source-preserving logic is defined by the [v7.2 System Prompt](../../references/zettelkasten-v7.2.md) and [Card Classification & Scope Assembly](../../references/card-classification-and-scope-assembly.md). Reuse accepted adequate Cards before any rewriting. A source transformation needs a named original Source, target Consumer, material clauses including refusals, evidence level and the owner's original acceptance. Distinguish source-byte identity, matched observable parity, independent semantic correctness and actually observed Host/Provider consumption; **none implies the next**. Preserve missing dynamic caller evidence instead of declaring full dependency closure.
+
+When Soodles is the selected Host **and** a real external source or migration affects an admitted Consumer, read the pinned original [migrate-class reference](https://github.com/ed3c/soodles/blob/c45d566e69bb074da33b63a89060022c893ff7de/.agents/skills/migrate-class/SKILL.md) via the actual Host/source reader. This is *a conditional method proposal*, not an installed Skill, universal AST requirement, duplicate runtime state, or permission to touch another repo. Only use original Soodles Code Intel, original Test Manager, Noodle Poteto and effect Owner if actually available and legally selected. Never force migration routing for simple Cards or repeat an unchanged original Owner next.
+
+The Source/CLI gates can be exercised in current FactoryWeaver CI; **Fresh Native Consumer Evals** require an independently observed Host and original task/Stage/Attempt/Observer/Provider identities. Missing capability = `NOT_RUN`/`BLOCKED`, not inferred quality improvement or a fabricated transcript.
+
 ## One dispatch per real need
 
 Consume an unchanged, valid original Owner continuation first. If an owner

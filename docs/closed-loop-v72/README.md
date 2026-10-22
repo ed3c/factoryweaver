@@ -20,3 +20,6 @@ This newer specification increment preserves the **historical** original 30 REQ 
 
 **Scope:** accepted FCL-01 A / FCL-02 A / FCL-03 A — card/coverage/specification documents and PR only. No Harness² runtime, Noodle admission, card-to-native auto-dispatch, formal proof, paid API key, provider landing or main merge authorized by this supplement.
 
+## MGP System Prompt semantic-parity amendment (FCL source-compatible)
+
+Follow-up to FCL-01 A / FCL-02 A / FCL-03 A and MGP-01 A / MGP-02 B / MGP-03 B: the [portable v7.2 System Prompt](../../references/zettelkasten-v7.2.md) now selects **conditional** source-to-Consumer Semantic Parity / reuse-before-rewrite when an actually material transformation exists. [Existing r3 Cards](project.json), [CL-20/CL-21](coverage.json) and [MGP review/Evals protocol](../evals/v72-migrate-semantic-parity.md) preserve all 30 REQ / 68 stable Card IDs and historical failed/unknown results. The original [migrate-class](https://github.com/ed3c/soodles/blob/c45d566e69bb074da33b63a89060022c893ff7de/.agents/skills/migrate-class/SKILL.md) is an unmerged method reference, not an automatically installed Skill. A source-only PR/CI PASS cannot certify live FactoryWeaver Agent behavior or native Soodles/Noodle effects.

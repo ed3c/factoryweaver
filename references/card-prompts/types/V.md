@@ -14,6 +14,8 @@
 - **negative_control** — change a material premise and state the expected refusal/unknown/non-case result; name what it distinguishes from the positive.
 - **observation_status** — report only actually observed covered results; proposed controls and missing native captures remain NOT_RUN.
 
+**Independent parity evidence when migrating an accepted source/target:** state separate statuses for Source Identity, Consumer-observable parity, independently judged Semantic Correctness and fresh Native Consumer/Provider effect. Provide a specific matched positive input, lawful adjacent case and planted false-equivalence/changed-error-or-side-effect negative. No consumer observation = `NOT_RUN`, not zero or a PASS from same bytes/shape. Only the original Test Manager/Observer decides necessary dynamic controls, never the card writer.
+
 **Evidence chronology:** Preserve the original prior `NOT_RUN` and the
 current separately observed scoped control status as different Source/Owner
 facts. A later Parser test can establish Parser PASS_SCOPED but not retroactively

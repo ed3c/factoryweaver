@@ -1,6 +1,6 @@
 # 閉環資料流卡片盒
 
-Current r2 card entries must be read from [project.json](project.json), not assumed from historical printed card excerpts below. See [current FCL source and acceptance supplement](intent-to-acceptance-coverage.md).
+Current r3 card entries must be read from [project.json](project.json), not assumed from historical printed card excerpts below. See [current FCL source and acceptance supplement](intent-to-acceptance-coverage.md).
 
 此筆記使用 Zettelkasten Specification Compiler v7.2 portable profile。這次交付規格與 eval 審計。30 個 REQ 描述待實作或待驗的結果，不能因筆記合併便稱系統已完成。
 
@@ -600,3 +600,8 @@ Given 本次 artifact 已讀回、自審與有限檢查完成。When 使用者�
 關聯為 based_on REQ-compiler-audit。
 
 <!-- CARD_META {"stable_id": "K-legacy-v71", "canonical_key": "K|closed-loop|explains|k-legacy-v71|portable|v1", "series": "K", "revision": 1, "status": "ACTIVE", "evidence_ids": ["SRC-TASK", "SRC-V72"], "typed_links": [{"relation": "based_on", "target": "REQ-compiler-audit"}]} -->
+
+## MGP semantic-parity continuation (source-only)
+
+Read [original FactoryWeaver System Prompt](../../references/zettelkasten-v7.2.md) and the [MGP verification protocol](../evals/v72-migrate-semantic-parity.md) for the conditional migrate-class source → Consumer lens. CL-20 and CL-21 are additions to original CL-01…CL-19; Source-Identity, Behavior-Parity, Semantic-Correctness and fresh Native Agent/Provider proof have separate evidence ceilings. Current actual source-bound cards SPEC-outer-loop, SPEC-inner-loop, SPEC-stable-update and V-runtime-gap are **r3**. Original 30 REQ and 68 stable IDs remain. Earlier r1→r2 statement below is historical; the new r2→r3 card delta must be checked at exact files/HEAD. Existing Runtime remains NOT_RUN unless original Host/Owner proves otherwise.
+

@@ -2,6 +2,12 @@
 
 **Goal:** Preserve the user's true outcome, technical source, constraints and original effects across the transformations from AGENTS.md → v7.2 instructions → Card → Scope → Prompt Delta → Soodles Reader → original Session → admitted Noodle stage → conditional Managers → provider readback. This is a **semantic process reference**, not a new JSON protocol or an API System-role grant.
 
+## Conditional parity lens across material carriers
+
+For existing source or accepted Card migrations, inspect **the source version and target Consumer together**. Preserve negation, error, source rights, state, effect order, unknown-readback and original acceptance. Prefer unchanged accepted semantic references before rewriting. Four distinct observations may apply: Source Identity (original bytes), matched Consumer Behavior (including planted divergent control), independent Semantic Correctness, and fresh Native Consumer/Provider Effect. A structurally valid Bundle, successful AST analysis, shorter Prompt or equal happy-path output is not proof of any downstream result. Do not force code migration tools for prose Cards. A newly authorized intentional behavior change is judged by its own new REQ/SPEC, not claimed as parity to the old behavior.
+
+This supplements the preexisting carrier table; **no row is a new execution authority**. The original Soodles state-machine contract governs current Owner next and unknown-effect readback. New semantics only reach a not-frozen Consumer via the original validated admission.
+
 ## One contract per carrier transition
 
 | Step, carrier | Semantic Producer → actual Consumer | Probabilistic Session / P-class decision (only if needed) | Deterministic CLI / original Owner work | Discriminator and proof ceiling |

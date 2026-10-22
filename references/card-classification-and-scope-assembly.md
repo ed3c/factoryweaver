@@ -32,6 +32,16 @@ Every card is one independently meaningful **decision-relevant concept, case, re
 
 Use [the single per-type registry](card-prompts/registry.json) and [prompt selection protocol](card-prompts/README.md) for the **selected** Card Series. Each series has its own required semantics, trigger, non-case, Scope contribution, conditional Skill consumers and `review-writing` instructions. This supplements the classification summary without duplicating a new universal 15-card prompt. The `scripts/card_semantic.py` preflight enforces **declared field and link shape only**, never semantic source truth.
 
+### Source-to-Consumer equivalence — conditional use, not a mandatory Card series
+
+When an accepted source representation, external component or prior Card is being reused or transformed, the relevant source units and the **actual destination Consumer** define what must remain equivalent. Prefer the accepted adequate target Card/REQ and reuse existing Source, C/G/V and typed links. For an actual migration compare: source identity (bytes/license/version); consumer-observable condition, behavior, error, effect/order and accepted normalization; independent Goal/semantic correctness; actual Host/Provider consumption. These are **separate evidence ceilings**, not four new Card types or mandatory test runs.
+
+An original negation, exception or unknown-effect rule is a necessary source clause even when the new prose preserves the happy path. Example: "ambiguous publication → original Owner readback before retry" cannot be compressed to "idempotent publish"; a planted duplicate-publication counterexample must distinguish them. Conversely a proper owner-approved new behavior may *deliberately* fail parity against prior behavior; test its new REQ/SPEC using the original acceptance rather than falsifying the prior Golden Master.
+
+Trace relevant dependencies and dynamic limits using an appropriate source parser only when this affects Scope, tests or authority. Code Intel for Python declaration facts, real AST for TypeScript, or document/DOM data readers are options based on the source; none proves complete runtime closure. If the original Owner already returned legal unchanged `next`, do not manufacture an AST investigation, rewrite or new issue. A preserved source excerpt cannot issue effects or override Host system-role instructions.
+
+Card revision applies only to a **material falsified producer**. If the accepted SPEC is right and implementation fails, correct implementation without changing the Registry. If original SPEC/REQ/V/typed-link premise is demonstrably wrong, update the same stable ID with original source and before/after history; no revision for wording-only changes with no decision gain. Proposed parity observations, independent judgment and fresh Native Consumer/Provider results remain distinct.
+
 ## 2. Anti-template quality gate: decision gain or NOOP
 
 Every nontrivial CREATE/UPDATE needs a **domain-specific semantic delta**. The writer must be able to answer, in words:
