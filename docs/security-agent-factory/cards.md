@@ -35,7 +35,7 @@ The **full 41-card proposal library** below retains other security, runtime, clo
 - **Status:** `PROPOSED`; no native Security Factory execution implied.
 - **Source anchors:** SEC-14/FactoryWeaver.
 - **Required semantics:** Actor: FactoryWeaver knowledge compiler. Given all SEC decisions including later overrides, retain every original requirement, source role and deferred obligation. Measure by explicit 33-row coverage ledger and no dropped item during four-slot Boot. Falsifier: an SEC constraint silently vanishes when selecting one atom.
-- **Typed-link proposals:** based_on:source-coverage
+- **Typed-link proposals:** None. The source-coverage ledger is a **document/evidence locator**, not a Registry Card ID. Record it as source evidence; do not create a fake `based_on` typed link.
 
 ### REQ · macbook-runtime — MacBook-first qualified OpenShell
 
