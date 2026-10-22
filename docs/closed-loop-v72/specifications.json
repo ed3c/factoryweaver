@@ -140,27 +140,30 @@
       "source_clauses": [
         "CL-07",
         "CL-09",
-        "CL-10"
+        "CL-10",
+        "CL-15",
+        "CL-17",
+        "CL-19"
       ],
       "actor": "compiler／卡片 owner",
-      "input_contract": "本卡前置條件與同一版本的 LoopEvent；缺欄位回具名 prerequisite。",
-      "output_contract": "LoopResult／OwnerConsumption／ClosureClaim 的 proposal；Host 需用自己已驗證 schema 轉接。",
-      "given": "已有 stable ID 與 canonical key",
-      "when": "新事實或必要未知出現",
-      "then": "就地更新現行 revision；保留原版、差異、理由及 supersedes；必要新問題新增 K／X",
+      "input_contract": "Accepted source/old Card identity + new original Source/Consumer counterexample + existing typed dependencies",
+      "output_contract": "Original Registry Card UPDATE/NOOP proposal and source-bound dependency invalidation, no admitted effect",
+      "given": "原 accepted Card 的 stable ID/canonical key/前一 revision 和原來源可讀",
+      "when": "新真實 Source/Native Consumer 證據推翻原 REQ/SPEC/V/Typed Link，或具名必要 Unknown 出現",
+      "then": "FactoryWeaver 原 Registry 以同一 stable ID revision+1 保留 before/after/原因和真正依賴影響；無錯誤卡片時 NOOP 並修程式，不創新 Card 身分",
       "non_cases": [
-        "不得刪原要求以消除 FAIL",
-        "重寫現行文字不改原始 logs／receipts"
+        "程式缺陷時竄改規格／Oracle 讓測試變綠",
+        "遺失原 REQ 或用新 stable ID 抹除歷史"
       ],
       "cases": {
-        "positive": "就地更新現行 revision；保留原版、差異、理由及 supersedes；必要新問題新增 K／X",
-        "negative": "不得刪原要求以消除 FAIL",
-        "unknown_effect": "無新證據的現況主張保持假設",
-        "replay": "相同新證據重送不增加 revision"
+        "positive": "FactoryWeaver 原 Registry 以同一 stable ID revision+1 保留 before/after/原因和真正依賴影響；無錯誤卡片時 NOOP 並修程式，不創新 Card 身分",
+        "negative": "程式缺陷時竄改規格／Oracle 讓測試變綠；遺失原 REQ 或用新 stable ID 抹除歷史",
+        "unknown_effect": "缺原 Provider 真相或不明寫入先保留 UNKNOWN、回到原 Owner Readback，只阻塞依賴工作",
+        "replay": "同來源／同 Revision／同原合法 Next 不重建 Stage 或卡片；不變修正 NOOP"
       },
-      "auth_boundary": "重寫現行文字不改原始 logs／receipts",
-      "verification_oracle": "原 owner 的條件審查、必要 control 與實際讀回；不得刪原要求以消除 FAIL",
-      "rollback": "切回上一 revision，保持 superseded 關係",
+      "auth_boundary": "FactoryWeaver Registry owns Card revision; Soodles Original Owner owns admission, acceptance and external effects; Noodle only admitted Stage",
+      "verification_oracle": "Actual original Source/Owner selection, FactoryWeaver before/after card delta, independently observed Noodle/Test/Schema/Provider readbacks, and V-runtime-gap discriminating controls",
+      "rollback": "以原 FactoryWeaver Card Delta 保存前版、差異與合法最新內容，不改原 runtime receipt",
       "execution_status": "UNTESTED",
       "registered_adapter": null,
       "test_artifacts": [],
@@ -400,27 +403,29 @@
       "source_clauses": [
         "CL-05",
         "CL-08",
-        "CL-13"
+        "CL-13",
+        "CL-15",
+        "CL-16"
       ],
       "actor": "原 Noodle execute session",
-      "input_contract": "本卡前置條件與同一版本的 LoopEvent；缺欄位回具名 prerequisite。",
-      "output_contract": "LoopResult／OwnerConsumption／ClosureClaim 的 proposal；Host 需用自己已驗證 schema 轉接。",
-      "given": "原 admission／execution envelope 固定且工作授權有效",
-      "when": "已有可執行 task unit",
-      "then": "選原 Poteto playbook，讀相似實作，小步修改、必要驗證、自審 diff，回填本單位結果後继续其他可做需求",
+      "input_contract": "Original admitted task envelope + relevant REQ/SPEC/G/V/negative cases + selected local prompt delta or NOOP",
+      "output_contract": "Original Noodle Stage result/trace/candidate/readback; no independent card acceptance, whole-goal closure, or next authorization",
+      "given": "原 Noodle Stage admission/授權有效，凍結原始來源、write/effect 範圍和選定 Playbook",
+      "when": "已知可做的 task unit 或實際執行反例出現",
+      "then": "Poteto 在合法 Stage 自選 implementation，完成必要原 Test Manager 控制與 diff 審查，再將真實 candidate/trace/finding 返回原 Soodles Owner；修程式與修 Specification 需區分",
       "non_cases": [
-        "局部 commit／PASS 不能作整份任務 stopping point",
-        "本次交接不啟動 Noodle、不製造 admission"
+        "正確 SPEC 下的 implementation failure 卻改規格讓測試 PASS",
+        "改寫已 Frozen Stage 或未經授權發布"
       ],
       "cases": {
-        "positive": "選原 Poteto playbook，讀相似實作，小步修改、必要驗證、自審 diff，回填本單位結果後继续其他可做需求",
-        "negative": "局部 commit／PASS 不能作整份任務 stopping point",
-        "unknown_effect": "缺原 session 身分只停需要該身分的效果",
-        "replay": "原終態 session 不自行重啟；重送結果回原紀錄"
+        "positive": "Poteto 在合法 Stage 自選 implementation，完成必要原 Test Manager 控制與 diff 審查，再將真實 candidate/trace/finding 返回原 Soodles Owner；修程式與修 Specification 需區分",
+        "negative": "正確 SPEC 下的 implementation failure 卻改規格讓測試 PASS；改寫已 Frozen Stage 或未經授權發布",
+        "unknown_effect": "缺原 Provider 真相或不明寫入先保留 UNKNOWN、回到原 Owner Readback，只阻塞依賴工作",
+        "replay": "同來源／同 Revision／同原合法 Next 不重建 Stage 或卡片；不變修正 NOOP"
       },
-      "auth_boundary": "本次交接不啟動 Noodle、不製造 admission",
-      "verification_oracle": "原 owner 的條件審查、必要 control 與實際讀回；局部 commit／PASS 不能作整份任務 stopping point",
-      "rollback": "由原 owner 回滾該單位，保留失敗歷史",
+      "auth_boundary": "FactoryWeaver Registry owns Card revision; Soodles Original Owner owns admission, acceptance and external effects; Noodle only admitted Stage",
+      "verification_oracle": "Actual original Source/Owner selection, FactoryWeaver before/after card delta, independently observed Noodle/Test/Schema/Provider readbacks, and V-runtime-gap discriminating controls",
+      "rollback": "原 Owner 處理合法 code rollback；保留先前真實 failure history",
       "execution_status": "UNTESTED",
       "registered_adapter": null,
       "test_artifacts": [],
@@ -433,27 +438,30 @@
       "source_clauses": [
         "CL-05",
         "CL-08",
-        "CL-13"
+        "CL-13",
+        "CL-15",
+        "CL-16",
+        "CL-19"
       ],
       "actor": "原 Soodles task／Issue owner",
-      "input_contract": "本卡前置條件與同一版本的 LoopEvent；缺欄位回具名 prerequisite。",
-      "output_contract": "LoopResult／OwnerConsumption／ClosureClaim 的 proposal；Host 需用自己已驗證 schema 轉接。",
-      "given": "整份需求及全部局部結果仍可讀",
-      "when": "一個小迴圈返回結果",
-      "then": "核對全部 REQ、未映射原句、缺件與下一步；可做項目继续，只有全要求具證據才整體完成",
+      "input_contract": "Original Owner current request/next + actual Noodle Stage output + selected FactoryWeaver Card/REQ + Source/Provider original readbacks",
+      "output_contract": "Source-bound semantic disposition and proposed single causal Scope/PromptDelta or NOOP; only original Soodles Owner may emit executable next",
+      "given": "原 Session 持有整份 Parent Goal／REQ、已接受卡片與原 Owner 的有效 next/讀回",
+      "when": "Inner Noodle 傳回實際結果或已存在合法原 next",
+      "then": "沿原 next/NOOP，或辨識 implementation 修程式、真正 falsified specification 修原卡、缺證據查原 Producer、未決架構才走 Thinking V2/條件式 V3；全 REQ 原驗收方可關閉",
       "non_cases": [
-        "單一 owner next=null 或無新 bug 不能結束整份能力工作",
-        "外迴圈不把 runtime 確認責任塞回 compiler"
+        "有合法 next 卻強制再跑 Thinking/FactoryWeaver",
+        "單次 Stage PASS/CI 綠被當成 Parent Goal 完成"
       ],
       "cases": {
-        "positive": "核對全部 REQ、未映射原句、缺件與下一步；可做項目继续，只有全要求具證據才整體完成",
-        "negative": "單一 owner next=null 或無新 bug 不能結束整份能力工作",
-        "unknown_effect": "沒有原身份的歷史欠帳保留在原任務，不阻塞獨立新工作",
-        "replay": "終態新證據按原任務邊界處理，不重開生命週期"
+        "positive": "沿原 next/NOOP，或辨識 implementation 修程式、真正 falsified specification 修原卡、缺證據查原 Producer、未決架構才走 Thinking V2/條件式 V3；全 REQ 原驗收方可關閉",
+        "negative": "有合法 next 卻強制再跑 Thinking/FactoryWeaver；單次 Stage PASS/CI 綠被當成 Parent Goal 完成",
+        "unknown_effect": "缺原 Provider 真相或不明寫入先保留 UNKNOWN、回到原 Owner Readback，只阻塞依賴工作",
+        "replay": "同來源／同 Revision／同原合法 Next 不重建 Stage 或卡片；不變修正 NOOP"
       },
-      "auth_boundary": "外迴圈不把 runtime 確認責任塞回 compiler",
-      "verification_oracle": "原 owner 的條件審查、必要 control 與實際讀回；單一 owner next=null 或無新 bug 不能結束整份能力工作",
-      "rollback": "撤回錯誤 whole-task complete，回到剩餘需求",
+      "auth_boundary": "FactoryWeaver Registry owns Card revision; Soodles Original Owner owns admission, acceptance and external effects; Noodle only admitted Stage",
+      "verification_oracle": "Actual original Source/Owner selection, FactoryWeaver before/after card delta, independently observed Noodle/Test/Schema/Provider readbacks, and V-runtime-gap discriminating controls",
+      "rollback": "不覆寫原 receipt；撤回不支援的 completion、保持原來源和 pending REQs",
       "execution_status": "UNTESTED",
       "registered_adapter": null,
       "test_artifacts": [],
