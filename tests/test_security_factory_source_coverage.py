@@ -57,8 +57,9 @@ class SecurityFactorySourceCoverage(unittest.TestCase):
     def test_planted_missing_source_fails_independently_of_selected_scope(self):
         before = self.inventory
         # The selected first Behavior Scope may remain intact despite this loss.
-        planted = before.replace("[ScopeSentry]", "[missing-origin]")
-        planted = planted.replace("ScopeSentry or promptfoo", "one reference or promptfoo")
+        # Remove all appearances, not just the linked label: a source can
+        # appear in more than one context table and narrative description.
+        planted = re.sub("scopesentry", "missing-origin", before, flags=re.I)
         self.assertNotEqual(before, planted)
         self.assertTrue(missing_required(planted, ("ScopeSentry",)))
         self.assertEqual(missing_required(before, ORIGINAL_RESEARCH), ())
