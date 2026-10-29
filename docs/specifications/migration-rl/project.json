@@ -557,7 +557,7 @@
       "owner": "Original FactoryWeaver Producer for current cards; original Soodles Owner for deferred docs",
       "acceptance": [
         "Source-supported record contains all MRL-01–10 and MRA-01–18 mapping with typed, valid cards.",
-        "Card compilation is promoted to RL implementation completion."
+        "Card compilation remains a specification result and must not be promoted to RL implementation completion."
       ],
       "knowledge_status": "SPECIFIED",
       "engineering_status": "UNASSESSED",
@@ -579,7 +579,7 @@
       "owner": "Original FactoryWeaver Producer for current cards; original Soodles Owner for deferred docs",
       "acceptance": [
         "Each contract has the agreed twelve sections and independent source-bound verification when actually created.",
-        "Uncreated docs are claimed to be deployed or already consumed."
+        "Uncreated docs must remain planned; deployment and actual Consumer consumption require their own evidence."
       ],
       "knowledge_status": "SPECIFIED",
       "engineering_status": "UNASSESSED",
