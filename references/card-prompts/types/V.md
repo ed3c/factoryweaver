@@ -31,3 +31,7 @@ inspected original test report; do not fill missing receipts from prose.
 **Review-writing:** Check actor, condition before required action, evidence and causal direction, proposed vs observed state, acceptance/unknown, exact technical terms, and preservation of original goal. Apply only this card's meaningful slots; do not require a `K` card to know an unavailable mechanism. Only a real P-class instruction edit triggers scoped behavior evals.
 
 **Output:** semantic CREATE/UPDATE/REUSE/NOOP proposal, source-grounded field content, typed links with direction/counterfactual, and relevant continuation obligation. The original Host resolves stable identity and version. A valid shape is not a semantic PASS.
+
+## Source-bound independent discriminator
+
+A positive control needs a real selected fixture/input, not restated success prose. A negative must change one material premise (symbol/consumer edge, error type, effect ordering, missing acknowledgment, wrong source/target or fake Owner receipt) and specify the observable difference. Actual Observation, historical Source-only fixture PASS and NOT_RUN must remain distinct. Do not turn AST navigation, REA replay, card compilation, independent property tests, Native Agent improvement and Provider release into a single green claim. Original Test Manager owns test scope; a changed P-class instruction requires original fresh Consumer feedback where behavior gains are claimed.
